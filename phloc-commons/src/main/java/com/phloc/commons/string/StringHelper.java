@@ -853,7 +853,8 @@ public final class StringHelper
                                                   @Nonnegative final int nLen)
   {
     ValueEnforcer.notNull (sSep, "Separator");
-    ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
+    if (aElements != null)
+      ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)

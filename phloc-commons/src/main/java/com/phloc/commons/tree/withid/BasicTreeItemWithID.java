@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -44,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Basic tree item with ID implementation, independent of the implementation
  * type.
- *
+ * 
  * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
@@ -74,7 +75,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   /**
    * Constructor for root object with a <code>null</code> data ID
-   *
+   * 
    * @param aFactory
    *        The tree item factory to use. May not be <code>null</code>.
    */
@@ -85,7 +86,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   /**
    * Constructor for root object
-   *
+   * 
    * @param aFactory
    *        The tree item factory to use. May not be <code>null</code>.
    * @param aDataID
@@ -94,15 +95,13 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
   public BasicTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> aFactory,
                               @Nullable final KEYTYPE aDataID)
   {
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
-    m_aFactory = aFactory;
+    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
     m_aDataID = aDataID;
   }
 
   /**
    * Constructor for normal elements
-   *
+   * 
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
@@ -111,14 +110,12 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    */
   public BasicTreeItemWithID (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
     if (!(aParent instanceof BasicTreeItemWithID <?, ?, ?>))
       throw new IllegalArgumentException ("Parent is no BasicTreeItemWithID");
-    if (aDataID == null)
-      throw new NullPointerException ("dataID");
     if (aParent.getFactory () == null)
       throw new IllegalStateException ("Parent item has no factory!");
+    ValueEnforcer.notNull (aDataID, "DataID");
     m_aParent = aParent;
     m_aFactory = m_aParent.getFactory ();
     m_aDataID = aDataID;
@@ -134,7 +131,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * This method is called to validate a data ID object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   *
+   * 
    * @param aDataID
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -149,7 +146,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * This method is called to validate a data object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   *
+   * 
    * @param aData
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -323,8 +320,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
 
     ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE> aCur = this;
     while (aCur != null)
@@ -340,8 +336,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
   @Nonnull
   public final ESuccess changeParent (@Nonnull final ITEMTYPE aNewParent)
   {
-    if (aNewParent == null)
-      throw new NullPointerException ("newParent");
+    ValueEnforcer.notNull (aNewParent, "NewParent");
 
     // no change so far
     if (getParent () == aNewParent)
@@ -366,8 +361,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
                                          @Nonnull final ITEMTYPE aChild,
                                          final boolean bAllowOverwrite)
   {
-    if (aChild == null)
-      throw new NullPointerException ("child");
+    ValueEnforcer.notNull (aChild, "Child");
 
     // Ensure children are present
     if (m_aChildMap != null)

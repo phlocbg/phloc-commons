@@ -61,7 +61,7 @@ public final class ObjectNameUtilsTest
       ObjectNameUtils.setDefaultJMXDomain (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

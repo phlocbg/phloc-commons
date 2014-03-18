@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * A special implementation of {@link IConverterTreeXML} that uses the
@@ -73,13 +73,9 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
                                     @Nonnull @Nonempty final String sElementName,
                                     @Nonnull final Class <? extends DATATYPE> aNativeClass)
   {
-    if (StringHelper.hasNoText (sElementName))
-      throw new IllegalArgumentException ("elementName");
-    if (aNativeClass == null)
-      throw new NullPointerException ("nativeClass");
     m_sNamespaceURI = sNamespaceURI;
-    m_sElementName = sElementName;
-    m_aNativeClass = aNativeClass;
+    m_sElementName = ValueEnforcer.notEmpty (sElementName, "ElementName");
+    m_aNativeClass = ValueEnforcer.notNull (aNativeClass, "NativeClass");
   }
 
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
