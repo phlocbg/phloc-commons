@@ -22,6 +22,8 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A special privileged object, that calls <code>class.getClassLoader ()</code>
  * 
@@ -33,9 +35,7 @@ public final class PrivilegedActionGetClassLoader implements PrivilegedAction <C
 
   public PrivilegedActionGetClassLoader (@Nonnull final Class <?> aBaseClass)
   {
-    if (aBaseClass == null)
-      throw new NullPointerException ("BaseClass");
-    m_aBaseClass = aBaseClass;
+    m_aBaseClass = ValueEnforcer.notNull (aBaseClass, "BaseClass");
   }
 
   @Nullable

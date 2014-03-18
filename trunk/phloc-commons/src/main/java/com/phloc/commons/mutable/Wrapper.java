@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -61,14 +62,12 @@ public class Wrapper <DATATYPE> implements IWrapper <DATATYPE>, ICloneable <Wrap
   /**
    * Copy constructor. Only takes wrappers of the same type.
    * 
-   * @param rhs
+   * @param aRhs
    *        The other wrapper to use. May not be <code>null</code>.
    */
-  public Wrapper (@Nonnull final IReadonlyWrapper <DATATYPE> rhs)
+  public Wrapper (@Nonnull final IReadonlyWrapper <DATATYPE> aRhs)
   {
-    if (rhs == null)
-      throw new NullPointerException ("rhs");
-    m_aObj = rhs.get ();
+    m_aObj = ValueEnforcer.notNull (aRhs, "Wrapper").get ();
   }
 
   @Nullable

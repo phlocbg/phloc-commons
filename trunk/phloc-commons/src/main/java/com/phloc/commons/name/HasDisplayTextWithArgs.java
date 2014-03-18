@@ -22,8 +22,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.text.impl.TextFormatter;
 
@@ -40,12 +40,8 @@ public final class HasDisplayTextWithArgs implements IHasDisplayText
 
   public HasDisplayTextWithArgs (@Nonnull final IHasDisplayText aParentText, @Nonnull @Nonempty final Object... aArgs)
   {
-    if (aParentText == null)
-      throw new NullPointerException ("parentText");
-    if (ArrayHelper.isEmpty (aArgs))
-      throw new IllegalArgumentException ("arguments may not be empty");
-    m_aParentText = aParentText;
-    m_aArgs = aArgs;
+    m_aParentText = ValueEnforcer.notNull (aParentText, "ParentText");
+    m_aArgs = ValueEnforcer.notEmpty (aArgs, "Arguments");
   }
 
   @Nullable

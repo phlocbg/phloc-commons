@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -55,10 +56,9 @@ public class MimeTypeContent
    */
   public MimeTypeContent (@Nonnull @Nonempty final byte [] aContentBytes, @Nonnull final IMimeType aMimeType)
   {
-    if (ArrayHelper.isEmpty (aContentBytes))
-      throw new IllegalArgumentException ("no ContentBytes provided");
-    if (aMimeType == null)
-      throw new NullPointerException ("mimeType");
+    ValueEnforcer.notEmpty (aContentBytes, "ContentBytes");
+    ValueEnforcer.notNull (aMimeType, "MimeType");
+
     m_aContentBytes = ArrayHelper.getCopy (aContentBytes);
     m_aMimeType = aMimeType;
   }
@@ -138,8 +138,7 @@ public class MimeTypeContent
    */
   public boolean matchesBeginning (@Nonnull final byte [] aBytes)
   {
-    if (aBytes == null)
-      throw new NullPointerException ("bytes");
+    ValueEnforcer.notNull (aBytes, "Bytes");
 
     return aBytes.length >= m_aContentBytes.length && _match (aBytes, 0, m_aContentBytes);
   }

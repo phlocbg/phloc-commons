@@ -19,6 +19,7 @@ package com.phloc.commons.mock;
 
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -45,8 +46,7 @@ public final class PhlocAssert
 
   public static void assertEquals (final double x, final Double y)
   {
-    if (y == null)
-      throw new NullPointerException ("y");
+    ValueEnforcer.notNull (y, "y");
     assertEquals (null, x, y.doubleValue ());
   }
 
@@ -70,8 +70,7 @@ public final class PhlocAssert
 
   public static void assertEquals (final float x, final Float y)
   {
-    if (y == null)
-      throw new NullPointerException ("y");
+    ValueEnforcer.notNull (y, "y");
     assertEquals (null, x, y.floatValue ());
   }
 

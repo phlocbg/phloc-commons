@@ -30,6 +30,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.state.ESuccess;
@@ -74,10 +75,8 @@ public final class ObjectPool <DATATYPE> implements IObjectPool <DATATYPE>
    */
   public ObjectPool (@Nonnegative final int nItemCount, @Nonnull final IFactory <DATATYPE> aFactory)
   {
-    if (nItemCount < 1)
-      throw new IllegalArgumentException ("Item count " + nItemCount + " is illegal!");
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
+    ValueEnforcer.isGT0 (nItemCount, "ItemCount");
+    ValueEnforcer.notNull (aFactory, "Factory");
 
     m_aAvailable = new Semaphore (nItemCount);
     m_aItems = new Object [nItemCount];
