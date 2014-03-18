@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.IsLocked;
 import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.cache.AbstractNotifyingCache;
@@ -99,8 +100,7 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
   @Nullable
   public JAXBContext getFromCache (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     final Package aPackage = aClass.getPackage ();
     if (aPackage.getAnnotation (XmlSchema.class) == null)
