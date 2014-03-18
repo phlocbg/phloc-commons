@@ -98,7 +98,7 @@ public final class RegExHelperTest
       RegExHelper.getSplitToArray ("ab9cd14ef", null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -173,7 +173,7 @@ public final class RegExHelperTest
       x = RegExHelper.getSplitToArray (null, null, 2);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -182,7 +182,7 @@ public final class RegExHelperTest
       RegExHelper.getSplitToArray ("ab9cd14ef", null, 2);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -243,7 +243,7 @@ public final class RegExHelperTest
       RegExHelper.getSplitToList ("ab9cd14ef", null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -317,7 +317,7 @@ public final class RegExHelperTest
       x = RegExHelper.getSplitToList (null, null, 2);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -326,7 +326,7 @@ public final class RegExHelperTest
       RegExHelper.getSplitToList ("ab9cd14ef", null, 2);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -444,7 +444,7 @@ public final class RegExHelperTest
       RegExHelper.stringMatchesPattern (null, "any");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

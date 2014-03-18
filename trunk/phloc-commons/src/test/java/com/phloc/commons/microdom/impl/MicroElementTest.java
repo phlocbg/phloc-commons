@@ -81,7 +81,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
       new MicroElement ((String) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
@@ -555,7 +555,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
       e.setAttribute (null, "ny");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     // Set something that can be removed
