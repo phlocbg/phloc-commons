@@ -20,6 +20,8 @@ package com.phloc.commons.i18n;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * @author Apache Abdera
  */
@@ -48,9 +50,7 @@ public class CodepointIteratorRestricted extends DelegatingCodepointIterator
                                       final boolean bInvert)
   {
     super (aInternal);
-    if (aFilter == null)
-      throw new NullPointerException ("filter");
-    m_aFilter = aFilter;
+    m_aFilter = ValueEnforcer.notNull (aFilter, "Filter");
     m_bScanningOnly = bScanningOnly;
     m_bInvert = bInvert;
   }
