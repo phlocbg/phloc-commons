@@ -25,9 +25,9 @@ import javax.annotation.Nullable;
 import javax.annotation.PropertyKey;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -44,13 +44,8 @@ public final class ResourceBundleKey implements Serializable
   public ResourceBundleKey (@Nonnull @Nonempty final String sBundleName,
                             @Nonnull @Nonempty @PropertyKey final String sKey)
   {
-    if (StringHelper.hasNoText (sBundleName))
-      throw new IllegalArgumentException ("bundleName");
-    if (StringHelper.hasNoText (sKey))
-      throw new IllegalArgumentException ("key");
-
-    m_sBundleName = sBundleName;
-    m_sKey = sKey;
+    m_sBundleName = ValueEnforcer.notEmpty (sBundleName, "BundleName");
+    m_sKey = ValueEnforcer.notEmpty (sKey, "Key");
   }
 
   @Nonnull

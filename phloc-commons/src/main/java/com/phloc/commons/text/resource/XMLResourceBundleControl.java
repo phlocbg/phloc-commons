@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.resource.URLResource;
@@ -46,8 +47,7 @@ public final class XMLResourceBundleControl extends ResourceBundle.Control
   @ReturnsMutableCopy
   public List <String> getFormats (@Nonnull final String sBaseName)
   {
-    if (sBaseName == null)
-      throw new NullPointerException ("baseName");
+    ValueEnforcer.notNull (sBaseName, "BaseName");
     return ContainerHelper.newList (FORMATS);
   }
 
@@ -58,14 +58,10 @@ public final class XMLResourceBundleControl extends ResourceBundle.Control
                                    @Nonnull final ClassLoader aClassLoader,
                                    final boolean bReload) throws IOException
   {
-    if (sBaseName == null)
-      throw new NullPointerException ("baseName");
-    if (aLocale == null)
-      throw new NullPointerException ("locale");
-    if (sFormat == null)
-      throw new NullPointerException ("format");
-    if (aClassLoader == null)
-      throw new NullPointerException ("classLoader");
+    ValueEnforcer.notNull (sBaseName, "BaseName");
+    ValueEnforcer.notNull (aLocale, "Locale");
+    ValueEnforcer.notNull (sFormat, "Format");
+    ValueEnforcer.notNull (aClassLoader, "ClassLoader");
 
     // We can only handle XML
     if (sFormat.equals (FORMAT_XML))
