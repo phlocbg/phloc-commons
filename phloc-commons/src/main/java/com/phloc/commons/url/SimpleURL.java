@@ -25,9 +25,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Abstraction of the string parts of a URL but much simpler (and faster) than
@@ -81,10 +81,8 @@ public class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleUR
   @Nonnull
   public SimpleURL add (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
-    if (StringHelper.hasNoText (sKey))
-      throw new IllegalArgumentException ("key may not be empty!");
-    if (sValue == null)
-      throw new NullPointerException ("value");
+    ValueEnforcer.notEmpty (sKey, "Key");
+    ValueEnforcer.notNull (sValue, "Value");
 
     if (m_aParams == null)
       m_aParams = new LinkedHashMap <String, String> ();

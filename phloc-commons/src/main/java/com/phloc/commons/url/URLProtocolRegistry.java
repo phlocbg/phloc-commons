@@ -31,6 +31,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -106,8 +107,7 @@ public final class URLProtocolRegistry
    */
   public static void registerProtocol (@Nonnull final IURLProtocol aProtocol)
   {
-    if (aProtocol == null)
-      throw new NullPointerException ("protocol");
+    ValueEnforcer.notNull (aProtocol, "Protocol");
 
     s_aRWLock.writeLock ().lock ();
     try

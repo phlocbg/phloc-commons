@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.url.URLUtils;
 
@@ -36,9 +37,7 @@ public class URLParameterEncoder implements IEncoder <String>
 
   public URLParameterEncoder (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   @Nullable
