@@ -34,6 +34,9 @@ import com.phloc.commons.compare.AbstractCollationComparator;
 @NotThreadSafe
 public final class ComparatorFileName extends AbstractCollationComparator <File>
 {
+  public ComparatorFileName ()
+  {}
+
   public ComparatorFileName (@Nullable final Locale aSortLocale)
   {
     super (aSortLocale);

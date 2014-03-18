@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
@@ -67,6 +68,9 @@ public final class FilenameHelper
 
   /** The Windows separator character. */
   public static final char WINDOWS_SEPARATOR = '\\';
+
+  /** The prefix used for Unix hidden files */
+  public static final char HIDDEN_FILE_PREFIX = '.';
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (FilenameHelper.class);
 
@@ -228,8 +232,7 @@ public final class FilenameHelper
    */
   public static boolean hasExtension (@Nullable final File aFile, @Nonnull final String... aExtensions)
   {
-    if (aExtensions == null)
-      throw new NullPointerException ("extensions");
+    ValueEnforcer.notNull (aExtensions, "Extensions");
 
     // determine current extension.
     final String sExt = getExtension (aFile);
@@ -254,8 +257,7 @@ public final class FilenameHelper
    */
   public static boolean hasExtension (@Nullable final String sFilename, @Nonnull final String... aExtensions)
   {
-    if (aExtensions == null)
-      throw new NullPointerException ("extensions");
+    ValueEnforcer.notNull (aExtensions, "Extensions");
 
     // determine current extension.
     final String sExt = getExtension (sFilename);
@@ -839,10 +841,8 @@ public final class FilenameHelper
   @Nonnull
   public static String getCleanConcatenatedUrlPath (@Nonnull final String sURL, @Nonnull final String sPath)
   {
-    if (sURL == null)
-      throw new NullPointerException ("url");
-    if (sPath == null)
-      throw new NullPointerException ("path");
+    ValueEnforcer.notNull (sURL, "URL");
+    ValueEnforcer.notNull (sPath, "Path");
 
     // If nothing is to be appended, just clean the base URL
     if (StringHelper.hasNoText (sPath))
@@ -928,8 +928,7 @@ public final class FilenameHelper
   @Nullable
   public static String getRelativeToParentDirectory (@Nonnull final File aFile, @Nullable final File aParentDirectory)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     final String sCleanedFile = getCleanPath (aFile);
     if (aParentDirectory == null)
@@ -970,10 +969,8 @@ public final class FilenameHelper
   public static String getAbsoluteWithEnsuredParentDirectory (@Nonnull final File aParentDirectory,
                                                               @Nonnull final String sFilePath)
   {
-    if (aParentDirectory == null)
-      throw new NullPointerException ("parentDirectory");
-    if (sFilePath == null)
-      throw new NullPointerException ("filePath");
+    ValueEnforcer.notNull (aParentDirectory, "ParentDirectory");
+    ValueEnforcer.notNull (sFilePath, "FilePath");
 
     final File aSubFile = new File (sFilePath);
     String sRelativeSubPath = sFilePath;
@@ -1000,5 +997,31 @@ public final class FilenameHelper
       return null;
     }
     return sEstimatedPath;
+  }
+
+  /**
+   * Check if the passed filename is a Unix hidden filename.
+   * 
+   * @param sFilename
+   *        The filename to check. May be <code>null</code>.
+   * @return <code>true</code> if the filename is neither <code>null</code> nor
+   *         empty and starts with a dot.
+   */
+  public static boolean isHiddenFilename (@Nullable final String sFilename)
+  {
+    return StringHelper.hasText (sFilename) && sFilename.charAt (0) == HIDDEN_FILE_PREFIX;
+  }
+
+  /**
+   * Check if the passed filename is a Unix hidden filename.
+   * 
+   * @param aFile
+   *        The file to check. May be <code>null</code>.
+   * @return <code>true</code> if the file is not <code>null</code> and the name
+   *         starts with a dot.
+   */
+  public static boolean isHiddenFilename (@Nullable final File aFile)
+  {
+    return aFile != null && isHiddenFilename (aFile.getName ());
   }
 }

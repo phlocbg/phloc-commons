@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -109,8 +110,7 @@ public class ClassPathResource implements IReadableResource
    */
   public ClassPathResource (@Nonnull @Nonempty final String sPath, @Nullable final ClassLoader aClassLoader)
   {
-    if (StringHelper.hasNoText (sPath))
-      throw new IllegalArgumentException ("No path specified");
+    ValueEnforcer.notEmpty (sPath, "Path");
 
     m_sPath = getWithoutClassPathPrefix (sPath);
 
@@ -336,8 +336,7 @@ public class ClassPathResource implements IReadableResource
   @Nullable
   public static URL getAsURL (@Nonnull @Nonempty final String sPath)
   {
-    if (StringHelper.hasNoText (sPath))
-      throw new IllegalArgumentException ("No path specified");
+    ValueEnforcer.notEmpty (sPath, "Path");
 
     // Ensure the path starts with a "/"
     final String sRealPath = sPath.startsWith ("/") ? sPath : '/' + sPath;
@@ -372,10 +371,8 @@ public class ClassPathResource implements IReadableResource
   @Nullable
   public static URL getAsURL (@Nonnull @Nonempty final String sPath, @Nonnull final ClassLoader aClassLoader)
   {
-    if (aClassLoader == null)
-      throw new NullPointerException ("classLoader");
-    if (StringHelper.hasNoText (sPath))
-      throw new IllegalArgumentException ("No path specified");
+    ValueEnforcer.notNull (aClassLoader, "ClassLoader");
+    ValueEnforcer.notEmpty (sPath, "Path");
 
     // Ensure the path starts with a "/"
     final String sRealPath = sPath.startsWith ("/") ? sPath : '/' + sPath;

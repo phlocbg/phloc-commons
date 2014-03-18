@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.Nonnegative;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -48,8 +49,7 @@ public final class MemoryLongIDFactory implements ILongIDFactory
 
   public MemoryLongIDFactory (@Nonnegative final long nStartID)
   {
-    if (nStartID < 0)
-      throw new IllegalArgumentException ("Passed start ID is invalid: " + nStartID);
+    ValueEnforcer.isGE0 (nStartID, "StartID");
     m_aID = new AtomicLong (nStartID);
   }
 

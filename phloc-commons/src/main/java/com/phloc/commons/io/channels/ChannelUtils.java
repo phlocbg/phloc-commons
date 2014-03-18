@@ -33,6 +33,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.IMockException;
@@ -40,7 +41,7 @@ import com.phloc.commons.state.ESuccess;
 
 /**
  * Some very basic NIO channel utility stuff.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -61,7 +62,7 @@ public final class ChannelUtils
 
   /**
    * Copy all content from the source channel to the destination channel.
-   *
+   * 
    * @param aSrc
    *        Source channel. May not be <code>null</code>. Is not closed after
    *        the operation.
@@ -74,12 +75,10 @@ public final class ChannelUtils
   public static long channelCopy (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
                                   @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
-    if (aSrc == null)
-      throw new NullPointerException ("sourceChannel");
+    ValueEnforcer.notNull (aSrc, "SourceChannel");
     if (!aSrc.isOpen ())
       throw new IllegalArgumentException ("sourceChannel is not open!");
-    if (aDest == null)
-      throw new NullPointerException ("desitnationChannel");
+    ValueEnforcer.notNull (aDest, "DestinationChannel");
     if (!aDest.isOpen ())
       throw new IllegalArgumentException ("desitnationChannel is not open!");
 
@@ -98,7 +97,7 @@ public final class ChannelUtils
    * wasn't fully drained. This may result in data copying, but minimizes system
    * calls. It also requires a cleanup loop to make sure all the data gets sent.<br>
    * Source: Java NIO, page 60
-   *
+   * 
    * @param aSrc
    *        Source channel. May not be <code>null</code>. Is not closed after
    *        the operation.
@@ -142,7 +141,7 @@ public final class ChannelUtils
    * data copying but may result in more systems calls. No post-loop cleanup is
    * needed because the buffer will be empty when the loop is exited.<br>
    * Source: Java NIO, page 60
-   *
+   * 
    * @param aSrc
    *        Source channel. May not be <code>null</code>. Is not closed after
    *        the operation.

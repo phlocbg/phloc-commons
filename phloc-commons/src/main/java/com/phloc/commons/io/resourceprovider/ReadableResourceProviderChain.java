@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
@@ -44,8 +44,14 @@ public class ReadableResourceProviderChain implements IReadableResourceProvider
 
   public ReadableResourceProviderChain (@Nonnull final IReadableResourceProvider... aResProviders)
   {
-    if (ArrayHelper.isEmpty (aResProviders))
-      throw new IllegalArgumentException ("No resource provider passed!");
+    ValueEnforcer.notEmptyNoNullValue (aResProviders, "ResourceProviders");
+
+    m_aReadingResourceProviders = ContainerHelper.newList (aResProviders);
+  }
+
+  public ReadableResourceProviderChain (@Nonnull final Iterable <? extends IReadableResourceProvider> aResProviders)
+  {
+    ValueEnforcer.notEmptyNoNullValue (aResProviders, "ResourceProviders");
 
     m_aReadingResourceProviders = ContainerHelper.newList (aResProviders);
   }

@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.combine.CombinatorStringWithSeparatorIgnoreNull;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
@@ -112,8 +113,7 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
                                @Nullable final FileFilter aFileFilter)
   {
     super (new CombinatorStringWithSeparatorIgnoreNull ("/"));
-    if (aStartDir == null)
-      throw new NullPointerException ("startDir");
+    ValueEnforcer.notNull (aStartDir, "StartDirectory");
     if (!aStartDir.isDirectory ())
       throw new IllegalArgumentException ("Start directory is not a directory!");
 

@@ -19,6 +19,7 @@ package com.phloc.commons.idfactory;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -28,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public final class StringIDFromLongIDFactory implements IStringIDFactory
+public class StringIDFromLongIDFactory implements IStringIDFactory
 {
   private final ILongIDFactory m_aLongIDFactory;
   private final String m_sPrefix;
@@ -40,12 +41,14 @@ public final class StringIDFromLongIDFactory implements IStringIDFactory
 
   public StringIDFromLongIDFactory (@Nonnull final ILongIDFactory aLongIDFactory, @Nonnull final String sPrefix)
   {
-    if (aLongIDFactory == null)
-      throw new NullPointerException ("longIDFactory");
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    m_aLongIDFactory = aLongIDFactory;
-    m_sPrefix = sPrefix;
+    m_aLongIDFactory = ValueEnforcer.notNull (aLongIDFactory, "LongIDFactory");
+    m_sPrefix = ValueEnforcer.notNull (sPrefix, "Prefix");
+  }
+
+  @Nonnull
+  public ILongIDFactory getLongIDFactory ()
+  {
+    return m_aLongIDFactory;
   }
 
   @Nonnull
@@ -65,7 +68,7 @@ public final class StringIDFromLongIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromLongIDFactory))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final StringIDFromLongIDFactory rhs = (StringIDFromLongIDFactory) o;
     return m_aLongIDFactory.equals (rhs.m_aLongIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);

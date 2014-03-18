@@ -26,6 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
@@ -86,8 +87,7 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
   @Nonnull
   private File _getFile (@Nonnull final String sName)
   {
-    if (sName == null)
-      throw new NullPointerException ("name");
+    ValueEnforcer.notNull (sName, "Name");
 
     // Don't add special handling for absolute paths here!
     // Breaks Unix handling!

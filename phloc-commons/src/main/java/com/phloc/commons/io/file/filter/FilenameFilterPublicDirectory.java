@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -45,7 +44,7 @@ public final class FilenameFilterPublicDirectory implements FilenameFilter
   {
     // Ignore hidden directories
     final String sRealName = FilenameHelper.getSecureFilename (sName);
-    return new File (aDir, sRealName).isDirectory () && !StringHelper.startsWith (sRealName, '.');
+    return new File (aDir, sRealName).isDirectory () && !FilenameHelper.isHiddenFilename (sRealName);
   }
 
   @Override
