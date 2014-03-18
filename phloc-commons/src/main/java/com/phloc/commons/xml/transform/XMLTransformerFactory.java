@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.IReadableResource;
@@ -111,8 +112,7 @@ public final class XMLTransformerFactory
   @Nullable
   public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory)
   {
-    if (aTransformerFactory == null)
-      throw new NullPointerException ("transformerFactory");
+    ValueEnforcer.notNull (aTransformerFactory, "TransformerFactory");
 
     try
     {
@@ -152,8 +152,7 @@ public final class XMLTransformerFactory
   public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory,
                                             @Nonnull final IReadableResource aResource)
   {
-    if (aResource == null)
-      throw new NullPointerException ("resource");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return newTransformer (aTransformerFactory, TransformSourceFactory.create (aResource));
   }
@@ -185,10 +184,8 @@ public final class XMLTransformerFactory
   public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory,
                                             @Nonnull final Source aSource)
   {
-    if (aTransformerFactory == null)
-      throw new NullPointerException ("transformerFactory");
-    if (aSource == null)
-      throw new NullPointerException ("source");
+    ValueEnforcer.notNull (aTransformerFactory, "TransformerFactory");
+    ValueEnforcer.notNull (aSource, "Source");
 
     try
     {
@@ -242,8 +239,7 @@ public final class XMLTransformerFactory
   public static Templates newTemplates (@Nonnull final TransformerFactory aFactory,
                                         @Nonnull final IReadableResource aResource)
   {
-    if (aResource == null)
-      throw new NullPointerException ("resource");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return newTemplates (aFactory, TransformSourceFactory.create (aResource));
   }
@@ -251,23 +247,22 @@ public final class XMLTransformerFactory
   /**
    * Create a new XSLT Template for the passed resource.
    * 
-   * @param aFactory
+   * @param aTransformerFactory
    *        The transformer factory to be used. May not be <code>null</code>.
    * @param aSource
    *        The resource to be templated. May not be <code>null</code>.
    * @return <code>null</code> if something goes wrong
    */
   @Nullable
-  public static Templates newTemplates (@Nonnull final TransformerFactory aFactory, @Nonnull final Source aSource)
+  public static Templates newTemplates (@Nonnull final TransformerFactory aTransformerFactory,
+                                        @Nonnull final Source aSource)
   {
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
-    if (aSource == null)
-      throw new NullPointerException ("source");
+    ValueEnforcer.notNull (aTransformerFactory, "TransformerFactory");
+    ValueEnforcer.notNull (aSource, "Source");
 
     try
     {
-      return aFactory.newTemplates (aSource);
+      return aTransformerFactory.newTemplates (aSource);
     }
     catch (final TransformerConfigurationException ex)
     {
