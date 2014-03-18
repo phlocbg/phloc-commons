@@ -21,10 +21,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.version.Version;
 
@@ -58,13 +58,8 @@ public final class CustomLicense implements ILicense
                         @Nullable final Version aVersion,
                         @Nullable final String sURL)
   {
-    if (StringHelper.hasNoText (sID))
-      throw new IllegalArgumentException ("ID");
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
-
-    m_sID = sID;
-    m_sName = sName;
+    m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    m_sName = ValueEnforcer.notEmpty (sName, "Name");
     m_aVersion = aVersion;
     m_sWebSiteURL = sURL;
   }

@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 
@@ -37,9 +38,7 @@ final class Utf8PropertyResourceBundle extends ResourceBundle
 
   Utf8PropertyResourceBundle (@Nonnull final PropertyResourceBundle aBundle)
   {
-    if (aBundle == null)
-      throw new NullPointerException ("bundle");
-    m_aBundle = aBundle;
+    m_aBundle = ValueEnforcer.notNull (aBundle, "Bundle");
   }
 
   @Override

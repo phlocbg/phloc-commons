@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.collections.ContainerHelper;
 
@@ -52,8 +53,7 @@ public final class XMLResourceBundle extends ResourceBundle
   @DevelopersNote ("Don't use it manually - use the static methods of this class!")
   XMLResourceBundle (@Nonnull @WillNotClose final InputStream aIS) throws IOException
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     // Read the main properties
     final Properties aProps = new Properties ();
