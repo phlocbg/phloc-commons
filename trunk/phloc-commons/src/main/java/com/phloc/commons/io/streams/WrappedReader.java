@@ -24,6 +24,7 @@ import java.nio.CharBuffer;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -38,9 +39,7 @@ public class WrappedReader extends Reader
 
   public WrappedReader (@Nonnull final Reader aWrappedReader)
   {
-    if (aWrappedReader == null)
-      throw new NullPointerException ("wrappedReader");
-    m_aWrappedReader = aWrappedReader;
+    m_aWrappedReader = ValueEnforcer.notNull (aWrappedReader, "WrappedReader");
   }
 
   @Nonnull

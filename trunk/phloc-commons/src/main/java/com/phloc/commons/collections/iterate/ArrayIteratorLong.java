@@ -78,9 +78,7 @@ public final class ArrayIteratorLong
                              @Nonnegative final int nOfs,
                              @Nonnegative final int nLength)
   {
-    ValueEnforcer.notNull (aArray, "Array");
-    ValueEnforcer.isGE0 (nOfs, "Offset");
-    ValueEnforcer.isGE0 (nLength, "Length");
+    ValueEnforcer.isArrayOfsLen (aArray, nOfs, nLength);
 
     m_nIndex = 0;
     m_aArray = ArrayHelper.getCopy (aArray, nOfs, nLength);

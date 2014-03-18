@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.lang.ByteBufferUtils;
 
 /**
@@ -45,10 +46,7 @@ public final class ByteBufferInputStream extends InputStream
    */
   public ByteBufferInputStream (@Nonnull final ByteBuffer aBuffer)
   {
-    if (aBuffer == null)
-      throw new NullPointerException ("buffer");
-
-    m_aBuffer = aBuffer;
+    m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
   }
 
   private void _checkClosed ()
@@ -125,20 +123,17 @@ public final class ByteBufferInputStream extends InputStream
   }
 
   @Override
-  public int read (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  public int read (@Nonnull final byte [] aBuffer, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buffer");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLen);
 
     if (!m_aBuffer.hasRemaining ())
       return -1;
-    if (nLen == 0 || aBuf.length == 0)
+    if (nLen == 0 || aBuffer.length == 0)
       return isAnythingAvailable () ? 0 : -1;
 
     final int nMaxRead = Math.min (m_aBuffer.remaining (), nLen);
-    m_aBuffer.get (aBuf, nOfs, nMaxRead);
+    m_aBuffer.get (aBuffer, nOfs, nMaxRead);
     return nMaxRead;
   }
 
@@ -161,8 +156,7 @@ public final class ByteBufferInputStream extends InputStream
   @Nonnegative
   public long read (@Nonnull final ByteBuffer aDestByteBuffer)
   {
-    if (aDestByteBuffer == null)
-      throw new NullPointerException ("destByteBuffer");
+    ValueEnforcer.notNull (aDestByteBuffer, "DestByteBuffer");
 
     long nBytesRead = 0;
     if (m_aBuffer.hasRemaining ())

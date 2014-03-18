@@ -20,11 +20,13 @@ package com.phloc.commons.io.streams;
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
+import com.phloc.commons.ValueEnforcer;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -73,11 +75,10 @@ public class NonBlockingBufferedWriter extends Writer
    * @exception IllegalArgumentException
    *            If sz is <= 0
    */
-  public NonBlockingBufferedWriter (@Nonnull final Writer aWriter, final int nBufSize)
+  public NonBlockingBufferedWriter (@Nonnull final Writer aWriter, @Nonnegative final int nBufSize)
   {
     super (aWriter);
-    if (nBufSize <= 0)
-      throw new IllegalArgumentException ("Buffer size <= 0");
+    ValueEnforcer.isGT0 (nBufSize, "BufSize");
     m_aWriter = aWriter;
     m_aBuf = new char [nBufSize];
     m_nChars = nBufSize;
@@ -155,8 +156,7 @@ public class NonBlockingBufferedWriter extends Writer
   public void write (final char [] cbuf, final int nOfs, final int nLen) throws IOException
   {
     _ensureOpen ();
-    if (nOfs < 0 || nOfs > cbuf.length || nLen < 0 || (nOfs + nLen) > cbuf.length)
-      throw new IndexOutOfBoundsException ();
+    ValueEnforcer.isArrayOfsLen (cbuf, nOfs, nLen);
 
     if (nLen == 0)
       return;

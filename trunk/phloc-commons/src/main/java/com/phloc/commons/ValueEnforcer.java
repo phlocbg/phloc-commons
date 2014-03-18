@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -909,5 +910,94 @@ public final class ValueEnforcer
                                           "! The current value is: " +
                                           aValue);
     return aValue;
+  }
+
+  private static void _isArrayOfsLen (@Nonnegative final int nArrayLen,
+                                      @Nonnegative final int nOfs,
+                                      @Nonnegative final int nLen)
+  {
+    isGE0 (nOfs, "Offset");
+    isGE0 (nLen, "Length");
+    if ((nOfs + nLen) > nArrayLen)
+      throw new IllegalArgumentException ("Offset (" +
+                                          nOfs +
+                                          ") + length (" +
+                                          nLen +
+                                          ") exceeds array length (" +
+                                          nArrayLen +
+                                          ")");
+
+  }
+
+  public static void isArrayOfsLen (@Nonnull final Object [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final boolean [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final byte [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final char [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final double [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final float [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final int [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final long [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
+  }
+
+  public static void isArrayOfsLen (@Nonnull final short [] aArray,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen)
+  {
+    notNull (aArray, "Array");
+    _isArrayOfsLen (aArray.length, nOfs, nLen);
   }
 }

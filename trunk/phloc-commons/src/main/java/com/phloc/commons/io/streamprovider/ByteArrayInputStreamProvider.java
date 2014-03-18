@@ -58,11 +58,7 @@ public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvid
                                        @Nonnegative final int nOfs,
                                        @Nonnegative final int nLen)
   {
-    ValueEnforcer.notNull (aData, "Data");
-    ValueEnforcer.isGE0 (nOfs, "Offset");
-    ValueEnforcer.isGE0 (nLen, "Length");
-    if ((nOfs + nLen) > aData.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aData.length);
+    ValueEnforcer.isArrayOfsLen (aData, nOfs, nLen);
     m_aData = aData;
     m_nOfs = nOfs;
     m_nLen = nLen;

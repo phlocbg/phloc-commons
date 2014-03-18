@@ -22,6 +22,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -36,10 +37,7 @@ public class WrappedOutputStream extends OutputStream
 
   public WrappedOutputStream (@Nonnull final OutputStream aWrappedOS)
   {
-    if (aWrappedOS == null)
-      throw new NullPointerException ("wrappedOutputStream");
-
-    m_aWrappedOS = aWrappedOS;
+    m_aWrappedOS = ValueEnforcer.notNull (aWrappedOS, "WrappedOutputStream");
   }
 
   @Nonnull

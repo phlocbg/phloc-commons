@@ -124,15 +124,11 @@ public final class StringDecoder
     _decode (ByteBuffer.wrap (aBuf, 0, aBuf.length), false);
   }
 
-  public void decode (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  public void decode (@Nonnull final byte [] aBuffer, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    ValueEnforcer.notNull (aBuf, "Buffer");
-    ValueEnforcer.isGE0 (nOfs, "Offset");
-    ValueEnforcer.isGE0 (nLen, "Length");
-    if (nOfs + nLen > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLen);
 
-    _decode (ByteBuffer.wrap (aBuf, nOfs, nLen), false);
+    _decode (ByteBuffer.wrap (aBuffer, nOfs, nLen), false);
   }
 
   public void decode (@Nonnull final ByteBuffer aByteBuffer)

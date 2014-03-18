@@ -25,6 +25,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A non-synchronized copy of the class {@link java.io.StringReader}.<br>
  * Note: super class {@link Reader} uses the lock object internally only for
@@ -62,10 +64,7 @@ public class NonBlockingStringReader extends Reader
    */
   public NonBlockingStringReader (@Nonnull final String sStr)
   {
-    if (sStr == null)
-      throw new NullPointerException ("str");
-
-    m_sStr = sStr;
+    m_sStr = ValueEnforcer.notNull (sStr, "String");
     m_nLength = sStr.length ();
   }
 
@@ -114,11 +113,10 @@ public class NonBlockingStringReader extends Reader
    */
   @Override
   @CheckForSigned
-  public int read (@Nonnull final char aBuf[], @Nonnegative final int nOfs, @Nonnegative final int nLen) throws IOException
+  public int read (@Nonnull final char [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen) throws IOException
   {
     _ensureOpen ();
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     if (nLen == 0)
       return 0;
@@ -202,8 +200,7 @@ public class NonBlockingStringReader extends Reader
   @Override
   public void mark (final int nReadAheadLimit) throws IOException
   {
-    if (nReadAheadLimit < 0)
-      throw new IllegalArgumentException ("Read-ahead limit < 0: " + nReadAheadLimit);
+    ValueEnforcer.isGE0 (nReadAheadLimit, "ReadAheadLimit");
 
     _ensureOpen ();
     m_nMark = m_nNext;
