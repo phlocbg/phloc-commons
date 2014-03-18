@@ -22,6 +22,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -35,9 +36,13 @@ public class ReverseComparator <T> implements Comparator <T>, Serializable
 
   public ReverseComparator (@Nonnull final Comparator <T> aComparator)
   {
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
-    m_aComparator = aComparator;
+    m_aComparator = ValueEnforcer.notNull (aComparator, "Comparator");
+  }
+
+  @Nonnull
+  public Comparator <T> getOriginalComparator ()
+  {
+    return m_aComparator;
   }
 
   public int compare (final T aObj1, final T aObj2)

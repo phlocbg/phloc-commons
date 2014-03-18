@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -59,15 +60,13 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
 
   public MapBasedAttributeContainer (@Nonnull final Map <String, ?> aMap)
   {
-    if (aMap == null)
-      throw new NullPointerException ("map");
+    ValueEnforcer.notNull (aMap, "Map");
     m_aAttrs = ContainerHelper.newMap (aMap);
   }
 
   public MapBasedAttributeContainer (@Nonnull final IReadonlyAttributeContainer aCont)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
+    ValueEnforcer.notNull (aCont, "Container");
     // Must already be a copy!
     m_aAttrs = aCont.getAllAttributes ();
   }
@@ -113,8 +112,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   @Nonnull
   public EChange setAttribute (@Nonnull final String sName, @Nullable final Object aValue)
   {
-    if (sName == null)
-      throw new NullPointerException ("name");
+    ValueEnforcer.notNull (sName, "Name");
 
     if (aValue == null)
       return removeAttribute (sName);

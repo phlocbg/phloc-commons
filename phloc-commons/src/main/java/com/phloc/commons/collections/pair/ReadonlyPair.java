@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -51,6 +52,7 @@ public final class ReadonlyPair <DATA1TYPE, DATA2TYPE> implements IReadonlyPair 
 
   public ReadonlyPair (@Nonnull final IReadonlyPair <? extends DATA1TYPE, ? extends DATA2TYPE> rhs)
   {
+    ValueEnforcer.notNull (rhs, "Pair");
     m_aFirst = rhs.getFirst ();
     m_aSecond = rhs.getSecond ();
   }
