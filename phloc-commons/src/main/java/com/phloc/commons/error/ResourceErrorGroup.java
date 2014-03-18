@@ -47,27 +47,23 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   public ResourceErrorGroup ()
   {}
 
+  public ResourceErrorGroup (@Nonnull final IResourceError aResourceError)
+  {
+    addResourceError (aResourceError);
+  }
+
   public ResourceErrorGroup (@Nonnull final IResourceError... aResourceErrors)
   {
     ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");
     for (final IResourceError aResourceError : aResourceErrors)
-    {
-      if (aResourceError == null)
-        throw new NullPointerException ("resourceError");
-      m_aErrors.add (aResourceError);
-    }
+      addResourceError (aResourceError);
   }
 
   public ResourceErrorGroup (@Nonnull final Iterable <? extends IResourceError> aResourceErrors)
   {
-    if (aResourceErrors == null)
-      throw new NullPointerException ("resourceErrors");
+    ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");
     for (final IResourceError aResourceError : aResourceErrors)
-    {
-      if (aResourceError == null)
-        throw new NullPointerException ("resourceError");
-      m_aErrors.add (aResourceError);
-    }
+      addResourceError (aResourceError);
   }
 
   /**
@@ -80,8 +76,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   @Nonnull
   public ResourceErrorGroup addResourceError (@Nonnull final IResourceError aResourceError)
   {
-    if (aResourceError == null)
-      throw new NullPointerException ("resourceError");
+    ValueEnforcer.notNull (aResourceError, "ResourceError");
     m_aErrors.add (aResourceError);
     return this;
   }
@@ -96,8 +91,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   @Nonnull
   public ResourceErrorGroup addResourceErrorGroup (@Nonnull final IResourceErrorGroup aResourceErrorGroup)
   {
-    if (aResourceErrorGroup == null)
-      throw new NullPointerException ("resourceErrorGroup");
+    ValueEnforcer.notNull (aResourceErrorGroup, "ResourceErrorGroup");
     m_aErrors.addAll (aResourceErrorGroup.getAllResourceErrors ());
     return this;
   }
