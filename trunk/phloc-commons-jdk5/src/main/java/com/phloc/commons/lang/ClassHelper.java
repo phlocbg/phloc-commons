@@ -21,7 +21,6 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.AccessController;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -31,10 +30,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ValueEnforcer;
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
-import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.priviledged.PrivilegedActionGetClassLoader;
 import com.phloc.commons.priviledged.PrivilegedActionGetContextClassLoader;
@@ -321,53 +318,6 @@ public final class ClassHelper
            Short.class.isAssignableFrom (aClass) ||
            short.class.isAssignableFrom (aClass) ||
            BigInteger.class.isAssignableFrom (aClass);
-  }
-
-  /**
-   * Get the complete super class hierarchy of the passed class including all
-   * super classes and all interfaces of the passed class and of all parent
-   * classes.
-   * 
-   * @param aClass
-   *        The source class to get the hierarchy from.
-   * @return A non-<code>null</code> and non-empty list containing the passed
-   *         class and all super classes, and all super-interfaces. This list
-   *         may contain duplicates in case a certain interface is implemented
-   *         more than once!
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  @Deprecated
-  public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
-  {
-    return ClassHierarchyCache.getClassHierarchy (aClass);
-  }
-
-  /**
-   * Get the complete super class hierarchy of the passed class including all
-   * super classes and all interfaces of the passed class and of all parent
-   * classes.
-   * 
-   * @param aClass
-   *        The source class to get the list from.
-   * @param bUniqueClasses
-   *        if <code>true</code> the returned type is a
-   *        {@link java.util.LinkedHashSet} of all classes, otherwise the result
-   *        is an {@link java.util.ArrayList} that potentially contains
-   *        duplicates!
-   * @return A non-<code>null</code> and non-empty collection containing the
-   *         passed class and all super classes, and all super-interfaces. This
-   *         collection may contain duplicates in case a certain interface is
-   *         implemented more than once and bUniqueClasses is <code>false</code>
-   *         !
-   */
-  @Deprecated
-  @Nonnull
-  @Nonempty
-  @ReturnsMutableCopy
-  public static Collection <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass, final boolean bUniqueClasses)
-  {
-    return getClassHierarchy (aClass);
   }
 
   /**

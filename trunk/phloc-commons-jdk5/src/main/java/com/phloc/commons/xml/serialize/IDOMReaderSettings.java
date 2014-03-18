@@ -92,17 +92,4 @@ public interface IDOMReaderSettings extends IBaseXMLReaderSettings
    *         <code>false</code> if not.
    */
   boolean requiresNewXMLParser ();
-
-  /**
-   * Check if the current settings require a separate
-   * {@link javax.xml.parsers.DocumentBuilderFactory} or if a pooled default
-   * object can be used.
-   * 
-   * @return <code>true</code> if a separate
-   *         {@link javax.xml.parsers.DocumentBuilderFactory} is required,
-   *         <code>false</code> if not.
-   * @see #requiresNewXMLParser()
-   */
-  @Deprecated
-  boolean requiresSeparateDocumentBuilderFactory ();
 }

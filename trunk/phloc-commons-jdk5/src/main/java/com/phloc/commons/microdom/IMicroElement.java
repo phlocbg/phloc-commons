@@ -88,18 +88,6 @@ public interface IMicroElement extends IMicroNodeWithChildren
   <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable String sAttrName, @Nonnull Class <DSTTYPE> aDstClass);
 
   /**
-   * Get an unmodifiable map of all attributes. Is ensured to be not
-   * <code>null</code> if {@link #hasAttributes()} returns <code>true</code>.
-   * 
-   * @return May be <code>null</code>.
-   * @deprecated Use {@link #getAllAttributes()} instead
-   */
-  @Deprecated
-  @Nullable
-  @ReturnsMutableCopy
-  Map <String, String> getAttributes ();
-
-  /**
    * Get a map of all attribute names and values. Is ensured to be not
    * <code>null</code> if {@link #hasAttributes()} returns <code>true</code>.
    * 
@@ -295,37 +283,10 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * inlined.
    * 
    * @return Never be <code>null</code>.
-   * @deprecated Use {@link #getAllChildElements()} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  List <IMicroElement> getChildElements ();
-
-  /**
-   * Get a list of all direct child elements. Text nodes and other other child
-   * nodes are not returned with this call. Micro container children are
-   * inlined.
-   * 
-   * @return Never be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
   List <IMicroElement> getAllChildElements ();
-
-  /**
-   * Get a list of all direct child elements having the specified tag name.
-   * Micro container children are inlined.
-   * 
-   * @param sTagName
-   *        The tag name to check. May be <code>null</code>.
-   * @return Never be <code>null</code>.
-   * @deprecated Use {@link #getAllChildElements(String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  List <IMicroElement> getChildElements (@Nullable String sTagName);
 
   /**
    * Get a list of all direct child elements having the specified tag name.
@@ -348,22 +309,6 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * @param sLocalName
    *        The tag name to check. May be <code>null</code>.
    * @return Never be <code>null</code>.
-   * @deprecated Use {@link #getAllChildElements(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  List <IMicroElement> getChildElements (@Nullable String sNamespaceURI, @Nullable String sLocalName);
-
-  /**
-   * Get a list of all direct child elements having the specified namespace and
-   * the specified tag name. Micro container children are inlined.
-   * 
-   * @param sNamespaceURI
-   *        The namespace URI to check. May be <code>null</code>.
-   * @param sLocalName
-   *        The tag name to check. May be <code>null</code>.
-   * @return Never be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -376,41 +321,10 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * @param aElementNameProvider
    *        Element name provider. May not be <code>null</code>.
    * @return Never be <code>null</code>.
-   * @deprecated Use {@link #getAllChildElements(IHasElementName)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  List <IMicroElement> getChildElements (@Nonnull IHasElementName aElementNameProvider);
-
-  /**
-   * Get a list of all direct child elements having the specified tag name.
-   * Micro container children are inlined.
-   * 
-   * @param aElementNameProvider
-   *        Element name provider. May not be <code>null</code>.
-   * @return Never be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
   List <IMicroElement> getAllChildElements (@Nonnull IHasElementName aElementNameProvider);
-
-  /**
-   * Get a list of all direct child elements having the specified namespace and
-   * the specified tag name. Micro container children are inlined.
-   * 
-   * @param sNamespaceURI
-   *        The namespace URI to check. May be <code>null</code>.
-   * @param aElementNameProvider
-   *        Element name provider. May not be <code>null</code>.
-   * @return Never be <code>null</code>.
-   * @deprecated Use {@link #getAllChildElements(String,IHasElementName)}
-   *             instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  List <IMicroElement> getChildElements (@Nullable String sNamespaceURI, @Nonnull IHasElementName aElementNameProvider);
 
   /**
    * Get a list of all direct child elements having the specified namespace and

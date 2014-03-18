@@ -579,12 +579,6 @@ public final class DOMReaderDefaultSettings
     }
   }
 
-  @Deprecated
-  public static boolean requiresSeparateDocumentBuilderFactory ()
-  {
-    return requiresNewXMLParser ();
-  }
-
   @Nullable
   public static EntityResolver getEntityResolver ()
   {

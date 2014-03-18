@@ -50,16 +50,6 @@ public enum EXMLSerializeComments implements IHasID <String>
 
   /**
    * @return <code>true</code> it emit is enabled
-   * @deprecated Use {@link #isEmit()} instead
-   */
-  @Deprecated
-  public boolean emit ()
-  {
-    return isEmit ();
-  }
-
-  /**
-   * @return <code>true</code> it emit is enabled
    */
   public boolean isEmit ()
   {

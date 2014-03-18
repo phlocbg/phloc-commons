@@ -138,21 +138,6 @@ public final class ClassHierarchyCache
    * application from unloading
    * 
    * @return {@link EChange}
-   * @deprecated Use {@link #clearCache()} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static EChange clearClassHierarchyCache ()
-  {
-    return clearCache ();
-  }
-
-  /**
-   * It's important to clear the cache upon application shutdown, because for
-   * web applications, keeping a cache of classes may prevent the web
-   * application from unloading
-   * 
-   * @return {@link EChange}
    */
   @Nonnull
   public static EChange clearCache ()

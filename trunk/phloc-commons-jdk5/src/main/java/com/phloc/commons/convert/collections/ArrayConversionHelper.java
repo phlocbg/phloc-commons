@@ -45,15 +45,6 @@ public final class ArrayConversionHelper
   {}
 
   @Nonnull
-  @Deprecated
-  public static <SRCTYPE, DSTTYPE> DSTTYPE [] getConverted (@Nullable final SRCTYPE [] aArray,
-                                                            @Nonnull final IUnidirectionalConverter <SRCTYPE, DSTTYPE> aConv,
-                                                            @Nonnull final Class <DSTTYPE> aDstClass)
-  {
-    return newArray (aArray, aConv, aDstClass);
-  }
-
-  @Nonnull
   @ReturnsMutableCopy
   public static <SRCTYPE, DSTTYPE> DSTTYPE [] newArray (@Nonnull final Collection <? extends SRCTYPE> aList,
                                                         @Nonnull final IUnidirectionalConverter <SRCTYPE, DSTTYPE> aConv,

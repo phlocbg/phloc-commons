@@ -55,23 +55,6 @@ public class BitInputStream extends NonBlockingBitInputStream
   }
 
   /**
-   * Create a new bit input stream based on an existing Java InputStream.
-   * 
-   * @param aIS
-   *        the input stream this class should read the bits from. May not be
-   *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first (
-   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
-   *        last ({@link ByteOrder#BIG_ENDIAN}).
-   */
-  @Deprecated
-  public BitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
-  {
-    super (aIS, bHighOrderBitFirst);
-  }
-
-  /**
    * Read the next bit from the stream.
    * 
    * @return 0 if the bit is 0, 1 if the bit is 1.

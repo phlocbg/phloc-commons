@@ -129,17 +129,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_aAttrs == null ? 0 : m_aAttrs.size ();
   }
 
-  /**
-   * @deprecated Use {@link #getAllAttributes()} instead
-   */
-  @Deprecated
-  @Nullable
-  @ReturnsMutableCopy
-  public Map <String, String> getAttributes ()
-  {
-    return getAllAttributes ();
-  }
-
   @Nullable
   @ReturnsMutableCopy
   public Map <String, String> getAllAttributes ()
@@ -329,17 +318,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
-  /**
-   * @deprecated Use {@link #getAllChildElements()} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IMicroElement> getChildElements ()
-  {
-    return getAllChildElements ();
-  }
-
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements ()
@@ -361,17 +339,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
           }
       }
     return ret;
-  }
-
-  /**
-   * @deprecated Use {@link #getAllChildElements(String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IMicroElement> getChildElements (@Nullable final String sTagName)
-  {
-    return getAllChildElements (sTagName);
   }
 
   @Nonnull
@@ -400,17 +367,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
           }
 
     return ret;
-  }
-
-  /**
-   * @deprecated Use {@link #getAllChildElements(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
-  {
-    return getAllChildElements (sNamespaceURI, sLocalName);
   }
 
   @Nonnull
@@ -445,36 +401,12 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
-  /**
-   * @deprecated Use {@link #getAllChildElements(IHasElementName)} instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IMicroElement> getChildElements (@Nonnull final IHasElementName aElementNameProvider)
-  {
-    return getAllChildElements (aElementNameProvider);
-  }
-
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
     ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return getAllChildElements (aElementNameProvider.getElementName ());
-  }
-
-  /**
-   * @deprecated Use {@link #getAllChildElements(String,IHasElementName)}
-   *             instead
-   */
-  @Deprecated
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI,
-                                                @Nonnull final IHasElementName aElementNameProvider)
-  {
-    return getAllChildElements (sNamespaceURI, aElementNameProvider);
   }
 
   @Nonnull

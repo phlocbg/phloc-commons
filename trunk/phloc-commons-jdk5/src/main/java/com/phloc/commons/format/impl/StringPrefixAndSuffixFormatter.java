@@ -40,19 +40,6 @@ public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
     this (null, sPrefix, sSuffix);
   }
 
-  /**
-   * @deprecated Use
-   *             {@link #StringPrefixAndSuffixFormatter(IFormatter,String,String)}
-   *             instead
-   */
-  @Deprecated
-  public StringPrefixAndSuffixFormatter (@Nonnull final String sPrefix,
-                                         @Nonnull final String sSuffix,
-                                         @Nullable final IFormatter aNestedFormatter)
-  {
-    this (aNestedFormatter, sPrefix, sSuffix);
-  }
-
   public StringPrefixAndSuffixFormatter (@Nullable final IFormatter aNestedFormatter,
                                          @Nonnull final String sPrefix,
                                          @Nonnull final String sSuffix)

@@ -101,17 +101,6 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
   String getParametersAsString (@Nonnull EMimeQuoting eQuotingAlgorithm);
 
   /**
-   * @param sEncoding
-   *        The encoding to use. May neither be <code>null</code> nor empty.
-   * @return The combined string plus the passed encoding.
-   * @see CMimeType#CHARSET_PREFIX
-   * @see #getAsString()
-   */
-  @Nonnull
-  @Deprecated
-  String getAsStringWithEncoding (@Nonnull @Nonempty String sEncoding);
-
-  /**
    * @return <code>true</code> if at least one parameter is present,
    *         <code>false</code> if no parameter is present.
    */
