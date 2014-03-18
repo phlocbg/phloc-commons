@@ -46,6 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -134,8 +135,7 @@ public final class URLUtils
   @Nonnull
   public static String urlDecode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return urlDecode (sValue, aCharset.name ());
   }
@@ -190,8 +190,7 @@ public final class URLUtils
   @Nonnull
   public static String urlEncode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return urlEncode (sValue, aCharset.name ());
   }
@@ -286,10 +285,8 @@ public final class URLUtils
   @Nonnull
   public static IURLData getAsURLData (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
   {
-    if (sHref == null)
-      throw new NullPointerException ("href");
-    if (aParameterDecoder == null)
-      throw new NullPointerException ("parameterDecoder");
+    ValueEnforcer.notNull (sHref, "Href");
+    ValueEnforcer.notNull (aParameterDecoder, "ParameterDecoder");
 
     final String sRealHref = sHref.trim ();
 
@@ -412,8 +409,7 @@ public final class URLUtils
                                      @Nullable final String sAnchor,
                                      @Nonnull final IEncoder <String> aParameterEncoder)
   {
-    if (aParameterEncoder == null)
-      throw new NullPointerException ("parameterEncoder");
+    ValueEnforcer.notNull (aParameterEncoder, "ParameterEncoder");
 
     final boolean bHasParams = ContainerHelper.isNotEmpty (aParams);
     final boolean bHasAnchor = StringHelper.hasText (sAnchor);
@@ -655,8 +651,7 @@ public final class URLUtils
                                             @Nullable final INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier,
                                             @Nullable final IWrapper <IOException> aExceptionHolder)
   {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
+    ValueEnforcer.notNull (aURL, "URL");
 
     URLConnection aConnection;
     HttpURLConnection aHTTPConnection = null;
@@ -803,10 +798,8 @@ public final class URLUtils
                                                    @Nullable final INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier,
                                                    @Nullable final IWrapper <IOException> aExceptionHolder)
   {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
-    if (aContentBytes == null)
-      throw new NullPointerException ("ContentBytes");
+    ValueEnforcer.notNull (aURL, "URL");
+    ValueEnforcer.notNull (aContentBytes, "ContentBytes");
 
     final Wrapper <OutputStream> aOpenedOS = new Wrapper <OutputStream> ();
     final INonThrowingRunnableWithParameter <URLConnection> aPOSTModifier = new INonThrowingRunnableWithParameter <URLConnection> ()
@@ -869,8 +862,7 @@ public final class URLUtils
   public static String getApplicationFormEncoded (@Nullable final Map <String, String> aParams,
                                                   @Nonnull final IEncoder <String> aParameterEncoder)
   {
-    if (aParameterEncoder == null)
-      throw new NullPointerException ("ParameterEncoder");
+    ValueEnforcer.notNull (aParameterEncoder, "ParameterEncoder");
 
     if (ContainerHelper.isEmpty (aParams))
       return "";

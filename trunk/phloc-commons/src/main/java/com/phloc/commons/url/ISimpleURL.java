@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.IHasStringRepresentation;
+import com.phloc.commons.annotations.Nonempty;
 
 /**
  * Interface for a simple URL that works around the issues with the Java default
@@ -64,14 +65,14 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
 
   /**
    * @param sCharset
-   *        The charset used for encoding the parameters. May not be
-   *        <code>null</code>.
+   *        The charset used for encoding the parameters. May neither be
+   *        <code>null</code> nor empty.
    * @return The final string representation of this URL with encoded URL
    *         parameter keys and values.
    */
   @Nonnull
   @Deprecated
-  String getAsStringWithEncodedParameters (@Nonnull String sCharset);
+  String getAsStringWithEncodedParameters (@Nonnull @Nonempty String sCharset);
 
   /**
    * @param aCharset

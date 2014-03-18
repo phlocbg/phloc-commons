@@ -19,6 +19,7 @@ package com.phloc.commons.typeconvert.rule;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.typeconvert.ITypeConverterRule;
 
@@ -33,9 +34,7 @@ public abstract class AbstractTypeConverterRule implements ITypeConverterRule
 
   public AbstractTypeConverterRule (@Nonnull final ITypeConverterRule.ESubType eSubType)
   {
-    if (eSubType == null)
-      throw new NullPointerException ("subType");
-    m_eSubType = eSubType;
+    m_eSubType = ValueEnforcer.notNull (eSubType, "SubType");
   }
 
   @Nonnull
