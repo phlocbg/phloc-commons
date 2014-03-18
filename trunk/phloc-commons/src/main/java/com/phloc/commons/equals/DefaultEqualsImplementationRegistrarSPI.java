@@ -166,7 +166,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArrayshort implements IEqualsImplementation
+  private static final class EqualsImplementationArrayShort implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -174,7 +174,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArraylong implements IEqualsImplementation
+  private static final class EqualsImplementationArrayLong implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -182,7 +182,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArrayint implements IEqualsImplementation
+  private static final class EqualsImplementationArrayInt implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -190,7 +190,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArrayfloat implements IEqualsImplementation
+  private static final class EqualsImplementationArrayFloat implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -198,7 +198,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArraydouble implements IEqualsImplementation
+  private static final class EqualsImplementationArrayDouble implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -206,7 +206,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArraychar implements IEqualsImplementation
+  private static final class EqualsImplementationArrayChar implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -214,7 +214,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArraybyte implements IEqualsImplementation
+  private static final class EqualsImplementationArrayByte implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -222,7 +222,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
-  private static final class EqualsImplementationArrayboolean implements IEqualsImplementation
+  private static final class EqualsImplementationArrayBoolean implements IEqualsImplementation
   {
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
@@ -404,14 +404,14 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
     // Default array implementations
     // (Object[].class is handled specially!)
-    aRegistry.registerEqualsImplementation (boolean [].class, new EqualsImplementationArrayboolean ());
-    aRegistry.registerEqualsImplementation (byte [].class, new EqualsImplementationArraybyte ());
-    aRegistry.registerEqualsImplementation (char [].class, new EqualsImplementationArraychar ());
-    aRegistry.registerEqualsImplementation (double [].class, new EqualsImplementationArraydouble ());
-    aRegistry.registerEqualsImplementation (float [].class, new EqualsImplementationArrayfloat ());
-    aRegistry.registerEqualsImplementation (int [].class, new EqualsImplementationArrayint ());
-    aRegistry.registerEqualsImplementation (long [].class, new EqualsImplementationArraylong ());
-    aRegistry.registerEqualsImplementation (short [].class, new EqualsImplementationArrayshort ());
+    aRegistry.registerEqualsImplementation (boolean [].class, new EqualsImplementationArrayBoolean ());
+    aRegistry.registerEqualsImplementation (byte [].class, new EqualsImplementationArrayByte ());
+    aRegistry.registerEqualsImplementation (char [].class, new EqualsImplementationArrayChar ());
+    aRegistry.registerEqualsImplementation (double [].class, new EqualsImplementationArrayDouble ());
+    aRegistry.registerEqualsImplementation (float [].class, new EqualsImplementationArrayFloat ());
+    aRegistry.registerEqualsImplementation (int [].class, new EqualsImplementationArrayInt ());
+    aRegistry.registerEqualsImplementation (long [].class, new EqualsImplementationArrayLong ());
+    aRegistry.registerEqualsImplementation (short [].class, new EqualsImplementationArrayShort ());
 
     // Special handling for Map
     aRegistry.registerEqualsImplementation (Map.class, new EqualsImplementationMap ());

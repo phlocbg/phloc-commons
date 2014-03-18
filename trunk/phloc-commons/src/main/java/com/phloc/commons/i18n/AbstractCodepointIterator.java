@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.UnsupportedOperation;
 
 /**
  * Provides an iterator over Unicode Codepoints
- *
+ * 
  * @author Apache Abdera
  * @author Philip Helger
  */
@@ -158,10 +158,15 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
     return new Codepoint (chars);
   }
 
-  public void position (@Nonnegative final int n)
+  private void _checkLimit (@Nonnegative final int n)
   {
     if (n < 0 || n > limit ())
       throw new ArrayIndexOutOfBoundsException (n);
+  }
+
+  public void position (@Nonnegative final int n)
+  {
+    _checkLimit (n);
     m_nPosition = n;
   }
 
@@ -196,8 +201,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
    */
   public boolean isHigh (@Nonnegative final int index)
   {
-    if (index < 0 || index > limit ())
-      throw new ArrayIndexOutOfBoundsException (index);
+    _checkLimit (index);
     return Character.isHighSurrogate (get (index));
   }
 
@@ -206,8 +210,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
    */
   public boolean isLow (@Nonnegative final int index)
   {
-    if (index < 0 || index > limit ())
-      throw new ArrayIndexOutOfBoundsException (index);
+    _checkLimit (index);
     return Character.isLowSurrogate (get (index));
   }
 

@@ -36,21 +36,23 @@ import com.phloc.commons.equals.IEqualsImplementationRegistry;
 @IsSPIImplementation
 public final class JAXBEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {
+  private static final class EqualsImplementationJAXBElement implements IEqualsImplementation
+  {
+    public boolean areEqual (final Object aObj1, final Object aObj2)
+    {
+      final JAXBElement <?> aRealObj1 = (JAXBElement <?>) aObj1;
+      final JAXBElement <?> aRealObj2 = (JAXBElement <?>) aObj2;
+      return EqualsImplementationRegistry.areEqual (aRealObj1.getDeclaredType (), aRealObj2.getDeclaredType ()) &&
+             EqualsImplementationRegistry.areEqual (aRealObj1.getName (), aRealObj2.getName ()) &&
+             EqualsImplementationRegistry.areEqual (aRealObj1.getScope (), aRealObj2.getScope ()) &&
+             EqualsUtils.equals (aRealObj1.isNil (), aRealObj2.isNil ()) &&
+             EqualsImplementationRegistry.areEqual (aRealObj1.getValue (), aRealObj2.getValue ());
+    }
+  }
+
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
   {
     // JAXBElement does not implement equals!
-    aRegistry.registerEqualsImplementation (JAXBElement.class, new IEqualsImplementation ()
-    {
-      public boolean areEqual (final Object aObj1, final Object aObj2)
-      {
-        final JAXBElement <?> aRealObj1 = (JAXBElement <?>) aObj1;
-        final JAXBElement <?> aRealObj2 = (JAXBElement <?>) aObj2;
-        return EqualsImplementationRegistry.areEqual (aRealObj1.getDeclaredType (), aRealObj2.getDeclaredType ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getName (), aRealObj2.getName ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getScope (), aRealObj2.getScope ()) &&
-               EqualsUtils.equals (aRealObj1.isNil (), aRealObj2.isNil ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getValue (), aRealObj2.getValue ());
-      }
-    });
+    aRegistry.registerEqualsImplementation (JAXBElement.class, new EqualsImplementationJAXBElement ());
   }
 }

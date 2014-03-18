@@ -295,6 +295,28 @@ public final class ValueEnforcer
     return aValue;
   }
 
+  /**
+   * Check that the passed value is not <code>null</code> and not equal to .
+   * 
+   * @param aValue
+   *        The value to check. May not be <code>null</code>.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @param aUnexpectedValue
+   *        The value that may not be equal to aValue. May not be
+   *        <code>null</code>.
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T> T notNullNotEquals (@Nonnull final T aValue, final String sName, @Nonnull final T aUnexpectedValue)
+  {
+    notNull (aValue, sName);
+    notNull (aUnexpectedValue, "UnexpectedValue");
+    if (aValue.equals (aUnexpectedValue))
+      throw new NullPointerException ("The value of '" + sName + "' may not be equal to " + aUnexpectedValue + "!");
+    return aValue;
+  }
+
   public static short isGE0 (final short nValue, final String sName)
   {
     if (nValue < 0)
