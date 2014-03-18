@@ -97,8 +97,8 @@ public final class RegExHelper
                                            @Nonnegative final int nLimit)
   {
     ValueEnforcer.notNull (sRegEx, "RegEx");
-    ValueEnforcer.notNull (sText, "Text");
-
+    if (sText == null)
+      return ArrayHelper.EMPTY_STRING_ARRAY;
     return RegExPool.getPattern (sRegEx).split (sText, nLimit);
   }
 
