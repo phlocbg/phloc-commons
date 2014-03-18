@@ -27,12 +27,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.jmx.JMXUtils;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Provides a central manager for the internal statistics.
@@ -81,8 +81,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerCache getCacheHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getCacheHandler (aClass.getName ());
   }
@@ -90,8 +89,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerCache getCacheHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerCache aHdl;
     s_aRWLockCache.readLock ().lock ();
@@ -146,8 +144,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerTimer getTimerHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getTimerHandler (aClass.getName ());
   }
@@ -155,8 +152,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerTimer getTimerHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerTimer aHdl;
     s_aRWLockTimer.readLock ().lock ();
@@ -211,8 +207,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedTimer getKeyedTimerHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getKeyedTimerHandler (aClass.getName ());
   }
@@ -220,8 +215,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedTimer getKeyedTimerHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerKeyedTimer aHdl;
     s_aRWLockKeyedTimer.readLock ().lock ();
@@ -275,8 +269,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerSize getSizeHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getSizeHandler (aClass.getName ());
   }
@@ -284,8 +277,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerSize getSizeHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerSize aHdl;
     s_aRWLockSize.readLock ().lock ();
@@ -339,8 +331,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedSize getKeyedSizeHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getKeyedSizeHandler (aClass.getName ());
   }
@@ -348,8 +339,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedSize getKeyedSizeHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerKeyedSize aHdl;
     s_aRWLockKeyedSize.readLock ().lock ();
@@ -403,8 +393,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerCounter getCounterHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getCounterHandler (aClass.getName ());
   }
@@ -412,8 +401,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerCounter getCounterHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerCounter aHdl;
     s_aRWLockCounter.readLock ().lock ();
@@ -467,8 +455,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedCounter getKeyedCounterHandler (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getKeyedCounterHandler (aClass.getName ());
   }
@@ -476,8 +463,7 @@ public final class StatisticsManager
   @Nonnull
   public static IStatisticsHandlerKeyedCounter getKeyedCounterHandler (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("name");
+    ValueEnforcer.notEmpty (sName, "Name");
 
     StatisticsHandlerKeyedCounter aHdl;
     s_aRWLockKeyedCounter.readLock ().lock ();

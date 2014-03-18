@@ -151,11 +151,6 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * @return the total number of bytes read into the buffer, or <code>-1</code>
    *         if there is no more data because the end of the stream has been
    *         reached.
-   * @exception NullPointerException
-   *            If <code>b</code> is <code>null</code>.
-   * @exception IndexOutOfBoundsException
-   *            If <code>off</code> is negative, <code>len</code> is negative,
-   *            or <code>len</code> is greater than <code>b.length - off</code>
    */
   @Override
   public int read (final byte [] aBuf, final int nOfs, final int nLen)
