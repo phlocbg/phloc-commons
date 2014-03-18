@@ -23,10 +23,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Element;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -43,9 +43,7 @@ public final class FilterElementWithTagName implements ISerializableFilter <Elem
 
   public FilterElementWithTagName (@Nonnull @Nonempty final String sTagName)
   {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("tagName");
-    m_sTagName = sTagName;
+    m_sTagName = ValueEnforcer.notNull (sTagName, "TagName");
   }
 
   @Nonnull

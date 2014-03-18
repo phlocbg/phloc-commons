@@ -34,6 +34,7 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.system.ENewLineMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 
@@ -116,8 +117,8 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    */
   public XMLWriterSettings (@Nonnull final IXMLWriterSettings aOther)
   {
-    if (aOther == null)
-      throw new NullPointerException ("other");
+    ValueEnforcer.notNull (aOther, "Other");
+
     setFormat (aOther.getFormat ());
     setXMLVersion (aOther.getXMLVersion ());
     setSerializeDocType (aOther.getSerializeDocType ());
@@ -144,9 +145,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
   {
-    if (eFormat == null)
-      throw new NullPointerException ("format");
-    m_eFormat = eFormat;
+    m_eFormat = ValueEnforcer.notNull (eFormat, "Format");
     return this;
   }
 
@@ -166,9 +165,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setXMLVersion (@Nonnull final EXMLVersion eVersion)
   {
-    if (eVersion == null)
-      throw new NullPointerException ("version");
-    m_eXMLVersion = eVersion;
+    m_eXMLVersion = ValueEnforcer.notNull (eVersion, "Version");
     return this;
   }
 
@@ -188,9 +185,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
   {
-    if (eSerializeDocType == null)
-      throw new NullPointerException ("serializeDocType");
-    m_eSerializeDocType = eSerializeDocType;
+    m_eSerializeDocType = ValueEnforcer.notNull (eSerializeDocType, "SerializeDocType");
     return this;
   }
 
@@ -210,9 +205,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
   {
-    if (eSerializeComments == null)
-      throw new NullPointerException ("serializeComments");
-    m_eSerializeComments = eSerializeComments;
+    m_eSerializeComments = ValueEnforcer.notNull (eSerializeComments, "SerializeComments");
     return this;
   }
 
@@ -232,9 +225,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setIndent (@Nonnull final EXMLSerializeIndent eIndent)
   {
-    if (eIndent == null)
-      throw new NullPointerException ("indent");
-    m_eIndent = eIndent;
+    m_eIndent = ValueEnforcer.notNull (eIndent, "Indent");
     return this;
   }
 
@@ -254,9 +245,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
   {
-    if (eIncorrectCharacterHandling == null)
-      throw new NullPointerException ("inccorectCharacterHandling");
-    m_eIncorrectCharacterHandling = eIncorrectCharacterHandling;
+    m_eIncorrectCharacterHandling = ValueEnforcer.notNull (eIncorrectCharacterHandling, "IncorrectCharacterHandling");
     return this;
   }
 
@@ -276,9 +265,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setCharset (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
     return this;
   }
 
@@ -354,11 +341,17 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
+  public final XMLWriterSettings setNewlineString (@Nonnull @Nonempty final ENewLineMode eNewlineMode)
+  {
+    ValueEnforcer.notNull (eNewlineMode, "NewlineMode");
+
+    return setNewlineString (eNewlineMode.getText ());
+  }
+
+  @Nonnull
   public final XMLWriterSettings setNewlineString (@Nonnull @Nonempty final String sNewlineString)
   {
-    if (StringHelper.hasNoText (sNewlineString))
-      throw new IllegalArgumentException ("NewlineString");
-    m_sNewlineString = sNewlineString;
+    m_sNewlineString = ValueEnforcer.notEmpty (sNewlineString, "NewlineString");
     return this;
   }
 
@@ -372,9 +365,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   @Nonnull
   public final XMLWriterSettings setIndentationString (@Nonnull @Nonempty final String sIndentationString)
   {
-    if (StringHelper.hasNoText (sIndentationString))
-      throw new IllegalArgumentException ("IndentationString");
-    m_sIndentationString = sIndentationString;
+    m_sIndentationString = ValueEnforcer.notEmpty (sIndentationString, "IndentationString");
     return this;
   }
 

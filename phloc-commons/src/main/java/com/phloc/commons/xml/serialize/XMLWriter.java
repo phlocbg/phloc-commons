@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -99,12 +100,9 @@ public final class XMLWriter
                                         @Nonnull @WillClose final OutputStream aOS,
                                         @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     try
     {
@@ -165,12 +163,9 @@ public final class XMLWriter
                                         @Nonnull @WillClose final Writer aWriter,
                                         @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aWriter == null)
-      throw new NullPointerException ("writer");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aWriter, "Writer");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     try
     {

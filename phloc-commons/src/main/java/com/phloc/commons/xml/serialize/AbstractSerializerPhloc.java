@@ -33,6 +33,7 @@ import javax.xml.namespace.NamespaceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.io.streams.NonBlockingBufferedWriter;
@@ -288,8 +289,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     @Nullable
     public String getUsedPrefixOfNamespace (@Nonnull final String sNamespaceURI)
     {
-      if (sNamespaceURI == null)
-        throw new NullPointerException ("namespaceURI");
+      ValueEnforcer.notNull (sNamespaceURI, "NamespaceURI");
 
       // find existing prefix (iterate current to root)
       for (final NamespaceLevel aNSLevel : m_aStack)
@@ -338,8 +338,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     @Nullable
     public String getMappedPrefix (@Nonnull final String sNamespaceURI)
     {
-      if (sNamespaceURI == null)
-        throw new NullPointerException ("namespaceURI");
+      ValueEnforcer.notNull (sNamespaceURI, "NamespaceURI");
 
       // If a mapping is defined, it always takes precedence over the default
       // namespace
@@ -398,9 +397,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   public AbstractSerializerPhloc (@Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
-    m_aSettings = aSettings;
+    m_aSettings = ValueEnforcer.notNull (aSettings, "Settings");
     m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
   }
 
@@ -468,10 +465,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
-    if (aNode == null)
-      throw new NullPointerException ("Node");
-    if (aOS == null)
-      throw new NullPointerException ("OutputStream");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     // Create a writer for the passed output stream
     final NonBlockingBufferedWriter aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS,

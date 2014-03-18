@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -48,8 +49,7 @@ public class ChildNodeIterator implements IIterableIterator <Node>
 
   public ChildNodeIterator (@Nonnull final Node aStartNode)
   {
-    if (aStartNode == null)
-      throw new NullPointerException ("startNode");
+    ValueEnforcer.notNull (aStartNode, "StartNode");
     m_aNL = aStartNode.getChildNodes ();
     m_nMax = m_aNL.getLength ();
   }

@@ -31,6 +31,7 @@ import javax.xml.validation.Schema;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
@@ -352,8 +353,7 @@ public final class DOMReaderDefaultSettings
   public static void setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
                                        @Nullable final Object aPropertyValue)
   {
-    if (eProperty == null)
-      throw new NullPointerException ("property");
+    ValueEnforcer.notNull (eProperty, "Property");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -467,8 +467,7 @@ public final class DOMReaderDefaultSettings
 
   public static void setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -483,8 +482,7 @@ public final class DOMReaderDefaultSettings
 
   public static void setFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -657,8 +655,7 @@ public final class DOMReaderDefaultSettings
 
   public static void setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    if (aExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
+    ValueEnforcer.notNull (aExceptionHandler, "ExceptionHandler");
 
     s_aRWLock.writeLock ().lock ();
     try
