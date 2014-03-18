@@ -33,8 +33,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.phloc.commons.ValueEnforcer;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Utility class to evaluate XPath expressions more easily
@@ -67,18 +68,14 @@ public final class XPathExpressionHelper
 
   @Nullable
   public static Object evalXPath (@Nonnull final XPath aXPath,
-                                  @Nonnull final String sXPath,
+                                  @Nonnull @Nonempty final String sXPath,
                                   @Nonnull final Document aDoc,
                                   @Nonnull final QName aReturnType)
   {
-    if (aXPath == null)
-      throw new NullPointerException ("XPath");
-    if (StringHelper.hasNoText (sXPath))
-      throw new IllegalArgumentException ("XPath");
-    if (aDoc == null)
-      throw new NullPointerException ("doc");
-    if (aReturnType == null)
-      throw new NullPointerException ("returnType");
+    ValueEnforcer.notNull (aXPath, "XPath");
+    ValueEnforcer.notEmpty (sXPath, "XPathExpression");
+    ValueEnforcer.notNull (aDoc, "Doc");
+    ValueEnforcer.notNull (aReturnType, "ReturnType");
 
     try
     {

@@ -21,6 +21,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -37,9 +38,7 @@ public final class StringScanner
 
   public StringScanner (@Nonnull final String sInput)
   {
-    if (sInput == null)
-      throw new NullPointerException ("input");
-    m_sInput = sInput;
+    m_sInput = ValueEnforcer.notNull (sInput, "Input");
     m_nMaxIndex = sInput.length ();
   }
 
@@ -49,14 +48,10 @@ public final class StringScanner
     return m_nCurIndex;
   }
 
+  @Deprecated
   public void setCurrentIndex (@Nonnegative final int nCurIndex)
   {
-    if (nCurIndex < 0 || nCurIndex > m_nMaxIndex)
-      throw new IllegalArgumentException ("Invalid index " +
-                                          nCurIndex +
-                                          " provided! Must be >= 0 and <= " +
-                                          m_nMaxIndex);
-    m_nCurIndex = nCurIndex;
+    setIndex (nCurIndex);
   }
 
   @Nonnegative
@@ -125,8 +120,7 @@ public final class StringScanner
   @Nonnull
   public StringScanner setIndex (@Nonnegative final int nIndex)
   {
-    if (nIndex < 0 || nIndex > m_nMaxIndex)
-      throw new IllegalArgumentException ("The passed index " + nIndex + " must be between 0 and < " + m_nMaxIndex);
+    ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, m_nMaxIndex);
     m_nCurIndex = nIndex;
     return this;
   }

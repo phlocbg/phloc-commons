@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -71,10 +72,9 @@ public class NonBlockingBitInputStream implements Closeable
    */
   public NonBlockingBitInputStream (@Nonnull final InputStream aIS, @Nonnull final ByteOrder aByteOrder)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-    if (aByteOrder == null)
-      throw new NullPointerException ("byteOrder");
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.notNull (aByteOrder, "ByteOrder");
+
     m_aIS = StreamUtils.getBuffered (aIS);
     m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
     m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
@@ -120,8 +120,7 @@ public class NonBlockingBitInputStream implements Closeable
    */
   public int readBits (@Nonnegative final int aNumberOfBits) throws IOException
   {
-    if (aNumberOfBits < 1 || aNumberOfBits > 32)
-      throw new IllegalArgumentException ("Illegal number of bits passed!");
+    ValueEnforcer.isBetweenInclusive (aNumberOfBits, "NumberOfBits", 1, CGlobal.BITS_PER_INT);
 
     int ret = 0;
     for (int i = aNumberOfBits - 1; i >= 0; i--)

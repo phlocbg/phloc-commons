@@ -28,6 +28,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.state.EFinish;
 
 /**
@@ -60,8 +61,7 @@ public final class StringEncoder
 
   public StringEncoder (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     m_aEncoder = aCharset.newEncoder ();
     // set the buffer to "filled" so it gets filled by encode()
@@ -110,10 +110,8 @@ public final class StringEncoder
   @Nonnull
   public EFinish encode (@Nonnull final String sSource, @Nonnull final ByteBuffer aDestBuffer)
   {
-    if (sSource == null)
-      throw new NullPointerException ("source");
-    if (aDestBuffer == null)
-      throw new NullPointerException ("destBuffer");
+    ValueEnforcer.notNull (sSource, "Source");
+    ValueEnforcer.notNull (aDestBuffer, "DestBuffer");
 
     // We need to special case the empty string
     if (sSource.length () == 0)

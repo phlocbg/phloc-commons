@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IInputStreamResolver;
@@ -50,8 +51,7 @@ public class FileSystemByteStreamResolver implements IInputStreamResolver, IOutp
 
   public FileSystemByteStreamResolver (@Nonnull final File aBasePath)
   {
-    if (aBasePath == null)
-      throw new NullPointerException ("basePath");
+    ValueEnforcer.notNull (aBasePath, "BasePath");
     if (!aBasePath.exists ())
       throw new IllegalArgumentException ("Base path does not exist: " + aBasePath);
     if (!aBasePath.isDirectory ())

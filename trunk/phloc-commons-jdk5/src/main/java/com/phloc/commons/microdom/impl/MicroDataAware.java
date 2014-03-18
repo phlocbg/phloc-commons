@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.microdom.IMicroDataAware;
@@ -39,6 +40,7 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
 
   public MicroDataAware (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
+    ValueEnforcer.isArrayOfsLen (aChars, nOfs, nLen);
     m_aSB = new StringBuilder (nLen + 16).append (aChars, nOfs, nLen);
   }
 

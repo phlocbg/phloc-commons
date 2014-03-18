@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.ValueEnforcer;
 
 /**
  * An object of type RomanNumeral is an integer between 1 and 3999. It can be
@@ -73,8 +73,7 @@ public final class RomanNumeral
    */
   private RomanNumeral (@Nonnegative final int nValue)
   {
-    if (nValue < MIN_VAL || nValue > MAX_VAL)
-      throw new IllegalArgumentException ("Value of RomanNumeral must be between " + MIN_VAL + " and " + MAX_VAL + ".");
+    ValueEnforcer.isBetweenInclusive (nValue, "Value", MIN_VAL, MAX_VAL);
     m_nValue = nValue;
   }
 
@@ -89,8 +88,7 @@ public final class RomanNumeral
    */
   private RomanNumeral (@Nonnull final String sRoman)
   {
-    if (StringHelper.hasNoText (sRoman))
-      throw new IllegalArgumentException ("An empty string does not define a Roman numeral.");
+    ValueEnforcer.notEmpty (sRoman, "Roman");
 
     // Convert to upper case letters.
     final String sRealRoman = sRoman.toUpperCase (CGlobal.DEFAULT_LOCALE);

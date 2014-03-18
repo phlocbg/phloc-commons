@@ -19,6 +19,7 @@ package com.phloc.commons.typeconvert.rule;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -36,12 +37,8 @@ public abstract class AbstractTypeConverterRuleAssignableSourceFixedDestination 
                                                                     @Nonnull final Class <?> aDstClass)
   {
     super (ESubType.ASSIGNABLE_SRC_FIXED_DST);
-    if (aSrcClass == null)
-      throw new NullPointerException ("srcClass");
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
-    m_aSrcClass = aSrcClass;
-    m_aDstClass = aDstClass;
+    m_aSrcClass = ValueEnforcer.notNull (aSrcClass, "SrcClass");
+    m_aDstClass = ValueEnforcer.notNull (aDstClass, "DestClass");
   }
 
   public final boolean canConvert (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)

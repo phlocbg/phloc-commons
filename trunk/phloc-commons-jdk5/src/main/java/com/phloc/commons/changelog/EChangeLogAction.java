@@ -56,4 +56,11 @@ public enum EChangeLogAction implements IHasID <String>
   {
     return EnumHelper.getFromIDOrNull (EChangeLogAction.class, sID);
   }
+
+  @Nullable
+  public static EChangeLogAction getFromIDOrDefault (@Nullable final String sID,
+                                                     @Nullable final EChangeLogAction eDefault)
+  {
+    return EnumHelper.getFromIDOrDefault (EChangeLogAction.class, sID, eDefault);
+  }
 }

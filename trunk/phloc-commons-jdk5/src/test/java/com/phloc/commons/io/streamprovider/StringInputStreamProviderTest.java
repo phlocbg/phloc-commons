@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
@@ -69,6 +70,26 @@ public final class StringInputStreamProviderTest
     // CharSequence constructor
     aIS = new StringInputStreamProvider (new StringBuilder (s), CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
     assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8_OBJ));
+  }
+
+  @Test
+  public void testBOM ()
+  {
+    // BOM is emitted
+    byte [] aBytes = StreamUtils.getAllBytes (new StringInputStreamProvider ("abc", CCharset.CHARSET_UTF_16_OBJ));
+    assertArrayEquals (new byte [] { (byte) 0xfe, (byte) 0xff, 0, 'a', 0, 'b', 0, 'c' }, aBytes);
+
+    // No BOM is emitted!
+    aBytes = StreamUtils.getAllBytes (new StringInputStreamProvider ("abc", CCharset.CHARSET_UTF_16BE_OBJ));
+    assertArrayEquals (new byte [] { 0, 'a', 0, 'b', 0, 'c' }, aBytes);
+
+    // No BOM is emitted!
+    aBytes = StreamUtils.getAllBytes (new StringInputStreamProvider ("abc", CCharset.CHARSET_UTF_16LE_OBJ));
+    assertArrayEquals (new byte [] { 'a', 0, 'b', 0, 'c', 0 }, aBytes);
+
+    // No BOM is emitted!
+    aBytes = StreamUtils.getAllBytes (new StringInputStreamProvider ("abc", CCharset.CHARSET_UTF_8_OBJ));
+    assertArrayEquals (new byte [] { 'a', 'b', 'c' }, aBytes);
   }
 
   @Test

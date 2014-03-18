@@ -23,6 +23,8 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 // ESCA-JAVA0143:
@@ -103,10 +105,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public NonBlockingByteArrayInputStream (final byte [] aBuf, final int nOfs, final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
     m_aBuf = aBuf;
     m_nPos = nOfs;
     m_nCount = Math.min (nOfs + nLen, aBuf.length);
@@ -152,19 +151,11 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * @return the total number of bytes read into the buffer, or <code>-1</code>
    *         if there is no more data because the end of the stream has been
    *         reached.
-   * @exception NullPointerException
-   *            If <code>b</code> is <code>null</code>.
-   * @exception IndexOutOfBoundsException
-   *            If <code>off</code> is negative, <code>len</code> is negative,
-   *            or <code>len</code> is greater than <code>b.length - off</code>
    */
   @Override
   public int read (final byte [] aBuf, final int nOfs, final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     if (m_nPos >= m_nCount)
       return -1;

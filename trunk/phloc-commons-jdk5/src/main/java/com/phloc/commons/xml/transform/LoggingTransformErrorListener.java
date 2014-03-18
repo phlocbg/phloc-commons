@@ -27,6 +27,7 @@ import javax.xml.transform.ErrorListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
@@ -54,9 +55,7 @@ public class LoggingTransformErrorListener extends AbstractTransformErrorListene
                                         @Nonnull final Locale aDisplayLocale)
   {
     super (aWrappedErrorListener);
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("displayLocale");
-    m_aDisplayLocale = aDisplayLocale;
+    m_aDisplayLocale = ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
   }
 
   @Override

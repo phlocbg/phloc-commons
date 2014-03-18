@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.iterate.EmptyIterator;
@@ -249,8 +250,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
   @Nonnull
   public <ARRAYELEMENTTYPE> ARRAYELEMENTTYPE [] toArray (@Nonnull final ARRAYELEMENTTYPE [] aDest)
   {
-    if (aDest == null)
-      throw new NullPointerException ("destinationArray");
+    ValueEnforcer.notNull (aDest, "Dest");
 
     if (!m_bHasElement)
       return aDest;

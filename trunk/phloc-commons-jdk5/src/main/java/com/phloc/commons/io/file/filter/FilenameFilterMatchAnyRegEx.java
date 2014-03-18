@@ -23,7 +23,9 @@ import java.io.FilenameFilter;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.regex.RegExHelper;
@@ -48,9 +50,14 @@ public final class FilenameFilterMatchAnyRegEx implements FilenameFilter
 
   public FilenameFilterMatchAnyRegEx (@Nonnull @Nonempty final String... aRegExs)
   {
-    if (ArrayHelper.isEmpty (aRegExs))
-      throw new IllegalArgumentException ("empty array passed");
-    m_aRegExs = aRegExs;
+    m_aRegExs = ArrayHelper.getCopy (ValueEnforcer.notEmpty (aRegExs, "RegularExpressions"));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public String [] getRegularExpressions ()
+  {
+    return ArrayHelper.getCopy (m_aRegExs);
   }
 
   public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)

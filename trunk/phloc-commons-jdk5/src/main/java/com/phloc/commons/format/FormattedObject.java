@@ -20,6 +20,7 @@ package com.phloc.commons.format;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -61,8 +62,7 @@ public class FormattedObject implements IFormattedObject
    */
   public FormattedObject (@Nullable final Object aValue, @Nonnull final IFormatterProvider aFormatterProvider)
   {
-    if (aFormatterProvider == null)
-      throw new NullPointerException ("formatterProvider");
+    ValueEnforcer.notNull (aFormatterProvider, "FormatterProvider");
     m_aValue = aValue;
     m_aFormatter = aFormatterProvider.getFormatter ();
   }

@@ -18,9 +18,11 @@
 package com.phloc.commons.xml.dom;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
 
 /**
  * Represents different DOM versions for XML feature tests.<br>
@@ -46,5 +48,11 @@ public enum EXMLDOMFeatureVersion implements IHasID <String>
   public String getID ()
   {
     return m_sID;
+  }
+
+  @Nullable
+  public static EXMLDOMFeatureVersion getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLDOMFeatureVersion.class, sID);
   }
 }

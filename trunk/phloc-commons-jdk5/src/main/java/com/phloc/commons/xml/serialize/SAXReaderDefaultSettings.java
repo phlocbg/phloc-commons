@@ -34,6 +34,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
@@ -270,8 +271,7 @@ public final class SAXReaderDefaultSettings
   public static void setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
                                        @Nullable final Object aPropertyValue)
   {
-    if (eProperty == null)
-      throw new NullPointerException ("property");
+    ValueEnforcer.notNull (eProperty, "Property");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -385,8 +385,7 @@ public final class SAXReaderDefaultSettings
 
   public static void setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -401,8 +400,7 @@ public final class SAXReaderDefaultSettings
 
   public static void setFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -504,15 +502,14 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  public static void setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aDefaultExceptionHandler)
+  public static void setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    if (aDefaultExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
+    ValueEnforcer.notNull (aExceptionHandler, "ExceptionHandler");
 
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultExceptionHandler = aDefaultExceptionHandler;
+      s_aDefaultExceptionHandler = aExceptionHandler;
     }
     finally
     {

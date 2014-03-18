@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.mutable.IReadonlyWrapper;
@@ -51,8 +52,7 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
    */
   public SuccessWithValue (@Nonnull final ISuccessIndicator aSuccessIndicator, @Nullable final DATATYPE aObj)
   {
-    if (aSuccessIndicator == null)
-      throw new NullPointerException ("successIndicator");
+    ValueEnforcer.notNull (aSuccessIndicator, "SuccessIndicator");
 
     // Wrap in ESuccess so that equals works for sure
     m_eSuccess = ESuccess.valueOf (aSuccessIndicator);

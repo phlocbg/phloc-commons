@@ -23,6 +23,8 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A special privileged object, that calls "setAccessible(true)" on an object.
  * 
@@ -41,9 +43,7 @@ public final class PrivilegedActionAccessibleObjectSetAccessible implements Priv
   public PrivilegedActionAccessibleObjectSetAccessible (@Nonnull final AccessibleObject aObject,
                                                         final boolean bAccessible)
   {
-    if (aObject == null)
-      throw new NullPointerException ("method");
-    m_aObject = aObject;
+    m_aObject = ValueEnforcer.notNull (aObject, "Object");
     m_bAccessible = bAccessible;
   }
 

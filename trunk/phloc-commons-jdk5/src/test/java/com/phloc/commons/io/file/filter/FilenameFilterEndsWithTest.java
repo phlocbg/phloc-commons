@@ -31,7 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FilenameFilterEndsWith}.
- *
+ * 
  * @author Philip Helger
  */
 public final class FilenameFilterEndsWithTest
@@ -46,7 +46,7 @@ public final class FilenameFilterEndsWithTest
       new FilenameFilterEndsWith (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     final FilenameFilter ff = new FilenameFilterEndsWith (".htm");

@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
@@ -55,9 +56,7 @@ public class StringReaderProvider implements IReaderProvider, Serializable
 
   public StringReaderProvider (@Nonnull final String sData)
   {
-    if (sData == null)
-      throw new NullPointerException ("data");
-    m_sData = sData;
+    m_sData = ValueEnforcer.notNull (sData, "Data");
   }
 
   @Nonnull

@@ -25,6 +25,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Node;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A small hash code creation class based on the article found in the net. See
  * <a href=
@@ -90,8 +92,8 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    */
   public HashCodeGenerator (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
+
     // Use the class name
     append (aClass.getName ());
 

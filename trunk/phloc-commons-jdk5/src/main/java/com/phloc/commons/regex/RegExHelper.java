@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.RegEx;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
@@ -95,8 +96,7 @@ public final class RegExHelper
                                            @Nonnull @RegEx final String sRegEx,
                                            @Nonnegative final int nLimit)
   {
-    if (sRegEx == null)
-      throw new IllegalArgumentException ("regexp");
+    ValueEnforcer.notNull (sRegEx, "RegEx");
     if (sText == null)
       return ArrayHelper.EMPTY_STRING_ARRAY;
     return RegExPool.getPattern (sRegEx).split (sText, nLimit);
@@ -163,8 +163,8 @@ public final class RegExHelper
   @Nonnull
   public static Matcher getMatcher (@Nonnull @RegEx final String sRegEx, @Nonnull final String sValue)
   {
-    if (sValue == null)
-      throw new NullPointerException ("value");
+    ValueEnforcer.notNull (sValue, "Value");
+
     return RegExPool.getPattern (sRegEx).matcher (sValue);
   }
 
@@ -187,8 +187,8 @@ public final class RegExHelper
                                     @Nonnegative final int nOptions,
                                     @Nonnull final String sValue)
   {
-    if (sValue == null)
-      throw new NullPointerException ("value");
+    ValueEnforcer.notNull (sValue, "Value");
+
     return RegExPool.getPattern (sRegEx, nOptions).matcher (sValue);
   }
 
@@ -320,8 +320,7 @@ public final class RegExHelper
   @Nullable
   public static String getAsIdentifier (@Nullable final String s, @Nonnull final String sReplacement)
   {
-    if (sReplacement == null)
-      throw new NullPointerException ("replacement");
+    ValueEnforcer.notNull (sReplacement, "Replacement");
 
     if (StringHelper.hasNoText (s))
       return s;

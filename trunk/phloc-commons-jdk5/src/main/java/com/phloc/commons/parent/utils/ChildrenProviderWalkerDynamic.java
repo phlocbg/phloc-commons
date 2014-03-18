@@ -20,6 +20,7 @@ package com.phloc.commons.parent.utils;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hierarchy.EHierarchyCallbackReturn;
 import com.phloc.commons.hierarchy.IHierarchyWalkerDynamicCallback;
 import com.phloc.commons.parent.IChildrenProvider;
@@ -41,12 +42,8 @@ public final class ChildrenProviderWalkerDynamic <CHILDTYPE>
   public ChildrenProviderWalkerDynamic (@Nonnull final IChildrenProvider <CHILDTYPE> aChildrenProvider,
                                         @Nonnull final IHierarchyWalkerDynamicCallback <CHILDTYPE> aCallback)
   {
-    if (aChildrenProvider == null)
-      throw new NullPointerException ("childProvider");
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
-    m_aChildrenProvider = aChildrenProvider;
-    m_aCallback = aCallback;
+    m_aChildrenProvider = ValueEnforcer.notNull (aChildrenProvider, "ChildrenProvider");
+    m_aCallback = ValueEnforcer.notNull (aCallback, "Callback");
   }
 
   @Nonnull
@@ -130,8 +127,7 @@ public final class ChildrenProviderWalkerDynamic <CHILDTYPE>
 
   public void walkSub (@Nonnull final CHILDTYPE aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     m_aCallback.begin ();
     try

@@ -24,9 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -47,9 +47,14 @@ public final class FilenameFilterEndsWith implements FilenameFilter
    */
   public FilenameFilterEndsWith (@Nonnull @Nonempty final String sSuffix)
   {
-    if (StringHelper.hasNoText (sSuffix))
-      throw new IllegalArgumentException ("suffix may not be empty");
-    m_sSuffix = sSuffix;
+    m_sSuffix = ValueEnforcer.notEmpty (sSuffix, "Suffix");
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getSuffix ()
+  {
+    return m_sSuffix;
   }
 
   public boolean accept (@Nullable final File aDir, @Nullable final String sName)

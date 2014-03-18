@@ -130,7 +130,7 @@ public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
   {
     final IUnidirectionalConverter <String, Integer> conv = new UnidirectionalConverterStringInteger (null);
 
-    final Integer [] dst = ArrayConversionHelper.getConverted (new String [] { "2", "4", "6" }, conv, Integer.class);
+    final Integer [] dst = ArrayConversionHelper.newArray (new String [] { "2", "4", "6" }, conv, Integer.class);
     assertNotNull (dst);
     assertEquals (3, dst.length);
     assertEquals (2, dst[0].intValue ());

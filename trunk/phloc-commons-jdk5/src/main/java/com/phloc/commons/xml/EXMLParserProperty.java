@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -250,8 +251,7 @@ public enum EXMLParserProperty implements IHasName
 
   public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final Object aValue)
   {
-    if (aParser == null)
-      throw new NullPointerException ("Reader");
+    ValueEnforcer.notNull (aParser, "Parser");
 
     if (m_ePropertyType != EXMLParserPropertyType.GENERAL && m_ePropertyType != EXMLParserPropertyType.SAX)
       s_aLogger.warn ("Parser property '" + name () + "' is not applicable for SAX parsers!");
@@ -276,8 +276,7 @@ public enum EXMLParserProperty implements IHasName
 
   public void applyTo (@Nonnull final DocumentBuilderFactory aDocumentBuilderFactory, final Object aValue)
   {
-    if (aDocumentBuilderFactory == null)
-      throw new NullPointerException ("DocumentBuilderFactory");
+    ValueEnforcer.notNull (aDocumentBuilderFactory, "DocumentBuilderFactory");
 
     if (m_ePropertyType != EXMLParserPropertyType.GENERAL && m_ePropertyType != EXMLParserPropertyType.DOM)
       s_aLogger.warn ("Parser property '" + name () + "' is not applicable for DOM parsers!");
@@ -302,8 +301,7 @@ public enum EXMLParserProperty implements IHasName
   @ReturnsMutableCopy
   public static List <EXMLParserProperty> getAllPropertiesOfType (@Nonnull final EXMLParserPropertyType ePropertyType)
   {
-    if (ePropertyType == null)
-      throw new NullPointerException ("PropertyType");
+    ValueEnforcer.notNull (ePropertyType, "PropertyType");
 
     final List <EXMLParserProperty> ret = new ArrayList <EXMLParserProperty> ();
     for (final EXMLParserProperty eProperty : values ())

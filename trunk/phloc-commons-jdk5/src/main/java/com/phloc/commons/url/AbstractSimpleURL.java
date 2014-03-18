@@ -26,6 +26,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
@@ -80,8 +82,7 @@ public abstract class AbstractSimpleURL implements ISimpleURL
 
   public AbstractSimpleURL (@Nonnull final IURLData aURL)
   {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
+    ValueEnforcer.notNull (aURL, "URL");
 
     m_sPath = aURL.getPath ();
     if (aURL.hasParams ())
@@ -162,18 +163,18 @@ public abstract class AbstractSimpleURL implements ISimpleURL
 
   @Nonnull
   @Deprecated
-  public final String getAsStringWithEncodedParameters (@Nonnull final String sParameterCharset)
+  public final String getAsStringWithEncodedParameters (@Nonnull @Nonempty final String sParameterCharset)
   {
-    if (sParameterCharset == null)
-      throw new NullPointerException ("parameterCharset");
+    ValueEnforcer.notEmpty (sParameterCharset, "ParameterCharset");
+
     return URLUtils.getURLString (this, sParameterCharset);
   }
 
   @Nonnull
   public final String getAsStringWithEncodedParameters (@Nonnull final Charset aParameterCharset)
   {
-    if (aParameterCharset == null)
-      throw new NullPointerException ("parameterCharset");
+    ValueEnforcer.notNull (aParameterCharset, "ParameterCharset");
+
     return URLUtils.getURLString (this, aParameterCharset);
   }
 

@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -44,9 +45,7 @@ public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> ext
   public AbstractNotifyingCacheWithMaxSize (@Nonnull final String sCacheName, @Nonnegative final int nMaxSize)
   {
     super (sCacheName);
-    if (nMaxSize < 0)
-      throw new IllegalArgumentException ("MaxSize must be > 0!");
-    m_nMaxSize = nMaxSize;
+    m_nMaxSize = ValueEnforcer.isGE0 (nMaxSize, "MaxSize");
   }
 
   /**

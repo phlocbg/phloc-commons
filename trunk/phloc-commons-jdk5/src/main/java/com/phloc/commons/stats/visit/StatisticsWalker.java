@@ -22,6 +22,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
@@ -56,8 +57,7 @@ public final class StatisticsWalker
    */
   public static void walkStatistics (@Nonnull final IStatisticsVisitor aVisitor)
   {
-    if (aVisitor == null)
-      throw new NullPointerException ("visitor");
+    ValueEnforcer.notNull (aVisitor, "Visitor");
 
     // For all cache handler
     List <String> aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllCacheHandler ());

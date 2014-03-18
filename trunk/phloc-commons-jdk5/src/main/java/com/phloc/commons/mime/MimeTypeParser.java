@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -310,8 +311,7 @@ public final class MimeTypeParser
   @Nullable
   public static MimeType parseMimeType (@Nullable final String sMimeType, @Nonnull final EMimeQuoting eQuotingAlgorithm) throws MimeTypeParserException
   {
-    if (eQuotingAlgorithm == null)
-      throw new NullPointerException ("quotingAlgorithm");
+    ValueEnforcer.notNull (eQuotingAlgorithm, "QuotingAlgorithm");
 
     // Trim
     final String sRealMimeType = StringHelper.trim (sMimeType);

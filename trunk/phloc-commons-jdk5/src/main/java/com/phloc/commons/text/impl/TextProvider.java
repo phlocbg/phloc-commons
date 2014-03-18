@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -124,8 +125,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   @Nonnull
   protected final TextProvider internalSetText (@Nonnull final Locale aContentLocale, @Nullable final String sValue)
   {
-    if (aContentLocale == null)
-      throw new NullPointerException ("contentLocale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
 
     if (sValue != null && s_aConsistencyChecksEnabled.get ())
       _performConsistencyChecks (sValue);

@@ -83,7 +83,7 @@ public final class ArrayIteratorTest
 
     try
     {
-      new ArrayIterator <String> (null, 5, 2);
+      ArrayIterator.createBeginEnd (null, 5, 2);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -91,7 +91,7 @@ public final class ArrayIteratorTest
 
     try
     {
-      new ArrayIterator <String> (new String [] { "x", "y" }, -1, 5);
+      ArrayIterator.createBeginEnd (new String [] { "x", "y" }, -1, 5);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -99,7 +99,7 @@ public final class ArrayIteratorTest
 
     try
     {
-      new ArrayIterator <String> (new String [] { "x", "y" }, 5, 2);
+      ArrayIterator.createBeginEnd (new String [] { "x", "y" }, 5, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)

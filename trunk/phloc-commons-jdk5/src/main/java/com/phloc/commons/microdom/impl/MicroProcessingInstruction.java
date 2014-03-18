@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -47,9 +47,7 @@ public final class MicroProcessingInstruction extends AbstractMicroNode implemen
 
   public MicroProcessingInstruction (@Nonnull @Nonempty final String sTarget, @Nullable final String sData)
   {
-    if (StringHelper.hasNoText (sTarget))
-      throw new IllegalArgumentException ("The passed target is valid");
-    m_sTarget = sTarget;
+    m_sTarget = ValueEnforcer.notEmpty (sTarget, "Target");
     m_sData = sData;
   }
 

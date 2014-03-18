@@ -23,6 +23,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.annotation.Nonnegative;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -44,8 +45,7 @@ public abstract class AbstractPersistingIntIDFactory implements IIntIDFactory
 
   public AbstractPersistingIntIDFactory (@Nonnegative final int nReserveCount)
   {
-    if (nReserveCount < 1)
-      throw new IllegalArgumentException ("reserve count illegal: " + nReserveCount);
+    ValueEnforcer.isGT0 (nReserveCount, "ReserveCount");
     m_nReserveCount = nReserveCount;
   }
 

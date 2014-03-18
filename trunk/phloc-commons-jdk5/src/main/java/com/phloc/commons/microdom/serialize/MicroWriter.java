@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
@@ -94,8 +95,7 @@ public final class MicroWriter
                                       @Nonnull final File aFile,
                                       @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     final OutputStream aOS = FileUtils.getOutputStream (aFile);
     if (aOS == null)
@@ -144,12 +144,9 @@ public final class MicroWriter
                                         @Nonnull @WillClose final OutputStream aOS,
                                         @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     try
     {
@@ -183,12 +180,9 @@ public final class MicroWriter
                                         @Nonnull @WillClose final Writer aWriter,
                                         @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aWriter == null)
-      throw new NullPointerException ("writer");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aWriter, "Writer");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     try
     {
@@ -205,10 +199,8 @@ public final class MicroWriter
   @Nullable
   public static String getNodeAsString (@Nonnull final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     NonBlockingStringWriter aWriter = null;
     try

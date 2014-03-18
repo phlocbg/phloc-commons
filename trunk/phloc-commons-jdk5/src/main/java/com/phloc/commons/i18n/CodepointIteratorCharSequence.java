@@ -17,7 +17,10 @@
  */
 package com.phloc.commons.i18n;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+
+import com.phloc.commons.ValueEnforcer;
 
 /**
  * @author Apache Abdera
@@ -26,15 +29,17 @@ public class CodepointIteratorCharSequence extends AbstractCodepointIterator
 {
   private final CharSequence m_aBuffer;
 
-  public CodepointIteratorCharSequence (@Nonnull final CharSequence buffer)
+  public CodepointIteratorCharSequence (@Nonnull final CharSequence aBuffer)
   {
-    this (buffer, 0, buffer.length ());
+    this (aBuffer, 0, aBuffer.length ());
   }
 
-  public CodepointIteratorCharSequence (@Nonnull final CharSequence aBuffer, final int nOfs, final int nLen)
+  public CodepointIteratorCharSequence (@Nonnull final CharSequence aBuffer,
+                                        @Nonnegative final int nOfs,
+                                        @Nonnegative final int nLen)
   {
-    m_aBuffer = aBuffer;
-    m_nPosition = nOfs;
+    m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
+    m_nPosition = ValueEnforcer.isGE0 (nOfs, "Offset");
     m_nLimit = Math.min (aBuffer.length () - nOfs, nLen);
   }
 

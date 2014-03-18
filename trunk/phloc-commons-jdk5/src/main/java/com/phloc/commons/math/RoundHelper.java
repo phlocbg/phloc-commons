@@ -26,13 +26,14 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.DecimalFormatSymbolsFactory;
 import com.phloc.commons.string.StringHelper;
 
 /**
  * Helper class for rounding numeric values in a flexible way.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -66,7 +67,7 @@ public final class RoundHelper
 
   /**
    * Source: http://www.luschny.de/java/doubleformat.html
-   *
+   * 
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -85,12 +86,9 @@ public final class RoundHelper
                                    @Nonnull final RoundingMode eMode,
                                    @Nonnull final EDecimalType eType)
   {
-    if (nScale < 0)
-      throw new IllegalArgumentException ("Scale is too small: " + nScale);
-    if (eMode == null)
-      throw new NullPointerException ("roundingMode");
-    if (eType == null)
-      throw new NullPointerException ("type");
+    ValueEnforcer.isGE0 (nScale, "Scale");
+    ValueEnforcer.notNull (eMode, "RoundingMode");
+    ValueEnforcer.notNull (eType, "Type");
 
     if (Double.isNaN (dValue) || Double.isInfinite (dValue))
       return dValue;
@@ -106,7 +104,7 @@ public final class RoundHelper
 
   /**
    * Round using the {@link RoundingMode#HALF_UP} mode and fix representation
-   *
+   * 
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -121,7 +119,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_UP} mode, fix representation and a
    * precision scale of 2.
-   *
+   * 
    * @param dValue
    *        The value to be rounded
    * @return the rounded value
@@ -134,7 +132,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_EVEN} mode and exponential
    * representation
-   *
+   * 
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -149,7 +147,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_EVEN} mode, exponential
    * representation and a precision scale of 2.
-   *
+   * 
    * @param dValue
    *        The value to be rounded
    * @return the rounded value
@@ -161,7 +159,7 @@ public final class RoundHelper
 
   /**
    * Source: http://www.luschny.de/java/doubleformat.html
-   *
+   * 
    * @param dValue
    *        the value to be formatted
    * @param nScale
@@ -182,12 +180,9 @@ public final class RoundHelper
                                      @Nonnull final EDecimalType eType,
                                      @Nonnull final Locale aLocale)
   {
-    if (nScale < 0)
-      throw new IllegalArgumentException ("Scale is too small: " + nScale);
-    if (eType == null)
-      throw new NullPointerException ("type");
-    if (aLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.isGE0 (nScale, "Scale");
+    ValueEnforcer.notNull (eType, "Type");
+    ValueEnforcer.notNull (aLocale, "Locale");
 
     if (Double.isNaN (dValue) || Double.isInfinite (dValue))
       return Double.toString (dValue);

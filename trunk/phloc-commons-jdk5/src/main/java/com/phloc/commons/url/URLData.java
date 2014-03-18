@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
@@ -63,9 +64,7 @@ public class URLData implements IURLData
                   @Nullable final Map <String, String> aParams,
                   @Nullable final String sAnchor)
   {
-    if (sPath == null)
-      throw new NullPointerException ("href may not be null");
-    m_sPath = sPath;
+    m_sPath = ValueEnforcer.notNull (sPath, "Path");
     m_aParams = aParams;
     m_sAnchor = sAnchor;
   }

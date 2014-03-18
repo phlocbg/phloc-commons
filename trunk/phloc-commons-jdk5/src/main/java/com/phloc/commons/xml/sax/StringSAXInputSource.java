@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import org.xml.sax.InputSource;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -60,9 +61,7 @@ public class StringSAXInputSource extends InputSource
 
   public StringSAXInputSource (@Nonnull final String sText, @Nullable final String sSystemID)
   {
-    if (sText == null)
-      throw new NullPointerException ("text");
-    m_sText = sText;
+    m_sText = ValueEnforcer.notNull (sText, "Text");
     setSystemId (sSystemID);
   }
 

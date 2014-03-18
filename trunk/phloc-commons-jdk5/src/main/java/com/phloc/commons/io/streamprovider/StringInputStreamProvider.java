@@ -26,6 +26,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -93,12 +94,8 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
 
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final Charset aCharset)
   {
-    if (sData == null)
-      throw new NullPointerException ("data");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
-    m_sData = sData;
-    m_aCharset = aCharset;
+    m_sData = ValueEnforcer.notNull (sData, "Data");
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException

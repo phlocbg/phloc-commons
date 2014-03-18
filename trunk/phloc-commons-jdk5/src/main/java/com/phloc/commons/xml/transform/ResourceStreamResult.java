@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.stream.StreamResult;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IOutputStreamProvider;
 import com.phloc.commons.io.IWritableResource;
@@ -49,9 +50,7 @@ public class ResourceStreamResult extends StreamResult
 
   public ResourceStreamResult (@Nonnull final IOutputStreamProvider aOSP, @Nullable final String sSystemID)
   {
-    if (aOSP == null)
-      throw new NullPointerException ("resource");
-    m_aOSP = aOSP;
+    m_aOSP = ValueEnforcer.notNull (aOSP, "OutputStreamProvider");
     setSystemId (sSystemID);
   }
 

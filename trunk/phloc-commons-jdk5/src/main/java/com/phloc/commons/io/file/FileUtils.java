@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -88,8 +89,7 @@ public final class FileUtils
    */
   public static boolean existsFile (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     return aFile.isFile ();
   }
@@ -106,8 +106,7 @@ public final class FileUtils
    */
   public static boolean existsDir (@Nonnull final File aDir)
   {
-    if (aDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDir, "Directory");
 
     // returns true if it exists() AND is a directory!
     return aDir.isDirectory ();
@@ -125,8 +124,7 @@ public final class FileUtils
    */
   public static boolean canRead (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
     return aFile.canRead ();
   }
 
@@ -143,8 +141,7 @@ public final class FileUtils
    */
   public static boolean canWrite (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
     return aFile.canWrite ();
   }
 
@@ -159,8 +156,7 @@ public final class FileUtils
    */
   public static boolean canExecute (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
     // IFJDK5
      return true;
     // ELSE
@@ -179,8 +175,8 @@ public final class FileUtils
    */
   public static boolean canReadAndWriteFile (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
+
     if (existsFile (aFile))
     {
       // File exists
@@ -202,13 +198,12 @@ public final class FileUtils
   }
 
   @Nonnull
-  public static EChange ensureParentDirectoryIsPresent (@Nonnull final File aFileObject)
+  public static EChange ensureParentDirectoryIsPresent (@Nonnull final File aFile)
   {
-    if (aFileObject == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     // If the file has no parent, it is located in the root...
-    final File aParent = aFileObject.getParentFile ();
+    final File aParent = aFile.getParentFile ();
     if (aParent == null || aParent.exists ())
     {
       if (aParent != null && !aParent.isDirectory ())
@@ -219,11 +214,11 @@ public final class FileUtils
     // Now try to create the directory
     final FileIOError aError = FileOperations.createDirRecursive (aParent);
     if (aError.isFailure ())
-      throw new IllegalStateException ("Failed to create parent of " + aFileObject.getAbsolutePath () + ": " + aError);
+      throw new IllegalStateException ("Failed to create parent of " + aFile.getAbsolutePath () + ": " + aError);
 
     // Check again if it exists, to be 100% sure :)
     if (!aParent.exists ())
-      throw new IllegalStateException ("Parent of " + aFileObject.getAbsolutePath () + " is still not existing!");
+      throw new IllegalStateException ("Parent of " + aFile.getAbsolutePath () + " is still not existing!");
     return EChange.CHANGED;
   }
 
@@ -246,10 +241,8 @@ public final class FileUtils
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static boolean isParentDirectory (@Nonnull final File aSearchDirectory, @Nonnull final File aStartDirectory)
   {
-    if (aSearchDirectory == null)
-      throw new NullPointerException ("search directory");
-    if (aStartDirectory == null)
-      throw new NullPointerException ("start directory");
+    ValueEnforcer.notNull (aSearchDirectory, "SearchDirectory");
+    ValueEnforcer.notNull (aStartDirectory, "StartDirectory");
 
     File aRealSearchDirectory = aSearchDirectory.getAbsoluteFile ();
     File aRealStartDirectory = aStartDirectory.getAbsoluteFile ();
@@ -329,8 +322,7 @@ public final class FileUtils
   @Nullable
   public static FileChannel getFileReadChannel (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     final FileInputStream aFIS = _getFileInputStream (aFile);
     return aFIS == null ? null : aFIS.getChannel ();
@@ -345,8 +337,7 @@ public final class FileUtils
   @Nullable
   public static InputStream getInputStream (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     final FileInputStream aFIS = _getFileInputStream (aFile);
     if (USE_MEMORY_MAPPED_FILES && aFIS != null)
@@ -377,8 +368,7 @@ public final class FileUtils
   @Nullable
   public static InputStream getMappedInputStream (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     // Open regular
     final FileInputStream aFIS = _getFileInputStream (aFile);
@@ -455,10 +445,8 @@ public final class FileUtils
   @Nullable
   public static FileChannel getFileWriteChannel (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     final FileOutputStream aFOS = _getFileOutputStream (aFile, eAppend);
     return aFOS == null ? null : aFOS.getChannel ();
@@ -550,10 +538,8 @@ public final class FileUtils
   @Nullable
   public static OutputStream getOutputStream (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     if (_checkParentDirectoryExistanceAndAccess (aFile).isInvalid ())
       return null;
@@ -583,10 +569,8 @@ public final class FileUtils
   @Nullable
   public static OutputStream getMappedOutputStream (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     if (_checkParentDirectoryExistanceAndAccess (aFile).isInvalid ())
       return null;
@@ -622,10 +606,8 @@ public final class FileUtils
   public static RandomAccessFile getRandomAccessFile (@Nonnull final File aFile,
                                                       @Nonnull final ERandomAccessFileMode eMode)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (eMode == null)
-      throw new NullPointerException ("mode");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (eMode, "Mode");
 
     try
     {
@@ -653,10 +635,8 @@ public final class FileUtils
    */
   public static boolean isFileNewer (@Nonnull final File aFile1, @Nonnull final File aFile2)
   {
-    if (aFile1 == null)
-      throw new NullPointerException ("firstFile");
-    if (aFile2 == null)
-      throw new NullPointerException ("secondFile");
+    ValueEnforcer.notNull (aFile1, "File1");
+    ValueEnforcer.notNull (aFile2, "aFile2");
 
     // Compare with the same file?
     if (aFile1.equals (aFile2))
@@ -697,10 +677,8 @@ public final class FileUtils
   @Nonnull
   public static String getFileSizeDisplay (@Nonnegative final long nFileSize, @Nonnegative final int nDecimals)
   {
-    if (nFileSize < 0)
-      throw new IllegalArgumentException ("File size may not be negative!");
-    if (nDecimals < 0)
-      throw new IllegalArgumentException ("Decimals may not be negative!");
+    ValueEnforcer.isGE0 (nFileSize, "FileSize");
+    ValueEnforcer.isGE0 (nDecimals, "Decimals");
 
     return SizeHelper.getSizeHelperOfLocale (CGlobal.LOCALE_FIXED_NUMBER_FORMAT).getAsMatching (nFileSize, nDecimals);
   }
@@ -756,8 +734,7 @@ public final class FileUtils
   @Nonnegative
   public static int getDirectoryObjectCount (@Nonnull final File aDirectory)
   {
-    if (aDirectory == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDirectory, "Directory");
     if (!aDirectory.isDirectory ())
       throw new IllegalArgumentException ("Passed object is not a directory: " + aDirectory);
 
@@ -832,8 +809,7 @@ public final class FileUtils
   @ReturnsMutableCopy
   public static List <File> getDirectoryContent (@Nonnull final File aDirectory)
   {
-    if (aDirectory == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDirectory, "Directory");
 
     return _getDirectoryContent (aDirectory, aDirectory.listFiles ());
   }
@@ -854,10 +830,8 @@ public final class FileUtils
   public static List <File> getDirectoryContent (@Nonnull final File aDirectory,
                                                  @Nonnull final FilenameFilter aFilenameFilter)
   {
-    if (aDirectory == null)
-      throw new NullPointerException ("directory");
-    if (aFilenameFilter == null)
-      throw new NullPointerException ("filenameFilter");
+    ValueEnforcer.notNull (aDirectory, "Directory");
+    ValueEnforcer.notNull (aFilenameFilter, "FilenameFilter");
 
     return _getDirectoryContent (aDirectory, aDirectory.listFiles (aFilenameFilter));
   }
@@ -877,10 +851,8 @@ public final class FileUtils
   @ReturnsMutableCopy
   public static List <File> getDirectoryContent (@Nonnull final File aDirectory, @Nonnull final FileFilter aFileFilter)
   {
-    if (aDirectory == null)
-      throw new NullPointerException ("directory");
-    if (aFileFilter == null)
-      throw new NullPointerException ("fileFilter");
+    ValueEnforcer.notNull (aDirectory, "Directory");
+    ValueEnforcer.notNull (aFileFilter, "FileFilter");
 
     return _getDirectoryContent (aDirectory, aDirectory.listFiles (aFileFilter));
   }

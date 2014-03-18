@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -37,16 +38,14 @@ import com.phloc.commons.string.ToStringGenerator;
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
-                                                                                                                 ITreeWithID <KEYTYPE, DATATYPE, ITEMTYPE>
+public class BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements ITreeWithID <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;
 
   public BasicTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> aFactory)
   {
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
+    ValueEnforcer.notNull (aFactory, "Factory");
 
     m_aRoot = aFactory.createRoot ();
     if (m_aRoot == null)

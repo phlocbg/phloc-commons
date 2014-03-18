@@ -23,11 +23,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Element;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -46,10 +46,8 @@ public final class FilterElementWithNamespaceAndLocalName implements ISerializab
   public FilterElementWithNamespaceAndLocalName (@Nullable final String sNamespaceURI,
                                                  @Nonnull @Nonempty final String sLocalName)
   {
-    if (StringHelper.hasNoText (sLocalName))
-      throw new IllegalArgumentException ("localName");
     m_sNamespaceURI = sNamespaceURI;
-    m_sLocalName = sLocalName;
+    m_sLocalName = ValueEnforcer.notEmpty (sLocalName, "LocalName");
   }
 
   public boolean matchesFilter (@Nullable final Element aElement)

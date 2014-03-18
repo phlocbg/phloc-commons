@@ -26,6 +26,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
@@ -117,9 +118,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public ByteBufferOutputStream (@Nonnull final ByteBuffer aBuffer, final boolean bCanGrow)
   {
-    if (aBuffer == null)
-      throw new NullPointerException ("buffer");
-    m_aBuffer = aBuffer;
+    m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
     m_bCanGrow = bCanGrow;
   }
 
@@ -188,8 +187,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void writeTo (@Nonnull final ByteBuffer aDestBuffer)
   {
-    if (aDestBuffer == null)
-      throw new NullPointerException ("destBuffer");
+    ValueEnforcer.notNull (aDestBuffer, "DestBuffer");
 
     m_aBuffer.flip ();
     aDestBuffer.put (m_aBuffer);
@@ -205,8 +203,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void writeTo (@Nonnull final byte [] aBuf)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
+    ValueEnforcer.notNull (aBuf, "Buffer");
 
     writeTo (aBuf, 0, aBuf.length);
   }
@@ -224,10 +221,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void writeTo (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     m_aBuffer.flip ();
     m_aBuffer.get (aBuf, nOfs, nLen);
@@ -243,8 +237,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     aOS.write (m_aBuffer.array (), m_aBuffer.arrayOffset (), m_aBuffer.position ());
     m_aBuffer.clear ();
@@ -299,8 +292,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void write (@Nonnull final ByteBuffer aSrcBuffer)
   {
-    if (aSrcBuffer == null)
-      throw new NullPointerException ("srcBuffer");
+    ValueEnforcer.notNull (aSrcBuffer, "SourceBuffer");
 
     if (m_bCanGrow && aSrcBuffer.remaining () > m_aBuffer.remaining ())
       _growBy (aSrcBuffer.remaining ());

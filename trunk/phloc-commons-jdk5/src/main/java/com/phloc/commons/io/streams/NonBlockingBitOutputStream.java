@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -78,10 +79,9 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    */
   public NonBlockingBitOutputStream (@Nonnull final OutputStream aOS, @Nonnull final ByteOrder aByteOrder)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
-    if (aByteOrder == null)
-      throw new NullPointerException ("byteOrder");
+    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aByteOrder, "ByteOrder");
+
     m_aOS = aOS;
     m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
     m_nBufferedBitCount = 0;
@@ -153,8 +153,8 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    */
   public void writeBits (final int aValue, @Nonnegative final int nNumBits) throws IOException
   {
-    if (nNumBits < 1 || nNumBits > 32)
-      throw new IllegalArgumentException ("Illegal number of bits to write: " + nNumBits);
+    ValueEnforcer.isBetweenInclusive (nNumBits, "NumberOfBits", 1, CGlobal.BITS_PER_INT);
+
     for (int i = nNumBits - 1; i >= 0; i--)
       writeBit ((aValue >> i) & 1);
   }

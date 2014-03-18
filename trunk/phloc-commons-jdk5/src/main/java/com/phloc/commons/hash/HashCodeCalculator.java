@@ -20,11 +20,12 @@ package com.phloc.commons.hash;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
  * This class provides the hash code generation for different data types.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -51,7 +52,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -65,7 +66,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -79,7 +80,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -93,7 +94,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -108,7 +109,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -123,7 +124,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -137,7 +138,7 @@ public final class HashCodeCalculator
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -146,13 +147,13 @@ public final class HashCodeCalculator
    */
   public static int append (final int nPrevHashCode, final long x)
   {
-    final int nTemp = append (nPrevHashCode, (int) (x >>> 32));
+    final int nTemp = append (nPrevHashCode, (int) (x >>> CGlobal.BITS_PER_INT));
     return append (nTemp, (int) (x & 0xffffffffL));
   }
 
   /**
    * Atomic type hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
@@ -166,7 +167,7 @@ public final class HashCodeCalculator
 
   /**
    * Object hash code generation.
-   *
+   * 
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x

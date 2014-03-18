@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.ValueEnforcer;
 
 /**
  * This is a facade for a list. It may be used to wrap any kind of list and
@@ -44,9 +45,7 @@ public abstract class AbstractWrappedList <ELEMENTTYPE> implements List <ELEMENT
 
   public AbstractWrappedList (@Nonnull final List <ELEMENTTYPE> aList)
   {
-    if (aList == null)
-      throw new NullPointerException ("list");
-    m_aSrc = aList;
+    m_aSrc = ValueEnforcer.notNull (aList, "List");
   }
 
   @Nullable

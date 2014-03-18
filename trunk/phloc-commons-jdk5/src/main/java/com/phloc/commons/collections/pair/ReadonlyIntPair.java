@@ -20,6 +20,7 @@ package com.phloc.commons.collections.pair;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -42,6 +43,7 @@ public final class ReadonlyIntPair
 
   public ReadonlyIntPair (@Nonnull final ReadonlyIntPair rhs)
   {
+    ValueEnforcer.notNull (rhs, "Pair");
     m_aFirst = rhs.getFirst ();
     m_aSecond = rhs.getSecond ();
   }

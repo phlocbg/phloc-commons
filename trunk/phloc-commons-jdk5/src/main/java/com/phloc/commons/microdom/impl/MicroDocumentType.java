@@ -20,11 +20,11 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -47,8 +47,7 @@ public final class MicroDocumentType extends AbstractMicroNode implements IMicro
                             @Nullable final String sPublicID,
                             @Nullable final String sSystemID)
   {
-    if (StringHelper.hasNoText (sQualifiedName))
-      throw new IllegalArgumentException ("qualified name may not be empty");
+    ValueEnforcer.notEmpty (sQualifiedName, "QualifiedName");
     // publicID is null if an inline DTD is contained
     // systemID is also null if an inline DTD is contained
 

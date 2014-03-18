@@ -41,20 +41,22 @@ import com.phloc.commons.serialize.convert.ISerializationConverterRegistry;
 @IsSPIImplementation
 public final class BasicSerializationConverterRegistrar implements ISerializationConverterRegistrarSPI
 {
+  private static final class SerializationConverterCharset implements ISerializationConverter
+  {
+    public void writeConvertedObject (@Nonnull final Object aSourceObject, @Nonnull final ObjectOutputStream aOOS) throws IOException
+    {
+      aOOS.writeUTF (((Charset) aSourceObject).name ());
+    }
+
+    public Object readConvertedObject (@Nonnull final ObjectInputStream aOIS) throws IOException
+    {
+      final String sCharsetName = aOIS.readUTF ();
+      return CharsetManager.getCharsetFromName (sCharsetName);
+    }
+  }
+
   public void registerSerializationConverter (@Nonnull final ISerializationConverterRegistry aRegistry)
   {
-    aRegistry.registerSerializationConverter (Charset.class, new ISerializationConverter ()
-    {
-      public void writeConvertedObject (@Nonnull final Object aSourceObject, @Nonnull final ObjectOutputStream aOOS) throws IOException
-      {
-        aOOS.writeUTF (((Charset) aSourceObject).name ());
-      }
-
-      public Object readConvertedObject (@Nonnull final ObjectInputStream aOIS) throws IOException
-      {
-        final String sCharsetName = aOIS.readUTF ();
-        return CharsetManager.getCharsetFromName (sCharsetName);
-      }
-    });
+    aRegistry.registerSerializationConverter (Charset.class, new SerializationConverterCharset ());
   }
 }

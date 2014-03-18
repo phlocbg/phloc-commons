@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathVariableResolver;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -58,10 +59,8 @@ public class MapBasedXPathVariableResolver implements XPathVariableResolver
   @Nonnull
   public EChange addUniqueVariable (@Nonnull final String sName, @Nonnull final Object aValue)
   {
-    if (sName == null)
-      throw new NullPointerException ("name");
-    if (aValue == null)
-      throw new NullPointerException ("value");
+    ValueEnforcer.notNull (sName, "Name");
+    ValueEnforcer.notNull (aValue, "Value");
 
     if (m_aVars.containsKey (sName))
       return EChange.UNCHANGED;
@@ -117,8 +116,7 @@ public class MapBasedXPathVariableResolver implements XPathVariableResolver
   @Nullable
   public Object resolveVariable (@Nonnull final QName aVariableName)
   {
-    if (aVariableName == null)
-      throw new NullPointerException ("variableName");
+    ValueEnforcer.notNull (aVariableName, "VariableName");
 
     if (m_aVars == null)
       return null;

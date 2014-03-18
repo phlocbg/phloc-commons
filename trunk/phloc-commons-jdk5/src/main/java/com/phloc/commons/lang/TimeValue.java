@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -41,8 +42,7 @@ public final class TimeValue
 
   public TimeValue (@Nonnull final TimeUnit eTimeUnit, final long nDuration)
   {
-    if (eTimeUnit == null)
-      throw new NullPointerException ("timeUnit");
+    ValueEnforcer.notNull (eTimeUnit, "TimeUnit");
     m_eTimeUnit = eTimeUnit;
     m_nDuration = nDuration;
   }

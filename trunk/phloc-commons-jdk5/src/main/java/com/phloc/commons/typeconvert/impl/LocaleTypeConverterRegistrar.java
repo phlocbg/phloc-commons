@@ -37,15 +37,17 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 @IsSPIImplementation
 public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
+  private static final class TypeConverterStringLocale implements ITypeConverter
+  {
+    public Locale convert (@Nonnull final Object aSource)
+    {
+      return LocaleCache.getLocale ((String) aSource);
+    }
+  }
+
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     // Locale
-    aRegistry.registerTypeConverter (String.class, Locale.class, new ITypeConverter ()
-    {
-      public Locale convert (@Nonnull final Object aSource)
-      {
-        return LocaleCache.getLocale ((String) aSource);
-      }
-    });
+    aRegistry.registerTypeConverter (String.class, Locale.class, new TypeConverterStringLocale ());
   }
 }

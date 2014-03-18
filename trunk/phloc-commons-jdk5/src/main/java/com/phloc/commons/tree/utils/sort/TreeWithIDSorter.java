@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
@@ -48,10 +49,8 @@ public final class TreeWithIDSorter
   private static <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> void _sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                                  @Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
-    if (aTree == null)
-      throw new NullPointerException ("tree");
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
+    ValueEnforcer.notNull (aTree, "Tree");
+    ValueEnforcer.notNull (aComparator, "Comparator");
 
     // sort root manually
     aTree.getRootItem ().reorderChildrenByItems (aComparator);

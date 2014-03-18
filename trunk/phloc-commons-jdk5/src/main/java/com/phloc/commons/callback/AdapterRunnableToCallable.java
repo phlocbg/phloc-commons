@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -44,9 +45,7 @@ public class AdapterRunnableToCallable <DATATYPE> implements INonThrowingCallabl
 
   public AdapterRunnableToCallable (@Nonnull final Runnable aRunnable, @Nullable final DATATYPE aResult)
   {
-    if (aRunnable == null)
-      throw new NullPointerException ("runnable");
-    m_aRunnable = aRunnable;
+    m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
     m_aResult = aResult;
   }
 

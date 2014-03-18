@@ -20,6 +20,7 @@ package com.phloc.commons.tree.utils.walk;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
@@ -70,8 +71,7 @@ public final class TreeWalker
                                                                                                 @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
                                                                                                 @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
-    if (aTree == null)
-      throw new NullPointerException ("tree");
+    ValueEnforcer.notNull (aTree, "Tree");
 
     walkSubTree (aTree.getRootItem (), aChildrenProvider, aCallback);
   }
@@ -86,8 +86,7 @@ public final class TreeWalker
                                                                                                     @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
                                                                                                     @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
   {
-    if (aTree == null)
-      throw new NullPointerException ("tree");
+    ValueEnforcer.notNull (aTree, "Tree");
 
     walkSubTreeData (aTree.getRootItem (), aChildrenProvider, aDataCallback);
   }
@@ -102,12 +101,9 @@ public final class TreeWalker
                                                                                                    @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
-    if (aTreeItem == null)
-      throw new NullPointerException ("treeItem");
-    if (aChildrenProvider == null)
-      throw new NullPointerException ("childrenProvider");
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
+    ValueEnforcer.notNull (aTreeItem, "TreeItem");
+    ValueEnforcer.notNull (aChildrenProvider, "ChildrenProvider");
+    ValueEnforcer.notNull (aCallback, "Callback");
 
     aCallback.begin ();
     try
@@ -132,8 +128,7 @@ public final class TreeWalker
                                                                                                        @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
                                                                                                        @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
   {
-    if (aDataCallback == null)
-      throw new NullPointerException ("callbackData");
+    ValueEnforcer.notNull (aDataCallback, "DataCallback");
 
     // Wrap callback
     walkSubTree (aTreeItem, aChildrenProvider, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()

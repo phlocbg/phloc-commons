@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -34,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type of the ID.
  */
 @Immutable
-public final class TypedObject <IDTYPE> implements ITypedObject <IDTYPE>, Serializable
+public final class TypedObject <IDTYPE extends Serializable> implements ITypedObject <IDTYPE>, Serializable
 {
   private final ObjectType m_aTypeID;
   private final IDTYPE m_aID;
@@ -46,13 +47,8 @@ public final class TypedObject <IDTYPE> implements ITypedObject <IDTYPE>, Serial
 
   public TypedObject (@Nonnull final ObjectType aTypeID, @Nonnull final IDTYPE aID)
   {
-    if (aTypeID == null)
-      throw new NullPointerException ("type");
-    if (aID == null)
-      throw new NullPointerException ("id");
-
-    m_aTypeID = aTypeID;
-    m_aID = aID;
+    m_aTypeID = ValueEnforcer.notNull (aTypeID, "TypeID");
+    m_aID = ValueEnforcer.notNull (aID, "ID");
   }
 
   @Nonnull
@@ -91,13 +87,14 @@ public final class TypedObject <IDTYPE> implements ITypedObject <IDTYPE>, Serial
   }
 
   @Nonnull
-  public static <IDTYPE> TypedObject <IDTYPE> create (@Nonnull final ITypedObject <IDTYPE> aObj)
+  public static <IDTYPE extends Serializable> TypedObject <IDTYPE> create (@Nonnull final ITypedObject <IDTYPE> aObj)
   {
     return new TypedObject <IDTYPE> (aObj);
   }
 
   @Nonnull
-  public static <IDTYPE> TypedObject <IDTYPE> create (@Nonnull final ObjectType aTypeID, @Nonnull final IDTYPE aID)
+  public static <IDTYPE extends Serializable> TypedObject <IDTYPE> create (@Nonnull final ObjectType aTypeID,
+                                                                           @Nonnull final IDTYPE aID)
   {
     return new TypedObject <IDTYPE> (aTypeID, aID);
   }

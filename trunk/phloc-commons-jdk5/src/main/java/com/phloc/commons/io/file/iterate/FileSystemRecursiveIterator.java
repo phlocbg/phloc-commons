@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.UnsupportedOperation;
@@ -196,8 +197,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
    */
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final IFilter <File> aRecursionFilter)
   {
-    if (aBaseDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aBaseDir, "BaseDirectory");
     m_nStartLevel = _getLevel (aBaseDir);
     m_aRecursionFilter = aRecursionFilter;
     m_aFilesLeft = FileUtils.getDirectoryContent (aBaseDir);

@@ -24,12 +24,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.lang.TimeValue;
 import com.phloc.commons.state.ESuccess;
 
 /**
  * Some thread utility methods.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -40,39 +41,37 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   *
+   * 
    * @param nMinutes
-   *        The minutes to sleep.
+   *        The minutes to sleep. Must be &ge; 0.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
   public static ESuccess sleepMinutes (@Nonnegative final long nMinutes)
   {
-    if (nMinutes < 0)
-      throw new IllegalArgumentException ("Negative minutes: " + nMinutes);
+    ValueEnforcer.isGE0 (nMinutes, "Minutes");
     return sleep (nMinutes * CGlobal.MILLISECONDS_PER_MINUTE);
   }
 
   /**
    * Sleep the current thread for a certain amount of time
-   *
+   * 
    * @param nSeconds
-   *        The seconds to sleep.
+   *        The seconds to sleep. Must be &ge; 0.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
   public static ESuccess sleepSeconds (@Nonnegative final long nSeconds)
   {
-    if (nSeconds < 0)
-      throw new IllegalArgumentException ("Negative seconds: " + nSeconds);
+    ValueEnforcer.isGE0 (nSeconds, "Seconds");
     return sleep (nSeconds * CGlobal.MILLISECONDS_PER_SECOND);
   }
 
   /**
    * Sleep the current thread for a certain amount of time
-   *
+   * 
    * @param aTimeValue
    *        The time value to use. May not be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
@@ -81,17 +80,15 @@ public final class ThreadUtils
   @Nonnull
   public static ESuccess sleep (@Nonnull final TimeValue aTimeValue)
   {
-    if (aTimeValue == null)
-      throw new NullPointerException ("timeValue");
-
+    ValueEnforcer.notNull (aTimeValue, "TimeValue");
     return sleep (aTimeValue.getAsMillis ());
   }
 
   /**
    * Sleep the current thread for a certain amount of time
-   *
+   * 
    * @param nDuration
-   *        The duration to sleep.
+   *        The duration to sleep. Must be &ge; 0.
    * @param aTimeUnit
    *        The time unit to use. May not be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
@@ -100,27 +97,25 @@ public final class ThreadUtils
   @Nonnull
   public static ESuccess sleep (@Nonnegative final long nDuration, @Nonnull final TimeUnit aTimeUnit)
   {
-    if (nDuration < 0)
-      throw new IllegalArgumentException ("Negative duration: " + nDuration);
-    if (aTimeUnit == null)
-      throw new NullPointerException ("timeUnit");
+    ValueEnforcer.isGE0 (nDuration, "Duration");
+    ValueEnforcer.notNull (aTimeUnit, "TimeUnit");
 
     return sleep (aTimeUnit.toMillis (nDuration));
   }
 
   /**
    * Sleep the current thread for a certain amount of time
-   *
+   * 
    * @param nMilliseconds
-   *        The milliseconds to sleep.
+   *        The milliseconds to sleep. Must be &ge; 0.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
   public static ESuccess sleep (@Nonnegative final long nMilliseconds)
   {
-    if (nMilliseconds < 0)
-      throw new IllegalArgumentException ("Negative milliseconds: " + nMilliseconds);
+    ValueEnforcer.isGE0 (nMilliseconds, "MilliSeconds");
+
     try
     {
       Thread.sleep (nMilliseconds);

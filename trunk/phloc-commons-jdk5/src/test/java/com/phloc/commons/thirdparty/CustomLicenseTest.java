@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link CustomLicense}.
- *
+ * 
  * @author Philip Helger
  */
 public final class CustomLicenseTest
@@ -89,14 +89,14 @@ public final class CustomLicenseTest
       new CustomLicense (null, "name", null, null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
       new CustomLicense ("id", null, null, null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
   }
 }

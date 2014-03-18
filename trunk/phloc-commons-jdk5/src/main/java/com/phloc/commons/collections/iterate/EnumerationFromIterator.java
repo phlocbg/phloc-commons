@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -34,18 +35,16 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration <ELEMENTTYPE>
 {
-  private final Iterator <ELEMENTTYPE> m_aIter;
+  private final Iterator <? extends ELEMENTTYPE> m_aIter;
 
-  public EnumerationFromIterator (@Nonnull final Iterable <ELEMENTTYPE> aCont)
+  public EnumerationFromIterator (@Nonnull final Iterable <? extends ELEMENTTYPE> aCont)
   {
     this (aCont.iterator ());
   }
 
-  public EnumerationFromIterator (@Nonnull final Iterator <ELEMENTTYPE> aIter)
+  public EnumerationFromIterator (@Nonnull final Iterator <? extends ELEMENTTYPE> aIter)
   {
-    if (aIter == null)
-      throw new NullPointerException ("iterator");
-    m_aIter = aIter;
+    m_aIter = ValueEnforcer.notNull (aIter, "Iterator");
   }
 
   public boolean hasMoreElements ()
@@ -65,13 +64,13 @@ public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration 
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterator <ELEMENTTYPE> aIter)
+  public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterator <? extends ELEMENTTYPE> aIter)
   {
     return new EnumerationFromIterator <ELEMENTTYPE> (aIter);
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterable <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterable <? extends ELEMENTTYPE> aCont)
   {
     return new EnumerationFromIterator <ELEMENTTYPE> (aCont);
   }

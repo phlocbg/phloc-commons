@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.parent.IChildrenProvider;
@@ -48,10 +49,8 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
 
   public ChildrenProviderElementWithName (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("tagName");
     m_sNamespaceURI = sNamespaceURI;
-    m_sTagName = sTagName;
+    m_sTagName = ValueEnforcer.notEmpty (sTagName, "TagName");
   }
 
   public boolean hasChildren (@Nullable final IMicroElement aCurrent)

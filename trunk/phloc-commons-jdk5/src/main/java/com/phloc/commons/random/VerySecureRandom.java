@@ -48,7 +48,8 @@ public final class VerySecureRandom
       try
       {
         // SUN
-        // http://java.sun.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html
+        // http://docs.oracle.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html
+        // http://docs.oracle.com/javase/7/docs/technotes/guides/security/crypto/CryptoSpec.html
         aSecureRandom = SecureRandom.getInstance ("SHA1PRNG");
       }
       catch (final Throwable t2)

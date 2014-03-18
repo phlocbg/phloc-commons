@@ -94,7 +94,7 @@ public final class MicroProcessingInstructionTest
       new MicroProcessingInstruction (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

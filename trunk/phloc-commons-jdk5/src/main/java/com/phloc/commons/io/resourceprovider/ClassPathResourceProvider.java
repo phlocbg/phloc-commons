@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
@@ -49,6 +50,12 @@ public final class ClassPathResourceProvider implements IReadableResourceProvide
     m_sPrefix = sPrefix;
   }
 
+  @Nullable
+  public String getPrefix ()
+  {
+    return m_sPrefix;
+  }
+
   public boolean supportsReading (@Nullable final String sName)
   {
     // Class path resource supports all paths
@@ -58,8 +65,7 @@ public final class ClassPathResourceProvider implements IReadableResourceProvide
   @Nonnull
   public IReadableResource getReadableResource (@Nonnull final String sName)
   {
-    if (sName == null)
-      throw new NullPointerException ("name");
+    ValueEnforcer.notNull (sName, "Name");
 
     return new ClassPathResource (m_sPrefix == null ? sName : m_sPrefix + sName);
   }

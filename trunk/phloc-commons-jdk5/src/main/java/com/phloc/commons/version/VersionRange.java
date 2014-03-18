@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.IHasStringRepresentation;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -198,8 +199,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
                        @Nullable final Version aCeilingVersion,
                        final boolean bIncludeCeilingVersion)
   {
-    if (aFloorVersion == null)
-      throw new NullPointerException ("floorVersion");
+    ValueEnforcer.notNull (aFloorVersion, "FloorVersion");
 
     // set values
     m_aFloorVersion = aFloorVersion;

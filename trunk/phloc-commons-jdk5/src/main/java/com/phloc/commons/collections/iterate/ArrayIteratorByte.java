@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -41,19 +42,46 @@ public final class ArrayIteratorByte
 
   public ArrayIteratorByte (@Nonnull final byte... aArray)
   {
-    this (aArray, 0, aArray.length);
+    ValueEnforcer.notNull (aArray, "Array");
+    m_nIndex = 0;
+    m_aArray = ArrayHelper.getCopy (aArray);
   }
 
+  @Deprecated
   public ArrayIteratorByte (@Nonnull final byte [] aArray, @Nonnegative final int nBegin, @Nonnegative final int nEnd)
   {
-    if (aArray == null)
-      throw new NullPointerException ("array");
-    if (nBegin < 0 || nEnd < nBegin)
+    ValueEnforcer.notNull (aArray, "Array");
+    ValueEnforcer.isGE0 (nBegin, "Begin");
+    ValueEnforcer.isGE0 (nEnd, "End");
+    if (nEnd < nBegin)
       throw new IllegalArgumentException ("Begin (" + nBegin + ") must be between 0 and < end (" + nEnd + ")");
     m_nIndex = 0;
 
     final int nLength = nEnd - nBegin;
     m_aArray = ArrayHelper.getCopy (aArray, nBegin, nLength);
+  }
+
+  /**
+   * Private constructor with offset and length
+   * 
+   * @param bUnused
+   *        Marker to differentiate between the constructor with begin and end
+   * @param aArray
+   *        Source array
+   * @param nOfs
+   *        Offset. Must be &ge; 0.
+   * @param nLength
+   *        Lenght. Must be &ge; 0.
+   */
+  private ArrayIteratorByte (final boolean bUnused,
+                             @Nonnull final byte [] aArray,
+                             @Nonnegative final int nOfs,
+                             @Nonnegative final int nLength)
+  {
+    ValueEnforcer.isArrayOfsLen (aArray, nOfs, nLength);
+
+    m_nIndex = 0;
+    m_aArray = ArrayHelper.getCopy (aArray, nOfs, nLength);
   }
 
   public boolean hasNext ()
@@ -98,5 +126,21 @@ public final class ArrayIteratorByte
     return new ToStringGenerator (this).append ("array", Arrays.toString (m_aArray))
                                        .append ("index", m_nIndex)
                                        .toString ();
+  }
+
+  @Nonnull
+  public static ArrayIteratorByte createOfsLen (@Nonnull final byte [] aArray,
+                                                @Nonnegative final int nOfs,
+                                                @Nonnegative final int nLength)
+  {
+    return new ArrayIteratorByte (true, aArray, nOfs, nLength);
+  }
+
+  @Nonnull
+  public static ArrayIteratorByte createBeginEnd (@Nonnull final byte [] aArray,
+                                                  @Nonnegative final int nBegin,
+                                                  @Nonnegative final int nEnd)
+  {
+    return new ArrayIteratorByte (aArray, nBegin, nEnd);
   }
 }

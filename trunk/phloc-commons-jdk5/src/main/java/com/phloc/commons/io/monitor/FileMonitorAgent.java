@@ -24,6 +24,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -44,8 +45,8 @@ final class FileMonitorAgent
 
   FileMonitorAgent (@Nonnull final FileMonitor aMonitor, @Nonnull final File aFile)
   {
-    m_aMonitor = aMonitor;
-    m_aFile = aFile;
+    m_aMonitor = ValueEnforcer.notNull (aMonitor, "Monitor");
+    m_aFile = ValueEnforcer.notNull (aFile, "File");
     m_bExists = aFile.exists ();
     if (m_bExists)
     {

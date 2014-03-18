@@ -64,7 +64,7 @@ public final class RegExPoolTest extends AbstractPhlocTestCase
       RegExPool.getPattern (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

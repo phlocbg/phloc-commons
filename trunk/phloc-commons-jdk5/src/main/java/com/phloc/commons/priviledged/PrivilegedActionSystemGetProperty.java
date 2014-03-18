@@ -22,8 +22,8 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * A special privileged object, that calls <code>System.getProperty</code>
@@ -36,9 +36,7 @@ public final class PrivilegedActionSystemGetProperty implements PrivilegedAction
 
   public PrivilegedActionSystemGetProperty (@Nonnull @Nonempty final String sKey)
   {
-    if (StringHelper.hasNoText (sKey))
-      throw new IllegalArgumentException ("key");
-    m_sKey = sKey;
+    m_sKey = ValueEnforcer.notEmpty (sKey, "Key");
   }
 
   @Nullable

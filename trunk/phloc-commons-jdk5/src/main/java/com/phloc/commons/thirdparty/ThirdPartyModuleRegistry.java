@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -64,8 +65,7 @@ public final class ThirdPartyModuleRegistry
   @Nonnull
   public static EChange registerThirdPartyModule (@Nonnull final IThirdPartyModule aModule)
   {
-    if (aModule == null)
-      throw new NullPointerException ("module");
+    ValueEnforcer.notNull (aModule, "Module");
 
     s_aRWLock.writeLock ().lock ();
     try

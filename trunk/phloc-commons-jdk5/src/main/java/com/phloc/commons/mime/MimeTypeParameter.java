@@ -22,9 +22,9 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -53,8 +53,7 @@ public class MimeTypeParameter implements Serializable
   {
     if (!MimeTypeParser.isToken (sAttribute))
       throw new IllegalArgumentException ("MimeType parameter name is not a valid token: " + sAttribute);
-    if (StringHelper.hasNoText (sValue))
-      throw new IllegalArgumentException ("MimeType parameter value may not be empty");
+    ValueEnforcer.notEmpty (sValue, "Value");
 
     m_sAttribute = sAttribute;
     m_sValue = sValue;

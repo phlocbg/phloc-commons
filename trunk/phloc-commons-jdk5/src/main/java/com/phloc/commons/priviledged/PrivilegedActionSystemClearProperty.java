@@ -22,6 +22,8 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A special privileged object, that calls <code>System.clearProperty</code>
  * 
@@ -33,9 +35,7 @@ public final class PrivilegedActionSystemClearProperty implements PrivilegedActi
 
   public PrivilegedActionSystemClearProperty (@Nonnull final String sKey)
   {
-    if (sKey == null)
-      throw new NullPointerException ("key");
-    m_sKey = sKey;
+    m_sKey = ValueEnforcer.notNull (sKey, "Key");
   }
 
   @Nullable

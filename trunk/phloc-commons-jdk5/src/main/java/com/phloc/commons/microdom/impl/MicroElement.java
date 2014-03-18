@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -77,8 +78,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
   public MicroElement (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("TagName may not be empty");
+    ValueEnforcer.notEmpty (sTagName, "TagName");
     m_sNamespaceURI = sNamespaceURI;
 
     // Store only the local name (cut the prefix) if a namespace is present
@@ -194,8 +194,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   @Nonnull
   public MicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
   {
-    if (StringHelper.hasNoText (sAttrName))
-      throw new IllegalArgumentException ("No valid attribute name passed");
+    ValueEnforcer.notEmpty (sAttrName, "AttrName");
 
     // Only for the dev version
     if (GlobalDebug.isDebugMode ())
@@ -233,8 +232,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public MicroElement setAttribute (@Nonnull final String sAttrName,
                                     @Nonnull final IHasAttributeValue aAttrValueProvider)
   {
-    if (aAttrValueProvider == null)
-      throw new NullPointerException ("AttrValueProvider");
+    ValueEnforcer.notNull (aAttrValueProvider, "AttrValueProvider");
 
     return setAttribute (sAttrName, aAttrValueProvider.getAttrValue ());
   }
@@ -462,8 +460,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return getAllChildElements (aElementNameProvider.getElementName ());
   }
 
@@ -485,8 +482,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public List <IMicroElement> getAllChildElements (@Nullable final String sNamespaceURI,
                                                    @Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return getAllChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
@@ -587,16 +583,14 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
   public boolean hasChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return hasChildElements (aElementNameProvider.getElementName ());
   }
 
   public boolean hasChildElements (@Nullable final String sNamespaceURI,
                                    @Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return hasChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
@@ -674,8 +668,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   @Nullable
   public IMicroElement getFirstChildElement (@Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return getFirstChildElement (aElementNameProvider.getElementName ());
   }
 
@@ -683,8 +676,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public IMicroElement getFirstChildElement (@Nullable final String sNamespaceURI,
                                              @Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
     return getFirstChildElement (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 

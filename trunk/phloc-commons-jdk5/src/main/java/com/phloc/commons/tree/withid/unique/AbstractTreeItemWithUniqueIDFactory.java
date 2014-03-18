@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -40,8 +41,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @author Philip Helger
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
-                                                                                                                                              ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>
+public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   private final Map <KEYTYPE, ITEMTYPE> m_aItemStore;
 
@@ -52,9 +52,7 @@ public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, IT
 
   public AbstractTreeItemWithUniqueIDFactory (@Nonnull final Map <KEYTYPE, ITEMTYPE> aItemStore)
   {
-    if (aItemStore == null)
-      throw new NullPointerException ("itemStore");
-    m_aItemStore = aItemStore;
+    m_aItemStore = ValueEnforcer.notNull (aItemStore, "ItemStore");
   }
 
   @Nonnull
@@ -87,8 +85,7 @@ public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, IT
   @Nonnull
   public final ITEMTYPE create (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent may not be null - use createRoot instead!");
+    ValueEnforcer.notNull (aParent, "Parent");
 
     // Create and store the item via the default factory
     final ITEMTYPE aTreeItem = internalCreate (aParent, aDataID);

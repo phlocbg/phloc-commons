@@ -23,6 +23,7 @@ import javax.xml.transform.Source;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.error.IResourceErrorGroup;
@@ -56,8 +57,7 @@ public final class XMLSchemaValidationHelper
   public static IResourceErrorGroup validate (@Nonnull @Nonempty final IReadableResource [] aSchemas,
                                               @Nonnull final IReadableResource aXML)
   {
-    if (aXML == null)
-      throw new NullPointerException ("XMLresource");
+    ValueEnforcer.notNull (aXML, "XML");
 
     return validate (aSchemas, TransformSourceFactory.create (aXML));
   }
@@ -65,8 +65,7 @@ public final class XMLSchemaValidationHelper
   @Nonnull
   public static IResourceErrorGroup validate (@Nonnull final Schema aSchema, @Nonnull final IReadableResource aXML)
   {
-    if (aXML == null)
-      throw new NullPointerException ("XMLresource");
+    ValueEnforcer.notNull (aXML, "XML");
 
     return validate (aSchema, TransformSourceFactory.create (aXML));
   }
@@ -89,10 +88,8 @@ public final class XMLSchemaValidationHelper
   @Nonnull
   public static IResourceErrorGroup validate (@Nonnull final Schema aSchema, @Nonnull final Source aXML)
   {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
-    if (aXML == null)
-      throw new NullPointerException ("XMLsource");
+    ValueEnforcer.notNull (aSchema, "Schema");
+    ValueEnforcer.notNull (aXML, "XML");
 
     // Build the validator
     final Validator aValidator = aSchema.newValidator ();

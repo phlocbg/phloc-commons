@@ -28,9 +28,9 @@ import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathFunctionResolver;
 import javax.xml.xpath.XPathVariableResolver;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Utility class to create {@link XPath} and {@link XPathExpression} objects
@@ -241,8 +241,7 @@ public final class XPathHelper
                                       @Nullable final XPathFunctionResolver aFunctionResolver,
                                       @Nullable final NamespaceContext aNamespaceContext)
   {
-    if (aXPathFactory == null)
-      throw new NullPointerException ("XPathFactory");
+    ValueEnforcer.notNull (aXPathFactory, "XPathFactory");
 
     final XPath aXPath = aXPathFactory.newXPath ();
     if (aVariableResolver != null)
@@ -367,10 +366,8 @@ public final class XPathHelper
   public static XPathExpression createNewXPathExpresion (@Nonnull final XPath aXPath,
                                                          @Nonnull @Nonempty final String sXPath)
   {
-    if (aXPath == null)
-      throw new NullPointerException ("XPath");
-    if (StringHelper.hasNoText (sXPath))
-      throw new IllegalArgumentException ("XPath");
+    ValueEnforcer.notNull (aXPath, "XPath");
+    ValueEnforcer.notNull (sXPath, "XPathExpression");
 
     try
     {

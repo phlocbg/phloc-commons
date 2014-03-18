@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.name.IHasDisplayName;
@@ -45,9 +46,7 @@ public class ConstantTextProvider extends AbstractTextProvider implements IHasDi
 
   public ConstantTextProvider (@Nonnull final String sFixedText)
   {
-    if (sFixedText == null)
-      throw new NullPointerException ("fixedText");
-    m_sFixedText = sFixedText;
+    m_sFixedText = ValueEnforcer.notNull (sFixedText, "FixedText");
   }
 
   @Override

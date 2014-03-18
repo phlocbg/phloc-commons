@@ -24,6 +24,7 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -41,10 +42,7 @@ public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMEN
 
   public ReverseListIterator (@Nonnull final List <? extends ELEMENTTYPE> aList)
   {
-    if (aList == null)
-      throw new NullPointerException ("list");
-
-    m_aList = aList;
+    m_aList = ValueEnforcer.notNull (aList, "List");
     m_nIndex = aList.size () - 1;
   }
 

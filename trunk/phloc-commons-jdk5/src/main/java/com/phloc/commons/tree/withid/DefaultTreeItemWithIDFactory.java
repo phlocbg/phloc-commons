@@ -20,6 +20,8 @@ package com.phloc.commons.tree.withid;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * Special implementation of {@link AbstractTreeItemWithIDFactory} using the
  * item type {@link DefaultTreeItemWithID}.
@@ -43,8 +45,8 @@ public class DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> extends AbstractTr
   public DefaultTreeItemWithID <KEYTYPE, DATATYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
                                                            @Nonnull final KEYTYPE aDataID)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
+
     return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (aParent, aDataID);
   }
 }

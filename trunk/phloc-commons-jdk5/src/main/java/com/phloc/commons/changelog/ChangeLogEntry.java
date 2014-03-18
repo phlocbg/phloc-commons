@@ -25,7 +25,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -74,17 +74,9 @@ public final class ChangeLogEntry extends AbstractChangeLogEntry
                          final boolean bIsIncompatible)
   {
     super (aDate);
-    if (aChangeLog == null)
-      throw new NullPointerException ("changeLog");
-    if (aDate == null)
-      throw new NullPointerException ("date");
-    if (eAction == null)
-      throw new NullPointerException ("action");
-    if (eCategory == null)
-      throw new NullPointerException ("category");
-    m_aChangeLog = aChangeLog;
-    m_eAction = eAction;
-    m_eCategory = eCategory;
+    m_aChangeLog = ValueEnforcer.notNull (aChangeLog, "ChangeLog");
+    m_eAction = ValueEnforcer.notNull (eAction, "Action");
+    m_eCategory = ValueEnforcer.notNull (eCategory, "Category");
     m_bIsIncompatible = bIsIncompatible;
   }
 
@@ -134,8 +126,7 @@ public final class ChangeLogEntry extends AbstractChangeLogEntry
   @Nonnull
   EChange setText (@Nonnull final IReadonlyMultiLingualText aMLT)
   {
-    if (aMLT == null)
-      throw new NullPointerException ("MLT");
+    ValueEnforcer.notNull (aMLT, "MLT");
 
     return m_aTexts.assignFrom (aMLT);
   }
@@ -201,14 +192,13 @@ public final class ChangeLogEntry extends AbstractChangeLogEntry
   }
 
   /**
-   * @return An unmodifiable, non-<code>null</code> list of all contained issue
-   *         IDs.
+   * @return A non-<code>null</code> list of all contained issue IDs.
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public List <String> getAllIssues ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aIssues);
+    return ContainerHelper.newList (m_aIssues);
   }
 
   @Override

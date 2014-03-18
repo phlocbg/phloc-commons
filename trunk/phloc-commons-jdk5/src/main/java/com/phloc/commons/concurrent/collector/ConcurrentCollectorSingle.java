@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 import com.phloc.commons.lang.GenericReflection;
 
@@ -86,9 +87,7 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
 
   protected final void setPerformer (@Nonnull final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
   {
-    if (aPerformer == null)
-      throw new NullPointerException ("performer");
-    m_aPerformer = aPerformer;
+    m_aPerformer = ValueEnforcer.notNull (aPerformer, "Performer");
   }
 
   private void _executeCallback (final DATATYPE aObject)

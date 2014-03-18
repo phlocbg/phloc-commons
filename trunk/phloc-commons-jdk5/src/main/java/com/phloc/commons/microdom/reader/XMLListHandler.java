@@ -31,6 +31,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.io.EAppend;
@@ -82,8 +83,7 @@ public final class XMLListHandler
   @ReturnsMutableCopy
   public static List <String> readList (@Nonnull final IInputStreamProvider aISP)
   {
-    if (aISP == null)
-      throw new NullPointerException ("ISP");
+    ValueEnforcer.notNull (aISP, "InputStreamProvider");
 
     return readList (aISP.getInputStream ());
   }
@@ -92,8 +92,7 @@ public final class XMLListHandler
   public static ESuccess readList (@Nonnull final IInputStreamProvider aISP,
                                    @Nonnull final Collection <String> aTargetList)
   {
-    if (aISP == null)
-      throw new NullPointerException ("ISP");
+    ValueEnforcer.notNull (aISP, "InputStreamProvider");
 
     return readList (aISP.getInputStream (), aTargetList);
   }
@@ -132,10 +131,8 @@ public final class XMLListHandler
   public static ESuccess readList (@Nonnull @WillClose final InputStream aIS,
                                    @Nonnull final Collection <String> aTargetList)
   {
-    if (aIS == null)
-      throw new NullPointerException ("resource");
-    if (aTargetList == null)
-      throw new NullPointerException ("targetList");
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.notNull (aTargetList, "TargetList");
 
     try
     {
@@ -163,10 +160,8 @@ public final class XMLListHandler
   public static ESuccess readList (@Nonnull final IMicroElement aParentElement,
                                    @Nonnull final Collection <String> aTargetList)
   {
-    if (aParentElement == null)
-      throw new NullPointerException ("parentElement");
-    if (aTargetList == null)
-      throw new NullPointerException ("targetList");
+    ValueEnforcer.notNull (aParentElement, "ParentElement");
+    ValueEnforcer.notNull (aTargetList, "TargetList");
 
     try
     {
@@ -192,8 +187,7 @@ public final class XMLListHandler
   @Nonnull
   public static IMicroDocument createListDocument (@Nonnull final Collection <String> aCollection)
   {
-    if (aCollection == null)
-      throw new NullPointerException ("collection");
+    ValueEnforcer.notNull (aCollection, "Collection");
 
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_LIST);
@@ -209,8 +203,7 @@ public final class XMLListHandler
   public static ESuccess writeList (@Nonnull final Collection <String> aCollection,
                                     @Nonnull final IOutputStreamProvider aOSP)
   {
-    if (aOSP == null)
-      throw new NullPointerException ("outputStreamProvider");
+    ValueEnforcer.notNull (aOSP, "OutputStreamProvider");
 
     return writeList (aCollection, aOSP.getOutputStream (EAppend.DEFAULT));
   }
@@ -231,10 +224,8 @@ public final class XMLListHandler
   public static ESuccess writeList (@Nonnull final Collection <String> aCollection,
                                     @Nonnull @WillClose final OutputStream aOS)
   {
-    if (aCollection == null)
-      throw new NullPointerException ("map");
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aCollection, "Collection");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     try
     {

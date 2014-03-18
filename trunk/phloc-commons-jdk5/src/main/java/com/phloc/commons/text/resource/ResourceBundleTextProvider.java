@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.text.impl.AbstractTextProvider;
@@ -42,9 +43,7 @@ public class ResourceBundleTextProvider extends AbstractTextProvider
 
   public ResourceBundleTextProvider (@Nonnull final ResourceBundleKey aResBundleKey)
   {
-    if (aResBundleKey == null)
-      throw new NullPointerException ("resBundleKey");
-    m_aResBundleKey = aResBundleKey;
+    m_aResBundleKey = ValueEnforcer.notNull (aResBundleKey, "ResBundleKey");
   }
 
   @Override

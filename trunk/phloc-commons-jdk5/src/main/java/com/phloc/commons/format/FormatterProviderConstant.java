@@ -19,6 +19,7 @@ package com.phloc.commons.format;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -33,9 +34,7 @@ public final class FormatterProviderConstant implements IFormatterProvider
 
   public FormatterProviderConstant (@Nonnull final IFormatter aFormatter)
   {
-    if (aFormatter == null)
-      throw new NullPointerException ("formatter");
-    m_aFormatter = aFormatter;
+    m_aFormatter = ValueEnforcer.notNull (aFormatter, "Formatter");
   }
 
   @Nonnull

@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.utils;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
 import com.phloc.commons.microdom.IMicroNode;
@@ -88,10 +89,8 @@ public final class MicroWalker
                                                       @Nonnull final IChildrenProvider <T> aChildrenResolver,
                                                       @Nonnull final IHierarchyWalkerCallback <? super T> aCallback)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aCallback, "Callback");
 
     aCallback.begin ();
     try

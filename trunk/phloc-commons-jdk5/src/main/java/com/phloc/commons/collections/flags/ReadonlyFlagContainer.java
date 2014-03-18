@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -43,22 +44,19 @@ public final class ReadonlyFlagContainer implements IReadonlyFlagContainer
 
   public ReadonlyFlagContainer (@Nonnull final Collection <String> aValues)
   {
-    if (aValues == null)
-      throw new NullPointerException ("Values");
+    ValueEnforcer.notNull (aValues, "Values");
     m_aFlags = ContainerHelper.newSet (aValues);
   }
 
   public ReadonlyFlagContainer (@Nonnull final String... aValues)
   {
-    if (aValues == null)
-      throw new NullPointerException ("Values");
+    ValueEnforcer.notNull (aValues, "Values");
     m_aFlags = ContainerHelper.newSet (aValues);
   }
 
   public ReadonlyFlagContainer (@Nonnull final IReadonlyFlagContainer aCont)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
+    ValueEnforcer.notNull (aCont, "Cont");
     m_aFlags = aCont.getAllFlags ();
   }
 

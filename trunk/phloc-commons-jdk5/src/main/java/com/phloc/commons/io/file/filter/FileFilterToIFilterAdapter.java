@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.filter.FilterChainAND;
 import com.phloc.commons.filter.FilterChainOR;
 import com.phloc.commons.filter.IFilter;
@@ -51,9 +51,13 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
 
   public FileFilterToIFilterAdapter (@Nonnull final FileFilter aFileFilter)
   {
-    if (aFileFilter == null)
-      throw new NullPointerException ("fileFilter");
-    m_aFileFilter = aFileFilter;
+    m_aFileFilter = ValueEnforcer.notNull (aFileFilter, "FileFilter");
+  }
+
+  @Nonnull
+  public FileFilter getFileFilter ()
+  {
+    return m_aFileFilter;
   }
 
   public boolean matchesFilter (@Nullable final File aFile)
@@ -82,8 +86,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   @Nonnull
   public static IFilter <File> getANDChained (@Nonnull final FileFilter... aFileFilters)
   {
-    if (ArrayHelper.isEmpty (aFileFilters))
-      throw new IllegalArgumentException ("fileFilters");
+    ValueEnforcer.notEmpty (aFileFilters, "FileFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
     for (final FileFilter aFileFilter : aFileFilters)
@@ -94,8 +97,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   @Nonnull
   public static IFilter <File> getANDChained (@Nonnull final FilenameFilter... aFilenameFilters)
   {
-    if (ArrayHelper.isEmpty (aFilenameFilters))
-      throw new IllegalArgumentException ("filenameFilters");
+    ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
     for (final FilenameFilter aFilenameFilter : aFilenameFilters)
@@ -106,8 +108,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   @Nonnull
   public static IFilter <File> getORChained (@Nonnull final FileFilter... aFileFilters)
   {
-    if (ArrayHelper.isEmpty (aFileFilters))
-      throw new IllegalArgumentException ("fileFilters");
+    ValueEnforcer.notEmpty (aFileFilters, "FileFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
     for (final FileFilter aFileFilter : aFileFilters)
@@ -118,8 +119,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   @Nonnull
   public static IFilter <File> getORChained (@Nonnull final FilenameFilter... aFilenameFilters)
   {
-    if (ArrayHelper.isEmpty (aFilenameFilters))
-      throw new IllegalArgumentException ("fileFilters");
+    ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
     for (final FilenameFilter aFilenameFilter : aFilenameFilters)

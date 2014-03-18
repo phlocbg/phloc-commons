@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -35,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * The not-thread safe implementation of {@link IFlagContainer}.
- *
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -51,22 +52,19 @@ public class FlagContainer implements IFlagContainer
 
   public FlagContainer (@Nonnull final Collection <String> aValues)
   {
-    if (aValues == null)
-      throw new NullPointerException ("Values");
+    ValueEnforcer.notNull (aValues, "Values");
     m_aFlags.addAll (aValues);
   }
 
   public FlagContainer (@Nonnull final String... aValues)
   {
-    if (aValues == null)
-      throw new NullPointerException ("Values");
+    ValueEnforcer.notNull (aValues, "Values");
     Collections.addAll (m_aFlags, aValues);
   }
 
   public FlagContainer (@Nonnull final IReadonlyFlagContainer aCont)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
+    ValueEnforcer.notNull (aCont, "Cont");
     m_aFlags.addAll (aCont.getAllFlags ());
   }
 
@@ -85,8 +83,7 @@ public class FlagContainer implements IFlagContainer
   @Nonnull
   public EChange addFlag (@Nonnull final String sName)
   {
-    if (sName == null)
-      throw new NullPointerException ("name");
+    ValueEnforcer.notNull (sName, "Name");
 
     return EChange.valueOf (m_aFlags.add (sName));
   }

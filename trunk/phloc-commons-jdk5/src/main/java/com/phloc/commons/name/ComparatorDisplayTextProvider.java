@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.compare.AbstractCollationComparator;
 import com.phloc.commons.compare.ESortOrder;
 
@@ -75,12 +76,20 @@ public final class ComparatorDisplayTextProvider <DATATYPE> extends AbstractColl
                                         @Nonnull final ESortOrder eSortOrder)
   {
     super (aSortLocale, eSortOrder);
-    if (aDisplayTextProvider == null)
-      throw new NullPointerException ("displayTextProvider");
-    if (aContentLocale == null)
-      throw new NullPointerException ("contentLocale");
-    m_aDisplayTextProvider = aDisplayTextProvider;
-    m_aContentLocale = aContentLocale;
+    m_aDisplayTextProvider = ValueEnforcer.notNull (aDisplayTextProvider, "DisplayTextProvider");
+    m_aContentLocale = ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+  }
+
+  @Nonnull
+  public IDisplayTextProvider <DATATYPE> getDisplayTextProvider ()
+  {
+    return m_aDisplayTextProvider;
+  }
+
+  @Nonnull
+  public Locale getContentLocale ()
+  {
+    return m_aContentLocale;
   }
 
   @Override

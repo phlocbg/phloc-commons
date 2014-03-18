@@ -32,6 +32,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.cache.AnnotationUsageCache;
 import com.phloc.commons.lang.ClassHelper;
@@ -97,10 +98,8 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
 
   public void registerEqualsImplementation (@Nonnull final Class <?> aClass, @Nonnull final IEqualsImplementation aImpl)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-    if (aImpl == null)
-      throw new NullPointerException ("implementation");
+    ValueEnforcer.notNull (aClass, "Class");
+    ValueEnforcer.notNull (aImpl, "Implementation");
 
     if (aClass.equals (Object.class))
       throw new IllegalArgumentException ("You cannot provide an equals implementation for Object.class!");
@@ -323,5 +322,10 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       bAreEqual = aImpl.areEqual (aObj1, aObj2);
     }
     return bAreEqual;
+  }
+
+  public static void clearCache ()
+  {
+    s_aInstance.m_aDirectEquals.clearCache ();
   }
 }

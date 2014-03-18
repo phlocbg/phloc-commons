@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.MustBeLocked;
 import com.phloc.commons.annotations.MustBeLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
@@ -39,7 +40,6 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.StatisticsManager;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -61,23 +61,19 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
 
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final String m_sCacheName;
   protected final IStatisticsHandlerCache m_aCacheAccessStats;
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
-
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
-  private final String m_sCacheName;
   private volatile Map <KEYTYPE, VALUETYPE> m_aCache;
 
   public AbstractCache (@Nonnull @Nonempty final String sCacheName)
   {
-    if (StringHelper.hasNoText (sCacheName))
-      throw new IllegalArgumentException ("cacheName");
-
+    m_sCacheName = ValueEnforcer.notEmpty (sCacheName, "cacheName");
     m_aCacheAccessStats = StatisticsManager.getCacheHandler (STATISTICS_PREFIX + sCacheName + "$access");
     m_aCacheRemoveStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$remove");
     m_aCacheClearStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$clear");
-    m_sCacheName = sCacheName;
     if (isJMXEnabled ())
       JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
   }
@@ -122,10 +118,8 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
   @MustBeLocked (ELockType.WRITE)
   protected final void putInCacheNotLocked (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
   {
-    if (aKey == null)
-      throw new NullPointerException ("cacheKey");
-    if (aValue == null)
-      throw new NullPointerException ("cacheValue");
+    ValueEnforcer.notNull (aKey, "cacheKey");
+    ValueEnforcer.notNull (aValue, "cacheValue");
 
     // try again in write lock
     if (m_aCache == null)
@@ -148,10 +142,8 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
    */
   protected final void putInCache (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
   {
-    if (aKey == null)
-      throw new NullPointerException ("cacheKey");
-    if (aValue == null)
-      throw new NullPointerException ("cacheValue");
+    ValueEnforcer.notNull (aKey, "cacheKey");
+    ValueEnforcer.notNull (aValue, "cacheValue");
 
     m_aRWLock.writeLock ().lock ();
     try

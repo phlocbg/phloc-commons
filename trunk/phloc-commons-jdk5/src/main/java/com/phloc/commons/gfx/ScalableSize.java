@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.math.IHasWidthAndHeight;
 import com.phloc.commons.math.MathHelper;
@@ -31,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This class represents an object having width and height.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -47,12 +48,8 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
 
   public ScalableSize (@Nonnegative final int nWidth, @Nonnegative final int nHeight)
   {
-    if (nWidth < 0)
-      throw new IllegalArgumentException ("Width may not be < 0: " + nWidth);
-    if (nHeight < 0)
-      throw new IllegalArgumentException ("Height may not be < 0: " + nHeight);
-    m_nWidth = nWidth;
-    m_nHeight = nHeight;
+    m_nWidth = ValueEnforcer.isGE0 (nWidth, "Width");
+    m_nHeight = ValueEnforcer.isGE0 (nHeight, "Height");
   }
 
   @Nonnegative
@@ -69,7 +66,7 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
 
   /**
    * Return the scaled width and height relative to a maximum size.
-   *
+   * 
    * @param nMaxWidth
    *        Maximum width. Must be &gt; 0.
    * @param nMaxHeight
@@ -81,10 +78,8 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
   @CheckReturnValue
   public ScalableSize getBestMatchingSize (@Nonnegative final int nMaxWidth, @Nonnegative final int nMaxHeight)
   {
-    if (nMaxWidth < 1)
-      throw new IllegalArgumentException ("Passed width value is not allowed: " + nMaxWidth);
-    if (nMaxHeight < 1)
-      throw new IllegalArgumentException ("Passed height value is not allowed: " + nMaxHeight);
+    ValueEnforcer.isGT0 (nMaxWidth, "MaxWidth");
+    ValueEnforcer.isGT0 (nMaxHeight, "MaxHeight");
 
     final double dRelWidth = MathHelper.getDividedDouble (m_nWidth, nMaxWidth);
     final double dRelHeight = MathHelper.getDividedDouble (m_nHeight, nMaxHeight);
@@ -105,8 +100,8 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
   @CheckReturnValue
   public ScalableSize getScaledToWidth (@Nonnegative final int nNewWidth)
   {
-    if (nNewWidth < 1)
-      throw new IllegalArgumentException ("Passed width value is not allowed: " + nNewWidth);
+    ValueEnforcer.isGT0 (nNewWidth, "NewWidth");
+
     if (m_nWidth == nNewWidth)
       return this;
     final double dMultFactory = MathHelper.getDividedDouble (nNewWidth, m_nWidth);
@@ -117,8 +112,8 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
   @CheckReturnValue
   public ScalableSize getScaledToHeight (@Nonnegative final int nNewHeight)
   {
-    if (nNewHeight < 1)
-      throw new IllegalArgumentException ("Passed height value is not allowed: " + nNewHeight);
+    ValueEnforcer.isGT0 (nNewHeight, "NewHeight");
+
     if (m_nHeight == nNewHeight)
       return this;
     final double dMultFactory = MathHelper.getDividedDouble (nNewHeight, m_nHeight);
@@ -139,7 +134,6 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
   @Override
   public int hashCode ()
   {
-    //noinspection SuspiciousNameCombination
     return new HashCodeGenerator (this).append (m_nWidth).append (m_nHeight).getHashCode ();
   }
 

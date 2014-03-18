@@ -88,7 +88,7 @@ public final class CharsetManagerTest
       CharsetManager.getAsBytes (s, (String) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.lang.DecimalFormatSymbolsFactory;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -62,8 +63,7 @@ public final class SizeHelper
 
   public SizeHelper (@Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("displayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_aDFS = DecimalFormatSymbolsFactory.getInstance (aDisplayLocale);
     m_aDF0 = new DecimalFormat ("0", m_aDFS);
     m_aDF1 = new DecimalFormat ("0.0", m_aDFS);
@@ -79,8 +79,7 @@ public final class SizeHelper
   @Nonnull
   private String _format (final double dSize, @Nonnegative final int nDecimals)
   {
-    if (nDecimals < 0)
-      throw new IllegalArgumentException ("Number of decimals must be >= 0!");
+    ValueEnforcer.isGE0 (nDecimals, "Decimals");
 
     if (nDecimals == 0)
       return _format ((long) dSize);

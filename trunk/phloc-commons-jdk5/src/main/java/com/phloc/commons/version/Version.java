@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.IHasStringRepresentation;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -35,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class represents a single version object. It supports 4 elements: major
  * version (integer), minor version (integer), micro version (integer) and a
  * qualifier (string).
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -61,7 +62,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @throws IllegalArgumentException
@@ -74,7 +75,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major and minor version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -90,7 +91,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   /**
    * Create a new version with major, minor and micro version number. The
    * qualifier remains null.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -115,7 +116,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with 3 integer values and a qualifier.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -136,18 +137,13 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
                   @Nonnegative final int nMicro,
                   @Nullable final String sQualifier)
   {
+    ValueEnforcer.isGE0 (nMajor, "Major");
+    ValueEnforcer.isGE0 (nMinor, "Minor");
+    ValueEnforcer.isGE0 (nMicro, "Micro");
     m_nMajor = nMajor;
     m_nMinor = nMinor;
     m_nMicro = nMicro;
     m_sQualifier = StringHelper.hasNoText (sQualifier) ? null : sQualifier;
-
-    // check consistency
-    if (m_nMajor < 0)
-      throw new IllegalArgumentException ("Major version " + m_nMajor + " is < 0");
-    if (m_nMinor < 0)
-      throw new IllegalArgumentException ("Minor version " + m_nMinor + " is < 0");
-    if (m_nMicro < 0)
-      throw new IllegalArgumentException ("Micro version " + m_nMicro + " is < 0");
   }
 
   /**
@@ -158,7 +154,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    * minor ::= number<br>
    * micro ::= number<br>
    * qualifier ::= .+
-   *
+   * 
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @throws IllegalArgumentException
@@ -199,7 +195,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Construct a version object from a string.
-   *
+   * 
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @param bOldVersion
@@ -241,7 +237,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
     else
     {
       // Complex parsing
-      Integer aMajor ;
+      Integer aMajor;
       Integer aMinor = null;
       Integer aMicro = null;
       String sQualifier = null;
@@ -298,12 +294,9 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
     }
 
     // check consistency
-    if (m_nMajor < 0)
-      throw new IllegalArgumentException ("Major version " + m_nMajor + " is < 0");
-    if (m_nMinor < 0)
-      throw new IllegalArgumentException ("Minor version " + m_nMinor + " is < 0");
-    if (m_nMicro < 0)
-      throw new IllegalArgumentException ("Micro version " + m_nMicro + " is < 0");
+    ValueEnforcer.isGE0 (m_nMajor, "Major");
+    ValueEnforcer.isGE0 (m_nMinor, "Minor");
+    ValueEnforcer.isGE0 (m_nMicro, "Micro");
   }
 
   @Nonnegative
@@ -332,7 +325,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Compares two Version objects.
-   *
+   * 
    * @param rhs
    *        the version to compare to
    * @return &lt; 0 if this is less than rhs; &gt; 0 if this is greater than
@@ -342,8 +335,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    */
   public int compareTo (@Nonnull final Version rhs)
   {
-    if (rhs == null)
-      throw new NullPointerException ("Cannot compare to null");
+    ValueEnforcer.notNull (rhs, "Rhs");
 
     // compare major version
     int ret = m_nMajor - rhs.m_nMajor;
@@ -419,7 +411,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Get the string representation of the version number.
-   *
+   * 
    * @param bPrintZeroElements
    *        If <code>true</code> than trailing zeroes are printed, otherwise
    *        printed zeroes are not printed.

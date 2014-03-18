@@ -44,6 +44,9 @@ public enum ENewLineMode
     m_sText = sText;
   }
 
+  /**
+   * @return The textual representation of the new line in this mode.
+   */
   @Nonnull
   @Nonempty
   public String getText ()
