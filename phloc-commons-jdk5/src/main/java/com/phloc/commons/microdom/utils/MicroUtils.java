@@ -17,9 +17,6 @@
  */
 package com.phloc.commons.microdom.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -65,37 +62,6 @@ public final class MicroUtils
 
   private MicroUtils ()
   {}
-
-  @Deprecated
-  @Nullable
-  public static List <IMicroNode> nl2br (@Nullable final String sText)
-  {
-    if (sText == null)
-      return null;
-
-    final List <IMicroNode> ret = new ArrayList <IMicroNode> ();
-    int start = 0;
-    while (true)
-    {
-      final int i = sText.indexOf ('\n', start);
-      if (i < 0)
-        break;
-
-      if (start != i)
-        ret.add (new MicroText (sText.substring (start, i)));
-
-      ret.add (new MicroElement ("br"));
-
-      // 1 == strlen ("\n")
-      start = i + 1;
-    }
-
-    // append everything after the last "\n" (if something is remaining)
-    if (start < sText.length ())
-      ret.add (new MicroText (sText.substring (start)));
-
-    return ret;
-  }
 
   @Nonnull
   public static IMicroNode append (@Nonnull final IMicroNode aSrcNode, @Nullable final Object aChild)

@@ -42,18 +42,6 @@ public final class MinLengthAddTrailingFormatter extends AbstractStringFormatter
     this (null, nMinLength, cFill);
   }
 
-  /**
-   * @deprecated Use {@link #MinLengthAddTrailingFormatter(IFormatter,int,char)}
-   *             instead
-   */
-  @Deprecated
-  public MinLengthAddTrailingFormatter (@Nonnegative final int nMinLength,
-                                        final char cFill,
-                                        @Nullable final IFormatter aNestedFormatter)
-  {
-    this (aNestedFormatter, nMinLength, cFill);
-  }
-
   public MinLengthAddTrailingFormatter (@Nullable final IFormatter aNestedFormatter,
                                         @Nonnegative final int nMinLength,
                                         final char cFill)

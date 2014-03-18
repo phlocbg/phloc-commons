@@ -88,23 +88,6 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
   }
 
   /**
-   * Create a new bit output stream based on an existing Java OutputStream.
-   * 
-   * @param aOS
-   *        the output stream this class should use. May not be
-   *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first (
-   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
-   *        last ({@link ByteOrder#BIG_ENDIAN}).
-   */
-  @Deprecated
-  public NonBlockingBitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
-  {
-    this (aOS, bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-  }
-
-  /**
    * @return The byte order used. Never <code>null</code>.
    */
   @Nonnull

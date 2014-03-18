@@ -51,20 +51,6 @@ public final class ChangeLog implements Serializable
   /**
    * Constructor.
    * 
-   * @param aVersion
-   *        The change log version.
-   * @param sComponent
-   *        The name of the component the changelog belongs to.
-   */
-  @Deprecated
-  public ChangeLog (@Nonnull final Version aVersion, @Nonnull @Nonempty final String sComponent)
-  {
-    this (aVersion.getAsString (), sComponent);
-  }
-
-  /**
-   * Constructor.
-   * 
    * @param sVersion
    *        The change log version string.
    * @param sComponent

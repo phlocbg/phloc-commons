@@ -178,14 +178,6 @@ public class MimeType implements IMimeType
     return _getParametersAsString (eQuotingAlgorithm);
   }
 
-  @Nonnull
-  @Deprecated
-  public String getAsStringWithEncoding (@Nonnull final String sEncoding)
-  {
-    // Don't store in member because this is not used so often
-    return m_sMainTypeAsString + CMimeType.CHARSET_PARAM + sEncoding;
-  }
-
   /**
    * Add a parameter.
    * 
@@ -375,21 +367,5 @@ public class MimeType implements IMimeType
                                        .append ("subType", m_sContentSubType)
                                        .appendIfNotNull ("parameters", m_aParameters)
                                        .toString ();
-  }
-
-  /**
-   * Try to convert the string representation of a MIME type to an object.
-   * 
-   * @param sMimeType
-   *        The string representation to be converted. May be <code>null</code>.
-   * @return <code>null</code> if the parsed string could not be converted to a
-   *         MIME type object.
-   * @deprecated Use {@link MimeTypeParser#parseMimeType(String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static MimeType parseFromStringWithoutEncoding (@Nullable final String sMimeType)
-  {
-    return MimeTypeParser.parseMimeType (sMimeType);
   }
 }

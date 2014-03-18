@@ -48,12 +48,6 @@ public final class StringScanner
     return m_nCurIndex;
   }
 
-  @Deprecated
-  public void setCurrentIndex (@Nonnegative final int nCurIndex)
-  {
-    setIndex (nCurIndex);
-  }
-
   @Nonnegative
   public int getRemainingChars ()
   {
