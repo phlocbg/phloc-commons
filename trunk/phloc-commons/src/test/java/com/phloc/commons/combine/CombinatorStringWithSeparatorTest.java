@@ -28,7 +28,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link CombinatorStringWithSeparator}.
- *
+ * 
  * @author Philip Helger
  */
 public final class CombinatorStringWithSeparatorTest
@@ -45,20 +45,11 @@ public final class CombinatorStringWithSeparatorTest
 
     try
     {
-      // Empty separator not allowed
-      new CombinatorStringWithSeparator ("");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      // Empty separator not allowed
+      // null separator not allowed
       new CombinatorStringWithSeparator (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new CombinatorStringWithSeparator (";"),

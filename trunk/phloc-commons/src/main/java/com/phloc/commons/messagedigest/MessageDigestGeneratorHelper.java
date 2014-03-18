@@ -27,6 +27,7 @@ import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -144,8 +145,7 @@ public final class MessageDigestGeneratorHelper
   public static byte [] getDigestFromInputStream (@Nonnull @WillClose final InputStream aIS,
                                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     final NonBlockingMessageDigestGenerator aMDGen = new NonBlockingMessageDigestGenerator (aAlgorithms);
     final byte [] aBuf = new byte [2048];

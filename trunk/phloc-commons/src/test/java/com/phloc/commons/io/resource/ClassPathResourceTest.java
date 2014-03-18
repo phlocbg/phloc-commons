@@ -212,7 +212,7 @@ public final class ClassPathResourceTest
       new ClassPathResource ((String) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

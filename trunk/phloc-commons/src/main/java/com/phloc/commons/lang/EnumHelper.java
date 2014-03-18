@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.id.IHasID;
@@ -98,8 +99,7 @@ public final class EnumHelper
                                                                                                             @Nullable final KEYTYPE aID,
                                                                                                             @Nullable final ENUMTYPE aDefault)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     if (aID != null)
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())
@@ -170,8 +170,7 @@ public final class EnumHelper
                                                                                                                  @Nullable final String sID,
                                                                                                                  @Nullable final ENUMTYPE aDefault)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     if (sID != null)
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())
@@ -240,8 +239,7 @@ public final class EnumHelper
                                                                                                   final int nID,
                                                                                                   @Nullable final ENUMTYPE aDefault)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     final String sCacheKey = aClass.getName ();
     Object [] aCachedData;
@@ -370,8 +368,7 @@ public final class EnumHelper
                                                                                              @Nullable final String sName,
                                                                                              @Nullable final ENUMTYPE aDefault)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     if (StringHelper.hasText (sName))
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())
@@ -441,8 +438,7 @@ public final class EnumHelper
                                                                                                             @Nullable final String sName,
                                                                                                             @Nullable final ENUMTYPE aDefault)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     if (StringHelper.hasText (sName))
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())

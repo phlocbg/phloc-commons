@@ -27,10 +27,10 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.UnsupportedOperation;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.lang.GenericReflection;
 
@@ -68,12 +68,8 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    */
   public CombinationGenerator (@Nonnull @Nonempty final List <DATATYPE> aElements, @Nonnegative final int nSlotCount)
   {
-    if (ContainerHelper.isEmpty (aElements))
-      throw new IllegalArgumentException ("No elements passed");
-    if (nSlotCount < 0)
-      throw new IllegalArgumentException ("To small slot count: " + nSlotCount);
-    if (nSlotCount > aElements.size ())
-      throw new IllegalArgumentException ("To few elements for specified slots: " + aElements.size ());
+    ValueEnforcer.notEmpty (aElements, "Elements");
+    ValueEnforcer.isBetweenInclusive (nSlotCount, "SlotCount", 0, aElements.size ());
 
     m_aElements = aElements.toArray ();
     m_aIndexResult = new int [nSlotCount];

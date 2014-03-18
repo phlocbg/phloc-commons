@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.convert.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
@@ -37,8 +38,7 @@ public final class StringBasedMicroTypeConverter implements IMicroTypeConverter
 
   public StringBasedMicroTypeConverter (@Nonnull final Class <?> aNativeClass)
   {
-    if (aNativeClass == null)
-      throw new NullPointerException ("nativeClass");
+    ValueEnforcer.notNull (aNativeClass, "NativeClass");
 
     m_aNativeClass = aNativeClass;
   }

@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -381,10 +382,8 @@ public final class ClassHelper
    */
   public static boolean areConvertibleClasses (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
-    if (aSrcClass == null)
-      throw new NullPointerException ("srcClass");
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
+    ValueEnforcer.notNull (aSrcClass, "SrcClass");
+    ValueEnforcer.notNull (aDstClass, "DstClass");
 
     // Same class?
     if (aDstClass.equals (aSrcClass))

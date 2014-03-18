@@ -153,7 +153,7 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    */
   public void writeBits (final int aValue, @Nonnegative final int nNumBits) throws IOException
   {
-    ValueEnforcer.isBetweenInclusive (nNumBits, "NumberOfBits", 1, 32);
+    ValueEnforcer.isBetweenInclusive (nNumBits, "NumberOfBits", 1, CGlobal.BITS_PER_INT);
 
     for (int i = nNumBits - 1; i >= 0; i--)
       writeBit ((aValue >> i) & 1);

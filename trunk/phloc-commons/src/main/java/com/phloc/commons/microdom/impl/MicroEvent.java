@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.microdom.EMicroEvent;
 import com.phloc.commons.microdom.IMicroEvent;
 import com.phloc.commons.microdom.IMicroNode;
@@ -42,10 +43,7 @@ public final class MicroEvent implements IMicroEvent
                      @Nullable final IMicroNode aSourceNode,
                      @Nullable final IMicroNode aTargetNode)
   {
-    if (eEventType == null)
-      throw new NullPointerException ("eventType");
-
-    m_eEventType = eEventType;
+    m_eEventType = ValueEnforcer.notNull (eEventType, "EventType");
     m_aSourceNode = aSourceNode;
     m_aTargetNode = aTargetNode;
   }
@@ -72,8 +70,8 @@ public final class MicroEvent implements IMicroEvent
   public String toString ()
   {
     return new ToStringGenerator (this).append ("eventType", m_eEventType)
-                                       .append ("sourceNode", m_aSourceNode)
-                                       .append ("targetNode", m_aTargetNode)
+                                       .appendIfNotNull ("sourceNode", m_aSourceNode)
+                                       .appendIfNotNull ("targetNode", m_aTargetNode)
                                        .toString ();
   }
 }

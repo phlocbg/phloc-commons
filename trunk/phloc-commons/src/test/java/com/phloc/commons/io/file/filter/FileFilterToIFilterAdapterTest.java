@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FileFilterToIFilterAdapter}.
- *
+ * 
  * @author Philip Helger
  */
 public final class FileFilterToIFilterAdapterTest
@@ -108,7 +108,7 @@ public final class FileFilterToIFilterAdapterTest
       FileFilterToIFilterAdapter.getANDChained ((FileFilter []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
@@ -123,7 +123,7 @@ public final class FileFilterToIFilterAdapterTest
       FileFilterToIFilterAdapter.getORChained ((FileFilter []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

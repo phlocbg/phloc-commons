@@ -31,6 +31,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -93,10 +94,8 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   private static void _registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
                                                           @Nonnull final IMicroTypeConverter aConverter)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aClass, "Class");
+    ValueEnforcer.notNull (aConverter, "Converter");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -141,8 +140,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   @Nullable
   public static IMicroTypeConverter getConverterToNative (@Nonnull final Class <?> aDstClass)
   {
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
+    ValueEnforcer.notNull (aDstClass, "DestClass");
 
     s_aRWLock.readLock ().lock ();
     try

@@ -70,7 +70,7 @@ public final class CharsetManager
    *         If the charset could not be resolved.
    */
   @Nonnull
-  public static Charset getCharsetFromName (@Nonnull final String sCharsetName)
+  public static Charset getCharsetFromName (@Nonnull @Nonempty final String sCharsetName)
   {
     try
     {

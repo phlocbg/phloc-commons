@@ -21,15 +21,15 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Base class for creating a cryptographic hash value. Don't mix it up with the
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
- *
+ * 
  * @author Philip Helger
  */
 public abstract class AbstractMessageDigestGenerator implements IMessageDigestGenerator
@@ -38,10 +38,8 @@ public abstract class AbstractMessageDigestGenerator implements IMessageDigestGe
   @Deprecated
   public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull @Nonempty final String sCharset)
   {
-    if (aValue == null)
-      throw new NullPointerException ("value");
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("charset");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notEmpty (sCharset, "Charset");
 
     return update (CharsetManager.getAsBytes (aValue, sCharset));
   }
@@ -49,10 +47,8 @@ public abstract class AbstractMessageDigestGenerator implements IMessageDigestGe
   @Nonnull
   public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull final Charset aCharset)
   {
-    if (aValue == null)
-      throw new NullPointerException ("value");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return update (CharsetManager.getAsBytes (aValue, aCharset));
   }
@@ -60,8 +56,7 @@ public abstract class AbstractMessageDigestGenerator implements IMessageDigestGe
   @Nonnull
   public final IMessageDigestGenerator update (@Nonnull final byte [] aValue)
   {
-    if (aValue == null)
-      throw new NullPointerException ("byteArray");
+    ValueEnforcer.notNull (aValue, "Value");
 
     return update (aValue, 0, aValue.length);
   }

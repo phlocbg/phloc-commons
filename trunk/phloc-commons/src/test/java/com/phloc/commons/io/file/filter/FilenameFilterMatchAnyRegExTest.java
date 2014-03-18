@@ -31,7 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FilenameFilterMatchAnyRegEx}.
- *
+ * 
  * @author Philip Helger
  */
 public final class FilenameFilterMatchAnyRegExTest
@@ -47,7 +47,7 @@ public final class FilenameFilterMatchAnyRegExTest
       new FilenameFilterMatchAnyRegEx ((String []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     final FilenameFilter ff = new FilenameFilterMatchAnyRegEx (".*htm$");

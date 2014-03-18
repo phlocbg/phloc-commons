@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -76,10 +77,8 @@ public final class ByteBufferUtils
                               @Nonnull final ByteBuffer aDstBuffer,
                               final boolean bNeedsFlip)
   {
-    if (aSrcBuffer == null)
-      throw new NullPointerException ("srcBuffer");
-    if (aDstBuffer == null)
-      throw new NullPointerException ("dstBuffer");
+    ValueEnforcer.notNull (aSrcBuffer, "SourceBuffer");
+    ValueEnforcer.notNull (aDstBuffer, "DestinationBuffer");
 
     int nRead = 0;
     if (bNeedsFlip)

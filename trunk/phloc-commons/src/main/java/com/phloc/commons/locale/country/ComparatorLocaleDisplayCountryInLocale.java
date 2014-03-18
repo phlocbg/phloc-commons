@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.compare.AbstractCollationComparator;
 
 /**
@@ -38,7 +39,14 @@ public final class ComparatorLocaleDisplayCountryInLocale extends AbstractCollat
                                                  @Nonnull final Locale aContentLocale)
   {
     super (aSortLocale);
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
     m_aContentLocale = aContentLocale;
+  }
+
+  @Nonnull
+  public Locale getContentLocale ()
+  {
+    return m_aContentLocale;
   }
 
   @Override

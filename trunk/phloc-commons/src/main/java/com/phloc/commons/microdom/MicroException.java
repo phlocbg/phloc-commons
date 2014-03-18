@@ -24,7 +24,7 @@ import com.phloc.commons.exceptions.LoggedRuntimeException;
  * 
  * @author Philip Helger
  */
-public final class MicroException extends LoggedRuntimeException
+public class MicroException extends LoggedRuntimeException
 {
   public MicroException (final String sMsg)
   {

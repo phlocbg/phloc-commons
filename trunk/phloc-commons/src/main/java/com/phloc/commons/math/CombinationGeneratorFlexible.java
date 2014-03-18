@@ -26,6 +26,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 
@@ -57,8 +58,7 @@ public final class CombinationGeneratorFlexible <DATATYPE>
    */
   public CombinationGeneratorFlexible (@Nonnegative final int nSlotCount, final boolean bAllowEmpty)
   {
-    if (nSlotCount < 0)
-      throw new IllegalArgumentException ("Passed slot count is too small: " + nSlotCount);
+    ValueEnforcer.isGE0 (nSlotCount, "SlotCount");
     m_nSlotCount = nSlotCount;
     m_bAllowEmpty = bAllowEmpty;
   }
@@ -74,10 +74,8 @@ public final class CombinationGeneratorFlexible <DATATYPE>
   public void iterateAllCombinations (@Nonnull final List <DATATYPE> aElements,
                                       @Nonnull final INonThrowingRunnableWithParameter <List <DATATYPE>> aCallback)
   {
-    if (aElements == null)
-      throw new NullPointerException ("elements");
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
+    ValueEnforcer.notNull (aElements, "Elements");
+    ValueEnforcer.notNull (aCallback, "Callback");
 
     for (int nSlotCount = m_bAllowEmpty ? 0 : 1; nSlotCount <= m_nSlotCount; nSlotCount++)
     {
@@ -105,8 +103,7 @@ public final class CombinationGeneratorFlexible <DATATYPE>
   @ReturnsMutableCopy
   public Set <List <DATATYPE>> getCombinations (@Nonnull final List <DATATYPE> aElements)
   {
-    if (aElements == null)
-      throw new NullPointerException ("elements");
+    ValueEnforcer.notNull (aElements, "Elements");
 
     final Set <List <DATATYPE>> aAllResults = new HashSet <List <DATATYPE>> ();
     iterateAllCombinations (aElements, new INonThrowingRunnableWithParameter <List <DATATYPE>> ()

@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -128,10 +129,8 @@ public final class ServiceLoaderUtils
                                                        @Nonnull final ClassLoader aClassLoader,
                                                        @Nullable final Logger aLogger)
   {
-    if (aSPIClass == null)
-      throw new NullPointerException ("SPIClass");
-    if (aClassLoader == null)
-      throw new NullPointerException ("ClassLoader");
+    ValueEnforcer.notNull (aSPIClass, "SPIClass");
+    ValueEnforcer.notNull (aClassLoader, "ClassLoader");
 
     final Logger aRealLogger = aLogger != null ? aLogger : s_aLogger;
 

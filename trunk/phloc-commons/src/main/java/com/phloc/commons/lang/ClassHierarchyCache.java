@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.LRUCache;
@@ -54,8 +55,7 @@ public final class ClassHierarchyCache
 
     public ClassList (@Nonnull final Class <?> aClass)
     {
-      if (aClass == null)
-        throw new NullPointerException ("class");
+      ValueEnforcer.notNull (aClass, "Class");
 
       // Check the whole class hierarchy of the source class
       final Set <Class <?>> aUniqueOrderedClasses = new LinkedHashSet <Class <?>> ();
@@ -174,8 +174,7 @@ public final class ClassHierarchyCache
   @Nonnull
   static ClassList getClassList (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
     final String sKey = aClass.getName ();
 
     // Get or update from cache
