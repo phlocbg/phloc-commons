@@ -3,6 +3,7 @@ package com.phloc.commons;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -52,13 +53,157 @@ public final class ValueEnforcer
    * Check that the passed Array is neither <code>null</code> nor empty.
    * 
    * @param aValue
-   *        The String to check.
+   *        The Array to check.
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
    */
   @Nonnull
   public static <T> T [] notEmpty (final T [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static boolean [] notEmpty (final boolean [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static byte [] notEmpty (final byte [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static char [] notEmpty (final char [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static double [] notEmpty (final double [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static float [] notEmpty (final float [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static int [] notEmpty (final int [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static long [] notEmpty (final long [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static short [] notEmpty (final short [] aValue, final String sName)
   {
     notNull (aValue, sName);
     if (aValue.length == 0)
@@ -77,6 +222,24 @@ public final class ValueEnforcer
    */
   @Nonnull
   public static <T extends Collection <?>> T notEmpty (final T aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.isEmpty ())
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Collection is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The String to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T extends Map <?, ?>> T notEmpty (final T aValue, final String sName)
   {
     notNull (aValue, sName);
     if (aValue.isEmpty ())
