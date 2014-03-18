@@ -44,10 +44,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXParseException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.io.IReadableResource;
@@ -96,9 +96,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    */
   protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType, @Nullable final IReadableResource aXSD)
   {
-    if (aType == null)
-      throw new NullPointerException ("type");
-    m_aType = aType;
+    m_aType = ValueEnforcer.notNull (aType, "Type");
     if (aXSD != null)
       m_aXSDs.add (aXSD);
   }
@@ -116,13 +114,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType,
                                     @Nullable final List <? extends IReadableResource> aXSDs)
   {
-    if (aType == null)
-      throw new NullPointerException ("type");
-    if (ContainerHelper.containsAnyNullElement (aXSDs))
-      throw new IllegalArgumentException ("The XSD list may not contain null elements!");
-    m_aType = aType;
+    m_aType = ValueEnforcer.notNull (aType, "Type");
     if (aXSDs != null)
+    {
+      ValueEnforcer.notEmptyNoNullValue (aXSDs, "XSDs");
       m_aXSDs.addAll (aXSDs);
+    }
   }
 
   /**
@@ -137,14 +134,13 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    */
   protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType, @Nullable final IReadableResource... aXSDs)
   {
-    if (aType == null)
-      throw new NullPointerException ("type");
-    if (ArrayHelper.containsAnyNullElement (aXSDs))
-      throw new IllegalArgumentException ("The XSD list may not contain null elements!");
-    m_aType = aType;
+    m_aType = ValueEnforcer.notNull (aType, "Type");
     if (aXSDs != null)
+    {
+      ValueEnforcer.notEmptyNoNullValue (aXSDs, "XSDs");
       for (final IReadableResource aXSD : aXSDs)
         m_aXSDs.add (aXSD);
+    }
   }
 
   /**
@@ -347,8 +343,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final JAXBTYPE read (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     return read (TransformSourceFactory.create (aFile));
   }
@@ -363,8 +358,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final JAXBTYPE read (@Nonnull final IReadableResource aResource)
   {
-    if (aResource == null)
-      throw new NullPointerException ("resource");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return read (TransformSourceFactory.create (aResource));
   }
@@ -379,8 +373,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final JAXBTYPE read (@Nonnull final InputStream aIS)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     return read (TransformSourceFactory.create (aIS));
   }
@@ -395,8 +388,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final JAXBTYPE read (@Nonnull final Node aNode)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
+    ValueEnforcer.notNull (aNode, "Node");
 
     return read (TransformSourceFactory.create (aNode));
   }
@@ -442,8 +434,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final JAXBTYPE read (@Nonnull final Source aSource)
   {
-    if (aSource == null)
-      throw new NullPointerException ("source");
+    ValueEnforcer.notNull (aSource, "Source");
 
     try
     {
@@ -514,8 +505,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nullable
   public final Document write (@Nonnull final JAXBTYPE aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     final Document aDoc = XMLFactory.newDocument ();
     return write (aObject, TransformResultFactory.create (aDoc)).isSuccess () ? aDoc : null;
@@ -584,10 +574,8 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nonnull
   public final ESuccess write (@Nonnull final JAXBTYPE aObject, @Nonnull final Result aResult)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
-    if (aResult == null)
-      throw new NullPointerException ("result");
+    ValueEnforcer.notNull (aObject, "Object");
+    ValueEnforcer.notNull (aResult, "Result");
 
     try
     {

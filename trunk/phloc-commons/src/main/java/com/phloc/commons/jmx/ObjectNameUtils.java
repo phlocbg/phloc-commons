@@ -27,12 +27,11 @@ import javax.annotation.concurrent.Immutable;
 import javax.management.JMException;
 import javax.management.ObjectName;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.exceptions.LoggedRuntimeException;
 import com.phloc.commons.lang.CGStringHelper;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Utility class to create JMX {@link ObjectName} objects.
@@ -61,8 +60,7 @@ public final class ObjectNameUtils
    */
   public static void setDefaultJMXDomain (@Nonnull @Nonempty final String sDefaultJMXDomain)
   {
-    if (StringHelper.hasNoText (sDefaultJMXDomain))
-      throw new IllegalArgumentException ("defaultJMXDomain is empty");
+    ValueEnforcer.notEmpty (sDefaultJMXDomain, "DefaultJMXDomain");
     if (sDefaultJMXDomain.indexOf (':') >= 0 || sDefaultJMXDomain.indexOf (' ') >= 0)
       throw new IllegalArgumentException ("defaultJMXDomain contains invalid chars: " + sDefaultJMXDomain);
 
@@ -99,8 +97,8 @@ public final class ObjectNameUtils
   @Nonnull
   public static ObjectName create (@Nonnull @Nonempty final Hashtable <String, String> aParams)
   {
-    if (ContainerHelper.isEmpty (aParams))
-      throw new IllegalArgumentException ("JMX objectName parameters may not be empty!");
+    ValueEnforcer.notEmpty (aParams, "Params");
+
     try
     {
       return new ObjectName (getDefaultJMXDomain (), aParams);
@@ -114,8 +112,8 @@ public final class ObjectNameUtils
   @Nonnull
   public static ObjectName create (@Nonnull @Nonempty final Map <String, String> aParams)
   {
-    if (ContainerHelper.isEmpty (aParams))
-      throw new IllegalArgumentException ("JMX objectName parameters may not be empty!");
+    ValueEnforcer.notEmpty (aParams, "Params");
+
     return create (new Hashtable <String, String> (aParams));
   }
 
@@ -154,8 +152,7 @@ public final class ObjectNameUtils
   @Nonnull
   public static ObjectName createWithDefaultProperties (@Nonnull final Object aObj)
   {
-    if (aObj == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObj, "Object");
 
     final Hashtable <String, String> aParams = new Hashtable <String, String> ();
     aParams.put (CJMX.PROPERTY_TYPE, CGStringHelper.getClassLocalName (aObj));
@@ -176,10 +173,8 @@ public final class ObjectNameUtils
   @Nonnull
   public static ObjectName createWithDefaultProperties (@Nonnull final Object aObj, @Nonnull final String sName)
   {
-    if (aObj == null)
-      throw new NullPointerException ("object");
-    if (sName == null)
-      throw new NullPointerException ("name");
+    ValueEnforcer.notNull (aObj, "Object");
+    ValueEnforcer.notNull (sName, "Name");
 
     final Hashtable <String, String> aParams = new Hashtable <String, String> ();
     aParams.put (CJMX.PROPERTY_TYPE, CGStringHelper.getClassLocalName (aObj));
