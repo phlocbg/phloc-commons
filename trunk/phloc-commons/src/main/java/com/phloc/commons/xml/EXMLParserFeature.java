@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -277,8 +278,7 @@ public enum EXMLParserFeature implements IHasName
 
   public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final boolean bValue)
   {
-    if (aParser == null)
-      throw new NullPointerException ("Reader");
+    ValueEnforcer.notNull (aParser, "Parser");
 
     if (m_eType != EXMLParserFeatureType.GENERAL && m_eType != EXMLParserFeatureType.SAX)
       s_aLogger.warn ("Parser feature '" + name () + "' is not applicable for SAX parsers!");
@@ -306,8 +306,7 @@ public enum EXMLParserFeature implements IHasName
 
   public void applyTo (@Nonnull final DocumentBuilderFactory aDocumentBuilderFactory, final boolean bValue)
   {
-    if (aDocumentBuilderFactory == null)
-      throw new NullPointerException ("DocumentBuilderFactory");
+    ValueEnforcer.notNull (aDocumentBuilderFactory, "DocumentBuilderFactory");
 
     if (m_eType != EXMLParserFeatureType.GENERAL && m_eType != EXMLParserFeatureType.DOM)
       s_aLogger.warn ("Parser feature '" + name () + "' is not applicable for DOM parsers!");
@@ -332,8 +331,7 @@ public enum EXMLParserFeature implements IHasName
   @ReturnsMutableCopy
   public static List <EXMLParserFeature> getAllFeaturesOfType (@Nonnull final EXMLParserFeatureType eFeatureType)
   {
-    if (eFeatureType == null)
-      throw new NullPointerException ("featureType");
+    ValueEnforcer.notNull (eFeatureType, "FeatureType");
 
     final List <EXMLParserFeature> ret = new ArrayList <EXMLParserFeature> ();
     for (final EXMLParserFeature eFeature : values ())

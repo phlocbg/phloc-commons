@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -65,12 +66,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter, @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aWriter == null)
-      throw new NullPointerException ("writer");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
-    m_aWriter = aWriter;
-    m_aSettings = aSettings;
+    m_aWriter = ValueEnforcer.notNull (aWriter, "Writer");
+    m_aSettings = ValueEnforcer.notNull (aSettings, "Settings");
     if (aSettings.getFormat ().isHTML ())
       m_eXMLVersion = EXMLSerializeVersion.HTML;
     else
@@ -270,8 +267,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                               @Nullable final String sPublicID,
                               @Nullable final String sSystemID)
   {
-    if (sQualifiedElementName == null)
-      throw new NullPointerException ("qualifiedElementName");
+    ValueEnforcer.notNull (sQualifiedElementName, "QualifiedElementName");
 
     final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion,
                                                           m_aSettings.getIncorrectCharacterHandling (),

@@ -18,9 +18,11 @@
 package com.phloc.commons.xml.dom;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
 
 /**
  * Represents different DOM features.<br>
@@ -64,5 +66,11 @@ public enum EXMLDOMFeature implements IHasID <String>
   public String getPlusFeature ()
   {
     return '+' + m_sID;
+  }
+
+  @Nullable
+  public static EXMLDOMFeature getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLDOMFeature.class, sID);
   }
 }

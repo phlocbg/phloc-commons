@@ -30,9 +30,9 @@ import javax.xml.validation.Validator;
 
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.convert.SimpleCacheWithConversion;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
 import com.phloc.commons.io.IReadableResource;
@@ -43,7 +43,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * Abstract base class for caching JAXP validation scheme elements. This class
  * is deprecated in favour of {@link DefaultSchemaCache}.
- *
+ * 
  * @author Philip Helger
  */
 @Deprecated
@@ -123,8 +123,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   @Nonnull
   public final Schema getSchema (@Nonnull final IReadableResource aResource)
   {
-    if (aResource == null)
-      throw new NullPointerException ("resources");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return _getSchema (aResource.getResourceID (), new Source [] { TransformSourceFactory.create (aResource) });
   }
@@ -132,8 +131,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final IReadableResource... aResources)
   {
-    if (ArrayHelper.isEmpty (aResources))
-      throw new IllegalArgumentException ("no resources provided!");
+    ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
 
     // Remove all duplicates while maintaining the order
     return _getSchemaFromMultipleSources (ContainerHelper.newOrderedSet (aResources));
@@ -142,8 +140,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final List <? extends IReadableResource> aResources)
   {
-    if (ContainerHelper.isEmpty (aResources))
-      throw new IllegalArgumentException ("no resources provided!");
+    ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
 
     // Remove all duplicates while maintaining the order
     return _getSchemaFromMultipleSources (ContainerHelper.newOrderedSet (aResources));
@@ -158,7 +155,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   /**
    * Utility method to get the validator for a given schema using the standard
    * logging error handler.
-   *
+   * 
    * @param aSchema
    *        The schema for which the validator is to be retrieved. May not be
    *        <code>null</code>.
@@ -167,8 +164,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   @Nonnull
   public static Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
   {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
+    ValueEnforcer.notNull (aSchema, "Schema");
 
     final Validator aValidator = aSchema.newValidator ();
     aValidator.setErrorHandler (LoggingSAXErrorHandler.getInstance ());

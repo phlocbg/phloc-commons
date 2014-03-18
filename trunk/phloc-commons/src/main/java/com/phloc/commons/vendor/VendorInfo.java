@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -85,9 +86,7 @@ public final class VendorInfo
 
   public static void setVendorLocation (@Nonnull @Nonempty final String sVendorLocation)
   {
-    if (StringHelper.hasNoText (sVendorLocation))
-      throw new IllegalArgumentException ("vendorLocation");
-    s_sVendorLocation = sVendorLocation;
+    s_sVendorLocation = ValueEnforcer.notEmpty (sVendorLocation, "VendorLocation");
   }
 
   @Nonnegative
@@ -98,9 +97,7 @@ public final class VendorInfo
 
   public static void setInceptionYear (@Nonnegative final int nInceptionYear)
   {
-    if (nInceptionYear < 0)
-      throw new IllegalArgumentException ("inceptionYear may not be negative");
-    s_nInceptionYear = nInceptionYear;
+    s_nInceptionYear = ValueEnforcer.isGE0 (nInceptionYear, "InceptionYear");
   }
 
   @Nonnull
@@ -111,9 +108,7 @@ public final class VendorInfo
 
   public static void setVendorName (@Nonnull @Nonempty final String sVendorName)
   {
-    if (StringHelper.hasNoText (sVendorName))
-      throw new IllegalArgumentException ("vendorName");
-    s_sVendorName = sVendorName;
+    s_sVendorName = ValueEnforcer.notEmpty (sVendorName, "VendorName");
   }
 
   @Nonnull
@@ -130,8 +125,7 @@ public final class VendorInfo
 
   public static void setVendorURL (@Nonnull @Nonempty final String sVendorURL)
   {
-    if (StringHelper.hasNoText (sVendorURL))
-      throw new IllegalArgumentException ("vendorURL");
+    ValueEnforcer.notEmpty (sVendorURL, "VendorURL");
 
     final IURLProtocol aProtocol = URLProtocolRegistry.getProtocol (sVendorURL);
     if (aProtocol == null)
@@ -162,8 +156,7 @@ public final class VendorInfo
 
   public static void setVendorEmail (@Nonnull @Nonempty final String sVendorEmail)
   {
-    if (StringHelper.hasNoText (sVendorEmail))
-      throw new IllegalArgumentException ("vendorEmail");
+    ValueEnforcer.notEmpty (sVendorEmail, "VendorEmail");
     if (!EmailAddressUtils.isValid (sVendorEmail))
       throw new IllegalArgumentException ("Illegal vendor email: " + sVendorEmail);
     s_sVendorEmail = sVendorEmail;

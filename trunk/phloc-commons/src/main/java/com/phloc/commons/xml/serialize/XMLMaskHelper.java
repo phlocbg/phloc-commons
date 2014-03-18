@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -547,8 +548,7 @@ public final class XMLMaskHelper
   @ReturnsMutableCopy
   public static char [] getAsCharArray (@Nonnull final Set <Character> aChars)
   {
-    if (aChars == null)
-      throw new NullPointerException ("chars");
+    ValueEnforcer.notNull (aChars, "Chars");
 
     final char [] ret = new char [aChars.size ()];
     int nIndex = 0;
