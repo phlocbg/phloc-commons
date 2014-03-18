@@ -34,6 +34,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
@@ -158,8 +159,7 @@ public final class SAXReader
   public static ESuccess readXMLSAX (@Nonnull @WillClose final InputStream aIS,
                                      @Nonnull final ISAXReaderSettings aSettings)
   {
-    if (aIS == null)
-      throw new NullPointerException ("IS");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     try
     {
@@ -175,8 +175,7 @@ public final class SAXReader
   public static ESuccess readXMLSAX (@Nonnull @WillClose final Reader aReader,
                                      @Nonnull final ISAXReaderSettings aSettings)
   {
-    if (aReader == null)
-      throw new NullPointerException ("Reader");
+    ValueEnforcer.notNull (aReader, "Reader");
 
     try
     {
@@ -207,10 +206,8 @@ public final class SAXReader
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
                                      @Nonnull final ISAXReaderSettings aSettings)
   {
-    if (aIS == null)
-      throw new NullPointerException ("InputSource");
-    if (aSettings == null)
-      throw new NullPointerException ("SAXReaderSettings");
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     try
     {

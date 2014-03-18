@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IChangeNotify;
 import com.phloc.commons.collections.ContainerHelper;
@@ -65,8 +66,7 @@ public class MultiLingualTextThreadSafe implements IMultiLingualText
    */
   public MultiLingualTextThreadSafe (@Nonnull final ISimpleMultiLingualText aSimpleMLT)
   {
-    if (aSimpleMLT == null)
-      throw new NullPointerException ("MLT");
+    ValueEnforcer.notNull (aSimpleMLT, "SimpleMLT");
 
     // Create a copy of the multilingual text!
     m_aMLT = new MultiLingualText (aSimpleMLT);
@@ -74,8 +74,7 @@ public class MultiLingualTextThreadSafe implements IMultiLingualText
 
   public MultiLingualTextThreadSafe (@Nonnull final IReadonlyMultiLingualText aMLT)
   {
-    if (aMLT == null)
-      throw new NullPointerException ("mlt");
+    ValueEnforcer.notNull (aMLT, "MLT");
 
     // Create a copy of the multilingual text!
     m_aMLT = new MultiLingualText (aMLT);

@@ -23,6 +23,7 @@ import java.io.InputStream;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 // ESCA-JAVA0143:
@@ -38,10 +39,7 @@ public class WrappedInputStream extends InputStream
 
   public WrappedInputStream (@Nonnull final InputStream aWrappedIS)
   {
-    if (aWrappedIS == null)
-      throw new NullPointerException ("wrappedInputStream");
-
-    m_aWrappedIS = aWrappedIS;
+    m_aWrappedIS = ValueEnforcer.notNull (aWrappedIS, "WrappedInputStream");
   }
 
   @Nonnull

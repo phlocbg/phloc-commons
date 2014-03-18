@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -69,12 +70,9 @@ public final class ArrayEnumeration <ELEMENTTYPE> implements Enumeration <ELEMEN
                            @Nonnegative final int nStartIndex,
                            @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      throw new NullPointerException ("array");
-    if (nStartIndex < 0)
-      throw new IllegalArgumentException ("Start index may not be < 0: " + nStartIndex);
-    if (nLength < 0)
-      throw new IllegalArgumentException ("Length may not be < 0: " + nLength);
+    ValueEnforcer.notNull (aArray, "Array");
+    ValueEnforcer.isGE0 (nStartIndex, "StartIndex");
+    ValueEnforcer.isGE0 (nLength, "Length");
     m_nIndex = 0;
     m_aArray = ArrayHelper.getCopy (aArray, nStartIndex, nLength);
   }

@@ -30,6 +30,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.io.EAppend;
@@ -84,8 +85,7 @@ public final class XMLMapHandler
   @ReturnsMutableCopy
   public static Map <String, String> readMap (@Nonnull final IInputStreamProvider aISP)
   {
-    if (aISP == null)
-      throw new NullPointerException ("ISP");
+    ValueEnforcer.notNull (aISP, "InputStreamProvider");
 
     return readMap (aISP.getInputStream ());
   }
@@ -94,8 +94,7 @@ public final class XMLMapHandler
   public static ESuccess readMap (@Nonnull final IInputStreamProvider aISP,
                                   @Nonnull final Map <String, String> aTargetMap)
   {
-    if (aISP == null)
-      throw new NullPointerException ("ISP");
+    ValueEnforcer.notNull (aISP, "InputStreamProvider");
 
     return readMap (aISP.getInputStream (), aTargetMap);
   }
@@ -132,10 +131,8 @@ public final class XMLMapHandler
   public static ESuccess readMap (@Nonnull @WillClose final InputStream aIS,
                                   @Nonnull final Map <String, String> aTargetMap)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-    if (aTargetMap == null)
-      throw new NullPointerException ("targetMap");
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.notNull (aTargetMap, "TargetMap");
 
     try
     {
@@ -162,10 +159,8 @@ public final class XMLMapHandler
   public static ESuccess readMap (@Nonnull final IMicroElement aParentElement,
                                   @Nonnull final Map <String, String> aTargetMap)
   {
-    if (aParentElement == null)
-      throw new NullPointerException ("parentElement");
-    if (aTargetMap == null)
-      throw new NullPointerException ("targetMap");
+    ValueEnforcer.notNull (aParentElement, "ParentElement");
+    ValueEnforcer.notNull (aTargetMap, "TargetMap");
 
     try
     {
@@ -200,8 +195,7 @@ public final class XMLMapHandler
   @Nonnull
   public static IMicroDocument createMapDocument (@Nonnull final Map <String, String> aMap)
   {
-    if (aMap == null)
-      throw new NullPointerException ("map");
+    ValueEnforcer.notNull (aMap, "Map");
 
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_MAPPING);
@@ -217,8 +211,7 @@ public final class XMLMapHandler
   @Nonnull
   public static ESuccess writeMap (@Nonnull final Map <String, String> aMap, @Nonnull final IOutputStreamProvider aOSP)
   {
-    if (aOSP == null)
-      throw new NullPointerException ("outputStreamProvider");
+    ValueEnforcer.notNull (aOSP, "OutputStreamProvider");
 
     return writeMap (aMap, aOSP.getOutputStream (EAppend.DEFAULT));
   }
@@ -238,10 +231,8 @@ public final class XMLMapHandler
   @Nonnull
   public static ESuccess writeMap (@Nonnull final Map <String, String> aMap, @Nonnull @WillClose final OutputStream aOS)
   {
-    if (aMap == null)
-      throw new NullPointerException ("map");
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aMap, "Map");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     try
     {

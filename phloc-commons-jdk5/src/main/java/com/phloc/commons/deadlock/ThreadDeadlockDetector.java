@@ -32,6 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.state.EChange;
 
@@ -94,8 +95,8 @@ public final class ThreadDeadlockDetector
   @Nonnull
   public EChange addListener (@Nonnull final IThreadDeadlockListener aListener)
   {
-    if (aListener == null)
-      throw new NullPointerException ("listener");
+    ValueEnforcer.notNull (aListener, "Listener");
+
     return EChange.valueOf (m_aListeners.add (aListener));
   }
 

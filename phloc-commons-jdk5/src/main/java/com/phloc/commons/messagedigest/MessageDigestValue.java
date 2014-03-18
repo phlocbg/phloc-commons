@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
@@ -45,14 +46,11 @@ public final class MessageDigestValue
   private final EMessageDigestAlgorithm m_eAlgorithm;
   private final byte [] m_aDigestBytes;
 
-  public MessageDigestValue (@Nonnull final EMessageDigestAlgorithm eAlgorithm, final byte [] aDigestBytes)
+  public MessageDigestValue (@Nonnull final EMessageDigestAlgorithm eAlgorithm,
+                             @Nonnull @Nonempty final byte [] aDigestBytes)
   {
-    if (eAlgorithm == null)
-      throw new NullPointerException ("algorithm");
-    if (ArrayHelper.isEmpty (aDigestBytes))
-      throw new IllegalArgumentException ("hashBytes");
-    m_eAlgorithm = eAlgorithm;
-    m_aDigestBytes = ArrayHelper.getCopy (aDigestBytes);
+    m_eAlgorithm = ValueEnforcer.notNull (eAlgorithm, "Algorithm");
+    m_aDigestBytes = ArrayHelper.getCopy (ValueEnforcer.notEmpty (aDigestBytes, "DigestBytes"));
   }
 
   /**
@@ -69,6 +67,7 @@ public final class MessageDigestValue
    *         algorithm. Never <code>null</code>.
    */
   @Nonnull
+  @Nonempty
   @ReturnsMutableCopy
   public byte [] getDigestBytes ()
   {
@@ -85,6 +84,7 @@ public final class MessageDigestValue
    */
   public void writeDigestBytes (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
   {
+    ValueEnforcer.notNull (aOS, "OutputStream");
     aOS.write (m_aDigestBytes, 0, m_aDigestBytes.length);
   }
 

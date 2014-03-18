@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.compare.AbstractCollationComparator;
 import com.phloc.commons.compare.ESortOrder;
 
@@ -33,8 +34,7 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> extends
-                                                                               AbstractCollationComparator <DATATYPE>
+public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> extends AbstractCollationComparator <DATATYPE>
 {
   private final Locale m_aContentLocale;
 
@@ -68,9 +68,13 @@ public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> e
                                    @Nonnull final ESortOrder eSortOrder)
   {
     super (aSortLocale, eSortOrder);
-    if (aContentLocale == null)
-      throw new NullPointerException ("contentLocale");
-    m_aContentLocale = aContentLocale;
+    m_aContentLocale = ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+  }
+
+  @Nonnull
+  public Locale getContentLocale ()
+  {
+    return m_aContentLocale;
   }
 
   @Override

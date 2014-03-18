@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IInputStreamResolver;
@@ -54,16 +55,13 @@ public final class FileSystemCharStreamResolver implements IReaderResolver, IWri
 
   public FileSystemCharStreamResolver (@Nonnull final File aBasePath, @Nonnull final Charset aCharset)
   {
-    if (aBasePath == null)
-      throw new NullPointerException ("basePath");
+    ValueEnforcer.notNull (aBasePath, "BasePath");
     if (!aBasePath.exists ())
       throw new IllegalArgumentException ("Base path does not exist: " + aBasePath);
     if (!aBasePath.isDirectory ())
       throw new IllegalArgumentException ("Only directories are allowed as base path: " + aBasePath);
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
     m_aByteStreamResolver = new FileSystemByteStreamResolver (aBasePath);
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   @Nonnull

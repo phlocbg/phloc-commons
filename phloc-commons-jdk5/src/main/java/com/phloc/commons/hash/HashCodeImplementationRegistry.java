@@ -32,6 +32,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.cache.AnnotationUsageCache;
 import com.phloc.commons.lang.ClassHelper;
@@ -95,10 +96,8 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   public void registerHashCodeImplementation (@Nonnull final Class <?> aClass,
                                               @Nonnull final IHashCodeImplementation aImpl)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-    if (aImpl == null)
-      throw new NullPointerException ("implementation");
+    ValueEnforcer.notNull (aClass, "Class");
+    ValueEnforcer.notNull (aImpl, "Implementation");
 
     if (aClass.equals (Object.class))
       throw new IllegalArgumentException ("You cannot provide a hashCode implementation for Object.class!");
@@ -294,5 +293,10 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     final Class <?> aClass = aObj.getClass ();
     final IHashCodeImplementation aImpl = s_aInstance.getBestMatchingHashCodeImplementation (aClass);
     return aImpl == null ? aObj.hashCode () : aImpl.getHashCode (aObj);
+  }
+
+  public static void clearCache ()
+  {
+    s_aInstance.m_aDirectHashCode.clearCache ();
   }
 }

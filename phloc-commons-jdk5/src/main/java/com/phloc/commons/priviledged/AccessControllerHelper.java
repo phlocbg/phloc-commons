@@ -28,6 +28,8 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * Simple wrapper around {@link AccessController} to catch exceptions centrally.
  * 
@@ -44,8 +46,7 @@ public final class AccessControllerHelper
   @Nullable
   public static <T> T call (@Nonnull final PrivilegedAction <T> aAction)
   {
-    if (aAction == null)
-      throw new NullPointerException ("action");
+    ValueEnforcer.notNull (aAction, "Action");
 
     try
     {

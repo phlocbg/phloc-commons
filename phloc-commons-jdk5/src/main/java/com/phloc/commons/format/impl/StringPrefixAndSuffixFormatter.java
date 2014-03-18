@@ -20,6 +20,7 @@ package com.phloc.commons.format.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.format.IFormatter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -57,12 +58,8 @@ public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
                                          @Nonnull final String sSuffix)
   {
     super (aNestedFormatter);
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    if (sSuffix == null)
-      throw new NullPointerException ("suffix");
-    m_sPrefix = sPrefix;
-    m_sSuffix = sSuffix;
+    m_sPrefix = ValueEnforcer.notNull (sPrefix, "Prefix");
+    m_sSuffix = ValueEnforcer.notNull (sSuffix, "Suffix");
   }
 
   @Override

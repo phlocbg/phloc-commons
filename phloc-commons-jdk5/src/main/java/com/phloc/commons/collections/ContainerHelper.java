@@ -44,6 +44,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -1594,8 +1595,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newListPrefilled (@Nullable final ELEMENTTYPE aValue,
                                                                    @Nonnegative final int nElements)
   {
-    if (nElements < 0)
-      throw new IllegalArgumentException ("Element count must be >= 0!");
+    ValueEnforcer.isGE0 (nElements, "Elements");
 
     final List <ELEMENTTYPE> ret = new ArrayList <ELEMENTTYPE> (nElements);
     for (int i = 0; i < nElements; ++i)
@@ -1700,8 +1700,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVectorPrefilled (@Nullable final ELEMENTTYPE aValue,
                                                                        @Nonnegative final int nElements)
   {
-    if (nElements < 0)
-      throw new IllegalArgumentException ("Element count must be >= 0!");
+    ValueEnforcer.isGE0 (nElements, "Elements");
 
     final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> (nElements);
     for (int i = 0; i < nElements; ++i)
@@ -2439,8 +2438,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> getSortedInline (@Nullable final List <ELEMENTTYPE> aList,
                                                                   @Nonnull final Comparator <? super ELEMENTTYPE> aComparator)
   {
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
+    ValueEnforcer.notNull (aComparator, "Comparator");
 
     if (isNotEmpty (aList))
       Collections.sort (aList, aComparator);
@@ -2510,8 +2508,7 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
                                                                               @Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
-    if (aKeyComparator == null)
-      throw new NullPointerException ("keyComparator");
+    ValueEnforcer.notNull (aKeyComparator, "KeyComparator");
 
     if (isEmpty (aMap))
       return aMap;
@@ -2585,8 +2582,7 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
                                                                                 @Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
-    if (aValueComparator == null)
-      throw new NullPointerException ("valueComparator");
+    ValueEnforcer.notNull (aValueComparator, "ValueComparator");
 
     if (isEmpty (aMap))
       return aMap;
@@ -3366,8 +3362,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE, COLLTYPE extends Collection <? super ELEMENTTYPE>> COLLTYPE getConcatenatedInline (@Nonnull final COLLTYPE aCont,
                                                                                                                  @Nullable final ELEMENTTYPE... aElementsToAdd)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
+    ValueEnforcer.notNull (aCont, "Container");
 
     if (aElementsToAdd != null)
       Collections.addAll (aCont, aElementsToAdd);
@@ -3379,8 +3374,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE, COLLTYPE extends Collection <? super ELEMENTTYPE>> COLLTYPE getConcatenatedInline (@Nonnull final COLLTYPE aCont,
                                                                                                                  @Nullable final Collection <? extends ELEMENTTYPE> aElementsToAdd)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
+    ValueEnforcer.notNull (aCont, "Container");
 
     if (aElementsToAdd != null)
       aCont.addAll (aElementsToAdd);
@@ -3602,10 +3596,8 @@ public final class ContainerHelper
                                                              @Nonnegative final int nStartIndex,
                                                              @Nonnegative final int nSectionLength)
   {
-    if (nStartIndex < 0)
-      throw new IllegalArgumentException ("Start index must be >= 0: " + nStartIndex);
-    if (nSectionLength < 0)
-      throw new IllegalArgumentException ("Length must be >= 0: " + nSectionLength);
+    ValueEnforcer.isGE0 (nStartIndex, "StartIndex");
+    ValueEnforcer.isGE0 (nSectionLength, "SectionLength");
 
     final int nSize = getSize (aCont);
     if (nSize == 0)

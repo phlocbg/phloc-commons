@@ -53,19 +53,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.mock.IMockException;
 import com.phloc.commons.mutable.MutableLong;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.StatisticsManager;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Some very basic IO stream utility stuff. All input stream (=reading) related
@@ -541,8 +540,7 @@ public final class StreamUtils
                                                         @Nullable final MutableLong aCopyByteCount,
                                                         @Nullable final Long aLimit)
   {
-    if (ArrayHelper.isEmpty (aBuffer))
-      throw new IllegalArgumentException ("buffer is empty");
+    ValueEnforcer.notEmpty (aBuffer, "Buffer");
     if (aLimit != null && aLimit.longValue () < 0)
       throw new IllegalArgumentException ("Limit may not be negative!");
 
@@ -730,8 +728,7 @@ public final class StreamUtils
   public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
                                             @Nonnull @Nonempty final String sCharset)
   {
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("empty charset");
+    ValueEnforcer.notEmpty (sCharset, "Charset");
 
     if (aIS == null)
       return null;
@@ -753,8 +750,7 @@ public final class StreamUtils
   public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
                                             @Nonnull @Nonempty final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("empty charset");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     if (aIS == null)
       return null;
@@ -1018,8 +1014,7 @@ public final class StreamUtils
                                              @Nullable final MutableLong aCopyCharCount,
                                              @Nullable final Long aLimit)
   {
-    if (ArrayHelper.isEmpty (aBuffer))
-      throw new IllegalArgumentException ("buffer is empty");
+    ValueEnforcer.notEmpty (aBuffer, "Buffer");
     if (aLimit != null && aLimit.longValue () < 0)
       throw new IllegalArgumentException ("Limit may not be negative!");
 
@@ -1488,15 +1483,12 @@ public final class StreamUtils
                                       final int nLinesToRead,
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("Empty charset passed!");
-    if (nLinesToSkip < 0)
-      throw new IllegalArgumentException ("First line may not be negative: " + nLinesToSkip);
+    ValueEnforcer.notNull (aCharset, "Charset");
+    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip");
     final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
     if (nLinesToRead < 0 && !bReadAllLines)
       throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
-    if (aLineCallback == null)
-      throw new NullPointerException ("lineCallback");
+    ValueEnforcer.notNull (aLineCallback, "LineCallback");
 
     if (aIS != null)
       try
@@ -1557,15 +1549,12 @@ public final class StreamUtils
                                       final int nLinesToRead,
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("Empty charset passed!");
-    if (nLinesToSkip < 0)
-      throw new IllegalArgumentException ("First line may not be negative: " + nLinesToSkip);
+    ValueEnforcer.notNull (sCharset, "Charset");
+    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip");
     final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
     if (nLinesToRead < 0 && !bReadAllLines)
       throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
-    if (aLineCallback == null)
-      throw new NullPointerException ("lineCallback");
+    ValueEnforcer.notNull (aLineCallback, "LineCallback");
 
     if (aIS != null)
       try
@@ -1621,12 +1610,8 @@ public final class StreamUtils
                                       @Nonnegative final int nOfs,
                                       @Nonnegative final int nLen)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
-    if (aBuf == null)
-      throw new NullPointerException ("content");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     try
     {
@@ -1677,12 +1662,10 @@ public final class StreamUtils
   @Deprecated
   public static ESuccess writeStream (@WillClose @Nonnull final OutputStream aOS,
                                       @Nonnull final String sContent,
-                                      @Nonnull final String sCharset)
+                                      @Nonnull @Nonempty final String sCharset)
   {
-    if (sContent == null)
-      throw new NullPointerException ("content");
-    if (sCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (sContent, "Content");
+    ValueEnforcer.notEmpty (sCharset, "Charset");
 
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, sCharset));
   }
@@ -1704,10 +1687,8 @@ public final class StreamUtils
                                       @Nonnull final String sContent,
                                       @Nonnull final Charset aCharset)
   {
-    if (sContent == null)
-      throw new NullPointerException ("content");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (sContent, "Content");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, aCharset));
   }
@@ -1777,10 +1758,8 @@ public final class StreamUtils
    */
   public static void skipFully (@Nonnull final InputStream aIS, @Nonnegative final long nBytesToSkip) throws IOException
   {
-    if (aIS == null)
-      throw new NullPointerException ("InputStream");
-    if (nBytesToSkip < 0)
-      throw new IllegalArgumentException ("Cannot skip " + nBytesToSkip + " bytes. Only forward skip is possible!");
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.isGE0 (nBytesToSkip, "BytesToSkip");
 
     long nRemaining = nBytesToSkip;
     while (nRemaining > 0)
@@ -1846,10 +1825,8 @@ public final class StreamUtils
                                @Nonnegative final int nOfs,
                                @Nonnegative final int nLen) throws IOException
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuffer.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuffer.length);
+    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLen);
 
     int nTotalBytesRead = 0;
     while (nTotalBytesRead < nLen)

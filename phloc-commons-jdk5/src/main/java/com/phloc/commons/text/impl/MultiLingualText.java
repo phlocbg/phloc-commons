@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.callback.IChangeNotify;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.locale.LocaleCache;
@@ -71,8 +72,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
    */
   public MultiLingualText (@Nonnull final ISimpleMultiLingualText aSimpleMLT)
   {
-    if (aSimpleMLT == null)
-      throw new NullPointerException ("MLT");
+    ValueEnforcer.notNull (aSimpleMLT, "SimpleMLT");
 
     for (final Locale aLocale : aSimpleMLT.getAllLocales ())
       internalAddText (aLocale, aSimpleMLT.getText (aLocale));
@@ -80,8 +80,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
 
   public MultiLingualText (@Nonnull final IReadonlyMultiLingualText aMLT)
   {
-    if (aMLT == null)
-      throw new NullPointerException ("MLT");
+    ValueEnforcer.notNull (aMLT, "MLT");
 
     for (final Map.Entry <Locale, String> aEntry : aMLT.getMap ().entrySet ())
       internalAddText (aEntry.getKey (), aEntry.getValue ());
@@ -106,8 +105,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
   @Nonnull
   public EChange addText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
 
     if (super.containsLocale (aContentLocale))
       return EChange.UNCHANGED;
@@ -122,8 +120,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
   @Nonnull
   public EChange setText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
 
     if (containsLocale (aContentLocale))
     {
@@ -179,8 +176,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
   @Nonnull
   public EChange assignFrom (@Nonnull final IReadonlyMultiLingualText aMLT)
   {
-    if (aMLT == null)
-      throw new NullPointerException ("mlt");
+    ValueEnforcer.notNull (aMLT, "MLT");
 
     if (getMap ().equals (aMLT.getMap ()) || !_beforeChange ())
       return EChange.UNCHANGED;
@@ -195,8 +191,7 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
 
   public void addChangeNotifier (@Nonnull final IChangeNotify <IMultiLingualText> aCallback)
   {
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
+    ValueEnforcer.notNull (aCallback, "Callback");
 
     if (m_aChangeNotifyList == null)
       m_aChangeNotifyList = new ArrayList <IChangeNotify <IMultiLingualText>> ();

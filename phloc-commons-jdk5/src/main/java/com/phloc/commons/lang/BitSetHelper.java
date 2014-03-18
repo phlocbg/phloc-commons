@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -115,8 +116,7 @@ public final class BitSetHelper
    */
   public static int getExtractedIntValue (@Nonnull final BitSet aBS)
   {
-    if (aBS == null)
-      throw new NullPointerException ("bitSet");
+    ValueEnforcer.notNull (aBS, "BitSet");
 
     final int nMax = aBS.length ();
     if (nMax > CGlobal.BITS_PER_INT)
@@ -143,8 +143,7 @@ public final class BitSetHelper
    */
   public static long getExtractedLongValue (@Nonnull final BitSet aBS)
   {
-    if (aBS == null)
-      throw new NullPointerException ("bitSet");
+    ValueEnforcer.notNull (aBS, "BitSet");
 
     final int nMax = aBS.length ();
     if (nMax > CGlobal.BITS_PER_LONG)

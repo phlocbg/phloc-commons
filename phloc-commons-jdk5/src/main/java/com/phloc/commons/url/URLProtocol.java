@@ -20,6 +20,7 @@ package com.phloc.commons.url;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -36,7 +37,7 @@ public class URLProtocol implements IURLProtocol
 
   public URLProtocol (@Nonnull @Nonempty final String sProtocol, final boolean bAllowsForQueryParameters)
   {
-    m_sProtocol = sProtocol;
+    m_sProtocol = ValueEnforcer.notEmpty (sProtocol, "Protocol");
     m_bAllowsForQueryParameters = bAllowsForQueryParameters;
   }
 

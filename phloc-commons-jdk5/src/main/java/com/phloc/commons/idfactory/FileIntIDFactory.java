@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.file.FileUtils;
@@ -57,8 +58,7 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
   public FileIntIDFactory (@Nonnull final File aFile, @Nonnegative final int nReserveCount)
   {
     super (nReserveCount);
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
     if (!FileUtils.canReadAndWriteFile (aFile))
       throw new IllegalArgumentException ("Cannot read and/or write the file " + aFile + "!");
     m_aFile = aFile;

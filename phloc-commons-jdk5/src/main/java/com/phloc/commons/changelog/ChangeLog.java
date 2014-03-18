@@ -26,12 +26,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.version.Version;
 
@@ -73,13 +72,9 @@ public final class ChangeLog implements Serializable
    */
   public ChangeLog (@Nonnull @Nonempty final String sVersion, @Nonnull @Nonempty final String sComponent)
   {
-    if (StringHelper.hasNoText (sVersion))
-      throw new IllegalArgumentException ("version");
-    if (StringHelper.hasNoText (sComponent))
-      throw new IllegalArgumentException ("component");
-    m_sOriginalVersion = sVersion;
+    m_sOriginalVersion = ValueEnforcer.notEmpty (sVersion, "Version");
     m_aVersion = new Version (sVersion);
-    m_sComponent = sComponent;
+    m_sComponent = ValueEnforcer.notEmpty (sComponent, "Component");
   }
 
   /**
@@ -120,8 +115,7 @@ public final class ChangeLog implements Serializable
    */
   public void addEntry (@Nonnull final ChangeLogEntry aEntry)
   {
-    if (aEntry == null)
-      throw new NullPointerException ("entry");
+    ValueEnforcer.notNull (aEntry, "Entry");
     m_aEntries.add (aEntry);
   }
 
@@ -135,21 +129,20 @@ public final class ChangeLog implements Serializable
    */
   public void addEntry (@Nonnegative final int nIndex, @Nonnull final ChangeLogEntry aEntry)
   {
-    if (aEntry == null)
-      throw new NullPointerException ("entry");
+    ValueEnforcer.notNull (aEntry, "Entry");
     m_aEntries.add (nIndex, aEntry);
   }
 
   /**
-   * @return An unmodifiable list of all contained change log items. Never
+   * @return An copy of the list with all contained change log items. Never
    *         <code>null</code>. The elements my be of type
    *         {@link ChangeLogEntry} or {@link ChangeLogRelease}.
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public List <AbstractChangeLogEntry> getAllBaseEntries ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aEntries);
+    return ContainerHelper.newList (m_aEntries);
   }
 
   /**
@@ -179,8 +172,7 @@ public final class ChangeLog implements Serializable
   @ReturnsMutableCopy
   public List <ChangeLogEntry> getAllEntriesOfCategory (@Nonnull final EChangeLogCategory eCategory)
   {
-    if (eCategory == null)
-      throw new NullPointerException ("category");
+    ValueEnforcer.notNull (eCategory, "Category");
 
     final List <ChangeLogEntry> ret = new ArrayList <ChangeLogEntry> ();
     for (final AbstractChangeLogEntry aEntry : m_aEntries)
@@ -201,8 +193,7 @@ public final class ChangeLog implements Serializable
    */
   public void addRelease (@Nonnull final ChangeLogRelease aRelease)
   {
-    if (aRelease == null)
-      throw new NullPointerException ("release");
+    ValueEnforcer.notNull (aRelease, "Release");
     m_aEntries.add (aRelease);
   }
 
@@ -216,8 +207,7 @@ public final class ChangeLog implements Serializable
    */
   public void addRelease (@Nonnegative final int nIndex, @Nonnull final ChangeLogRelease aRelease)
   {
-    if (aRelease == null)
-      throw new NullPointerException ("release");
+    ValueEnforcer.notNull (aRelease, "Release");
     m_aEntries.add (nIndex, aRelease);
   }
 

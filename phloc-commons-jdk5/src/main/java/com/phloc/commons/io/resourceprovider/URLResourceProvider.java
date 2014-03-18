@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IReadableResourceProvider;
@@ -44,8 +45,7 @@ public final class URLResourceProvider implements IReadableResourceProvider
 
   public IReadableResource getReadableResource (@Nonnull final String sURL)
   {
-    if (sURL == null)
-      throw new NullPointerException ("URL");
+    ValueEnforcer.notNull (sURL, "URL");
 
     try
     {

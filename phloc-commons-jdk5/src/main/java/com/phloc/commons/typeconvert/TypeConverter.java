@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
@@ -366,10 +367,8 @@ public final class TypeConverter
                                                       @Nullable final Object aSrcValue,
                                                       @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException
   {
-    if (aTypeConverterProvider == null)
-      throw new NullPointerException ("typeConverterProvider");
-    if (aDstClass == null)
-      throw new NullPointerException ("destClass");
+    ValueEnforcer.notNull (aTypeConverterProvider, "TypeConverterProvider");
+    ValueEnforcer.notNull (aDstClass, "DstClass");
 
     // Nothing to convert for null
     if (aSrcValue == null)

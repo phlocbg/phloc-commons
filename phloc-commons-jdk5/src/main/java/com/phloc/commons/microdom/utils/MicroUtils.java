@@ -31,6 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
@@ -99,8 +100,7 @@ public final class MicroUtils
   @Nonnull
   public static IMicroNode append (@Nonnull final IMicroNode aSrcNode, @Nullable final Object aChild)
   {
-    if (aSrcNode == null)
-      throw new NullPointerException ("srcNode");
+    ValueEnforcer.notNull (aSrcNode, "SrcNode");
 
     if (aChild != null)
       if (aChild instanceof IMicroNode)
@@ -152,8 +152,7 @@ public final class MicroUtils
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static String getPath (@Nullable final IMicroNode aNode, @Nonnull final String sSep)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (sSep, "Separator");
 
     final StringBuilder aSB = new StringBuilder ();
     IMicroNode aCurrentNode = aNode;
@@ -190,8 +189,7 @@ public final class MicroUtils
   @Nonnull
   public static IMicroNode convertToMicroNode (@Nonnull final Node aNode)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
+    ValueEnforcer.notNull (aNode, "Node");
 
     IMicroNode ret;
     final short nNodeType = aNode.getNodeType ();

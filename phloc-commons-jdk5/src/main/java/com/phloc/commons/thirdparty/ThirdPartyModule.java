@@ -21,10 +21,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.version.Version;
 
@@ -87,28 +87,23 @@ public final class ThirdPartyModule implements IThirdPartyModule
                            @Nullable final String sWebsiteURL,
                            final boolean bOptional)
   {
-    if (StringHelper.hasNoText (sDisplayName))
-      throw new IllegalArgumentException ("displayName");
-    if (StringHelper.hasNoText (sCopyrightOwner))
-      throw new IllegalArgumentException ("copyrightOwner");
-    if (aLicense == null)
-      throw new NullPointerException ("license");
-
-    m_sDisplayName = sDisplayName;
-    m_sCopyrightOwner = sCopyrightOwner;
-    m_aLicense = aLicense;
+    m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    m_sCopyrightOwner = ValueEnforcer.notEmpty (sCopyrightOwner, "CopyrightOwner");
+    m_aLicense = ValueEnforcer.notNull (aLicense, "License");
     m_aVersion = aVersion;
     m_sWebSiteURL = sWebsiteURL;
     m_bOptional = bOptional;
   }
 
   @Nonnull
+  @Nonempty
   public String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
   @Nonnull
+  @Nonempty
   public String getCopyrightOwner ()
   {
     return m_sCopyrightOwner;

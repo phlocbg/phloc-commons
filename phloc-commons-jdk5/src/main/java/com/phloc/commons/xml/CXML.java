@@ -75,10 +75,29 @@ public final class CXML
   // xml:*
   /** The special namespace prefix "xml" and the separator == xml: */
   public static final String XML_ATTR_XML_WITH_SEP = XMLConstants.XML_NS_PREFIX + XML_PREFIX_NAMESPACE_SEP;
-  /** The special attribute xml:lang */
+  /**
+   * The special attribute xml:space. A special attribute named xml:space MAY be
+   * attached to an element to signal an intention that in that element, white
+   * space should be preserved by applications. (values preserve/default)
+   */
+  public static final String XML_ATTR_SPACE = XML_ATTR_XML_WITH_SEP + "space";
+  /**
+   * The special attribute xml:lang. The values of the attribute are language
+   * identifiers as defined by [IETF RFC 3066], Tags for the Identification of
+   * Languages, or its successor; in addition, the empty string MAY be
+   * specified.
+   */
   public static final String XML_ATTR_LANG = XML_ATTR_XML_WITH_SEP + "lang";
-  /** The special attribute xml:base */
+  /**
+   * The special attribute xml:base. Specify a base URI (used to resolve
+   * relative URI's) other than the base URI of the document or external entity.
+   */
   public static final String XML_ATTR_BASE = XML_ATTR_XML_WITH_SEP + "base";
+  /**
+   * The special attribute xml:id. Instead of using the 'ID' type. This can make
+   * sure the value for this attribute is unique within the XML document
+   */
+  public static final String XML_ATTR_ID = XML_ATTR_XML_WITH_SEP + "id";
 
   // XML Schema Definition (XS and XSD) stuff:
   /** The XML schema namespace URI */

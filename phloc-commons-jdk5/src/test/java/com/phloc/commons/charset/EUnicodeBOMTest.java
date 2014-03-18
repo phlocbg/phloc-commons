@@ -24,6 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.phloc.commons.string.StringHelper;
+
 /**
  * Test class for class {@link EUnicodeBOM}.
  * 
@@ -46,6 +48,15 @@ public final class EUnicodeBOMTest
     assertEquals (3, EUnicodeBOM.BOM_UTF_1.getSizeInBytes ());
     assertEquals (4, EUnicodeBOM.BOM_UTF_EBCDIC.getSizeInBytes ());
     assertEquals (3, EUnicodeBOM.BOM_SCSU.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_TO_UCS.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W0_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W1_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W2_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W3_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W4_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W5_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W6_TO_FE80.getSizeInBytes ());
+    assertEquals (3, EUnicodeBOM.BOM_SCSU_W7_TO_FE80.getSizeInBytes ());
     assertEquals (3, EUnicodeBOM.BOM_BOCU_1.getSizeInBytes ());
     assertEquals (4, EUnicodeBOM.BOM_BOCU_1_ALT2.getSizeInBytes ());
     assertEquals (4, EUnicodeBOM.BOM_GB_18030.getSizeInBytes ());
@@ -61,6 +72,8 @@ public final class EUnicodeBOMTest
       assertTrue (eBOM.isPresent (eBOM.getBytes ()));
       assertSame (eBOM, EUnicodeBOM.valueOf (eBOM.name ()));
       assertSame (eBOM, EUnicodeBOM.getFromBytesOrNull (eBOM.getBytes ()));
+      if (eBOM.getCharset () != null)
+        assertTrue (StringHelper.hasText (eBOM.getCharsetName ()));
     }
 
     assertEquals (4, EUnicodeBOM.getMaximumByteCount ());

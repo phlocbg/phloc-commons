@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -39,12 +40,12 @@ public class RecursiveChildNodeIterator implements IIterableIterator <Node>
 {
   private final Iterator <Node> m_aIter;
 
-  public RecursiveChildNodeIterator (@Nonnull final Node eParent)
+  public RecursiveChildNodeIterator (@Nonnull final Node aParent)
   {
-    if (eParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
+
     final List <Node> aNodes = new ArrayList <Node> ();
-    _fillListPrefix (eParent, aNodes);
+    _fillListPrefix (aParent, aNodes);
     m_aIter = aNodes.iterator ();
   }
 

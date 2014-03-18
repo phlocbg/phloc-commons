@@ -28,7 +28,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ObjectType}.
- *
+ * 
  * @author Philip Helger
  */
 public final class ObjectTypeTest
@@ -55,7 +55,7 @@ public final class ObjectTypeTest
       new ObjectType (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

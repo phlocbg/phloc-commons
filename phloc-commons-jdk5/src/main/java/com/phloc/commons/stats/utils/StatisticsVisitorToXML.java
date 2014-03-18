@@ -19,6 +19,7 @@ package com.phloc.commons.stats.utils;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
@@ -43,9 +44,7 @@ public class StatisticsVisitorToXML extends DefaultStatisticsVisitor
 
   public StatisticsVisitorToXML (@Nonnull final IMicroElement eRoot)
   {
-    if (eRoot == null)
-      throw new NullPointerException ("root");
-    m_eRoot = eRoot;
+    m_eRoot = ValueEnforcer.notNull (eRoot, "Root");
   }
 
   /**

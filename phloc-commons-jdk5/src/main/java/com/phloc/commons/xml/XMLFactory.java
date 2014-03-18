@@ -29,6 +29,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
 import com.phloc.commons.SystemProperties;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.xml.serialize.DOMReaderDefaultSettings;
@@ -123,8 +124,7 @@ public final class XMLFactory
   @Nonnull
   public static DocumentBuilderFactory createDocumentBuilderFactory (@Nonnull final Schema aSchema)
   {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
+    ValueEnforcer.notNull (aSchema, "Schema");
 
     final DocumentBuilderFactory aDocumentBuilderFactory = createDefaultDocumentBuilderFactory ();
     aDocumentBuilderFactory.setSchema (aSchema);
@@ -200,8 +200,7 @@ public final class XMLFactory
   @Nonnull
   public static DocumentBuilder createDocumentBuilder (@Nonnull final DocumentBuilderFactory aDocBuilderFactory)
   {
-    if (aDocBuilderFactory == null)
-      throw new NullPointerException ("docBuilderFactory");
+    ValueEnforcer.notNull (aDocBuilderFactory, "DocBuilderFactory");
 
     try
     {
@@ -270,8 +269,7 @@ public final class XMLFactory
   @Nonnull
   public static Document newDocument (@Nonnull final DocumentBuilder aDocBuilder, @Nullable final EXMLVersion eVersion)
   {
-    if (aDocBuilder == null)
-      throw new NullPointerException ("docBuilder");
+    ValueEnforcer.notNull (aDocBuilder, "DocBuilder");
 
     final Document aDoc = aDocBuilder.newDocument ();
     aDoc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
@@ -345,8 +343,7 @@ public final class XMLFactory
                                       @Nullable final String sPublicId,
                                       @Nullable final String sSystemId)
   {
-    if (aDocBuilder == null)
-      throw new NullPointerException ("docBuilder");
+    ValueEnforcer.notNull (aDocBuilder, "DocBuilder");
 
     final DOMImplementation aDomImpl = aDocBuilder.getDOMImplementation ();
     final DocumentType aDocType = aDomImpl.createDocumentType (sQualifiedName, sPublicId, sSystemId);

@@ -23,6 +23,7 @@ import java.util.BitSet;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
@@ -87,9 +88,7 @@ public class URLCodec extends AbstractCodec implements IStringCodec
    */
   public URLCodec (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("Charset");
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   @Nonnull

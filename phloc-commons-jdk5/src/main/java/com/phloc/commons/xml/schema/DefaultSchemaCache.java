@@ -33,11 +33,11 @@ import org.w3c.dom.ls.LSResourceResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.IsLocked;
 import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.AbstractNotifyingCache;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.state.EChange;
@@ -64,8 +64,8 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
                              @Nullable final LSResourceResolver aResourceResolver)
   {
     super (DefaultSchemaCache.class.getName () + "$" + sSchemaTypeName);
-    if (aSchemaFactory == null)
-      throw new NullPointerException ("SchemaFactory");
+    ValueEnforcer.notNull (sSchemaTypeName, "SchemaTypeName");
+    ValueEnforcer.notNull (aSchemaFactory, "SchemaFactory");
     m_sSchemaTypeName = sSchemaTypeName;
     m_aSchemaFactory = aSchemaFactory;
     m_aSchemaFactory.setErrorHandler (aErrorHandler);
@@ -78,8 +78,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @IsLocked (ELockType.WRITE)
   protected Schema getValueToCache (@Nullable final List <? extends IReadableResource> aKey)
   {
-    if (ContainerHelper.isEmpty (aKey))
-      throw new IllegalArgumentException ("No resources provided!");
+    ValueEnforcer.notEmptyNoNullValue (aKey, "Resources");
 
     // Collect all sources
     final Source [] aSources = new Source [aKey.size ()];
@@ -116,8 +115,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @Nonnull
   public final Schema getSchema (@Nonnull final IReadableResource aResource)
   {
-    if (aResource == null)
-      throw new NullPointerException ("resources");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return getFromCache (ContainerHelper.newList (aResource));
   }
@@ -134,10 +132,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final IReadableResource... aResources)
   {
-    if (ArrayHelper.isEmpty (aResources))
-      throw new IllegalArgumentException ("no resources provided!");
-    if (ArrayHelper.containsAnyNullElement (aResources))
-      throw new IllegalArgumentException ("At leaste one resource is null!");
+    ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
 
     return getFromCache (ContainerHelper.newList (aResources));
   }
@@ -154,10 +149,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final Collection <? extends IReadableResource> aResources)
   {
-    if (ContainerHelper.isEmpty (aResources))
-      throw new IllegalArgumentException ("no resources provided!");
-    if (ContainerHelper.containsAnyNullElement (aResources))
-      throw new IllegalArgumentException ("At leaste one resource is null!");
+    ValueEnforcer.notEmptyNoNullValue (aResources, "Resources");
 
     return getFromCache (ContainerHelper.newList (aResources));
   }
@@ -174,8 +166,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @Nonnull
   public final Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
   {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
+    ValueEnforcer.notNull (aSchema, "Schema");
 
     final Validator aValidator = aSchema.newValidator ();
     aValidator.setErrorHandler (m_aErrorHandler);

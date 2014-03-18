@@ -170,7 +170,7 @@ public final class StreamUtilsTest
       StreamUtils.copyInputStreamToOutputStream (bais, baos, (byte []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -259,7 +259,7 @@ public final class StreamUtilsTest
       StreamUtils.getAllBytesAsString (new NonBlockingByteArrayInputStream (aInput), (String) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
@@ -408,7 +408,7 @@ public final class StreamUtilsTest
       StreamUtils.copyReaderToWriter (bais, baos, (char []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

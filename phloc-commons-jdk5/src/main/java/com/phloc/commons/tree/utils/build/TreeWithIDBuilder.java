@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.id.IHasID;
@@ -120,10 +121,8 @@ public final class TreeWithIDBuilder
   public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final Collection <? extends DATATYPE> aAll,
                                                                                                               @Nonnull final IParentProvider <DATATYPE> aParentResolver)
   {
-    if (aAll == null)
-      throw new NullPointerException ("all");
-    if (aParentResolver == null)
-      throw new NullPointerException ("parentResolver");
+    ValueEnforcer.notNull (aAll, "All");
+    ValueEnforcer.notNull (aParentResolver, "ParentResolver");
 
     return _buildTree (ContainerHelper.newList (aAll), aParentResolver);
   }
@@ -150,10 +149,8 @@ public final class TreeWithIDBuilder
   public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final DATATYPE [] aAll,
                                                                                                               @Nonnull final IParentProvider <DATATYPE> aParentResolver)
   {
-    if (aAll == null)
-      throw new NullPointerException ("all");
-    if (aParentResolver == null)
-      throw new NullPointerException ("parentResolver");
+    ValueEnforcer.notNull (aAll, "All");
+    ValueEnforcer.notNull (aParentResolver, "ParentResolver");
 
     return _buildTree (ContainerHelper.newList (aAll), aParentResolver);
   }
@@ -176,8 +173,7 @@ public final class TreeWithIDBuilder
   @Nonnull
   public static <KEYTYPE, DATATYPE extends IHasParent <DATATYPE> & IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final Collection <? extends DATATYPE> aAll)
   {
-    if (aAll == null)
-      throw new NullPointerException ("all");
+    ValueEnforcer.notNull (aAll, "All");
 
     return buildTree (aAll, new ParentProviderHasParent <DATATYPE> ());
   }
@@ -200,8 +196,7 @@ public final class TreeWithIDBuilder
   @Nonnull
   public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final IChildrenProvider <DATATYPE> aChildrenResolver)
   {
-    if (aChildrenResolver == null)
-      throw new NullPointerException ("childrenResolver");
+    ValueEnforcer.notNull (aChildrenResolver, "ChildrenResolver");
 
     final DefaultTreeWithID <KEYTYPE, DATATYPE> aTree = new DefaultTreeWithID <KEYTYPE, DATATYPE> ();
 

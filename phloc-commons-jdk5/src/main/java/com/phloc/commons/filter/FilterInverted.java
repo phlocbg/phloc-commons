@@ -20,6 +20,7 @@ package com.phloc.commons.filter;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -37,9 +38,7 @@ public final class FilterInverted <DATATYPE> implements IFilter <DATATYPE>
 
   public FilterInverted (@Nonnull final IFilter <DATATYPE> aOriginalFilter)
   {
-    if (aOriginalFilter == null)
-      throw new NullPointerException ("originalFilter");
-    m_aOriginalFilter = aOriginalFilter;
+    m_aOriginalFilter = ValueEnforcer.notNull (aOriginalFilter, "OriginalFilter");
   }
 
   @Nonnull

@@ -40,6 +40,8 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.sax.EmptyEntityResolver;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -392,5 +394,24 @@ public final class MicroReaderTest
                      "<?important value?>" +
                      "</root>";
     assertTrue (MicroReader.readMicroXML (s).isEqualContent (MicroReader.readMicroXML (s)));
+  }
+
+  @Test
+  public void testSpecialXMLAttrs ()
+  {
+    final String s = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                     + "<root xml:lang=\"en\" xml:space=\"preserve\" xml:base=\"baseuri\" xml:id=\"4711\">"
+                     + "Bla"
+                     + "</root>";
+    final IMicroDocument aDoc = MicroReader.readMicroXML (s);
+    assertNotNull (aDoc);
+    final IMicroElement eRoot = aDoc.getDocumentElement ();
+    assertEquals ("en", eRoot.getAttribute (CXML.XML_ATTR_LANG));
+    assertEquals ("preserve", eRoot.getAttribute (CXML.XML_ATTR_SPACE));
+    assertEquals ("baseuri", eRoot.getAttribute (CXML.XML_ATTR_BASE));
+    assertEquals ("4711", eRoot.getAttribute (CXML.XML_ATTR_ID));
+
+    // Ensure they are written as well
+    assertEquals (s, MicroWriter.getNodeAsString (aDoc, new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE)));
   }
 }

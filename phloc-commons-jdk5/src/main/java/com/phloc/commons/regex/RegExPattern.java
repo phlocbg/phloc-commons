@@ -27,9 +27,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.RegEx;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -97,10 +97,8 @@ public final class RegExPattern implements Serializable
 
   public RegExPattern (@Nonnull @Nonempty @RegEx final String sRegEx, @Nonnegative final int nOptions) throws IllegalArgumentException
   {
-    if (StringHelper.hasNoText (sRegEx))
-      throw new IllegalArgumentException ("regEx is empty");
-    if (nOptions < 0)
-      throw new IllegalArgumentException ("Options may not be < 0: " + nOptions);
+    ValueEnforcer.notEmpty (sRegEx, "RegEx");
+    ValueEnforcer.isGE0 (nOptions, "Options");
     m_sRegEx = sRegEx;
     m_nOptions = nOptions;
 

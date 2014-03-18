@@ -23,7 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
 
@@ -43,25 +45,23 @@ public final class ArrayConversionHelper
   {}
 
   @Nonnull
-  public static <SRCTYPE, DSTTYPE> DSTTYPE [] getConverted (@Nonnull final SRCTYPE [] aArray,
+  @Deprecated
+  public static <SRCTYPE, DSTTYPE> DSTTYPE [] getConverted (@Nullable final SRCTYPE [] aArray,
                                                             @Nonnull final IUnidirectionalConverter <SRCTYPE, DSTTYPE> aConv,
                                                             @Nonnull final Class <DSTTYPE> aDstClass)
   {
-    final DSTTYPE [] ret = ArrayHelper.newArray (aDstClass, aArray.length);
-    for (int i = 0; i < aArray.length; ++i)
-      ret[i] = aConv.convert (aArray[i]);
-    return ret;
+    return newArray (aArray, aConv, aDstClass);
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public static <SRCTYPE, DSTTYPE> DSTTYPE [] newArray (@Nonnull final Collection <? extends SRCTYPE> aList,
                                                         @Nonnull final IUnidirectionalConverter <SRCTYPE, DSTTYPE> aConv,
                                                         @Nonnull final Class <DSTTYPE> aDstClass)
   {
-    if (aList == null)
-      throw new NullPointerException ("list");
-    if (aConv == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aList, "List");
+    ValueEnforcer.notNull (aConv, "Converter");
+    ValueEnforcer.notNull (aDstClass, "DestClass");
 
     final DSTTYPE [] ret = ArrayHelper.newArray (aDstClass, aList.size ());
     int i = 0;
@@ -71,12 +71,13 @@ public final class ArrayConversionHelper
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public static <SRCTYPE, DSTTYPE> DSTTYPE [] newArray (@Nullable final SRCTYPE [] aArray,
                                                         @Nonnull final IUnidirectionalConverter <SRCTYPE, DSTTYPE> aConv,
                                                         @Nonnull final Class <DSTTYPE> aDstClass)
   {
-    if (aConv == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aConv, "Converter");
+    ValueEnforcer.notNull (aDstClass, "DestClass");
 
     final DSTTYPE [] ret = ArrayHelper.newArray (aDstClass, ArrayHelper.getSize (aArray));
     if (aArray != null)

@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.string.ToStringGenerator;
@@ -51,9 +52,7 @@ public class ReadableResourceSAXInputSource extends InputSource
 
   public ReadableResourceSAXInputSource (@Nonnull final IInputStreamProvider aISP, @Nullable final String sSystemID)
   {
-    if (aISP == null)
-      throw new NullPointerException ("resource");
-    m_aISP = aISP;
+    m_aISP = ValueEnforcer.notNull (aISP, "InputStreamProvider");
     setSystemId (sSystemID);
   }
 

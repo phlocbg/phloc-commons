@@ -26,7 +26,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link RomanNumeral}.
- *
+ * 
  * @author Philip Helger
  */
 public final class RomanNumeralTest
@@ -68,7 +68,7 @@ public final class RomanNumeralTest
       RomanNumeral.romanStringToInt (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

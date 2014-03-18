@@ -20,6 +20,8 @@ package com.phloc.commons.tree.simple;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * Implementation of the {@link ITreeItemFactory} for {@link DefaultTreeItem}
  * implementation
@@ -40,8 +42,7 @@ public class DefaultTreeItemFactory <DATATYPE> extends AbstractTreeItemFactory <
   @Nonnull
   public DefaultTreeItem <DATATYPE> create (@Nonnull final DefaultTreeItem <DATATYPE> aParent)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
     return new DefaultTreeItem <DATATYPE> (aParent);
   }
 }

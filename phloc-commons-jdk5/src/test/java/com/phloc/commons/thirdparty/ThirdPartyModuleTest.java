@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ThirdPartyModule}.
- *
+ * 
  * @author Philip Helger
  */
 public final class ThirdPartyModuleTest
@@ -78,14 +78,14 @@ public final class ThirdPartyModuleTest
       new ThirdPartyModule (null, "owner", ELicense.APACHE1);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
       new ThirdPartyModule ("displayname", null, ELicense.APACHE1);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

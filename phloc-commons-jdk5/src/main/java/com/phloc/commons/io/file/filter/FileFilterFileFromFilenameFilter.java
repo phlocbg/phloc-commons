@@ -23,6 +23,7 @@ import java.io.FilenameFilter;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.string.ToStringGenerator;
@@ -39,9 +40,7 @@ public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
 
   public FileFilterFileFromFilenameFilter (@Nonnull final FilenameFilter aFilenameFilter)
   {
-    if (aFilenameFilter == null)
-      throw new NullPointerException ("filenameFilter");
-    m_aFilenameFilter = aFilenameFilter;
+    m_aFilenameFilter = ValueEnforcer.notNull (aFilenameFilter, "FilenameFilter");
   }
 
   @Nonnull

@@ -24,6 +24,8 @@ import java.io.OutputStream;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A non-synchronized copy of the class {@link java.io.BufferedOutputStream}.
  * 
@@ -70,8 +72,7 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
   public NonBlockingBufferedOutputStream (@Nonnull final OutputStream aOS, @Nonnegative final int nSize)
   {
     super (aOS);
-    if (nSize <= 0)
-      throw new IllegalArgumentException ("Buffer size <= 0");
+    ValueEnforcer.isGT0 (nSize, "Size");
     m_aBuf = new byte [nSize];
   }
 

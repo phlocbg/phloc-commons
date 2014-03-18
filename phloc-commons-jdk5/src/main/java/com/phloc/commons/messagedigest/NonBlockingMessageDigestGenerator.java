@@ -28,6 +28,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ArrayHelper;
@@ -37,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Base class for creating a cryptographic hash value. Don't mix it up with the
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
- *
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -58,7 +59,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   /**
    * Create a hash generator with a set of possible algorithms to use.
-   *
+   * 
    * @param aAlgorithms
    *        The parameters to test. May not be <code>null</code>.
    * @throws NullPointerException
@@ -69,8 +70,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
    */
   public NonBlockingMessageDigestGenerator (@Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
-    if (aAlgorithms == null)
-      throw new NullPointerException ("algorithms");
+    ValueEnforcer.notEmpty (aAlgorithms, "Algortihms");
 
     MessageDigest aMessageDigest = null;
     for (final EMessageDigestAlgorithm eMD : aAlgorithms)
@@ -118,15 +118,14 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   @Nonnull
   public IMessageDigestGenerator update (@Nonnull final byte [] aValue,
-                                         @Nonnegative final int nOffset,
-                                         @Nonnegative final int nLength)
+                                         @Nonnegative final int nOfs,
+                                         @Nonnegative final int nLen)
   {
-    if (aValue == null)
-      throw new NullPointerException ("byteArray");
+    ValueEnforcer.isArrayOfsLen (aValue, nOfs, nLen);
     if (m_aDigest != null)
       throw new IllegalStateException ("The hash has already been finished. Call reset manually!");
 
-    m_aMessageDigest.update (aValue, nOffset, nLength);
+    m_aMessageDigest.update (aValue, nOfs, nLen);
     return this;
   }
 

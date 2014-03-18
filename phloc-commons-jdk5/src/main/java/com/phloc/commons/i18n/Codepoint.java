@@ -25,6 +25,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
@@ -53,9 +54,8 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
 
   private static int _getValueFromCharSequence (@Nonnull final CharSequence s)
   {
+    ValueEnforcer.notNull (s, "CharSequence");
     final int nLength = s.length ();
-    if (nLength == 0)
-      throw new IllegalArgumentException ("Empty CharSequence");
     if (nLength == 1)
       return s.charAt (0);
     if (nLength > 2)
@@ -81,9 +81,8 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
 
   private static int _getValueFromCharArray (@Nonnull final char [] s)
   {
+    ValueEnforcer.notEmpty (s, "CharArray");
     final int nLength = s.length;
-    if (nLength == 0)
-      throw new IllegalArgumentException ("Empty char[]");
     if (nLength == 1)
       return s[0];
     if (nLength > 2)

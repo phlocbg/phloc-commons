@@ -20,6 +20,7 @@ package com.phloc.commons.cache;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -34,9 +35,7 @@ final class SimpleCache implements SimpleCacheMBean
 
   public SimpleCache (@Nonnull final AbstractCache <?, ?> aCache)
   {
-    if (aCache == null)
-      throw new NullPointerException ("cache");
-    m_aCache = aCache;
+    m_aCache = ValueEnforcer.notNull (aCache, "Cache");
   }
 
   @Nonnegative

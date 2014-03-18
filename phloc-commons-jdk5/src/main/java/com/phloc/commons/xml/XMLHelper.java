@@ -43,6 +43,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -682,8 +683,7 @@ public final class XMLHelper
   @Nonnull
   public static Node append (@Nonnull final Node aParentNode, @Nullable final Object aChild)
   {
-    if (aParentNode == null)
-      throw new NullPointerException ("parentNode");
+    ValueEnforcer.notNull (aParentNode, "ParentNode");
 
     if (aChild != null)
       if (aChild instanceof Document)
@@ -804,8 +804,7 @@ public final class XMLHelper
   public static IIterableIterator <Element> getChildElementIteratorNoNS (@Nonnull final Node aStartNode,
                                                                          @Nonnull @Nonempty final String sTagName)
   {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("Passed tag name is illegal");
+    ValueEnforcer.notEmpty (sTagName, "TagName");
 
     return new ChildElementIterator (aStartNode, new FilterElementWithTagName (sTagName));
   }
@@ -822,8 +821,7 @@ public final class XMLHelper
                                                                        @Nullable final String sNamespaceURI,
                                                                        @Nonnull @Nonempty final String sLocalName)
   {
-    if (StringHelper.hasNoText (sLocalName))
-      throw new IllegalArgumentException ("Passed local name is illegal");
+    ValueEnforcer.notEmpty (sLocalName, "LocalName");
 
     return new ChildElementIterator (aStartNode, new FilterElementWithNamespaceAndLocalName (sNamespaceURI, sLocalName));
   }
@@ -861,10 +859,8 @@ public final class XMLHelper
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static String getPathToNode (@Nonnull final Node aNode, @Nonnull final String sSep)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (sSep, "Separator");
 
     final StringBuilder aRet = new StringBuilder ();
     Node aCurNode = aNode;

@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
@@ -49,14 +50,9 @@ public class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndi
                      @Nonnull final Serializable aMsg,
                      @Nullable final Throwable aThrowable)
   {
-    if (eLevel == null)
-      throw new NullPointerException ("level");
-    if (aMsg == null)
-      throw new NullPointerException ("msg");
-
     m_aIssueDT = new Date ();
-    m_eErrorLevel = eLevel;
-    m_aMsg = aMsg;
+    m_eErrorLevel = ValueEnforcer.notNull (eLevel, "ErrorLevel");
+    m_aMsg = ValueEnforcer.notNull (aMsg, "Message");
     m_aThrowable = aThrowable;
   }
 

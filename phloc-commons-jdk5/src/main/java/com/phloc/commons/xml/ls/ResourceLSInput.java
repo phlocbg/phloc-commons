@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import org.w3c.dom.ls.LSInput;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
@@ -52,9 +53,7 @@ public class ResourceLSInput implements LSInput
 
   public ResourceLSInput (@Nonnull final IInputStreamProvider aISP, @Nullable final String sSystemID)
   {
-    if (aISP == null)
-      throw new NullPointerException ("inputStreamProvider");
-    m_aISP = aISP;
+    m_aISP = ValueEnforcer.notNull (aISP, "InputStreamProvider");
     m_sSystemId = sSystemID;
   }
 

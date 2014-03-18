@@ -25,6 +25,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -43,21 +44,22 @@ public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvid
   private final int m_nOfs;
   private final int m_nLen;
 
+  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public ByteArrayInputStreamProvider (@Nonnull final byte [] aData)
   {
-    this (aData, 0, aData.length);
+    ValueEnforcer.notNull (aData, "Data");
+    m_aData = aData;
+    m_nOfs = 0;
+    m_nLen = aData.length;
   }
 
   @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
-  public ByteArrayInputStreamProvider (@Nonnull final byte [] aInput,
+  public ByteArrayInputStreamProvider (@Nonnull final byte [] aData,
                                        @Nonnegative final int nOfs,
                                        @Nonnegative final int nLen)
   {
-    if (aInput == null)
-      throw new NullPointerException ("input");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aInput.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aInput.length);
-    m_aData = aInput;
+    ValueEnforcer.isArrayOfsLen (aData, nOfs, nLen);
+    m_aData = aData;
     m_nOfs = nOfs;
     m_nLen = nLen;
   }

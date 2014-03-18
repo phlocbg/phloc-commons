@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.name.IHasDisplayText;
@@ -71,16 +72,9 @@ public class ResourceError implements IResourceError
                         @Nonnull final IHasDisplayText aErrorText,
                         @Nullable final Throwable aLinkedException)
   {
-    if (aLocation == null)
-      throw new NullPointerException ("location");
-    if (eErrorLevel == null)
-      throw new NullPointerException ("errorLevel");
-    if (aErrorText == null)
-      throw new NullPointerException ("errorText");
-
-    m_aLocation = aLocation;
-    m_eErrorLevel = eErrorLevel;
-    m_aErrorText = aErrorText;
+    m_aLocation = ValueEnforcer.notNull (aLocation, "Location");
+    m_eErrorLevel = ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+    m_aErrorText = ValueEnforcer.notNull (aErrorText, "ErrorText");
     m_aLinkedException = aLinkedException;
   }
 

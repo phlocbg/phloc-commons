@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.base64.Base64;
 import com.phloc.commons.base64.Base64Helper;
 import com.phloc.commons.charset.CCharset;
@@ -65,9 +66,7 @@ public class RFC1522BCodec extends AbstractRFC1522Codec
    */
   public RFC1522BCodec (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("Charset");
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   @Override

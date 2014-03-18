@@ -27,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.collections.ContainerHelper;
@@ -314,8 +315,7 @@ public abstract class AbstractMicroNode implements IMicroNode
   public final IMicroElement appendElement (@Nullable final String sNamespaceURI,
                                             @Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("elementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
 
     return appendElement (sNamespaceURI, aElementNameProvider.getElementName ());
   }
@@ -354,8 +354,7 @@ public abstract class AbstractMicroNode implements IMicroNode
   @Nonnull
   public final EChange removeChild (@Nonnull final IMicroNode aChild)
   {
-    if (aChild == null)
-      throw new NullPointerException ("child");
+    ValueEnforcer.notNull (aChild, "Child");
     return onRemoveChild (aChild);
   }
 
@@ -402,10 +401,8 @@ public abstract class AbstractMicroNode implements IMicroNode
   @Nonnull
   public final EChange replaceChild (@Nonnull final IMicroNode aOldChild, @Nonnull final IMicroNode aNewChild)
   {
-    if (aOldChild == null)
-      throw new NullPointerException ("oldChild");
-    if (aNewChild == null)
-      throw new NullPointerException ("newChild");
+    ValueEnforcer.notNull (aOldChild, "OldChild");
+    ValueEnforcer.notNull (aNewChild, "NewChild");
 
     if (aOldChild.equals (aNewChild))
       return EChange.UNCHANGED;
@@ -637,10 +634,8 @@ public abstract class AbstractMicroNode implements IMicroNode
   @Nonnull
   public EChange registerEventTarget (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEventTarget aTarget)
   {
-    if (eEventType == null)
-      throw new NullPointerException ("eventType");
-    if (aTarget == null)
-      throw new NullPointerException ("eventTarget");
+    ValueEnforcer.notNull (eEventType, "EventType");
+    ValueEnforcer.notNull (aTarget, "EventTarget");
 
     if (m_aEventTargets == null)
       m_aEventTargets = new EnumMap <EMicroEvent, Set <IMicroEventTarget>> (EMicroEvent.class);
@@ -656,10 +651,8 @@ public abstract class AbstractMicroNode implements IMicroNode
   @Nonnull
   public EChange unregisterEventTarget (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEventTarget aTarget)
   {
-    if (eEventType == null)
-      throw new NullPointerException ("eventType");
-    if (aTarget == null)
-      throw new NullPointerException ("eventTarget");
+    ValueEnforcer.notNull (eEventType, "EventType");
+    ValueEnforcer.notNull (aTarget, "EventTarget");
 
     if (m_aEventTargets != null && !m_aEventTargets.isEmpty ())
     {

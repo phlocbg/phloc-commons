@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.MustBeLocked;
 import com.phloc.commons.annotations.MustBeLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
@@ -164,8 +165,7 @@ public final class MimeTypeDeterminator
   @Nonnull
   public static EChange registerMimeTypeContent (@Nonnull final MimeTypeContent aMimeTypeContent)
   {
-    if (aMimeTypeContent == null)
-      throw new NullPointerException ("MimeTypeContent");
+    ValueEnforcer.notNull (aMimeTypeContent, "MimeTypeContent");
 
     s_aRWLock.writeLock ().lock ();
     try

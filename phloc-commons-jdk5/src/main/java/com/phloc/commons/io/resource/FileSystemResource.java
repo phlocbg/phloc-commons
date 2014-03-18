@@ -34,6 +34,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
@@ -41,7 +42,6 @@ import com.phloc.commons.io.IReadWriteResource;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.streams.StreamUtils;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -82,8 +82,7 @@ public class FileSystemResource implements IReadWriteResource
 
   public FileSystemResource (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     // Make absolute and try to remove all ".." etc paths
     // Note: using getCleanPath with String is much faster compared to
@@ -112,8 +111,7 @@ public class FileSystemResource implements IReadWriteResource
   @Nullable
   public static InputStream getInputStream (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     return FileUtils.getInputStream (aFile);
   }
@@ -122,10 +120,8 @@ public class FileSystemResource implements IReadWriteResource
   @Deprecated
   public static Reader getReader (@Nonnull final File aFile, @Nonnull @Nonempty final String sCharset)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("charset");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notEmpty (sCharset, "Charset");
 
     return StreamUtils.createReader (getInputStream (aFile), sCharset);
   }
@@ -133,10 +129,8 @@ public class FileSystemResource implements IReadWriteResource
   @Nullable
   public static Reader getReader (@Nonnull final File aFile, @Nonnull final Charset aCharset)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return StreamUtils.createReader (getInputStream (aFile), aCharset);
   }
@@ -163,10 +157,8 @@ public class FileSystemResource implements IReadWriteResource
   @Nullable
   public static OutputStream getOutputStream (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     return FileUtils.getOutputStream (aFile, eAppend);
   }
@@ -177,12 +169,9 @@ public class FileSystemResource implements IReadWriteResource
                                   @Nonnull @Nonempty final String sCharset,
                                   @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("charset");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notEmpty (sCharset, "Charset");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     return StreamUtils.createWriter (getOutputStream (aFile, eAppend), sCharset);
   }
@@ -192,12 +181,9 @@ public class FileSystemResource implements IReadWriteResource
                                   @Nonnull final Charset aCharset,
                                   @Nonnull final EAppend eAppend)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
-    if (eAppend == null)
-      throw new NullPointerException ("append");
+    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (aCharset, "Charset");
+    ValueEnforcer.notNull (eAppend, "Append");
 
     return StreamUtils.createWriter (getOutputStream (aFile, eAppend), aCharset);
   }

@@ -32,6 +32,7 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.state.EChange;
@@ -103,8 +104,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
    */
   public DOMReaderSettings (@Nonnull final IDOMReaderSettings aOther)
   {
-    if (aOther == null)
-      throw new NullPointerException ("other");
+    ValueEnforcer.notNull (aOther, "Other");
 
     // DocumentBuilderFactory
     setNamespaceAware (aOther.isNamespaceAware ());
@@ -244,8 +244,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   public final DOMReaderSettings setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
                                                    @Nullable final Object aPropertyValue)
   {
-    if (eProperty == null)
-      throw new NullPointerException ("property");
+    ValueEnforcer.notNull (eProperty, "Property");
 
     if (aPropertyValue != null &&
         eProperty.getValueClass () != null &&
@@ -318,8 +317,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   @Nonnull
   public final DOMReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     m_aFeatures.put (eFeature, Boolean.valueOf (bValue));
     return this;
@@ -329,8 +327,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   public final DOMReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                   @Nullable final Boolean aValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    ValueEnforcer.notNull (eFeature, "Feature");
 
     if (aValue == null)
       m_aFeatures.remove (eFeature);
@@ -426,8 +423,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   @Nonnull
   public final DOMReaderSettings setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    if (aExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
+    ValueEnforcer.notNull (aExceptionHandler, "ExceptionHandler");
 
     m_aExceptionHandler = aExceptionHandler;
     return this;

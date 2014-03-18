@@ -21,9 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -36,11 +35,15 @@ public final class CombinatorStringWithSeparator implements ICombinator <String>
 {
   private final String m_sSep;
 
-  public CombinatorStringWithSeparator (@Nonnull @Nonempty final String sSep)
+  public CombinatorStringWithSeparator (@Nonnull final String sSep)
   {
-    if (StringHelper.hasNoText (sSep))
-      throw new IllegalArgumentException ("separator is null");
-    m_sSep = sSep;
+    m_sSep = ValueEnforcer.notNull (sSep, "Separator");
+  }
+
+  @Nonnull
+  public String getSeparator ()
+  {
+    return m_sSep;
   }
 
   public String combine (@Nullable final String sFirst, @Nullable final String sSecond)

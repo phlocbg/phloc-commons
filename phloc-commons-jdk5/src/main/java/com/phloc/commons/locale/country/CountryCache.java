@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -81,8 +82,7 @@ public final class CountryCache
   @Nonnull
   static EChange addCountry (@Nonnull final String sCountry)
   {
-    if (sCountry == null)
-      throw new NullPointerException ("country");
+    ValueEnforcer.notNull (sCountry, "Country");
     final String sValidCountry = LocaleUtils.getValidCountryCode (sCountry);
     if (sValidCountry == null)
       throw new IllegalArgumentException ("illegal country code '" + sCountry + "'");

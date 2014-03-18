@@ -37,23 +37,27 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 @IsSPIImplementation
 public final class CharsetTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
+  private static final class TypeConverterStringCharset implements ITypeConverter
+  {
+    public Charset convert (@Nonnull final Object aSource)
+    {
+      return CharsetManager.getCharsetFromName ((String) aSource);
+    }
+  }
+
+  private static final class TypeConverterCharsetString implements ITypeConverter
+  {
+    @Nonnull
+    public String convert (@Nonnull final Object aSource)
+    {
+      return ((Charset) aSource).name ();
+    }
+  }
+
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     // Charset
-    aRegistry.registerTypeConverter (Charset.class, String.class, new ITypeConverter ()
-    {
-      @Nonnull
-      public String convert (@Nonnull final Object aSource)
-      {
-        return ((Charset) aSource).name ();
-      }
-    });
-    aRegistry.registerTypeConverter (String.class, Charset.class, new ITypeConverter ()
-    {
-      public Charset convert (@Nonnull final Object aSource)
-      {
-        return CharsetManager.getCharsetFromName ((String) aSource);
-      }
-    });
+    aRegistry.registerTypeConverter (Charset.class, String.class, new TypeConverterCharsetString ());
+    aRegistry.registerTypeConverter (String.class, Charset.class, new TypeConverterStringCharset ());
   }
 }

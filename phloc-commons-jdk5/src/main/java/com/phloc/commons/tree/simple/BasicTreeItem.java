@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -71,9 +72,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
    */
   public BasicTreeItem (@Nonnull final ITreeItemFactory <DATATYPE, ITEMTYPE> aFactory)
   {
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
-    m_aFactory = aFactory;
+    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
     m_aParent = null;
     m_aData = null;
   }
@@ -88,8 +87,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
    */
   public BasicTreeItem (@Nonnull final ITEMTYPE aParent)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
     if (!(aParent instanceof BasicTreeItem <?, ?>))
       throw new IllegalArgumentException ("Parent is no BasicTreeItem");
     if (aParent.getFactory () == null)
@@ -228,8 +226,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {
-    if (aParent == null)
-      throw new NullPointerException ("parent");
+    ValueEnforcer.notNull (aParent, "Parent");
 
     ITreeItem <DATATYPE, ITEMTYPE> aCur = this;
     while (aCur != null)
@@ -245,8 +242,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
   @Nonnull
   public final ESuccess changeParent (@Nonnull final ITEMTYPE aNewParent)
   {
-    if (aNewParent == null)
-      throw new NullPointerException ("newParent");
+    ValueEnforcer.notNull (aNewParent, "NewParent");
 
     // no change so far
     if (getParent () == aNewParent)
@@ -269,8 +265,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
   @Nonnull
   public final EChange internalAddChild (@Nonnull final ITEMTYPE aChild)
   {
-    if (aChild == null)
-      throw new NullPointerException ("child");
+    ValueEnforcer.notNull (aChild, "Child");
 
     // Ensure children are present
     if (m_aChildren == null)
@@ -282,8 +277,7 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
   @Nonnull
   public final EChange removeChild (@Nonnull final ITEMTYPE aChild)
   {
-    if (aChild == null)
-      throw new NullPointerException ("child");
+    ValueEnforcer.notNull (aChild, "Child");
 
     return EChange.valueOf (m_aChildren != null && m_aChildren.remove (aChild));
   }

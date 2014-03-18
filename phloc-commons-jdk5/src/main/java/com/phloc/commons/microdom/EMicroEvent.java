@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.lang.EnumHelper;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * All available micro DOM events.
@@ -39,8 +38,6 @@ public enum EMicroEvent implements IHasID <String>
 
   private EMicroEvent (@Nonnull @Nonempty final String sID)
   {
-    if (StringHelper.hasNoText (sID))
-      throw new IllegalArgumentException ("id");
     m_sID = sID;
   }
 

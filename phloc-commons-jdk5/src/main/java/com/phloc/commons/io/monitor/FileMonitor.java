@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.state.EChange;
@@ -78,9 +79,7 @@ public class FileMonitor
 
   public FileMonitor (@Nonnull final IFileListener aListener)
   {
-    if (aListener == null)
-      throw new NullPointerException ("Listener");
-    m_aListener = aListener;
+    m_aListener = ValueEnforcer.notNull (aListener, "Listener");
   }
 
   /**

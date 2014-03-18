@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.ISuccessIndicator;
@@ -45,12 +46,8 @@ public final class FileIOError implements ISuccessIndicator, Serializable
 
   public FileIOError (@Nonnull final EFileIOOperation eOperation, @Nonnull final EFileIOErrorCode eCode)
   {
-    if (eOperation == null)
-      throw new NullPointerException ("operation");
-    if (eCode == null)
-      throw new NullPointerException ("errorCode");
-    m_eOperation = eOperation;
-    m_eCode = eCode;
+    m_eOperation = ValueEnforcer.notNull (eOperation, "Operation");
+    m_eCode = ValueEnforcer.notNull (eCode, "ErrorCode");
     m_aFile1 = null;
     m_aFile2 = null;
     m_aException = null;
@@ -60,15 +57,9 @@ public final class FileIOError implements ISuccessIndicator, Serializable
                       @Nonnull final EFileIOErrorCode eCode,
                       @Nonnull final File aFile1)
   {
-    if (eOperation == null)
-      throw new NullPointerException ("operation");
-    if (eCode == null)
-      throw new NullPointerException ("errorCode");
-    if (aFile1 == null)
-      throw new NullPointerException ("file1");
-    m_eOperation = eOperation;
-    m_eCode = eCode;
-    m_aFile1 = aFile1;
+    m_eOperation = ValueEnforcer.notNull (eOperation, "Operation");
+    m_eCode = ValueEnforcer.notNull (eCode, "ErrorCode");
+    m_aFile1 = ValueEnforcer.notNull (aFile1, "File1");
     m_aFile2 = null;
     m_aException = null;
   }
@@ -78,18 +69,10 @@ public final class FileIOError implements ISuccessIndicator, Serializable
                       @Nonnull final File aFile1,
                       @Nonnull final File aFile2)
   {
-    if (eOperation == null)
-      throw new NullPointerException ("operation");
-    if (eCode == null)
-      throw new NullPointerException ("errorCode");
-    if (aFile1 == null)
-      throw new NullPointerException ("file1");
-    if (aFile2 == null)
-      throw new NullPointerException ("file2");
-    m_eOperation = eOperation;
-    m_eCode = eCode;
-    m_aFile1 = aFile1;
-    m_aFile2 = aFile2;
+    m_eOperation = ValueEnforcer.notNull (eOperation, "Operation");
+    m_eCode = ValueEnforcer.notNull (eCode, "ErrorCode");
+    m_aFile1 = ValueEnforcer.notNull (aFile1, "File1");
+    m_aFile2 = ValueEnforcer.notNull (aFile2, "File2");
     m_aException = null;
   }
 
@@ -97,17 +80,11 @@ public final class FileIOError implements ISuccessIndicator, Serializable
                       @Nonnull final EFileIOErrorCode eCode,
                       @Nonnull final Exception aException)
   {
-    if (eOperation == null)
-      throw new NullPointerException ("operation");
-    if (eCode == null)
-      throw new NullPointerException ("errorCode");
-    if (aException == null)
-      throw new NullPointerException ("exception");
-    m_eOperation = eOperation;
-    m_eCode = eCode;
+    m_eOperation = ValueEnforcer.notNull (eOperation, "Operation");
+    m_eCode = ValueEnforcer.notNull (eCode, "ErrorCode");
     m_aFile1 = null;
     m_aFile2 = null;
-    m_aException = aException;
+    m_aException = ValueEnforcer.notNull (aException, "Exception");
   }
 
   @Nonnull

@@ -76,7 +76,7 @@ public final class MicroEntityReferenceTest
       new MicroEntityReference (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

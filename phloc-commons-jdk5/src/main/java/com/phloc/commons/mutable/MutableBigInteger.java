@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.math.MathHelper;
@@ -53,9 +54,7 @@ public final class MutableBigInteger extends Number implements IMutableNumeric <
 
   public MutableBigInteger (@Nonnull final BigInteger aValue)
   {
-    if (aValue == null)
-      throw new NullPointerException ("value");
-    m_aValue = aValue;
+    m_aValue = ValueEnforcer.notNull (aValue, "Value");
   }
 
   @Nonnull

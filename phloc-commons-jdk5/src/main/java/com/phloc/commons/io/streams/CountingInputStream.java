@@ -55,7 +55,7 @@ public class CountingInputStream extends WrappedInputStream
   }
 
   @Override
-  public int read (final byte b[], final int nOffset, final int nLength) throws IOException
+  public int read (final byte [] b, final int nOffset, final int nLength) throws IOException
   {
     final int ret = super.read (b, nOffset, nLength);
     if (ret != -1)

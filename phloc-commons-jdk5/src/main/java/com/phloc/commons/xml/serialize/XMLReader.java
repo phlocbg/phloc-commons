@@ -46,6 +46,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.factory.IFactory;
@@ -116,8 +117,7 @@ public final class XMLReader
   public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS,
                                      @Nonnull final IDOMReaderSettings aSettings) throws SAXException
   {
-    if (aIS == null)
-      throw new NullPointerException ("IS");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     try
     {
@@ -139,8 +139,7 @@ public final class XMLReader
   public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader,
                                      @Nonnull final IDOMReaderSettings aSettings) throws SAXException
   {
-    if (aReader == null)
-      throw new NullPointerException ("Reader");
+    ValueEnforcer.notNull (aReader, "Reader");
 
     try
     {
@@ -466,8 +465,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     try
     {
@@ -486,8 +484,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     return readXMLDOM (InputSourceFactory.create (aFile), aSchema, aCustomErrorHandler, aEntityResolver);
   }
@@ -499,8 +496,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aResource == null)
-      throw new NullPointerException ("resource");
+    ValueEnforcer.notNull (aResource, "Resource");
 
     return readXMLDOM (InputSourceFactory.create (aResource), aSchema, aCustomErrorHandler, aEntityResolver);
   }
@@ -512,8 +508,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aReader == null)
-      throw new NullPointerException ("reader");
+    ValueEnforcer.notNull (aReader, "Reader");
 
     try
     {
@@ -532,8 +527,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (sXML == null)
-      throw new NullPointerException ("xml");
+    ValueEnforcer.notNull (sXML, "XML");
 
     return readXMLDOM (InputSourceFactory.create (sXML), aSchema, aCustomErrorHandler, aEntityResolver);
   }
@@ -545,8 +539,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aXML == null)
-      throw new NullPointerException ("xml");
+    ValueEnforcer.notNull (aXML, "XML");
 
     return readXMLDOM (InputSourceFactory.create (aXML), aSchema, aCustomErrorHandler, aEntityResolver);
   }
@@ -558,8 +551,7 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler,
                                      @Nullable final EntityResolver aEntityResolver) throws SAXException
   {
-    if (aInputSource == null)
-      throw new NullPointerException ("inputSource");
+    ValueEnforcer.notNull (aInputSource, "InputSource");
 
     return readXMLDOM (aInputSource, new DOMReaderSettings ().setSchema (aSchema)
                                                              .setErrorHandler (aCustomErrorHandler)
@@ -570,10 +562,8 @@ public final class XMLReader
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
                                      @Nonnull final IDOMReaderSettings aSettings) throws SAXException
   {
-    if (aInputSource == null)
-      throw new NullPointerException ("inputSource");
-    if (aSettings == null)
-      throw new NullPointerException ("settings");
+    ValueEnforcer.notNull (aInputSource, "InputSource");
+    ValueEnforcer.notNull (aSettings, "Settings");
 
     Document aDoc = null;
     try
@@ -702,8 +692,7 @@ public final class XMLReader
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputStream aIS,
                                      @Nullable final ContentHandler aContentHdl)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     return readXMLSAX (InputSourceFactory.create (aIS), aContentHdl);
   }
@@ -726,8 +715,7 @@ public final class XMLReader
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
                                      @Nullable final ContentHandler aContentHdl)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     return readXMLSAX (aIS, null, null, aContentHdl, null, null, null);
   }
@@ -769,8 +757,7 @@ public final class XMLReader
                                      final boolean bDTDValidating,
                                      final boolean bSchemaValidating)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     return readXMLSAX (InputSourceFactory.create (aIS),
                        aEntityResolver,

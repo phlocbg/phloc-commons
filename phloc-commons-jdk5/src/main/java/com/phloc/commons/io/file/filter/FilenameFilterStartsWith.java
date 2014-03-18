@@ -24,9 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -47,9 +47,13 @@ public final class FilenameFilterStartsWith implements FilenameFilter
    */
   public FilenameFilterStartsWith (@Nonnull @Nonempty final String sPrefix)
   {
-    if (StringHelper.hasNoText (sPrefix))
-      throw new IllegalArgumentException ("prefix may not be empty");
-    m_sPrefix = sPrefix;
+    m_sPrefix = ValueEnforcer.notEmpty (sPrefix, "Prefix");
+  }
+
+  @Nonnull
+  public String getPrefix ()
+  {
+    return m_sPrefix;
   }
 
   public boolean accept (@Nullable final File aDir, @Nullable final String sName)

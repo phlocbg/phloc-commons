@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.callback.AdapterRunnableToCallable;
 import com.phloc.commons.callback.IThrowingRunnable;
@@ -52,8 +53,7 @@ public final class MainRunner
 
   public static void run (@Nonnull final IThrowingRunnable aRunnable)
   {
-    if (aRunnable == null)
-      throw new NullPointerException ("runnable");
+    ValueEnforcer.notNull (aRunnable, "Runnable");
 
     final StopWatch aSW = new StopWatch (true);
     try
@@ -78,8 +78,7 @@ public final class MainRunner
   @Nullable
   public static <DATATYPE> DATATYPE run (@Nonnull final Callable <DATATYPE> aCallable)
   {
-    if (aCallable == null)
-      throw new NullPointerException ("runnable");
+    ValueEnforcer.notNull (aCallable, "Callable");
 
     final StopWatch aSW = new StopWatch (true);
     try

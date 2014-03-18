@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link SingleElementNamespaceContext}.
- *
+ * 
  * @author Philip Helger
  */
 public final class SingleElementNamespaceContextTest
@@ -47,7 +47,7 @@ public final class SingleElementNamespaceContextTest
       new SingleElementNamespaceContext (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try

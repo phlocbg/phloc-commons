@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.streams.ByteBufferInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -40,9 +41,7 @@ public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvi
 
   public ByteBufferInputStreamProvider (@Nonnull final ByteBuffer aBuffer)
   {
-    if (aBuffer == null)
-      throw new NullPointerException ("buffer");
-    m_aBuffer = aBuffer;
+    m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
   }
 
   @Nonnull

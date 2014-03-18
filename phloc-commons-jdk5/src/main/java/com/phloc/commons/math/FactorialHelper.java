@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -77,8 +78,7 @@ public final class FactorialHelper
   @Nonnegative
   public static long getSmallFactorial (@Nonnegative final int n)
   {
-    if (n < PREDEFINED_MIN_INDEX || n > PREDEFINED_MAX_INDEX)
-      throw new IllegalArgumentException ("Passed index " + n + " is out of bounds");
+    ValueEnforcer.isBetweenInclusive (n, "n", PREDEFINED_MIN_INDEX, PREDEFINED_MAX_INDEX);
     return PREDEFINED_FACTORIALS_LONG[n];
   }
 
@@ -118,8 +118,7 @@ public final class FactorialHelper
     @Nonnull
     public BigInteger getFactorial (@Nonnegative final int n)
     {
-      if (n < 0)
-        throw new IllegalArgumentException ("n >= 0 required, but was " + n);
+      ValueEnforcer.isGE0 (n, "n");
       if (n < 2)
         return BigInteger.ONE;
       BigInteger aP = BigInteger.ONE;

@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroContainer;
@@ -64,8 +65,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
                            @Nonnull final IMicroNode aNode,
                            @Nullable final IMicroNode aNextSibling)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
+    ValueEnforcer.notNull (aNode, "Node");
 
     if (aNode.isElement ())
       _writeElement (aXMLWriter, aPrevSibling, (IMicroElement) aNode, aNextSibling);

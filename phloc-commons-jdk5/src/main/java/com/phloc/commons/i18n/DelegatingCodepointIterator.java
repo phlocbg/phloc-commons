@@ -20,6 +20,8 @@ package com.phloc.commons.i18n;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * Base implementation of a CodepointIterator that filters the output of another
  * {@link ICodepointIterator}
@@ -32,9 +34,7 @@ public class DelegatingCodepointIterator implements ICodepointIterator
 
   protected DelegatingCodepointIterator (@Nonnull final AbstractCodepointIterator aInternal)
   {
-    if (aInternal == null)
-      throw new NullPointerException ("internal");
-    m_aInternal = aInternal;
+    m_aInternal = ValueEnforcer.notNull (aInternal, "Internal");
   }
 
   protected char get ()

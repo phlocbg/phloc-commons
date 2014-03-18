@@ -31,6 +31,7 @@ import javax.annotation.WillNotClose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.streams.NonBlockingBitInputStream;
 import com.phloc.commons.io.streams.NonBlockingBitOutputStream;
@@ -65,8 +66,7 @@ public class LZWCodec extends AbstractCodec
 
     public LZWNode (@Nonnegative final int nTableIndex)
     {
-      if (nTableIndex < 0 || nTableIndex >= AbstractLZWDictionary.MAX_CODE)
-        throw new IllegalArgumentException ("Illegal table index: " + nTableIndex);
+      ValueEnforcer.isBetweenInclusive (nTableIndex, "TableIndex", 0, AbstractLZWDictionary.MAX_CODE);
       m_nTableIndex = nTableIndex;
     }
 
@@ -80,8 +80,7 @@ public class LZWCodec extends AbstractCodec
 
     public void setChildNode (@Nonnegative final byte nIndex, @Nonnull final LZWNode aNode)
     {
-      if (aNode == null)
-        throw new NullPointerException ("node");
+      ValueEnforcer.notNull (aNode, "Node");
       if (m_aChildren == null)
         m_aChildren = new LZWNode [256];
       m_aChildren[nIndex & 0xff] = aNode;
@@ -152,8 +151,7 @@ public class LZWCodec extends AbstractCodec
 
     public final void addEntry (@Nonnull final byte [] aByteSeq, final boolean bForEncode)
     {
-      if (aByteSeq == null)
-        throw new NullPointerException ("entry");
+      ValueEnforcer.notNull (aByteSeq, "ByteSeq");
       if (m_nFreeCode == m_aTab.length)
         throw bForEncode ? new EncoderException ("LZW encode table overflow")
                         : new DecoderException ("LZW decode table overflow");
@@ -288,10 +286,8 @@ public class LZWCodec extends AbstractCodec
   public static void decodeLZW (@Nonnull @WillNotClose final InputStream aEncodedIS,
                                 @Nonnull @WillNotClose final OutputStream aOS)
   {
-    if (aEncodedIS == null)
-      throw new NullPointerException ("encodedInputStream");
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aEncodedIS, "EncodedInputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (aEncodedIS, ByteOrder.LITTLE_ENDIAN);
 
@@ -389,8 +385,7 @@ public class LZWCodec extends AbstractCodec
    */
   public static void encodeLZW (@Nullable final byte [] aBuffer, @Nonnull @WillNotClose final OutputStream aOS)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     if (aBuffer == null)
       return;

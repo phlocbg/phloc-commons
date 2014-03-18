@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
 
@@ -189,12 +190,9 @@ public final class LevenshteinDistance
                                  @Nonnegative final int nCostDelete,
                                  @Nonnegative final int nCostSubstitution)
   {
-    if (nCostInsert < 0)
-      throw new IllegalArgumentException ("Insert cost is invalid: " + nCostInsert);
-    if (nCostDelete < 0)
-      throw new IllegalArgumentException ("Deletion cost is invalid: " + nCostDelete);
-    if (nCostSubstitution < 0)
-      throw new IllegalArgumentException ("Substitution cost is invalid: " + nCostSubstitution);
+    ValueEnforcer.isGE0 (nCostInsert, "InsertionCost");
+    ValueEnforcer.isGE0 (nCostDelete, "DeletionCost");
+    ValueEnforcer.isGE0 (nCostSubstitution, "SubstitutionCost");
 
     final int nLen1 = aStr1 == null ? 0 : aStr1.length;
     final int nLen2 = aStr2 == null ? 0 : aStr2.length;
@@ -240,12 +238,9 @@ public final class LevenshteinDistance
                                  @Nonnegative final int nCostDelete,
                                  @Nonnegative final int nCostSubstitution)
   {
-    if (nCostInsert < 0)
-      throw new IllegalArgumentException ("Insert cost is invalid: " + nCostInsert);
-    if (nCostDelete < 0)
-      throw new IllegalArgumentException ("Deletion cost is invalid: " + nCostDelete);
-    if (nCostSubstitution < 0)
-      throw new IllegalArgumentException ("Substitution cost is invalid: " + nCostSubstitution);
+    ValueEnforcer.isGE0 (nCostInsert, "InsertionCost");
+    ValueEnforcer.isGE0 (nCostDelete, "DeletionCost");
+    ValueEnforcer.isGE0 (nCostSubstitution, "SubstitutionCost");
 
     final int nLen1 = StringHelper.getLength (sStr1);
     final int nLen2 = StringHelper.getLength (sStr2);

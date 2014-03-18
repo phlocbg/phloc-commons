@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
@@ -42,8 +43,7 @@ public final class AggregatorFactoryNewInstance <SRCTYPE, DSTTYPE> implements IA
 
   public <DATATYPE extends IAggregator <?, ?>> AggregatorFactoryNewInstance (@Nonnull final Class <DATATYPE> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "aClass");
     if (!ClassHelper.isInstancableClass (aClass))
       throw new IllegalArgumentException ("Class " + aClass + " is not instancable!");
 

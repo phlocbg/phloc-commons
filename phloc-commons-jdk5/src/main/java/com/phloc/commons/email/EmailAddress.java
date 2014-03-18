@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -34,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class EmailAddress implements IEmailAddress
+public class EmailAddress implements IEmailAddress
 {
   private final String m_sAddress;
   private final String m_sPersonal;
@@ -51,8 +52,7 @@ public final class EmailAddress implements IEmailAddress
 
   public EmailAddress (@Nonnull final String sAddress, @Nullable final String sPersonal)
   {
-    if (sAddress == null)
-      throw new NullPointerException ("emailAddress");
+    ValueEnforcer.notNull (sAddress, "EmailAddress");
     if (!EmailAddressUtils.isValid (sAddress))
       throw new IllegalArgumentException ("The passed email address '" + sAddress + "' is illegal!");
     m_sAddress = EmailAddressUtils.getUnifiedEmailAddress (sAddress);
@@ -84,7 +84,7 @@ public final class EmailAddress implements IEmailAddress
   {
     if (o == this)
       return true;
-    if (!(o instanceof EmailAddress))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final EmailAddress rhs = (EmailAddress) o;
     return m_sAddress.equals (rhs.m_sAddress) && EqualsUtils.equals (m_sPersonal, rhs.m_sPersonal);

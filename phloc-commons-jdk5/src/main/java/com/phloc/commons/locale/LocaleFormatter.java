@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -60,8 +61,7 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final double dValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getNumberInstance (aDisplayLocale).format (dValue);
   }
@@ -80,8 +80,7 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final int nValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (nValue);
   }
@@ -100,8 +99,7 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final long nValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (nValue);
   }
@@ -120,10 +118,8 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (@Nonnull final BigInteger aValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aValue == null)
-      throw new NullPointerException ("Value");
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (aValue);
   }
@@ -143,10 +139,8 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (@Nonnull final BigDecimal aValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aValue == null)
-      throw new NullPointerException ("Value");
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getInstance (aDisplayLocale).format (aValue);
   }
@@ -168,10 +162,8 @@ public final class LocaleFormatter
                                      @Nonnegative final int nFractionDigits,
                                      @Nonnull final Locale aDisplayLocale)
   {
-    if (aValue == null)
-      throw new NullPointerException ("Value");
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     final NumberFormat aNF = NumberFormat.getInstance (aDisplayLocale);
     aNF.setMinimumFractionDigits (nFractionDigits);
@@ -193,10 +185,8 @@ public final class LocaleFormatter
   public static String getFormattedWithAllFractionDigits (@Nonnull final BigDecimal aValue,
                                                           @Nonnull final Locale aDisplayLocale)
   {
-    if (aValue == null)
-      throw new NullPointerException ("Value");
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aValue, "Value");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     final NumberFormat aNF = NumberFormat.getInstance (aDisplayLocale);
     aNF.setMaximumFractionDigits (aValue.scale ());
@@ -218,8 +208,7 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormattedPercent (final double dValue, @Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     return NumberFormat.getPercentInstance (aDisplayLocale).format (dValue);
   }
@@ -242,8 +231,7 @@ public final class LocaleFormatter
                                             @Nonnegative final int nFractionDigits,
                                             @Nonnull final Locale aDisplayLocale)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     final NumberFormat aNF = NumberFormat.getPercentInstance (aDisplayLocale);
     aNF.setMinimumFractionDigits (nFractionDigits);
@@ -260,8 +248,7 @@ public final class LocaleFormatter
   @Nullable
   public static Number parse (@Nullable final String sStr, @Nonnull final NumberFormat aNF)
   {
-    if (aNF == null)
-      throw new NullPointerException ("numberFormat");
+    ValueEnforcer.notNull (aNF, "NumberFormat");
 
     if (sStr != null)
       try
@@ -325,8 +312,7 @@ public final class LocaleFormatter
   @Nullable
   public static BigDecimal parseBigDecimal (@Nullable final String sStr, @Nonnull final DecimalFormat aNF)
   {
-    if (aNF == null)
-      throw new NullPointerException ("numberFormat");
+    ValueEnforcer.notNull (aNF, "NumberFormat");
 
     aNF.setParseBigDecimal (true);
     return (BigDecimal) parse (sStr, aNF);

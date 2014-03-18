@@ -25,11 +25,11 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.xml.XMLConstants;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.SingleElementIterator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -57,13 +57,8 @@ public class SingleElementNamespaceContext extends AbstractNamespaceContext
 
   public SingleElementNamespaceContext (@Nonnull final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
   {
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    if (StringHelper.hasNoText (sNamespaceURI))
-      throw new IllegalArgumentException ("namespaceURI may not be empty");
-
-    m_sPrefix = sPrefix;
-    m_sNamespaceURI = sNamespaceURI;
+    m_sPrefix = ValueEnforcer.notNull (sPrefix, "Prefix");
+    m_sNamespaceURI = ValueEnforcer.notEmpty (sNamespaceURI, "NamespaceURI");
   }
 
   @Override

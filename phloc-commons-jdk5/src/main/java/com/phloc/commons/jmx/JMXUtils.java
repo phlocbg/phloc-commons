@@ -27,6 +27,7 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.state.ESuccess;
 
 /**
@@ -48,10 +49,8 @@ public final class JMXUtils
   @Nonnull
   public static ESuccess exposeMBean (@Nonnull final Object aObject, @Nonnull final ObjectName aObjectName)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
-    if (aObjectName == null)
-      throw new NullPointerException ("objectName");
+    ValueEnforcer.notNull (aObject, "Object");
+    ValueEnforcer.notNull (aObjectName, "ObjectName");
 
     try
     {
