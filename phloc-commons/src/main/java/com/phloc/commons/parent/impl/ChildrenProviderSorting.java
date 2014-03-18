@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.parent.IChildrenProvider;
 
@@ -55,12 +56,8 @@ public class ChildrenProviderSorting <CHILDTYPE> implements IChildrenProvider <C
   public ChildrenProviderSorting (@Nonnull final IChildrenProvider <CHILDTYPE> aCP,
                                   @Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
-    if (aCP == null)
-      throw new NullPointerException ("childrenProvider");
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
-    m_aCR = aCP;
-    m_aComparator = aComparator;
+    m_aCR = ValueEnforcer.notNull (aCP, "ChildrenProvider");
+    m_aComparator = ValueEnforcer.notNull (aComparator, "Comparator");
   }
 
   public final boolean hasChildren (@Nullable final CHILDTYPE aCurrent)

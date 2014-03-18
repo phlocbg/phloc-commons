@@ -22,6 +22,7 @@ import java.util.Iterator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -51,9 +52,7 @@ public class IterableIterator <ELEMENTTYPE> implements IIterableIterator <ELEMEN
 
   protected IterableIterator (@Nonnull final Iterator <ELEMENTTYPE> aIter)
   {
-    if (aIter == null)
-      throw new NullPointerException ("iterator");
-    m_aIter = aIter;
+    m_aIter = ValueEnforcer.notNull (aIter, "Iterator");
   }
 
   public final boolean hasNext ()
