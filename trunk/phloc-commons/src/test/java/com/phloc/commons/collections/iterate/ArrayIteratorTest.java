@@ -86,7 +86,7 @@ public final class ArrayIteratorTest
       ArrayIterator.createBeginEnd (null, 5, 2);
       fail ();
     }
-    catch (final NullPointerException ex)
+    catch (final IllegalArgumentException ex)
     {}
 
     try
