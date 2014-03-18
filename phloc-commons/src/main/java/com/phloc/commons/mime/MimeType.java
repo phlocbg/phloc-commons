@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -101,10 +102,8 @@ public class MimeType implements IMimeType
                    @Nonnull @Nonempty final String sContentSubType,
                    @Nullable final Collection <? extends MimeTypeParameter> aParameters)
   {
-    if (eContentType == null)
-      throw new NullPointerException ("contentType");
-    if (StringHelper.hasNoText (sContentSubType))
-      throw new IllegalArgumentException ("contentSubType may not be empty");
+    ValueEnforcer.notNull (eContentType, "ContentType");
+    ValueEnforcer.notEmpty (sContentSubType, "ContentSubType");
 
     m_eContentType = eContentType;
     m_sContentSubType = sContentSubType;
@@ -151,8 +150,7 @@ public class MimeType implements IMimeType
   @Nonempty
   public String getAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
   {
-    if (eQuotingAlgorithm == null)
-      throw new NullPointerException ("QuotingAlgorithm");
+    ValueEnforcer.notNull (eQuotingAlgorithm, "QuotingAlgorithm");
 
     if (ContainerHelper.isEmpty (m_aParameters))
     {
@@ -172,8 +170,7 @@ public class MimeType implements IMimeType
   @Nonnull
   public String getParametersAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
   {
-    if (eQuotingAlgorithm == null)
-      throw new NullPointerException ("QuotingAlgorithm");
+    ValueEnforcer.notNull (eQuotingAlgorithm, "QuotingAlgorithm");
 
     if (ContainerHelper.isEmpty (m_aParameters))
       return "";
@@ -216,8 +213,8 @@ public class MimeType implements IMimeType
   @Nonnull
   public MimeType addParameter (@Nonnull final MimeTypeParameter aParameter)
   {
-    if (aParameter == null)
-      throw new NullPointerException ("parameter");
+    ValueEnforcer.notNull (aParameter, "Parameter");
+
     if (m_aParameters == null)
       m_aParameters = new ArrayList <MimeTypeParameter> ();
     m_aParameters.add (aParameter);

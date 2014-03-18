@@ -20,6 +20,7 @@ package com.phloc.commons.parent.utils;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
 import com.phloc.commons.parent.IChildrenProvider;
 
@@ -40,20 +41,15 @@ public final class ChildrenProviderWalker <CHILDTYPE>
   public ChildrenProviderWalker (@Nonnull final IChildrenProvider <CHILDTYPE> aChildrenProvider,
                                  @Nonnull final IHierarchyWalkerCallback <CHILDTYPE> aCallback)
   {
-    if (aChildrenProvider == null)
-      throw new NullPointerException ("childProvider");
-    if (aCallback == null)
-      throw new NullPointerException ("callback");
-    m_aChildrenProvider = aChildrenProvider;
-    m_aCallback = aCallback;
+    m_aChildrenProvider = ValueEnforcer.notNull (aChildrenProvider, "ChildrenProvider");
+    m_aCallback = ValueEnforcer.notNull (aCallback, "Callback");
   }
 
   private void _walkRecursive (@Nonnull final CHILDTYPE aObject)
   {
     // Only the root level is null -> otherwise we end up in a potentially
     // endless recursion
-    if (aObject == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     // prefix insertion
     m_aCallback.onItemBeforeChildren (aObject);
@@ -100,8 +96,7 @@ public final class ChildrenProviderWalker <CHILDTYPE>
 
   public void walkSub (@Nonnull final CHILDTYPE aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     m_aCallback.begin ();
     try

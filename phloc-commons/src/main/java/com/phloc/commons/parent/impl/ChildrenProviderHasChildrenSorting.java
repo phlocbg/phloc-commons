@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.parent.IHasChildren;
 
@@ -45,9 +46,7 @@ public class ChildrenProviderHasChildrenSorting <CHILDTYPE extends IHasChildren 
 
   public ChildrenProviderHasChildrenSorting (@Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
-    m_aComparator = aComparator;
+    m_aComparator = ValueEnforcer.notNull (aComparator, "Comparator");
   }
 
   @Override

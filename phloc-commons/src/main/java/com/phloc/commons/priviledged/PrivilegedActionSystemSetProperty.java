@@ -22,6 +22,8 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A special privileged object, that calls <code>System.setProperty</code>
  * 
@@ -34,12 +36,8 @@ public final class PrivilegedActionSystemSetProperty implements PrivilegedAction
 
   public PrivilegedActionSystemSetProperty (@Nonnull final String sKey, @Nonnull final String sValue)
   {
-    if (sKey == null)
-      throw new NullPointerException ("key");
-    if (sValue == null)
-      throw new NullPointerException ("value");
-    m_sKey = sKey;
-    m_sValue = sValue;
+    m_sKey = ValueEnforcer.notNull (sKey, "Key");
+    m_sValue = ValueEnforcer.notNull (sValue, "Value");
   }
 
   @Nullable

@@ -33,6 +33,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.callback.AdapterRunnableToThrowingRunnable;
 import com.phloc.commons.callback.IThrowingRunnable;
@@ -329,8 +330,7 @@ public final class PhlocTestUtils
    */
   public static void testInParallel (@Nonnegative final int nCalls, @Nonnull final Runnable aRunnable)
   {
-    if (aRunnable == null)
-      throw new NullPointerException ("Runnable");
+    ValueEnforcer.notNull (aRunnable, "Runnable");
     testInParallel (nCalls, new AdapterRunnableToThrowingRunnable (aRunnable));
   }
 
@@ -344,10 +344,8 @@ public final class PhlocTestUtils
    */
   public static void testInParallel (@Nonnegative final int nCalls, @Nonnull final IThrowingRunnable aRunnable)
   {
-    if (nCalls < 0)
-      throw new IllegalArgumentException ("Too few calls: " + nCalls);
-    if (aRunnable == null)
-      throw new NullPointerException ("Runnable");
+    ValueEnforcer.isGE0 (nCalls, "Calls");
+    ValueEnforcer.notNull (aRunnable, "Runnable");
 
     // More than 20s thread would be overkill!
     final ExecutorService aES = Executors.newFixedThreadPool (20);
