@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.factory.FactoryNull;
 import com.phloc.commons.factory.IFactory;
@@ -57,9 +58,7 @@ public class SafeVector <ELEMENTTYPE> extends Vector <ELEMENTTYPE> implements IH
 
   public SafeVector (@Nonnull final IFactory <ELEMENTTYPE> aFactory)
   {
-    if (aFactory == null)
-      throw new NullPointerException ("If you use the constructor with an IFactory you have to provide anything other than null.");
-    m_aFactory = aFactory;
+    m_aFactory = ValueEnforcer.notNull (aFactory, "Factory");
   }
 
   private void _ensureSize (@Nonnegative final int nIndex)

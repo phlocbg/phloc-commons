@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -260,10 +261,8 @@ public final class ContainerConversionHelper
   public static <SRCTYPE, DSTTYPE extends Comparable <? super DSTTYPE>> List <DSTTYPE> getSorted (@Nonnull final Iterator <? extends SRCTYPE> it,
                                                                                                   @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    if (it == null)
-      throw new NullPointerException ("iterator");
-    if (aConverter == null)
-      throw new NullPointerException ("comparator");
+    ValueEnforcer.notNull (it, "Iterator");
+    ValueEnforcer.notNull (aConverter, "Converter");
 
     final List <DSTTYPE> ret = new ArrayList <DSTTYPE> ();
     while (it.hasNext ())
@@ -293,12 +292,9 @@ public final class ContainerConversionHelper
                                                              @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter,
                                                              @Nonnull final Comparator <? super DSTTYPE> aComparator)
   {
-    if (it == null)
-      throw new NullPointerException ("iterator");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
+    ValueEnforcer.notNull (it, "Iterator");
+    ValueEnforcer.notNull (aConverter, "Converter");
+    ValueEnforcer.notNull (aComparator, "Comparator");
 
     final List <DSTTYPE> ret = new ArrayList <DSTTYPE> ();
     while (it.hasNext ())

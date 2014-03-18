@@ -22,6 +22,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * An implementation of {@link IUnidirectionalConverter} that converts from a
  * map key to a map value
@@ -38,9 +40,7 @@ public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
 
   public UnidirectionalConverterMapGet (@Nonnull final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    if (aMap == null)
-      throw new NullPointerException ("map");
-    m_aMap = aMap;
+    m_aMap = ValueEnforcer.notNull (aMap, "Map");
   }
 
   @Nullable

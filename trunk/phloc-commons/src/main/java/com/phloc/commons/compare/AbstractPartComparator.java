@@ -22,6 +22,8 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * This class is an {@link AbstractComparator} that extracts a certain data
  * element from the main object to compare.
@@ -92,9 +94,7 @@ public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends Abstra
                                  @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
     super (eSortOrder, aNestedComparator);
-    if (aPartComparator == null)
-      throw new NullPointerException ("partComparator");
-    m_aPartComparator = aPartComparator;
+    m_aPartComparator = ValueEnforcer.notNull (aPartComparator, "PartComparator");
   }
 
   @Nullable

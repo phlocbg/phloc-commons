@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -41,8 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Third type.
  */
 @Immutable
-public final class ReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements
-                                                                    IReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE>
+public final class ReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements IReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE>
 {
   private final DATA1TYPE m_aFirst;
   private final DATA2TYPE m_aSecond;
@@ -59,6 +59,7 @@ public final class ReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements
 
   public ReadonlyTriple (@Nonnull final IReadonlyTriple <? extends DATA1TYPE, ? extends DATA2TYPE, ? extends DATA3TYPE> rhs)
   {
+    ValueEnforcer.notNull (rhs, "Triple");
     m_aFirst = rhs.getFirst ();
     m_aSecond = rhs.getSecond ();
     m_aThird = rhs.getThird ();

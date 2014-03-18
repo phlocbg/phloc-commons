@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.state.EInterrupt;
 
 /**
@@ -37,13 +38,12 @@ import com.phloc.commons.state.EInterrupt;
 public final class ManagedExecutorService
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ManagedExecutorService.class);
+
   private final ExecutorService m_aES;
 
   public ManagedExecutorService (@Nonnull final ExecutorService aES)
   {
-    if (aES == null)
-      throw new NullPointerException ("executorService");
-    m_aES = aES;
+    m_aES = ValueEnforcer.notNull (aES, "ExecutorService");
   }
 
   /**

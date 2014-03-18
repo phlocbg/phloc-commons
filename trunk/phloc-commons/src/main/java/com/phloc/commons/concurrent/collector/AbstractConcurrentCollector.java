@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.callback.INonThrowingRunnable;
 import com.phloc.commons.state.ESuccess;
 
@@ -67,16 +68,14 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
    */
   public AbstractConcurrentCollector (@Nonnegative final int nMaxQueueSize)
   {
-    if (nMaxQueueSize <= 0)
-      throw new IllegalArgumentException ("max queue size is illegal: " + nMaxQueueSize);
+    ValueEnforcer.isGT0 (nMaxQueueSize, "MaxQueueSize");
     m_aQueue = new ArrayBlockingQueue <Object> (nMaxQueueSize);
   }
 
   @Nonnull
   public final ESuccess queueObject (@Nonnull final DATATYPE aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("message");
+    ValueEnforcer.notNull (aObject, "Object");
 
     if (isStopped ())
       throw new IllegalStateException ("The queue is already stopped and does not take any more elements");
