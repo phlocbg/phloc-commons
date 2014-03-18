@@ -23,6 +23,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.text.IReadonlyMultiLingualText;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 
@@ -49,8 +50,7 @@ public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyM
 
   public ReadonlyMultiLingualText (@Nonnull final Map <Locale, String> aContent)
   {
-    if (aContent == null)
-      throw new NullPointerException ("content");
+    ValueEnforcer.notNull (aContent, "Content");
 
     for (final Map.Entry <Locale, String> aEntry : aContent.entrySet ())
       internalAddText (aEntry.getKey (), aEntry.getValue ());
@@ -58,8 +58,7 @@ public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyM
 
   public ReadonlyMultiLingualText (@Nonnull final ISimpleMultiLingualText aSimpleMLT)
   {
-    if (aSimpleMLT == null)
-      throw new NullPointerException ("textProvider");
+    ValueEnforcer.notNull (aSimpleMLT, "SimpleMLT");
 
     for (final Locale aLocale : aSimpleMLT.getAllLocales ())
       internalAddText (aLocale, aSimpleMLT.getText (aLocale));
@@ -67,8 +66,7 @@ public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyM
 
   public ReadonlyMultiLingualText (@Nonnull final IReadonlyMultiLingualText aMLT)
   {
-    if (aMLT == null)
-      throw new NullPointerException ("MLT");
+    ValueEnforcer.notNull (aMLT, "MLT");
 
     for (final Map.Entry <Locale, String> aEntry : aMLT.getMap ().entrySet ())
       internalAddText (aEntry.getKey (), aEntry.getValue ());

@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
@@ -1471,10 +1472,9 @@ public final class StringParser
                                             @Nonnull final RoundingMode eRoundingMode,
                                             @Nullable final BigDecimal aDefault)
   {
-    if (nScale < 0)
-      throw new IllegalArgumentException ("Scale may not be negative: " + nScale);
-    if (eRoundingMode == null)
-      throw new NullPointerException ("RoundingMode");
+    ValueEnforcer.isGE0 (nScale, "Scale");
+    ValueEnforcer.notNull (eRoundingMode, "RoundingMode");
+
     if (sStr != null && sStr.length () > 0)
       try
       {

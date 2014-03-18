@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -64,8 +65,7 @@ public final class TextFormatter
                                          @Nullable final String sText,
                                          @Nullable final Object... aArgs)
   {
-    if (aDisplayLocale == null)
-      throw new NullPointerException ("DisplayLocale");
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     if (sText == null)
     {

@@ -33,6 +33,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -92,10 +93,8 @@ public final class SerializationConverterRegistry implements ISerializationConve
   private static void _registerSerializationConverter (@Nonnull final Class <?> aClass,
                                                        @Nonnull final ISerializationConverter aConverter)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aClass, "Class");
+    ValueEnforcer.notNull (aConverter, "Converter");
     if (Serializable.class.isAssignableFrom (aClass))
       throw new IllegalArgumentException ("The provided " + aClass.toString () + " is already Serializable!");
 

@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.typeconvert.TypeConverterException;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
@@ -48,8 +49,7 @@ public final class SerializationConverter
   public static void writeConvertedObject (@Nullable final Object aObject, @Nonnull final ObjectOutputStream aOOS) throws TypeConverterException,
                                                                                                                   IOException
   {
-    if (aOOS == null)
-      throw new NullPointerException ("ObjectOutputStream");
+    ValueEnforcer.notNull (aOOS, "ObjectOutputStream");
 
     // Write boolean flag indicating null or not
     aOOS.writeBoolean (aObject == null);
@@ -72,10 +72,8 @@ public final class SerializationConverter
                                                        @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException,
                                                                                                 IOException
   {
-    if (aOIS == null)
-      throw new NullPointerException ("ObjectInputStream");
-    if (aDstClass == null)
-      throw new NullPointerException ("destinationClass");
+    ValueEnforcer.notNull (aOIS, "ObjectInputStream");
+    ValueEnforcer.notNull (aDstClass, "DestinationClass");
 
     // Was the object null?
     final boolean bIsNull = aOIS.readBoolean ();

@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.text.ISimpleTextProvider;
 
 /**
@@ -58,8 +59,7 @@ public abstract class AbstractSimpleTextProvider implements ISimpleTextProvider
   @Nullable
   public final String getText (@Nonnull final Locale aContentLocale)
   {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
 
     return internalGetText (aContentLocale);
   }
@@ -67,8 +67,7 @@ public abstract class AbstractSimpleTextProvider implements ISimpleTextProvider
   @Nullable
   public final String getTextWithLocaleFallback (@Nonnull final Locale aContentLocale)
   {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
 
     final Locale aLocaleToUse = internalGetLocaleToUseWithFallback (aContentLocale);
     return aLocaleToUse == null ? null : internalGetText (aLocaleToUse);
