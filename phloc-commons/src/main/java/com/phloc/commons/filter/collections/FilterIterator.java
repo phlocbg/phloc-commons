@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
@@ -74,12 +75,8 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
   public FilterIterator (@Nonnull final Iterator <? extends ELEMENTTYPE> aBaseIter,
                          @Nonnull final IFilter <ELEMENTTYPE> aFilter)
   {
-    if (aBaseIter == null)
-      throw new NullPointerException ("baseIterator");
-    if (aFilter == null)
-      throw new NullPointerException ("filter");
-    m_aBaseIter = aBaseIter;
-    m_aFilter = aFilter;
+    m_aBaseIter = ValueEnforcer.notNull (aBaseIter, "BaseIterator");
+    m_aFilter = ValueEnforcer.notNull (aFilter, "Filter");
     _gotoNextCurrent ();
   }
 
@@ -94,12 +91,9 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
   public FilterIterator (@Nonnull final Iterable <? extends ELEMENTTYPE> aBaseCont,
                          @Nonnull final IFilter <ELEMENTTYPE> aFilter)
   {
-    if (aBaseCont == null)
-      throw new NullPointerException ("baseContainer");
-    if (aFilter == null)
-      throw new NullPointerException ("filter");
+    ValueEnforcer.notNull (aBaseCont, "BaseContainer");
     m_aBaseIter = aBaseCont.iterator ();
-    m_aFilter = aFilter;
+    m_aFilter = ValueEnforcer.notNull (aFilter, "Filter");
     _gotoNextCurrent ();
   }
 

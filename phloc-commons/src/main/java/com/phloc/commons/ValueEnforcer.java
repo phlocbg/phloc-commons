@@ -247,6 +247,54 @@ public final class ValueEnforcer
     return aValue;
   }
 
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty and that
+   * no <code>null</code> value is contained.
+   * 
+   * @param aValue
+   *        The Array to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T> T [] notEmptyNoNullValue (final T [] aValue, final String sName)
+  {
+    notEmpty (aValue, sName);
+    int nIndex = 0;
+    for (final T aItem : aValue)
+    {
+      if (aItem == null)
+        throw new IllegalArgumentException ("Item " + nIndex + " of array '" + sName + "' may not be null!");
+      ++nIndex;
+    }
+    return aValue;
+  }
+
+  /**
+   * Check that the passed collection is neither <code>null</code> nor empty and
+   * that no <code>null</code> value is contained.
+   * 
+   * @param aValue
+   *        The collection to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T extends Collection <?>> T notEmptyNoNullValue (final T aValue, final String sName)
+  {
+    notEmpty (aValue, sName);
+    int nIndex = 0;
+    for (final Object aItem : aValue)
+    {
+      if (aItem == null)
+        throw new IllegalArgumentException ("Item " + nIndex + " of collection '" + sName + "' may not be null!");
+      ++nIndex;
+    }
+    return aValue;
+  }
+
   public static short isGE0 (final short nValue, final String sName)
   {
     if (nValue < 0)

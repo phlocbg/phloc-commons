@@ -20,6 +20,7 @@ package com.phloc.commons.format.impl;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.format.IFormatter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -58,8 +59,7 @@ public final class MinLengthAddLeadingFormatter extends AbstractStringFormatter
                                        final char cFill)
   {
     super (aNestedFormatter);
-    if (nMinLength < 1)
-      throw new IllegalArgumentException ("Passed min length is too small: " + nMinLength);
+    ValueEnforcer.isGT0 (nMinLength, "MinLength");
     m_nMinLength = nMinLength;
     m_cFill = cFill;
   }
