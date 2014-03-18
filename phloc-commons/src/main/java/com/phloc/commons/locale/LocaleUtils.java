@@ -29,10 +29,12 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.IsLocked;
 import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.regex.RegExHelper;
@@ -122,6 +124,8 @@ public final class LocaleUtils
   @Nonnull
   public static String getLocaleDisplayName (@Nullable final Locale aLocale, @Nonnull final Locale aContentLocale)
   {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+
     if (aLocale == null || aLocale.equals (CGlobal.LOCALE_INDEPENDENT))
       return ELocaleName.ID_LANGUAGE_INDEPENDENT.getDisplayText (aContentLocale);
     if (aLocale.equals (CGlobal.LOCALE_ALL))
@@ -139,8 +143,7 @@ public final class LocaleUtils
   @Nonnull
   public static String getLocaleNativeDisplayName (@Nonnull final Locale aLocale)
   {
-    if (aLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aLocale, "Locale");
     return getLocaleDisplayName (aLocale, aLocale);
   }
 
@@ -153,8 +156,11 @@ public final class LocaleUtils
    *         map is not ordered.
    */
   @Nonnull
+  @ReturnsMutableCopy
   public static Map <Locale, String> getAllLocaleDisplayNames (@Nonnull final Locale aContentLocale)
   {
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+
     final Map <Locale, String> ret = new HashMap <Locale, String> ();
     for (final Locale aCurLocale : LocaleCache.getAllLocales ())
       ret.put (aCurLocale, getLocaleDisplayName (aCurLocale, aContentLocale));
@@ -187,8 +193,7 @@ public final class LocaleUtils
   @ReturnsImmutableObject
   public static List <Locale> getCalculatedLocaleListForResolving (@Nonnull final Locale aLocale)
   {
-    if (aLocale == null)
-      throw new NullPointerException ("locale");
+    ValueEnforcer.notNull (aLocale, "Locale");
 
     return s_aLocaleListCache.getFromCache (aLocale);
   }
@@ -279,10 +284,8 @@ public final class LocaleUtils
                                                  @Nonnull final Collection <Locale> aAvailableLocales,
                                                  @Nullable final Locale aFallback)
   {
-    if (aRequestLocale == null)
-      throw new NullPointerException ("requestLocale");
-    if (aAvailableLocales == null)
-      throw new NullPointerException ("providedLocales");
+    ValueEnforcer.notNull (aRequestLocale, "RequestLocale");
+    ValueEnforcer.notNull (aAvailableLocales, "AvailableLocales");
 
     // first check direct match
     if (aAvailableLocales.contains (aRequestLocale))

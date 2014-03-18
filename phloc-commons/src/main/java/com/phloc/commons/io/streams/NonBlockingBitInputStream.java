@@ -120,7 +120,7 @@ public class NonBlockingBitInputStream implements Closeable
    */
   public int readBits (@Nonnegative final int aNumberOfBits) throws IOException
   {
-    ValueEnforcer.isBetweenInclusive (aNumberOfBits, "NumberOfBits", 1, 32);
+    ValueEnforcer.isBetweenInclusive (aNumberOfBits, "NumberOfBits", 1, CGlobal.BITS_PER_INT);
 
     int ret = 0;
     for (int i = aNumberOfBits - 1; i >= 0; i--)

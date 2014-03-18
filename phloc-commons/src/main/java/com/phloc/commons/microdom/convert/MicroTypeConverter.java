@@ -21,10 +21,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.typeconvert.TypeConverterException;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 
@@ -60,8 +60,7 @@ public final class MicroTypeConverter
                                                      @Nullable final String sNamespaceURI,
                                                      @Nonnull @Nonempty final String sTagName) throws TypeConverterException
   {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("tagName is empty");
+    ValueEnforcer.notEmpty (sTagName, "TagName");
 
     if (aObject == null)
       return null;
@@ -83,8 +82,7 @@ public final class MicroTypeConverter
   public static <DSTTYPE> DSTTYPE convertToNative (@Nullable final IMicroElement aElement,
                                                    @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException
   {
-    if (aDstClass == null)
-      throw new NullPointerException ("destinationClass");
+    ValueEnforcer.notNull (aDstClass, "DestClass");
 
     if (aElement == null)
       return null;

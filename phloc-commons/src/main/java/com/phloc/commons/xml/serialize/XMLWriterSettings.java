@@ -26,6 +26,7 @@ import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
@@ -290,8 +291,9 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    */
   @Nonnull
   @Deprecated
-  public final XMLWriterSettings setCharset (@Nonnull final String sCharset)
+  public final XMLWriterSettings setCharset (@Nonnull @Nonempty final String sCharset)
   {
+    ValueEnforcer.notEmpty (sCharset, "Chrset");
     return setCharset (CharsetManager.getCharsetFromName (sCharset));
   }
 

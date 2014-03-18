@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
@@ -174,10 +175,9 @@ public final class LogUtils
                           @Nonnull final String sMsg,
                           @Nullable final Throwable t)
   {
-    if (aLogger == null)
-      throw new NullPointerException ("logger");
-    if (eErrorLevel == null)
-      throw new NullPointerException ("errorLevel");
+    ValueEnforcer.notNull (aLogger, "Logger");
+    ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+    ValueEnforcer.notNull (sMsg, "Message");
 
     if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.ERROR))
       aLogger.error (sMsg, t);

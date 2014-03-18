@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
@@ -52,8 +53,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassLocalName (@Nonnull final Object aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     return getClassLocalName (aObject.getClass ());
   }
@@ -68,8 +68,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassLocalName (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getClassLocalName (aClass.getName ());
   }
@@ -84,8 +83,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassLocalName (@Nonnull final String sClassName)
   {
-    if (sClassName == null)
-      throw new NullPointerException ("className");
+    ValueEnforcer.notNull (sClassName, "ClassName");
 
     final int nIndex = sClassName.lastIndexOf ('.');
     return nIndex == -1 ? sClassName : sClassName.substring (nIndex + 1);
@@ -101,8 +99,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassPackageName (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getClassPackageName (aClass.getName ());
   }
@@ -118,8 +115,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassPackageName (@Nonnull final String sClassName)
   {
-    if (sClassName == null)
-      throw new NullPointerException ("className");
+    ValueEnforcer.notNull (sClassName, "ClassName");
 
     final int nIndex = sClassName.lastIndexOf ('.');
     return nIndex == -1 ? "" : sClassName.substring (0, nIndex);
@@ -153,8 +149,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getDirectoryFromPackage (@Nonnull final Package aPackage)
   {
-    if (aPackage == null)
-      throw new NullPointerException ("package");
+    ValueEnforcer.notNull (aPackage, "Package");
 
     // No differentiation
     return getPathFromClass (aPackage.getName ());
@@ -188,8 +183,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getPathFromClass (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     return getPathFromClass (aClass.getName ());
   }
@@ -206,8 +200,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getPathFromClass (@Nonnull final String sClassName)
   {
-    if (sClassName == null)
-      throw new NullPointerException ("className");
+    ValueEnforcer.notNull (sClassName, "ClassName");
 
     return sClassName.replace ('.', '/');
   }
@@ -225,8 +218,7 @@ public final class CGStringHelper
   @Nonnull
   public static String getClassFromPath (@Nonnull final String sPath)
   {
-    if (sPath == null)
-      throw new NullPointerException ("path");
+    ValueEnforcer.notNull (sPath, "Path");
 
     return sPath.replace ('\\', '.').replace ('/', '.');
   }

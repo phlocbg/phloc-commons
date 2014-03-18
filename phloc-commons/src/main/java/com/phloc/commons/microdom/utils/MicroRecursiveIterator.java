@@ -24,6 +24,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.microdom.IMicroNode;
@@ -39,8 +40,7 @@ public class MicroRecursiveIterator implements IIterableIterator <IMicroNode>
 
   public MicroRecursiveIterator (@Nonnull final IMicroNode aNode)
   {
-    if (aNode == null)
-      throw new NullPointerException ("node");
+    ValueEnforcer.notNull (aNode, "Node");
     m_aOpen.add (aNode);
   }
 

@@ -72,6 +72,26 @@ public final class CombinationGeneratorTest
   }
 
   @Test
+  public void testStringCombination2 ()
+  {
+    final List <String> aElements = ContainerHelper.newList (A, B, B, C);
+    final CombinationGenerator <String> x = new CombinationGenerator <String> (aElements, 0);
+    assertEquals (BigInteger.ONE, x.getTotalCombinations ());
+    assertEquals (BigInteger.ONE, x.getCombinationsLeft ());
+
+    final List <List <String>> aResultsWithDuplicates = new ArrayList <List <String>> ();
+    final Set <List <String>> aResultsWithoutDuplicates = new HashSet <List <String>> ();
+    while (x.hasNext ())
+    {
+      final List <String> aResult = x.next ();
+      aResultsWithDuplicates.add (aResult);
+      aResultsWithoutDuplicates.add (aResult);
+    }
+    assertEquals (1, aResultsWithDuplicates.size ());
+    assertEquals (1, aResultsWithoutDuplicates.size ());
+  }
+
+  @Test
   @SuppressFBWarnings ({ "NP_NONNULL_PARAM_VIOLATION", "TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED" })
   public void testCtor ()
   {
@@ -80,7 +100,7 @@ public final class CombinationGeneratorTest
       new CombinationGenerator <String> (null, 3);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

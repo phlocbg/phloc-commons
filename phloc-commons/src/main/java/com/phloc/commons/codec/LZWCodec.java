@@ -66,7 +66,7 @@ public class LZWCodec extends AbstractCodec
 
     public LZWNode (@Nonnegative final int nTableIndex)
     {
-      ValueEnforcer.isBetweenInclusive (nTableIndex, "TableIndex", 1, AbstractLZWDictionary.MAX_CODE);
+      ValueEnforcer.isBetweenInclusive (nTableIndex, "TableIndex", 0, AbstractLZWDictionary.MAX_CODE);
       m_nTableIndex = nTableIndex;
     }
 
