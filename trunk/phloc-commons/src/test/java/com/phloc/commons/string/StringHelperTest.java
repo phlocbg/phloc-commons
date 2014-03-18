@@ -1400,7 +1400,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       StringHelper.replaceAll ("aaaaach", null, "a");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
@@ -1455,7 +1455,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       StringHelper.replaceAllSafe ("aaaaach", null, "a");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     assertEquals ("ach", StringHelper.replaceAllSafe ("aaaaach", "aa", null));
   }
@@ -1476,7 +1476,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       StringHelper.replaceAllRepeatedly ("aaaaach", null, "a");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

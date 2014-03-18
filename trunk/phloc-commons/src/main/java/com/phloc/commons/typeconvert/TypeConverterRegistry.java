@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.multimap.IMultiMapListBased;
 import com.phloc.commons.collections.multimap.MultiTreeMapArrayListBased;
@@ -131,18 +132,15 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
                                               @Nonnull final Class <?> aDstClass,
                                               @Nonnull final ITypeConverter aConverter)
   {
-    if (aSrcClass == null)
-      throw new NullPointerException ("srcClass");
+    ValueEnforcer.notNull (aSrcClass, "SrcClass");
     if (!ClassHelper.isPublic (aSrcClass))
       throw new IllegalArgumentException ("Source " + aSrcClass + " is no public class!");
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
+    ValueEnforcer.notNull (aDstClass, "DstClass");
     if (!ClassHelper.isPublic (aDstClass))
       throw new IllegalArgumentException ("Destination " + aDstClass + " is no public class!");
     if (aSrcClass.equals (aDstClass))
       throw new IllegalArgumentException ("Source and destination class are equal and therefore no converter is required.");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aConverter, "Converter");
     if (aConverter instanceof ITypeConverterRule)
       throw new IllegalArgumentException ("Type converter rules must be registered via registerTypeConverterRule");
     if (ClassHelper.areConvertibleClasses (aSrcClass, aDstClass))
@@ -419,8 +417,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
 
   public void registerTypeConverterRule (@Nonnull final ITypeConverterRule aTypeConverterRule)
   {
-    if (aTypeConverterRule == null)
-      throw new NullPointerException ("typeConverterRule");
+    ValueEnforcer.notNull (aTypeConverterRule, "TypeConverterRule");
 
     s_aRWLock.writeLock ().lock ();
     try
