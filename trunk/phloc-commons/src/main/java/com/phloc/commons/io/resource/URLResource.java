@@ -27,7 +27,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -158,48 +157,6 @@ public class URLResource implements IReadableResource
                                      @Nullable final IWrapper <IOException> aExceptionHolder)
   {
     return URLUtils.getInputStream (m_aURL, nConnectTimeoutMS, nReadTimeoutMS, aConnectionModifier, aExceptionHolder);
-  }
-
-  @Nullable
-  @Deprecated
-  public static InputStream getInputStream (@Nonnull final URL aURL,
-                                            @Nullable final Map <String, String> aRequestProperties,
-                                            @Nullable final IWrapper <IOException> aExceptionHolder)
-  {
-    INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier = null;
-    if (aRequestProperties != null)
-    {
-      aConnectionModifier = new INonThrowingRunnableWithParameter <URLConnection> ()
-      {
-        public void run (final URLConnection aConnection)
-        {
-
-          // Apply all request properties
-          for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
-            aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
-        }
-      };
-    }
-    return URLUtils.getInputStream (aURL,
-                                    DEFAULT_CONNECT_TIMEOUT,
-                                    DEFAULT_READ_TIMEOUT,
-                                    aConnectionModifier,
-                                    aExceptionHolder);
-  }
-
-  @Nullable
-  @Deprecated
-  public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties)
-  {
-    return getInputStream (m_aURL, aRequestProperties, (IWrapper <IOException>) null);
-  }
-
-  @Nullable
-  @Deprecated
-  public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties,
-                                     @Nullable final IWrapper <IOException> aExceptionHolder)
-  {
-    return getInputStream (m_aURL, aRequestProperties, aExceptionHolder);
   }
 
   @Nullable

@@ -34,15 +34,6 @@ public class StringSuffixFormatter extends StringPrefixAndSuffixFormatter
     super ("", sSuffix);
   }
 
-  /**
-   * @deprecated Use {@link #StringSuffixFormatter(IFormatter,String)} instead
-   */
-  @Deprecated
-  public StringSuffixFormatter (@Nonnull final String sSuffix, @Nullable final IFormatter aNestedFormatter)
-  {
-    this (aNestedFormatter, sSuffix);
-  }
-
   public StringSuffixFormatter (@Nullable final IFormatter aNestedFormatter, @Nonnull final String sSuffix)
   {
     super (aNestedFormatter, "", sSuffix);

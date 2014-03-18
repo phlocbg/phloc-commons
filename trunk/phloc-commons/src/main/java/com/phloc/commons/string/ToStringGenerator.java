@@ -365,30 +365,10 @@ public final class ToStringGenerator
     return aValue == null ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,boolean[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final boolean [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final boolean [] aValue)
   {
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
-  }
-
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,byte[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final byte [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
   }
 
   @Nonnull
@@ -397,30 +377,10 @@ public final class ToStringGenerator
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,char[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final char [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final char [] aValue)
   {
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
-  }
-
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,double[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final double [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
   }
 
   @Nonnull
@@ -429,30 +389,10 @@ public final class ToStringGenerator
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,float[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final float [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final float [] aValue)
   {
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
-  }
-
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,int[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final int [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
   }
 
   @Nonnull
@@ -461,30 +401,10 @@ public final class ToStringGenerator
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,long[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final long [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final long [] aValue)
   {
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
-  }
-
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,short[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final short [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
   }
 
   @Nonnull
@@ -493,46 +413,16 @@ public final class ToStringGenerator
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,Object[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Object [] aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final Object [] aValue)
   {
     return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
   }
 
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,Collection)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Collection <?> aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
-  }
-
   @Nonnull
   public ToStringGenerator appendIfNotEmpty (@Nonnull final String sField, @Nullable final Collection <?> aValue)
   {
     return aValue == null || aValue.isEmpty () ? this : append (sField, aValue);
-  }
-
-  /**
-   * @deprecated Use {@link #appendIfNotEmpty(String,Map)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Map <?, ?> aValue)
-  {
-    return appendIfNotEmpty (sField, aValue);
   }
 
   @Nonnull

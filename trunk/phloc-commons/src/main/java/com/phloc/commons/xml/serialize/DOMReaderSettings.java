@@ -382,12 +382,6 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     return m_aEntityResolver != null;
   }
 
-  @Deprecated
-  public boolean requiresSeparateDocumentBuilderFactory ()
-  {
-    return requiresNewXMLParser ();
-  }
-
   @Nullable
   public EntityResolver getEntityResolver ()
   {

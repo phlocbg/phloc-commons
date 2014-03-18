@@ -521,7 +521,6 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   /**
    * Test for method concatenate
    */
-  @java.lang.SuppressWarnings ("deprecation")
   @Test
   public void testGetConcatenated ()
   {
@@ -543,7 +542,6 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final Integer [] b = new Integer [] { I3, I4 };
 
       // Generic
-      assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, getConcatenated (a, b, Integer.class));
       assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, getConcatenated (a, b));
       assertArrayEquals (new Integer [] { I3, I4, I1, I2 }, getConcatenated (b, a));
       assertArrayEquals (a, getConcatenated (a, (Integer []) null));

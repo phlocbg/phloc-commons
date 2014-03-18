@@ -47,36 +47,17 @@ public final class ArrayIteratorDouble
     m_aArray = ArrayHelper.getCopy (aArray);
   }
 
-  @Deprecated
-  public ArrayIteratorDouble (@Nonnull final double [] aArray,
-                              @Nonnegative final int nBegin,
-                              @Nonnegative final int nEnd)
-  {
-    ValueEnforcer.notNull (aArray, "Array");
-    ValueEnforcer.isGE0 (nBegin, "Begin");
-    ValueEnforcer.isGE0 (nEnd, "End");
-    if (nEnd < nBegin)
-      throw new IllegalArgumentException ("Begin (" + nBegin + ") must be between 0 and < end (" + nEnd + ")");
-    m_nIndex = 0;
-
-    final int nLength = nEnd - nBegin;
-    m_aArray = ArrayHelper.getCopy (aArray, nBegin, nLength);
-  }
-
   /**
    * Private constructor with offset and length
    * 
-   * @param bUnused
-   *        Marker to differentiate between the constructor with begin and end
    * @param aArray
    *        Source array
    * @param nOfs
    *        Offset. Must be &ge; 0.
    * @param nLength
-   *        Lenght. Must be &ge; 0.
+   *        Length. Must be &ge; 0.
    */
-  private ArrayIteratorDouble (final boolean bUnused,
-                               @Nonnull final double [] aArray,
+  private ArrayIteratorDouble (@Nonnull final double [] aArray,
                                @Nonnegative final int nOfs,
                                @Nonnegative final int nLength)
   {
@@ -135,7 +116,7 @@ public final class ArrayIteratorDouble
                                                   @Nonnegative final int nOfs,
                                                   @Nonnegative final int nLength)
   {
-    return new ArrayIteratorDouble (true, aArray, nOfs, nLength);
+    return new ArrayIteratorDouble (aArray, nOfs, nLength);
   }
 
   @Nonnull
@@ -143,6 +124,8 @@ public final class ArrayIteratorDouble
                                                     @Nonnegative final int nBegin,
                                                     @Nonnegative final int nEnd)
   {
-    return new ArrayIteratorDouble (aArray, nBegin, nEnd);
+    if (nEnd < nBegin)
+      throw new IllegalArgumentException ("Begin (" + nBegin + ") must be between 0 and < end (" + nEnd + ")");
+    return createOfsLen (aArray, nBegin, nEnd - nBegin);
   }
 }

@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.xml;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -150,124 +149,6 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
       ++nCount;
     }
     assertEquals (nCount, 1);
-  }
-
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testGetMaskedXMLText ()
-  {
-    for (final EXMLVersion eVersion : EXMLVersion.values ())
-      for (final EXMLIncorrectCharacterHandling eIncorrectCharHandling : EXMLIncorrectCharacterHandling.values ())
-      {
-        assertArrayEquals ("abc".toCharArray (), XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "abc"));
-        assertArrayEquals ("a&amp;c".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "a&c"));
-        assertArrayEquals ("a&amp;amp;c".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "a&amp;c"));
-        assertArrayEquals ("&amp;&lt;&gt;".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "&<>"));
-        assertArrayEquals ("&lt;&gt;&amp;".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "<>&"));
-        assertArrayEquals ("a&lt;c".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "a<c"));
-        assertArrayEquals ("a&gt;c".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "a>c"));
-        assertArrayEquals ("a&quot;c".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "a\"c"));
-        assertArrayEquals ("&lt;a&gt;".toCharArray (),
-                           XMLHelper.getMaskedXMLText (eVersion, eIncorrectCharHandling, "<a>"));
-      }
-
-    // Emit as usual
-    assertArrayEquals (new char [] { 1 },
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.DEFAULT, "\u0001"));
-    assertArrayEquals ("&#1;".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_11, EXMLIncorrectCharacterHandling.DEFAULT, "\u0001"));
-
-    // Replace with ""
-    assertArrayEquals (new char [0],
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "\u0001"));
-    assertArrayEquals (new char [0], XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
-                                                                 EXMLIncorrectCharacterHandling.DO_NOT_WRITE_NO_LOG,
-                                                                 "\u0001"));
-    assertArrayEquals ("abc".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "ab\u0001c"));
-
-    // Throw exception
-    try
-    {
-      XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.THROW_EXCEPTION, "\u0001");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      XMLHelper.getMaskedXMLText (EXMLVersion.XML_11, EXMLIncorrectCharacterHandling.THROW_EXCEPTION, "\u0001");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    // Emit as usual
-    assertArrayEquals ("1 &amp; \u0001".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
-                                                   EXMLIncorrectCharacterHandling.DEFAULT,
-                                                   "1 & \u0001"));
-    assertArrayEquals ("1 &amp; &#1;".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
-                                                   EXMLIncorrectCharacterHandling.DEFAULT,
-                                                   "1 & \u0001"));
-    // Emit as usual
-    assertArrayEquals ("1 &amp; ".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "1 & \u0001"));
-    assertArrayEquals ("1 &amp; ".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "1 & \u0001"));
-
-    assertArrayEquals ("ab\nc".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "ab\u2028c"));
-    assertArrayEquals ("ab\nc".toCharArray (),
-                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                   "ab\u2028c"));
-  }
-
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testGetMaskedXMLTextLength ()
-  {
-    for (final EXMLVersion eVersion : EXMLVersion.values ())
-      for (final EXMLIncorrectCharacterHandling eIncorrectCharHandling : EXMLIncorrectCharacterHandling.values ())
-      {
-        assertEquals (3, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "abc"));
-        assertEquals (1 + 5 + 1, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "a&c"));
-        assertEquals (1 + 4 + 1, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "a<c"));
-        assertEquals (1 + 4 + 1, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "a>c"));
-        assertEquals (1 + 6 + 1, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "a\"c"));
-        assertEquals (4 + 1 + 4, XMLHelper.getMaskedXMLTextLength (eVersion, eIncorrectCharHandling, "<a>"));
-      }
-    assertEquals (1, XMLHelper.getMaskedXMLTextLength (EXMLVersion.XML_10,
-                                                       EXMLIncorrectCharacterHandling.DEFAULT,
-                                                       "\u0001"));
-    assertEquals (4, XMLHelper.getMaskedXMLTextLength (EXMLVersion.XML_11,
-                                                       EXMLIncorrectCharacterHandling.DEFAULT,
-                                                       "\u0001"));
-    assertEquals (2 + 5 + 1 + 1, XMLHelper.getMaskedXMLTextLength (EXMLVersion.XML_10,
-                                                                   EXMLIncorrectCharacterHandling.DEFAULT,
-                                                                   "1 & \u0001"));
-    assertEquals (2 + 5 + 1 + 4, XMLHelper.getMaskedXMLTextLength (EXMLVersion.XML_11,
-                                                                   EXMLIncorrectCharacterHandling.DEFAULT,
-                                                                   "1 & \u0001"));
   }
 
   @Test

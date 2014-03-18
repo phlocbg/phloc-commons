@@ -191,8 +191,6 @@ public enum EXMLParserProperty implements IHasName
    */
   SAX_XML_VERSION (EXMLParserPropertyType.SAX, "http://xml.org/sax/properties/document-xml-version", String.class);
 
-  @Deprecated
-  public static final EXMLParserProperty SAX_FEATURE_LEXICAL_HANDLER = SAX_LEXICAL_HANDLER;
   private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLParserProperty.class);
 
   private final EXMLParserPropertyType m_ePropertyType;
