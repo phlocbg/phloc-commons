@@ -173,17 +173,6 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     }
   }
 
-  @Nonnull
-  @Deprecated
-  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
-                                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
-                                                     @Nonnull final IMicroDocumentType aDocType)
-  {
-    return getDocTypeHTMLRepresentation (EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion),
-                                         eIncorrectCharHandling,
-                                         aDocType);
-  }
-
   /**
    * Get the XML representation of a document type.
    * 

@@ -149,10 +149,6 @@ public final class CMimeType
   /** The character used to separate content type and sub type: '/' */
   public static final char SEPARATOR_CONTENTTYPE_SUBTYPE = '/';
 
-  /** The character used to separate content type and sub type: '/' */
-  @Deprecated
-  public static final char CONTENTTYPE_SUBTYPE_SEPARATOR = SEPARATOR_CONTENTTYPE_SUBTYPE;
-
   /** The separator of between parameters: ';' */
   public static final char SEPARATOR_PARAMETER = ';';
 
@@ -161,14 +157,6 @@ public final class CMimeType
 
   /** The special "charset" MIME type parameter name */
   public static final String PARAMETER_NAME_CHARSET = "charset";
-
-  /** For appending a charset e.g. to HTML */
-  @Deprecated
-  public static final String CHARSET_PREFIX = PARAMETER_NAME_CHARSET + SEPARATOR_PARAMETER_NAME_VALUE;
-
-  /** For appending a charset e.g. to HTML */
-  @Deprecated
-  public static final String CHARSET_PARAM = SEPARATOR_PARAMETER + CHARSET_PREFIX;
 
   /**
    * The default quoting algorithm to be used:

@@ -1876,34 +1876,6 @@ public final class ArrayHelper
   }
 
   /**
-   * Get a new array that combines the passed two arrays, maintaining the order.<br>
-   * Note: this method is only present, because it may be confusing that
-   * {@link #getConcatenated(Object, Object[], Class)} and
-   * {@link #getConcatenated(Object[], Object, Class)} take the class as third
-   * parameter and this method does not require one.
-   * 
-   * @param aHeadArray
-   *        The first array. May be <code>null</code>.
-   * @param aTailArray
-   *        The second array. May be <code>null</code>.
-   * @param aClass
-   *        The element class. Ignored.
-   * @return <code>null</code> if both array parameters are <code>null</code> -
-   *         a non-<code>null</code> array with all elements in the correct
-   *         order otherwise.
-   * @deprecated use {@link #getConcatenated(Object[], Object[])} directly
-   */
-  @Deprecated
-  @Nullable
-  @ReturnsMutableCopy
-  public static <ELEMENTTYPE> ELEMENTTYPE [] getConcatenated (@Nullable final ELEMENTTYPE [] aHeadArray,
-                                                              @Nullable final ELEMENTTYPE [] aTailArray,
-                                                              final Class <ELEMENTTYPE> aClass)
-  {
-    return getConcatenated (aHeadArray, aTailArray);
-  }
-
-  /**
    * Get a new array that combines the passed two arrays, maintaining the order.
    * 
    * @param aHeadArray

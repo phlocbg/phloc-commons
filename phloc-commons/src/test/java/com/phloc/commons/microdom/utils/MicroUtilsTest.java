@@ -20,12 +20,10 @@ package com.phloc.commons.microdom.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,7 +40,6 @@ import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.name.MockHasDisplayName;
@@ -55,37 +52,6 @@ import com.phloc.commons.xml.XMLFactory;
  */
 public final class MicroUtilsTest
 {
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testNl2Br ()
-  {
-    assertNull (MicroUtils.nl2br (null));
-    List <IMicroNode> aList = MicroUtils.nl2br ("");
-    assertNotNull (aList);
-    assertEquals (0, aList.size ());
-    aList = MicroUtils.nl2br ("abc");
-    assertEquals (1, aList.size ());
-    aList = MicroUtils.nl2br ("a\nc");
-    assertEquals (3, aList.size ());
-    assertTrue (aList.get (0) instanceof IMicroText);
-    assertTrue (aList.get (1) instanceof IMicroElement);
-    assertTrue (aList.get (2) instanceof IMicroText);
-    aList = MicroUtils.nl2br ("a\n");
-    assertEquals (2, aList.size ());
-    assertTrue (aList.get (0) instanceof IMicroText);
-    assertTrue (aList.get (1) instanceof IMicroElement);
-    aList = MicroUtils.nl2br ("\na");
-    assertEquals (2, aList.size ());
-    assertTrue (aList.get (0) instanceof IMicroElement);
-    assertTrue (aList.get (1) instanceof IMicroText);
-    aList = MicroUtils.nl2br ("\n\n");
-    assertEquals (2, aList.size ());
-    assertTrue (aList.get (0) instanceof IMicroElement);
-    assertTrue (aList.get (1) instanceof IMicroElement);
-    aList = MicroUtils.nl2br ("\n\na\n\n");
-    assertEquals (5, aList.size ());
-  }
-
   @Test
   public void testAppend ()
   {

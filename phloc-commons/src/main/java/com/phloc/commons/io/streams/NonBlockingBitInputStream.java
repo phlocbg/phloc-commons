@@ -81,23 +81,6 @@ public class NonBlockingBitInputStream implements Closeable
   }
 
   /**
-   * Create a new bit input stream based on an existing Java InputStream.
-   * 
-   * @param aIS
-   *        the input stream this class should read the bits from. May not be
-   *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first (
-   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
-   *        last ({@link ByteOrder#BIG_ENDIAN}).
-   */
-  @Deprecated
-  public NonBlockingBitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
-  {
-    this (aIS, bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-  }
-
-  /**
    * @return The byte order used. Never <code>null</code>.
    */
   @Nonnull

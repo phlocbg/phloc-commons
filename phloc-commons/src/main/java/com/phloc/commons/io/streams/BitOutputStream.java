@@ -56,23 +56,6 @@ public class BitOutputStream extends NonBlockingBitOutputStream
   }
 
   /**
-   * Create a new bit output stream based on an existing Java OutputStream.
-   * 
-   * @param aOS
-   *        the output stream this class should use. May not be
-   *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first (
-   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
-   *        last ({@link ByteOrder#BIG_ENDIAN}).
-   */
-  @Deprecated
-  public BitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
-  {
-    super (aOS, bHighOrderBitFirst);
-  }
-
-  /**
    * Write a single bit to the stream. It will only be flushed to the underlying
    * OutputStream when a byte has been completed or when flush() manually.
    * 

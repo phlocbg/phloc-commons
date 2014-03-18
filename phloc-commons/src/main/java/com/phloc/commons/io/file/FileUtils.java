@@ -48,7 +48,6 @@ import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.misc.SizeHelper;
 import com.phloc.commons.io.streams.ByteBufferInputStream;
@@ -743,22 +742,6 @@ public final class FileUtils
       if (!FilenameHelper.isSystemInternalDirectory (aChild.getName ()))
         ret++;
     return ret;
-  }
-
-  /**
-   * Check if the passed 2 files are equal using the unified (unix separator),
-   * absolute and cleaned (no "." or "..") path.
-   * 
-   * @param f1
-   *        First file. May be <code>null</code>.
-   * @param f2
-   *        Second file. May be <code>null</code>.
-   * @return <code>true</code> if both are null or equal.
-   */
-  @Deprecated
-  public static boolean safeEquals (@Nullable final File f1, @Nullable final File f2)
-  {
-    return EqualsUtils.equals (f1, f2);
   }
 
   @Nonnull
