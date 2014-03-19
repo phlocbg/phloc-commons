@@ -17,10 +17,7 @@
  */
 package com.phloc.commons.tree.utils.sort;
 
-import java.util.Comparator;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
@@ -28,13 +25,12 @@ import com.phloc.commons.tree.simple.DefaultTreeItem;
 /**
  * Comparator for sorting {@link DefaultTreeItem} items by their value using an
  * comparable value types.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  */
-public final class ComparatorDefaultTreeItemComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                                        ComparatorTreeItemDataComparable <DATATYPE, DefaultTreeItem <DATATYPE>>
+public final class ComparatorDefaultTreeItemComparable <DATATYPE extends Comparable <? super DATATYPE>> extends ComparatorTreeItemDataComparable <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   /**
    * Comparator with default sort order.
@@ -46,39 +42,12 @@ public final class ComparatorDefaultTreeItemComparable <DATATYPE extends Compara
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorDefaultTreeItemComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorDefaultTreeItemComparable (@Nullable final Comparator <? super DefaultTreeItem <DATATYPE>> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorDefaultTreeItemComparable (@Nonnull final ESortOrder eSortOrder,
-                                              @Nullable final Comparator <? super DefaultTreeItem <DATATYPE>> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
   }
 }

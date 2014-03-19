@@ -20,16 +20,14 @@ package com.phloc.commons.compare;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * This is another *lol* class: a {@link Comparator} for {@link Comparable}
  * objects.
- * 
+ *
  * @author Philip Helger
  */
-public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                   AbstractComparator <DATATYPE>
+public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends AbstractComparator <DATATYPE>
 {
   /**
    * Comparator with default sort order and no nested comparator.
@@ -41,40 +39,13 @@ public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorComparable (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorComparable (@Nonnull final ESortOrder eSortOrder,
-                               @Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
   }
 
   @Override

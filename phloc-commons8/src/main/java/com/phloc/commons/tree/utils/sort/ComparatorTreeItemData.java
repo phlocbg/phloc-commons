@@ -31,7 +31,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * explicit {@link Comparator}.<br>
  * Works for {@link com.phloc.commons.tree.simple.ITreeItem} and
  * {@link com.phloc.commons.tree.withid.ITreeItemWithID}.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
@@ -42,7 +42,7 @@ public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <
 {
   /**
    * Constructor with default sort order.
-   * 
+   *
    * @param aDataComparator
    *        Comparator for the data elements. May not be <code>null</code>.
    */
@@ -53,7 +53,7 @@ public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param aDataComparator
    *        Comparator for the data elements. May not be <code>null</code>.
    * @param eSortOrder
@@ -63,39 +63,6 @@ public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <
                                  @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
     super (eSortOrder, aDataComparator);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aDataComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public ComparatorTreeItemData (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
-                                 @Nonnull final Comparator <? super DATATYPE> aDataComparator)
-  {
-    super (aNestedComparator, aDataComparator);
-  }
-
-  /**
-   * Constructor with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aDataComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public ComparatorTreeItemData (@Nonnull final ESortOrder eSortOrder,
-                                 @Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
-                                 @Nonnull final Comparator <? super DATATYPE> aDataComparator)
-  {
-    super (eSortOrder, aNestedComparator, aDataComparator);
   }
 
   @Override

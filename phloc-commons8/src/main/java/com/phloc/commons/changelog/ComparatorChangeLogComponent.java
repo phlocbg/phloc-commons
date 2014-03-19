@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.changelog;
 
-import java.util.Comparator;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -27,7 +25,7 @@ import com.phloc.commons.compare.ESortOrder;
 
 /**
  * Special comparator to sort change logs by their component.
- * 
+ *
  * @author Philip Helger
  */
 public final class ComparatorChangeLogComponent extends AbstractPartComparatorComparable <ChangeLog, String>
@@ -42,40 +40,13 @@ public final class ComparatorChangeLogComponent extends AbstractPartComparatorCo
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorChangeLogComponent (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorChangeLogComponent (@Nullable final Comparator <? super ChangeLog> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorChangeLogComponent (@Nonnull final ESortOrder eSortOrder,
-                                       @Nullable final Comparator <? super ChangeLog> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
   }
 
   @Override

@@ -42,7 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Base class for all kind of string-object mapping container. This
  * implementation is not thread-safe!
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -94,7 +94,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   /**
    * Internal callback method that can be used to check constraints on an
    * attribute name or value.
-   * 
+   *
    * @param sName
    *        The attribute name. Never <code>null</code>.
    * @param aValue
@@ -169,7 +169,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
 
   /**
    * Internal callback method that can be used to avoid removal of an attribute.
-   * 
+   *
    * @param sName
    *        The attribute name. Never <code>null</code>.
    * @return {@link EContinue#CONTINUE} to indicate that the name-value-pair is

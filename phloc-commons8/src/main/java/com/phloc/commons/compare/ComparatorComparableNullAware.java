@@ -26,11 +26,10 @@ import javax.annotation.Nullable;
  * This is another *lol* class: a {@link Comparator} for {@link Comparable}
  * objects. In comparison to {@link ComparatorComparable} this class can handle
  * <code>null</code> values.
- * 
+ *
  * @author Philip Helger
  */
-public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                            AbstractComparator <DATATYPE>
+public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends AbstractComparator <DATATYPE>
 {
   /** Default value wether <code>null</code> values come first or last */
   public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = CompareUtils.DEFAULT_NULL_VALUES_COME_FIRST;
@@ -47,40 +46,13 @@ public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorComparableNullAware (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorComparableNullAware (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorComparableNullAware (@Nonnull final ESortOrder eSortOrder,
-                                        @Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
   }
 
   public final boolean isNullValuesComeFirst ()
