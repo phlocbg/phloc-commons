@@ -35,13 +35,13 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
-import com.phloc.commons.convert.UnidirectionalConverterStringInteger;
 import com.phloc.commons.filter.FilterNotNull;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for class {@link ContainerConversionHelper}
- * 
+ *
  * @author Philip Helger
  */
 public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
@@ -65,28 +65,28 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   public void testNewSetIteratorWithConverter ()
   {
     Iterator <String> it = ContainerHelper.newSet ("100", "-733").iterator ();
-    Set <Integer> aSet = ContainerConversionHelper.newSet (it, new UnidirectionalConverterStringInteger (null));
+    Set <Integer> aSet = ContainerConversionHelper.newSet (it, a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     it = ContainerHelper.newSet ("100", "-733").iterator ();
-    aSet = ContainerConversionHelper.newUnmodifiableSet (it, new UnidirectionalConverterStringInteger (null));
+    aSet = ContainerConversionHelper.newUnmodifiableSet (it, a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     it = ContainerHelper.newSet ("100", "-733").iterator ();
-    aSet = ContainerConversionHelper.newOrderedSet (it, new UnidirectionalConverterStringInteger (null));
+    aSet = ContainerConversionHelper.newOrderedSet (it, a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     it = ContainerHelper.newSet ("100", "-733").iterator ();
-    aSet = ContainerConversionHelper.newUnmodifiableOrderedSet (it, new UnidirectionalConverterStringInteger (null));
+    aSet = ContainerConversionHelper.newUnmodifiableOrderedSet (it, a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -98,28 +98,28 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   public void testNewSetIterableWithConverter ()
   {
     Set <Integer> aSet = ContainerConversionHelper.newSet (ContainerHelper.newList ("100", "-733"),
-                                                           new UnidirectionalConverterStringInteger (null));
+                                                           a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newUnmodifiableSet (ContainerHelper.newList ("100", "-733"),
-                                                         new UnidirectionalConverterStringInteger (null));
+                                                         a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newOrderedSet (ContainerHelper.newList ("100", "-733"),
-                                                    new UnidirectionalConverterStringInteger (null));
+                                                    a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newUnmodifiableOrderedSet (ContainerHelper.newList ("100", "-733"),
-                                                                new UnidirectionalConverterStringInteger (null));
+                                                                a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -131,7 +131,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   {
     Set <Integer> aSet = ContainerConversionHelper.newSet (ContainerHelper.newList ("100", null, "-733"),
                                                            FilterNotNull.getInstance (),
-                                                           new UnidirectionalConverterStringInteger (null));
+                                                           a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -139,7 +139,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     aSet = ContainerConversionHelper.newUnmodifiableSet (ContainerHelper.newList ("100", null, "-733"),
                                                          FilterNotNull.getInstance (),
-                                                         new UnidirectionalConverterStringInteger (null));
+                                                         a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -147,7 +147,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     aSet = ContainerConversionHelper.newOrderedSet (ContainerHelper.newList ("100", null, "-733"),
                                                     FilterNotNull.getInstance (),
-                                                    new UnidirectionalConverterStringInteger (null));
+                                                    a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -155,7 +155,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     aSet = ContainerConversionHelper.newUnmodifiableOrderedSet (ContainerHelper.newList ("100", null, "-733"),
                                                                 FilterNotNull.getInstance (),
-                                                                new UnidirectionalConverterStringInteger (null));
+                                                                a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains (Integer.valueOf (100)));
@@ -169,18 +169,17 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aSource.add ("100"));
     assertTrue (aSource.add ("-721"));
 
-    List <Integer> aList = ContainerConversionHelper.newList (aSource, new UnidirectionalConverterStringInteger (null));
+    List <Integer> aList = ContainerConversionHelper.newList (aSource, a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
     assertTrue (aList.contains (Integer.valueOf (-721)));
 
-    aList = ContainerConversionHelper.newList (new ArrayList <String> (),
-                                               new UnidirectionalConverterStringInteger (null));
+    aList = ContainerConversionHelper.newList (new ArrayList <String> (), a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertTrue (aList.isEmpty ());
 
-    aList = ContainerConversionHelper.newUnmodifiableList (aSource, new UnidirectionalConverterStringInteger (null));
+    aList = ContainerConversionHelper.newUnmodifiableList (aSource, a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
@@ -192,17 +191,17 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   {
     final String [] aSource = new String [] { "100", "-721" };
 
-    List <Integer> aList = ContainerConversionHelper.newList (aSource, new UnidirectionalConverterStringInteger (null));
+    List <Integer> aList = ContainerConversionHelper.newList (aSource, a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
     assertTrue (aList.contains (Integer.valueOf (-721)));
 
-    aList = ContainerConversionHelper.newList (new String [0], new UnidirectionalConverterStringInteger (null));
+    aList = ContainerConversionHelper.newList (new String [0], a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertTrue (aList.isEmpty ());
 
-    aList = ContainerConversionHelper.newUnmodifiableList (aSource, new UnidirectionalConverterStringInteger (null));
+    aList = ContainerConversionHelper.newUnmodifiableList (aSource, a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
@@ -219,7 +218,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     List <Integer> aList = ContainerConversionHelper.newList (aSource,
                                                               FilterNotNull.getInstance (),
-                                                              new UnidirectionalConverterStringInteger (null));
+                                                              a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
@@ -227,13 +226,13 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     aList = ContainerConversionHelper.newList (new ArrayList <String> (),
                                                FilterNotNull.getInstance (),
-                                               new UnidirectionalConverterStringInteger (null));
+                                               a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertTrue (aList.isEmpty ());
 
     aList = ContainerConversionHelper.newUnmodifiableList (aSource,
                                                            FilterNotNull.getInstance (),
-                                                           new UnidirectionalConverterStringInteger (null));
+                                                           a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));
@@ -246,7 +245,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     try
     {
       // null iterator not allowed
-      ContainerConversionHelper.getSorted ((Iterator <String>) null, new UnidirectionalConverterStringInteger (null));
+      ContainerConversionHelper.getSorted ((Iterator <String>) null, a -> StringParser.parseIntObj (a));
       fail ();
     }
     catch (final NullPointerException ex)
@@ -264,7 +263,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     final List <String> aList = ContainerHelper.newList ("6", "5", "4", "3");
     final List <Integer> aSorted = ContainerConversionHelper.getSorted (aList.iterator (),
-                                                                        new UnidirectionalConverterStringInteger (null));
+                                                                        a -> StringParser.parseIntObj (a));
     assertEquals (aSorted.size (), 4);
     assertEquals (aSorted.get (0), Integer.valueOf (3));
     assertEquals (aSorted.get (1), Integer.valueOf (4));
@@ -278,7 +277,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     try
     {
       // null iterator not allowed
-      ContainerConversionHelper.getSorted ((Iterable <String>) null, new UnidirectionalConverterStringInteger (null));
+      ContainerConversionHelper.getSorted ((Iterable <String>) null, a -> StringParser.parseIntObj (a));
       fail ();
     }
     catch (final NullPointerException ex)
@@ -294,8 +293,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     {}
 
     final List <String> aList = ContainerHelper.newList ("6", "5", "4", "3");
-    final List <Integer> aSorted = ContainerConversionHelper.getSorted (aList,
-                                                                        new UnidirectionalConverterStringInteger (null));
+    final List <Integer> aSorted = ContainerConversionHelper.getSorted (aList, a -> StringParser.parseIntObj (a));
     assertEquals (aSorted.size (), 4);
     assertEquals (aSorted.get (0), Integer.valueOf (3));
     assertEquals (aSorted.get (1), Integer.valueOf (4));
@@ -310,7 +308,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     {
       // null iterator not allowed
       ContainerConversionHelper.getSorted ((Iterator <String>) null,
-                                           new UnidirectionalConverterStringInteger (null),
+                                           a -> StringParser.parseIntObj (a),
                                            new MyIntegerCompi ());
       fail ();
     }
@@ -332,7 +330,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     {
       // null comparator not allowed
       ContainerConversionHelper.getSorted (new ArrayList <String> ().iterator (),
-                                           new UnidirectionalConverterStringInteger (null),
+                                           a -> StringParser.parseIntObj (a),
                                            null);
       fail ();
     }
@@ -341,7 +339,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     final List <String> aList = ContainerHelper.newList ("6", "5", "4", "3");
     final List <Integer> aSorted = ContainerConversionHelper.getSorted (aList.iterator (),
-                                                                        new UnidirectionalConverterStringInteger (null),
+                                                                        a -> StringParser.parseIntObj (a),
                                                                         new MyIntegerCompi ());
     assertEquals (aSorted.size (), 4);
     assertEquals (aSorted.get (0), Integer.valueOf (4));
@@ -357,7 +355,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     {
       // null iterator not allowed
       ContainerConversionHelper.getSorted ((Iterable <String>) null,
-                                           new UnidirectionalConverterStringInteger (null),
+                                           a -> StringParser.parseIntObj (a),
                                            new MyIntegerCompi ());
       fail ();
     }
@@ -378,9 +376,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     try
     {
       // null comparator not allowed
-      ContainerConversionHelper.getSorted (new ArrayList <String> (),
-                                           new UnidirectionalConverterStringInteger (null),
-                                           null);
+      ContainerConversionHelper.getSorted (new ArrayList <String> (), a -> StringParser.parseIntObj (a), null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -388,7 +384,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
 
     final List <String> aList = ContainerHelper.newList ("6", "5", "4", "3");
     final List <Integer> aSorted = ContainerConversionHelper.getSorted (aList,
-                                                                        new UnidirectionalConverterStringInteger (null),
+                                                                        a -> StringParser.parseIntObj (a),
                                                                         new MyIntegerCompi ());
     assertEquals (aSorted.size (), 4);
     assertEquals (aSorted.get (0), Integer.valueOf (4));
@@ -401,7 +397,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   public void testGetIteratorWithConversion ()
   {
     final Iterator <Integer> it = ContainerConversionHelper.getIterator (ContainerHelper.newList ("100", "-25"),
-                                                                         new UnidirectionalConverterStringInteger (null));
+                                                                         a -> StringParser.parseIntObj (a));
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (100), it.next ());

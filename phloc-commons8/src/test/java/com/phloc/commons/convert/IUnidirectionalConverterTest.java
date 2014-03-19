@@ -30,10 +30,11 @@ import com.phloc.commons.collections.pair.ReadonlyPair;
 import com.phloc.commons.id.MockHasIDInteger;
 import com.phloc.commons.id.MockHasIDString;
 import com.phloc.commons.name.MockHasName;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for implementation classes of {@link IUnidirectionalConverter}.
- * 
+ *
  * @author Philip Helger
  */
 public final class IUnidirectionalConverterTest
@@ -57,30 +58,28 @@ public final class IUnidirectionalConverterTest
   {
     @SuppressWarnings ("unchecked")
     final List <IReadonlyPair <Integer, String>> aPairs = ContainerHelper.newList (ReadonlyPair.create (Integer.valueOf (1),
-                                                                                                        "Hallo"),
-                                                                                   ReadonlyPair.create (Integer.valueOf (2),
-                                                                                                        "welt"),
-                                                                                   ReadonlyPair.create (Integer.valueOf (47),
-                                                                                                        "!"));
-    _test (UnidirectionalConverterPairFirst.<Integer, String> create (),
+        "Hallo"),
+        ReadonlyPair.create (Integer.valueOf (2),
+            "welt"),
+            ReadonlyPair.create (Integer.valueOf (47),
+                "!"));
+    _test (a -> a.getFirst (),
            aPairs,
            ContainerHelper.newList (Integer.valueOf (1), Integer.valueOf (2), Integer.valueOf (47)));
-    _test (UnidirectionalConverterPairSecond.<Integer, String> create (),
-           aPairs,
-           ContainerHelper.newList ("Hallo", "welt", "!"));
-    _test (new UnidirectionalConverterStringInteger (null),
+    _test (a -> a.getSecond (), aPairs, ContainerHelper.newList ("Hallo", "welt", "!"));
+    _test (a -> StringParser.parseIntObj (a),
            ContainerHelper.newList ("1", "2", "47"),
            ContainerHelper.newList (Integer.valueOf (1), Integer.valueOf (2), Integer.valueOf (47)));
-    _test (UnidirectionalConverterIntegerString.getInstance (),
+    _test (a -> a.toString (),
            ContainerHelper.newList (Integer.valueOf (1), Integer.valueOf (2), Integer.valueOf (47)),
            ContainerHelper.newList ("1", "2", "47"));
-    _test (UnidirectionalConverterHasNameString.getInstance (),
+    _test (a -> a.getName (),
            ContainerHelper.newList (new MockHasName (1), new MockHasName (2), new MockHasName (47)),
            ContainerHelper.newList ("1", "2", "47"));
-    _test (UnidirectionalConverterHasIDID.<String> create (),
+    _test (a -> a.getID (),
            ContainerHelper.newList (new MockHasIDString (1), new MockHasIDString (2), new MockHasIDString (47)),
            ContainerHelper.newList ("1", "2", "47"));
-    _test (UnidirectionalConverterHasIDID.<Integer> create (),
+    _test (a -> a.getID (),
            ContainerHelper.newList (new MockHasIDInteger (1), new MockHasIDInteger (2), new MockHasIDInteger (47)),
            ContainerHelper.newList (Integer.valueOf (1), Integer.valueOf (2), Integer.valueOf (47)));
   }

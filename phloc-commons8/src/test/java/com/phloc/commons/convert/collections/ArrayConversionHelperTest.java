@@ -29,12 +29,12 @@ import org.junit.Test;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
-import com.phloc.commons.convert.UnidirectionalConverterStringInteger;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for {@link ArrayHelper}
- * 
+ *
  * @author Philip Helger
  */
 public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
@@ -42,7 +42,7 @@ public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewArrayFromCollectionWithConverter ()
   {
-    final IUnidirectionalConverter <String, Integer> conv = new UnidirectionalConverterStringInteger (null);
+    final IUnidirectionalConverter <String, Integer> conv = a -> StringParser.parseIntObj (a);
 
     Integer [] x = ArrayConversionHelper.newArray (ContainerHelper.newList ("1", "2", "3"), conv, Integer.class);
     assertNotNull (x);
@@ -86,7 +86,7 @@ public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewArrayFromArrayWithConverter ()
   {
-    final IUnidirectionalConverter <String, Integer> conv = new UnidirectionalConverterStringInteger (null);
+    final IUnidirectionalConverter <String, Integer> conv = a -> StringParser.parseIntObj (a);
 
     Integer [] x = ArrayConversionHelper.newArray (new String [] { "1", "2", "3" }, conv, Integer.class);
     assertNotNull (x);
@@ -128,7 +128,7 @@ public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
   @Test
   public void testConvert ()
   {
-    final IUnidirectionalConverter <String, Integer> conv = new UnidirectionalConverterStringInteger (null);
+    final IUnidirectionalConverter <String, Integer> conv = a -> StringParser.parseIntObj (a);
 
     final Integer [] dst = ArrayConversionHelper.newArray (new String [] { "2", "4", "6" }, conv, Integer.class);
     assertNotNull (dst);

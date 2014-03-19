@@ -17,21 +17,22 @@
  */
 package com.phloc.commons.convert;
 
+import java.util.function.Function;
 
 /**
  * This is a very simple type conversion interface for compile type conversions.
- * 
+ *
  * @param <SRCTYPE>
  *        source type
  * @param <DSTTYPE>
  *        destination type
  * @author Philip Helger
  */
-public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE>
+public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE> extends Function <SRCTYPE, DSTTYPE>
 {
   /**
    * Convert the passed source object to the destination type.
-   * 
+   *
    * @param aSource
    *        The source object to be converted. No <code>null</code> or non-
    *        <code>null</code> constraint possible.
@@ -39,4 +40,9 @@ public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE>
    *         constraint possible.
    */
   DSTTYPE convert (SRCTYPE aSource);
+
+  default DSTTYPE apply (final SRCTYPE t)
+  {
+    return convert (t);
+  }
 }

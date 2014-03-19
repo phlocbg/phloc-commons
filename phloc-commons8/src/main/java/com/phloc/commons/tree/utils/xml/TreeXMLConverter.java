@@ -26,7 +26,6 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.convert.IUnidirectionalConverter;
-import com.phloc.commons.convert.UnidirectionalConverterIdentity;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.microdom.IMicroDocument;
@@ -45,7 +44,7 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Convert a tree to XML
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -66,7 +65,7 @@ public final class TreeXMLConverter
   /**
    * Specialized conversion method for converting a tree with ID to a
    * standardized XML tree.
-   * 
+   *
    * @param <DATATYPE>
    *        tree item value type
    * @param <ITEMTYPE>
@@ -81,10 +80,7 @@ public final class TreeXMLConverter
   public static <DATATYPE, ITEMTYPE extends ITreeItemWithID <String, DATATYPE, ITEMTYPE>> IMicroElement getTreeWithStringIDAsXML (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                                                   @Nonnull final IConverterTreeItemToMicroNode <? super DATATYPE> aConverter)
   {
-    return getTreeWithIDAsXML (aTree,
-                               new ComparatorHasIDString <ITEMTYPE> (),
-                               UnidirectionalConverterIdentity.<String> create (),
-                               aConverter);
+    return getTreeWithIDAsXML (aTree, new ComparatorHasIDString <ITEMTYPE> (), a -> a, aConverter);
   }
 
   @Nonnull
@@ -212,9 +208,7 @@ public final class TreeXMLConverter
   public static <DATATYPE> DefaultTreeWithGlobalUniqueID <String, DATATYPE> getXMLAsTreeWithUniqueStringID (@Nonnull final IMicroElement aElement,
                                                                                                             @Nonnull final IConverterMicroNodeToTreeItem <? extends DATATYPE> aDataConverter)
   {
-    return TreeXMLConverter.<String, DATATYPE> getXMLAsTreeWithUniqueID (aElement,
-                                                                         UnidirectionalConverterIdentity.<String> create (),
-                                                                         aDataConverter);
+    return TreeXMLConverter.<String, DATATYPE> getXMLAsTreeWithUniqueID (aElement, a -> a, aDataConverter);
   }
 
   @Nonnull

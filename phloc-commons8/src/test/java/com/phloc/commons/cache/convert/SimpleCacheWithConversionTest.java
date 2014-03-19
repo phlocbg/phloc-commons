@@ -26,11 +26,10 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.convert.UnidirectionalConverterMapGet;
 
 /**
  * Test class for class {@link SimpleCacheWithConversion}.
- * 
+ *
  * @author Philip Helger
  */
 public final class SimpleCacheWithConversionTest
@@ -42,11 +41,9 @@ public final class SimpleCacheWithConversionTest
     final SimpleCacheWithConversion <String, Integer> aCache = new SimpleCacheWithConversion <String, Integer> ("test");
     assertEquals ("test", aCache.getName ());
     // Get from map
-    assertEquals (Integer.valueOf (1),
-                  aCache.getFromCache ("In", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (1), aCache.getFromCache ("In", a -> aMap.get (a)));
     // Use cached value
-    assertEquals (Integer.valueOf (1),
-                  aCache.getFromCache ("In", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (1), aCache.getFromCache ("In", a -> aMap.get (a)));
     // Use cached value
     assertEquals (Integer.valueOf (1), aCache.getFromCache ("In"));
     // No such cached value
@@ -54,7 +51,7 @@ public final class SimpleCacheWithConversionTest
     try
     {
       // Cannot convert the passed key!
-      aCache.getFromCache ("Gibts Ned", new UnidirectionalConverterMapGet <String, Integer> (aMap));
+      aCache.getFromCache ("Gibts Ned", a -> aMap.get (a));
       fail ();
     }
     catch (final IllegalStateException ex)

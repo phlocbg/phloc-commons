@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.phloc.commons.convert.UnidirectionalConverterIdentity;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
@@ -35,7 +34,7 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Test class for class {@link TreeXMLConverter}.
- * 
+ *
  * @author Philip Helger
  */
 public final class TreeXMLConverterTest extends AbstractPhlocTestCase
@@ -63,16 +62,12 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     assertEquals (t1, t2);
 
     // and convert the document again to a tree
-    t2 = TreeXMLConverter.getXMLAsTreeWithUniqueID (aDoc2,
-                                                    UnidirectionalConverterIdentity.<String> create (),
-                                                    new MockHasNameConverter ());
+    t2 = TreeXMLConverter.getXMLAsTreeWithUniqueID (aDoc2, a -> a, new MockHasNameConverter ());
     assertNotNull (t2);
     assertEquals (t1, t2);
 
     // and convert the document again to a tree
-    assertNotNull (TreeXMLConverter.getXMLAsTreeWithID (aDoc2,
-                                                        UnidirectionalConverterIdentity.<String> create (),
-                                                        new MockHasNameConverter ()));
+    assertNotNull (TreeXMLConverter.getXMLAsTreeWithID (aDoc2, a -> a, new MockHasNameConverter ()));
   }
 
   @Test
