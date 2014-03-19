@@ -27,7 +27,7 @@ import com.phloc.commons.ValueEnforcer;
 /**
  * This class is an {@link AbstractComparator} that extracts a certain data
  * element from the main object to compare.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type of elements to be compared.
@@ -36,22 +36,23 @@ import com.phloc.commons.ValueEnforcer;
  */
 public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends AbstractComparator <DATATYPE>
 {
-  private Comparator <? super PARTTYPE> m_aPartComparator;
+  private final Comparator <? super PARTTYPE> m_aPartComparator;
 
   /**
    * Comparator with default sort order and no nested comparator.
-   * 
+   *
    * @param aPartComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
   public AbstractPartComparator (@Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    this (ESortOrder.DEFAULT, (Comparator <? super DATATYPE>) null, aPartComparator);
+    super ();
+    m_aPartComparator = ValueEnforcer.notNull (aPartComparator, "PartComparator");
   }
 
   /**
    * Constructor with sort order and no nested comparator.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    * @param aPartComparator
@@ -60,40 +61,7 @@ public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends Abstra
   public AbstractPartComparator (@Nonnull final ESortOrder eSortOrder,
                                  @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    this (eSortOrder, (Comparator <? super DATATYPE>) null, aPartComparator);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aPartComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public AbstractPartComparator (@Nullable final Comparator <? super DATATYPE> aNestedComparator,
-                                 @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
-  {
-    this (ESortOrder.DEFAULT, aNestedComparator, aPartComparator);
-  }
-
-  /**
-   * Constructor with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aPartComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public AbstractPartComparator (@Nonnull final ESortOrder eSortOrder,
-                                 @Nullable final Comparator <? super DATATYPE> aNestedComparator,
-                                 @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
-  {
-    super (eSortOrder, aNestedComparator);
+    super (eSortOrder);
     m_aPartComparator = ValueEnforcer.notNull (aPartComparator, "PartComparator");
   }
 

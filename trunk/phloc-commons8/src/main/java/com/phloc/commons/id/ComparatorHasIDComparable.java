@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.id;
 
-import java.util.Comparator;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,15 +26,14 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * This is a collation {@link java.util.Comparator} for objects that implement
  * the {@link IHasID} interface with a class that implements {@link Comparable}.
- * 
+ *
  * @author Philip Helger
  * @param <IDTYPE>
  *        The type of the ID
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYPE>, DATATYPE extends IHasID <IDTYPE>> extends
-                                                                                                                      AbstractPartComparatorComparable <DATATYPE, IDTYPE>
+public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYPE>, DATATYPE extends IHasID <IDTYPE>> extends AbstractPartComparatorComparable <DATATYPE, IDTYPE>
 {
   /**
    * Comparator with default sort order and no nested comparator.
@@ -48,40 +45,13 @@ public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYP
 
   /**
    * Constructor with sort order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorHasIDComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorHasIDComparable (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (aNestedComparator);
-  }
-
-  /**
-   * Comparator with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorHasIDComparable (@Nonnull final ESortOrder eSortOrder,
-                                    @Nullable final Comparator <? super DATATYPE> aNestedComparator)
-  {
-    super (eSortOrder, aNestedComparator);
   }
 
   @Override

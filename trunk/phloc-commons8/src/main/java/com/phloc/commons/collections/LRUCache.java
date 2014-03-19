@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A special ordered map, that has an upper limit of contained elements. It is
  * therefore a "Last Recently Used" cache.
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
@@ -52,7 +52,7 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
 
   /**
    * Create a new object with the specified max size.
-   * 
+   *
    * @param nMaxSize
    *        The maximum number of elements in this cache. May not be &lt; 0.
    */
@@ -75,7 +75,7 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
 
   /**
    * Protected method that is invoked every time the oldest entry is removed.
-   * 
+   *
    * @param aEldest
    *        The map entry that is removed. Never <code>null</code>.
    */
@@ -114,8 +114,7 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
   {
     // Special case because LinkedHashMap implementation is a bit bogus
     final HashCodeGenerator aHCG = new HashCodeGenerator (this).append (m_nMaxSize);
-    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : entrySet ())
-      aHCG.append (aEntry.getKey ()).append (aEntry.getValue ());
+    forEach ( (aKey, aValue) -> aHCG.append (aKey).append (aValue));
     return aHCG.getHashCode ();
   }
 

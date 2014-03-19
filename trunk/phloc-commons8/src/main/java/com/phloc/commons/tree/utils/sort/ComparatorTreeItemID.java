@@ -20,7 +20,6 @@ package com.phloc.commons.tree.utils.sort;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.id.ComparatorHasID;
@@ -29,7 +28,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
 /**
  * Comparator for sorting {@link com.phloc.commons.tree.withid.ITreeItemWithID}
  * items by their ID using an explicit {@link Comparator}.
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
@@ -42,7 +41,7 @@ public class ComparatorTreeItemID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItem
 {
   /**
    * Comparator with default sort order and no nested comparator.
-   * 
+   *
    * @param aIDComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
@@ -53,7 +52,7 @@ public class ComparatorTreeItemID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItem
 
   /**
    * Constructor with sort order and no nested comparator.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    * @param aIDComparator
@@ -63,38 +62,5 @@ public class ComparatorTreeItemID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItem
                                @Nonnull final Comparator <? super KEYTYPE> aIDComparator)
   {
     super (eSortOrder, aIDComparator);
-  }
-
-  /**
-   * Comparator with default sort order and a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aIDComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public ComparatorTreeItemID (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
-                               @Nonnull final Comparator <? super KEYTYPE> aIDComparator)
-  {
-    super (aNestedComparator, aIDComparator);
-  }
-
-  /**
-   * Constructor with sort order and a nested comparator.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   * @param aIDComparator
-   *        The comparator for comparing the IDs. May not be <code>null</code>.
-   */
-  public ComparatorTreeItemID (@Nonnull final ESortOrder eSortOrder,
-                               @Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
-                               @Nonnull final Comparator <? super KEYTYPE> aIDComparator)
-  {
-    super (eSortOrder, aNestedComparator, aIDComparator);
   }
 }

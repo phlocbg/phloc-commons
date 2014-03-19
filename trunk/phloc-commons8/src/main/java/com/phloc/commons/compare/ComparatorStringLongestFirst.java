@@ -17,16 +17,13 @@
  */
 package com.phloc.commons.compare;
 
-import java.util.Comparator;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * A special comparator that sorts String, but the longest strings come first.
  * For all strings with an equal length, they are sorted in regular,
  * non-collated order.
- * 
+ *
  * @author Philip Helger
  */
 public class ComparatorStringLongestFirst extends AbstractComparator <String>
@@ -37,18 +34,6 @@ public class ComparatorStringLongestFirst extends AbstractComparator <String>
   public ComparatorStringLongestFirst ()
   {
     super ();
-  }
-
-  /**
-   * Comparator with a nested comparator.
-   * 
-   * @param aNestedComparator
-   *        The nested comparator to be invoked, when the main comparison
-   *        resulted in 0.
-   */
-  public ComparatorStringLongestFirst (@Nullable final Comparator <? super String> aNestedComparator)
-  {
-    super (aNestedComparator);
   }
 
   @Override
