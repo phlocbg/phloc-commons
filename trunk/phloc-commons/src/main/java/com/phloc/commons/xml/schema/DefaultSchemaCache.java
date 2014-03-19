@@ -76,7 +76,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   @Override
   @Nonnull
   @IsLocked (ELockType.WRITE)
-  protected Schema getValueToCache (@Nullable final List <? extends IReadableResource> aKey)
+  protected Schema getValueToCache (final List <? extends IReadableResource> aKey)
   {
     ValueEnforcer.notEmptyNoNullValue (aKey, "Resources");
 
