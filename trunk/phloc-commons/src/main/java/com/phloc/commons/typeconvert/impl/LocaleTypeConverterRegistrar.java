@@ -30,7 +30,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 
 /**
  * Register the locale specific type converter
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -41,7 +41,14 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
   {
     public Locale convert (@Nonnull final Object aSource)
     {
-      return LocaleCache.getLocale ((String) aSource);
+      final String sSource = (String) aSource;
+      // Special handling for ROOT locale
+      // IFJDK5
+      // ELSE
+      if ("".equals (sSource))
+        return Locale.ROOT;
+      // ENDIF
+      return LocaleCache.getLocale (sSource);
     }
   }
 
