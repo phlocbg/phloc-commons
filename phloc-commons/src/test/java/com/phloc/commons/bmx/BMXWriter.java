@@ -17,14 +17,13 @@
  */
 package com.phloc.commons.bmx;
 
-import gnu.trove.list.TIntList;
-import gnu.trove.list.array.TIntArrayList;
-
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -50,7 +49,7 @@ import com.phloc.commons.state.ESuccess;
 
 /**
  * Binary Micro XML (BMX) Writer
- * 
+ *
  * @author Philip Helger
  */
 public class BMXWriter
@@ -114,26 +113,26 @@ public class BMXWriter
         }
         case ELEMENT:
           final IMicroElement aElement = (IMicroElement) aChildNode;
-          final TIntList aIntList = new TIntArrayList ();
-          aIntList.add (aST.addString (aElement.getNamespaceURI ()));
-          aIntList.add (aST.addString (aElement.getTagName ()));
+          final List <Integer> aIntList = new ArrayList <Integer> ();
+          aIntList.add (Integer.valueOf (aST.addString (aElement.getNamespaceURI ())));
+          aIntList.add (Integer.valueOf (aST.addString (aElement.getTagName ())));
           if (aElement.hasAttributes ())
           {
             final Map <String, String> aAttrs = aElement.getAllAttributes ();
-            aIntList.add (aAttrs.size ());
+            aIntList.add (Integer.valueOf (aAttrs.size ()));
             for (final Map.Entry <String, String> aEntry : aAttrs.entrySet ())
             {
-              aIntList.add (aST.addString (aEntry.getKey ()));
-              aIntList.add (aST.addString (aEntry.getValue ()));
+              aIntList.add (Integer.valueOf (aST.addString (aEntry.getKey ())));
+              aIntList.add (Integer.valueOf (aST.addString (aEntry.getValue ())));
             }
           }
           else
           {
-            aIntList.add (0);
+            aIntList.add (Integer.valueOf (0));
           }
           aDOS.writeByte (CBMXIO.NODETYPE_ELEMENT);
-          for (final int nInt : aIntList.toArray ())
-            aDOS.writeInt (nInt);
+          for (final Integer aInt : aIntList)
+            aDOS.writeInt (aInt.intValue ());
           break;
         case ENTITY_REFERENCE:
         {
@@ -195,7 +194,7 @@ public class BMXWriter
     // Write main content
     _writeNodeBeforeChildren (aST, aNode, aDOS);
     MicroWalker.walkNode (aNode, new DefaultHierarchyWalkerCallback <IMicroNode> ()
-    {
+                          {
       @Override
       public void onItemBeforeChildren (final IMicroNode aChildNode)
       {
@@ -207,7 +206,7 @@ public class BMXWriter
       {
         _writeNodeAfterChildren (aChildNode, aDOS);
       }
-    });
+                          });
     _writeNodeAfterChildren (aNode, aDOS);
   }
 
