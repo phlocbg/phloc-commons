@@ -26,11 +26,10 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.convert.UnidirectionalConverterMapGet;
 
 /**
  * Test class for class {@link SimpleCacheWithConversionAndMaxSize}.
- * 
+ *
  * @author Philip Helger
  */
 public final class SimpleCacheWithConversionAndMaxSizeTest
@@ -40,17 +39,15 @@ public final class SimpleCacheWithConversionAndMaxSizeTest
   {
     final Map <String, Integer> aMap = ContainerHelper.newMap (new String [] { "In", "In2" },
                                                                new Integer [] { Integer.valueOf (1),
-                                                                               Integer.valueOf (2) });
+                                                                                Integer.valueOf (2) });
     final SimpleCacheWithConversionAndMaxSize <String, Integer> aCache = new SimpleCacheWithConversionAndMaxSize <String, Integer> ("test",
-                                                                                                                                    1);
+        1);
     assertEquals ("test", aCache.getName ());
     assertEquals (1, aCache.getMaxSize ());
     // Get from map
-    assertEquals (Integer.valueOf (1),
-                  aCache.getFromCache ("In", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (1), aCache.getFromCache ("In", a -> aMap.get (a)));
     // Use cached value
-    assertEquals (Integer.valueOf (1),
-                  aCache.getFromCache ("In", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (1), aCache.getFromCache ("In", a -> aMap.get (a)));
     // Use cached value
     assertEquals (Integer.valueOf (1), aCache.getFromCache ("In"));
     // No such cached value
@@ -58,7 +55,7 @@ public final class SimpleCacheWithConversionAndMaxSizeTest
     try
     {
       // Cannot convert the passed key!
-      aCache.getFromCache ("Gibts Ned", new UnidirectionalConverterMapGet <String, Integer> (aMap));
+      aCache.getFromCache ("Gibts Ned", a -> aMap.get (a));
       fail ();
     }
     catch (final IllegalStateException ex)
@@ -69,11 +66,9 @@ public final class SimpleCacheWithConversionAndMaxSizeTest
     // Overwrite the item with a new one, therefore kicking the old one
 
     // Get from map
-    assertEquals (Integer.valueOf (2),
-                  aCache.getFromCache ("In2", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (2), aCache.getFromCache ("In2", a -> aMap.get (a)));
     // Use cached value
-    assertEquals (Integer.valueOf (2),
-                  aCache.getFromCache ("In2", new UnidirectionalConverterMapGet <String, Integer> (aMap)));
+    assertEquals (Integer.valueOf (2), aCache.getFromCache ("In2", a -> aMap.get (a)));
     // Use cached value
     assertEquals (Integer.valueOf (2), aCache.getFromCache ("In2"));
     // No longer in the cache

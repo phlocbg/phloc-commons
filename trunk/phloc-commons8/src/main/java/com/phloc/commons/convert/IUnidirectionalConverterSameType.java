@@ -17,14 +17,16 @@
  */
 package com.phloc.commons.convert;
 
+import java.util.function.UnaryOperator;
+
 /**
  * A specialized converter interface that does not do type transformations.
- * 
+ *
  * @param <DATATYPE>
  *        Handled data type
  * @author Philip Helger
  */
-public interface IUnidirectionalConverterSameType <DATATYPE> extends IUnidirectionalConverter <DATATYPE, DATATYPE>
+public interface IUnidirectionalConverterSameType <DATATYPE> extends IUnidirectionalConverter <DATATYPE, DATATYPE>, UnaryOperator <DATATYPE>
 {
   /* empty */
 }
