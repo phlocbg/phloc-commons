@@ -36,7 +36,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link ResourceLSInput}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ResourceLSInputTest
@@ -75,8 +75,8 @@ public final class ResourceLSInputTest
     }
     catch (final UnsupportedOperationException ex)
     {}
-    lsi.setEncoding (CCharset.CHARSET_ISO_8859_1);
-    assertEquals (CCharset.CHARSET_ISO_8859_1, lsi.getEncoding ());
+    lsi.setEncoding (CCharset.CHARSET_ISO_8859_1_OBJ.name ());
+    assertEquals (CCharset.CHARSET_ISO_8859_1_OBJ.name (), lsi.getEncoding ());
     lsi.setPublicId ("pubid");
     assertEquals ("pubid", lsi.getPublicId ());
     lsi.setStringData ("str");

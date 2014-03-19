@@ -40,7 +40,6 @@ import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.MustBeLocked;
 import com.phloc.commons.annotations.MustBeLocked.ELockType;
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
@@ -57,7 +56,7 @@ import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains a basic set of MimeType determination method.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
@@ -88,7 +87,7 @@ public final class MimeTypeDeterminator
   {
     // Key: extension (without dot), value (MIME type)
     if (XMLMapHandler.readMap (new ClassPathResource ("codelists/fileext-mimetype-mapping.xml"), s_aFileExtMap)
-                     .isFailure ())
+        .isFailure ())
       throw new InitializationException ("Failed to init file extension to mimetype mapping file");
 
     // Validate all file extensions
@@ -157,7 +156,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Register a new MIME content type.
-   * 
+   *
    * @param aMimeTypeContent
    *        The content type to register. May not be <code>null</code>.
    * @return {@link EChange#CHANGED} if the object was successfully registered.
@@ -180,7 +179,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Unregister an existing MIME content type.
-   * 
+   *
    * @param aMimeTypeContent
    *        The content type to unregister. May not be <code>null</code>.
    * @return {@link EChange#CHANGED} if the object was successfully
@@ -205,24 +204,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to find the MIME type that matches the passed content string.
-   * 
-   * @param s
-   *        The content string to check. May be <code>null</code>.
-   * @param sCharsetName
-   *        The charset used to convert the string to a byte array. May neither
-   *        be <code>null</code> nor empty.
-   * @return <code>null</code> if no matching MIME type was found.
-   */
-  @Nonnull
-  @Deprecated
-  public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull @Nonempty final String sCharsetName)
-  {
-    return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, sCharsetName));
-  }
-
-  /**
-   * Try to find the MIME type that matches the passed content string.
-   * 
+   *
    * @param s
    *        The content string to check. May be <code>null</code>.
    * @param aCharset
@@ -239,7 +221,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to find the MIME type that matches the passed content string.
-   * 
+   *
    * @param s
    *        The content string to check. May be <code>null</code>.
    * @param aCharset
@@ -261,7 +243,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   * 
+   *
    * @param b
    *        The byte array to parse. May be <code>null</code> or empty.
    * @return {@link #DEFAULT_MIME_TYPE} if no specific MIME type was found.
@@ -275,7 +257,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   * 
+   *
    * @param b
    *        The byte array to parse. May be <code>null</code> or empty.
    * @param aDefault
@@ -327,7 +309,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Get the MIME type from the extension of the passed filename.
-   * 
+   *
    * @param sFilename
    *        The filename to check. May be <code>null</code>.
    * @return <code>null</code> if no MIME type was found.
@@ -341,7 +323,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Get the MIME type object from the extension of the passed filename.
-   * 
+   *
    * @param sFilename
    *        The filename to check. May be <code>null</code>.
    * @return <code>null</code> if no MIME type was found.
@@ -355,7 +337,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Get the MIME type from the passed filename extension.
-   * 
+   *
    * @param sExtension
    *        The extension to check. Must be without the leading dot, so "doc" is
    *        valid but ".doc" is not. May be <code>null</code>.
@@ -379,7 +361,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Get the MIME type object from the passed filename extension.
-   * 
+   *
    * @param sExtension
    *        The extension to check. Must be without the leading dot, so "doc" is
    *        valid but ".doc" is not. May be <code>null</code>.
@@ -415,7 +397,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Reset the MimeTypeContent cache to the initial state.
-   * 
+   *
    * @see #registerMimeTypeContent(MimeTypeContent)
    * @see #unregisterMimeTypeContent(MimeTypeContent)
    */

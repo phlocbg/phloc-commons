@@ -22,28 +22,17 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.ValueEnforcer;
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
  * Base class for creating a cryptographic hash value. Don't mix it up with the
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractMessageDigestGenerator implements IMessageDigestGenerator
 {
-  @Nonnull
-  @Deprecated
-  public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull @Nonempty final String sCharset)
-  {
-    ValueEnforcer.notNull (aValue, "Value");
-    ValueEnforcer.notEmpty (sCharset, "Charset");
-
-    return update (CharsetManager.getAsBytes (aValue, sCharset));
-  }
-
   @Nonnull
   public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull final Charset aCharset)
   {

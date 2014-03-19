@@ -29,7 +29,7 @@ import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Interface for the settings to be used for serializing XML nodes.
- * 
+ *
  * @author Philip Helger
  */
 public interface IXMLWriterSettings
@@ -72,12 +72,6 @@ public interface IXMLWriterSettings
   EXMLIncorrectCharacterHandling getIncorrectCharacterHandling ();
 
   /**
-   * @return The charset name to use. May never be <code>null</code>.
-   */
-  @Nonnull
-  String getCharset ();
-
-  /**
    * @return The charset to use. May never be <code>null</code>.
    */
   @Nonnull
@@ -100,7 +94,7 @@ public interface IXMLWriterSettings
    * Determine if a self closed element (an element having no children) should
    * be emitted with a space at the end (<code>&lt;br /&gt;</code>) or not (
    * <code>&lt;br/&gt;</code>)
-   * 
+   *
    * @return <code>true</code> if a space should be emitted, <code>false</code>
    *         if no space should be emitted.
    */
@@ -123,7 +117,7 @@ public interface IXMLWriterSettings
 
   /**
    * Determine if namespaces should be emitted or not.
-   * 
+   *
    * @return <code>true</code> if namespaces should be emitted,
    *         <code>false</code> if all created elements should reside in the
    *         default namespace.
@@ -136,7 +130,7 @@ public interface IXMLWriterSettings
    * an effect if a namespace context is defined and if it implements the
    * {@link com.phloc.commons.xml.namespace.IIterableNamespaceContext}
    * interface!
-   * 
+   *
    * @return <code>true</code> if it is enabled, <code>false</code> if not.
    */
   boolean isPutNamespaceContextPrefixesInRoot ();

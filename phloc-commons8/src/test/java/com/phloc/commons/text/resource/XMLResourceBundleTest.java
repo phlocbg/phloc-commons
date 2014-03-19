@@ -36,7 +36,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
  * Test class for class {@link XMLResourceBundle}.
- * 
+ *
  * @author Philip Helger
  */
 // SKIPJDK5
@@ -52,7 +52,7 @@ public final class XMLResourceBundleTest extends AbstractPhlocTestCase
       final Properties p = new Properties ();
       p.setProperty ("prop1", "Value 1");
       p.setProperty ("prop2", "äöü");
-      p.storeToXML (FileUtils.getOutputStream (aFile), null, CCharset.CHARSET_UTF_8);
+      p.storeToXML (FileUtils.getOutputStream (aFile), null, CCharset.CHARSET_UTF_8_OBJ.name ());
 
       // Read again
       final ResourceBundle aRB = XMLResourceBundle.getXMLBundle ("unittest-xml-props");

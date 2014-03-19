@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * An {@link java.io.OutputStream} provider based on a byte array.
- * 
+ *
  * @author Philip Helger
  */
 public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProvider, Serializable
@@ -52,13 +52,6 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   }
 
   @Nonnull
-  @Deprecated
-  public final OutputStreamWriter getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
-  {
-    return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
-  }
-
-  @Nonnull
   public final OutputStreamWriter getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), aCharset);
@@ -72,13 +65,6 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   public byte [] getBytes ()
   {
     return m_aOS.toByteArray ();
-  }
-
-  @Nonnull
-  @Deprecated
-  public String getAsString (@Nonnull final String sCharset)
-  {
-    return m_aOS.getAsString (sCharset);
   }
 
   @Nonnull

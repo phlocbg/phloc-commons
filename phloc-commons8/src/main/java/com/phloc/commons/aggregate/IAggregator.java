@@ -18,6 +18,7 @@
 package com.phloc.commons.aggregate;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,8 +32,13 @@ import javax.annotation.Nullable;
  * @param <DSTTYPE>
  *        The output type.
  */
-public interface IAggregator <SRCTYPE, DSTTYPE>
+public interface IAggregator <SRCTYPE, DSTTYPE> extends Function <Collection <SRCTYPE>, DSTTYPE>
 {
   @Nullable
   DSTTYPE aggregate (@Nonnull Collection <SRCTYPE> aObjects);
+
+  default DSTTYPE apply (final Collection <SRCTYPE> t)
+  {
+    return aggregate (t);
+  }
 }

@@ -44,7 +44,7 @@ import com.phloc.commons.xml.XMLHelper;
 /**
  * org.w3c.dom.Node serializer that correctly handles HTML empty elements
  * (&lt;span>&lt;/span> vs. &lt;span />).
- * 
+ *
  * @author Philip Helger
  */
 public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
@@ -100,8 +100,8 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     {
       emitNode (aXMLWriter,
                 nIndex == 0 ? null : aChildren.item (nIndex - 1),
-                aChildren.item (nIndex),
-                nIndex == nLastIndex ? null : aChildren.item (nIndex + 1));
+                            aChildren.item (nIndex),
+                            nIndex == nLastIndex ? null : aChildren.item (nIndex + 1));
     }
   }
 
@@ -123,7 +123,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       }
       final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_aSettings.getXMLVersion ());
       aXMLWriter.onDocumentStart (eXMLVersion,
-                                  m_aSettings.getCharset (),
+                                  m_aSettings.getCharsetObj ().name (),
                                   bIsDocumentStandalone || aDocument.getDoctype () == null);
     }
 

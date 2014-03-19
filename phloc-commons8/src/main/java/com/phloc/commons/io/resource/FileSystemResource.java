@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.ValueEnforcer;
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IReadWriteResource;
@@ -48,7 +47,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Implementation of the {@link com.phloc.commons.io.IReadableResource} and
  * {@link com.phloc.commons.io.IWritableResource} interfaces for file system
  * objects.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -117,16 +116,6 @@ public class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
-  @Deprecated
-  public static Reader getReader (@Nonnull final File aFile, @Nonnull @Nonempty final String sCharset)
-  {
-    ValueEnforcer.notNull (aFile, "File");
-    ValueEnforcer.notEmpty (sCharset, "Charset");
-
-    return StreamUtils.createReader (getInputStream (aFile), sCharset);
-  }
-
-  @Nullable
   public static Reader getReader (@Nonnull final File aFile, @Nonnull final Charset aCharset)
   {
     ValueEnforcer.notNull (aFile, "File");
@@ -139,13 +128,6 @@ public class FileSystemResource implements IReadWriteResource
   public InputStream getInputStream ()
   {
     return getInputStream (m_aFile);
-  }
-
-  @Nullable
-  @Deprecated
-  public Reader getReader (@Nonnull @Nonempty final String sCharset)
-  {
-    return getReader (m_aFile, sCharset);
   }
 
   @Nullable
@@ -164,19 +146,6 @@ public class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
-  @Deprecated
-  public static Writer getWriter (@Nonnull final File aFile,
-                                  @Nonnull @Nonempty final String sCharset,
-                                  @Nonnull final EAppend eAppend)
-  {
-    ValueEnforcer.notNull (aFile, "File");
-    ValueEnforcer.notEmpty (sCharset, "Charset");
-    ValueEnforcer.notNull (eAppend, "Append");
-
-    return StreamUtils.createWriter (getOutputStream (aFile, eAppend), sCharset);
-  }
-
-  @Nullable
   public static Writer getWriter (@Nonnull final File aFile,
                                   @Nonnull final Charset aCharset,
                                   @Nonnull final EAppend eAppend)
@@ -192,13 +161,6 @@ public class FileSystemResource implements IReadWriteResource
   public OutputStream getOutputStream (@Nonnull final EAppend eAppend)
   {
     return getOutputStream (m_aFile, eAppend);
-  }
-
-  @Nullable
-  @Deprecated
-  public Writer getWriter (@Nonnull @Nonempty final String sCharset, @Nonnull final EAppend eAppend)
-  {
-    return getWriter (m_aFile, sCharset, eAppend);
   }
 
   @Nullable
@@ -253,7 +215,7 @@ public class FileSystemResource implements IReadWriteResource
   /**
    * Tests whether the application can read the file denoted by this abstract
    * pathname.
-   * 
+   *
    * @return <code>true</code> if and only if the file specified by this
    *         abstract pathname exists <em>and</em> can be read by the
    *         application; <code>false</code> otherwise
@@ -266,7 +228,7 @@ public class FileSystemResource implements IReadWriteResource
   /**
    * Tests whether the application can modify the file denoted by this abstract
    * pathname.
-   * 
+   *
    * @return <code>true</code> if and only if the file system actually contains
    *         a file denoted by this abstract pathname <em>and</em> the
    *         application is allowed to write to the file; <code>false</code>
@@ -280,7 +242,7 @@ public class FileSystemResource implements IReadWriteResource
   /**
    * Tests whether the application can execute the file denoted by this abstract
    * pathname.
-   * 
+   *
    * @return <code>true</code> if and only if the abstract pathname exists
    *         <em>and</em> the application is allowed to execute the file
    */

@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * An {@link java.io.InputStream} provider based on a byte array.
- * 
+ *
  * @author Philip Helger
  */
 public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider, Serializable
@@ -71,13 +71,6 @@ public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvid
   }
 
   @Nonnull
-  @Deprecated
-  public final Reader getReader (@Nonnull final String sCharset)
-  {
-    return StreamUtils.createReader (getInputStream (), sCharset);
-  }
-
-  @Nonnull
   public final Reader getReader (@Nonnull final Charset aCharset)
   {
     return StreamUtils.createReader (getInputStream (), aCharset);
@@ -87,8 +80,8 @@ public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvid
   public String toString ()
   {
     return new ToStringGenerator (null).append ("byteArray[]", m_aData.length + " bytes")
-                                       .append ("ofs", m_nOfs)
-                                       .append ("len", m_nLen)
-                                       .toString ();
+        .append ("ofs", m_nOfs)
+        .append ("len", m_nLen)
+        .toString ();
   }
 }

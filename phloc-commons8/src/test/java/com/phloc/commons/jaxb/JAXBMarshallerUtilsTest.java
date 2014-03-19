@@ -33,7 +33,7 @@ import com.phloc.commons.charset.CCharset;
 
 /**
  * Test class for class {@link JAXBMarshallerUtils}.
- * 
+ *
  * @author Philip Helger
  */
 public final class JAXBMarshallerUtilsTest
@@ -48,9 +48,9 @@ public final class JAXBMarshallerUtilsTest
     assertTrue (JAXBMarshallerUtils.isSunJAXB2Marshaller (aMarshaller));
 
     // Encoding
-    assertEquals (CCharset.CHARSET_UTF_8, JAXBMarshallerUtils.getEncoding (aMarshaller));
-    JAXBMarshallerUtils.setEncoding (aMarshaller, CCharset.CHARSET_ISO_8859_1);
-    assertEquals (CCharset.CHARSET_ISO_8859_1, JAXBMarshallerUtils.getEncoding (aMarshaller));
+    assertEquals (CCharset.CHARSET_UTF_8_OBJ.name (), JAXBMarshallerUtils.getEncoding (aMarshaller));
+    JAXBMarshallerUtils.setEncoding (aMarshaller, CCharset.CHARSET_ISO_8859_1_OBJ);
+    assertEquals (CCharset.CHARSET_ISO_8859_1_OBJ.name (), JAXBMarshallerUtils.getEncoding (aMarshaller));
 
     // Formatted output?
     assertFalse (JAXBMarshallerUtils.isFormattedOutput (aMarshaller));

@@ -46,7 +46,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for {@link XMLWriter}
- * 
+ *
  * @author Philip Helger
  */
 public final class XMLWriterTest extends AbstractPhlocTestCase
@@ -168,7 +168,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     {
       final String sResult = XMLWriter.getXMLString (doc);
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
-                    CCharset.CHARSET_UTF_8 +
+                    CCharset.CHARSET_UTF_8_OBJ.name () +
                     "\"?>" +
                     CRLF +
                     "<!DOCTYPE html PUBLIC \"" +
@@ -200,7 +200,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                                                 .setSerializeComments (EXMLSerializeComments.IGNORE)
                                                                                 .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
-                    CCharset.CHARSET_UTF_8 +
+                    CCharset.CHARSET_UTF_8_OBJ.name () +
                     "\"?>" +
                     CRLF +
                     "<html xmlns=\"" +
@@ -226,7 +226,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                                                 .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN)
                                                                                 .setNewlineString ("\n"));
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
-                    CCharset.CHARSET_UTF_8 +
+                    CCharset.CHARSET_UTF_8_OBJ.name () +
                     "\"?>\n" +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
@@ -248,7 +248,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                                                 .setNewlineString ("\n")
                                                                                 .setIndentationString ("\t"));
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
-                    CCharset.CHARSET_UTF_8 +
+                    CCharset.CHARSET_UTF_8_OBJ.name () +
                     "\"?>\n" +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
@@ -465,7 +465,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
         // Use regular transformer
         final Transformer aTransformer = XMLTransformerFactory.newTransformer ();
-        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8);
+        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8_OBJ.name ());
         aTransformer.setOutputProperty (OutputKeys.INDENT, "yes");
         aTransformer.setOutputProperty (OutputKeys.VERSION, EXMLVersion.XML_10.getVersion ());
         final StringStreamResult aRes = new StringStreamResult ();
@@ -489,7 +489,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
         eRoot.appendChild (aDoc.createTextNode (sText));
 
         final Transformer aTransformer = XMLTransformerFactory.newTransformer ();
-        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8);
+        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8_OBJ.name ());
         aTransformer.setOutputProperty (OutputKeys.INDENT, "no");
         aTransformer.setOutputProperty (OutputKeys.VERSION, EXMLVersion.XML_11.getVersion ());
         final StringStreamResult aRes = new StringStreamResult ();

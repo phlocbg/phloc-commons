@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ValueEnforcer;
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
@@ -39,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Abstraction of the string parts of a URL but much simpler (and faster) than
  * {@link java.net.URL}.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -162,15 +161,6 @@ public abstract class AbstractSimpleURL implements ISimpleURL
   }
 
   @Nonnull
-  @Deprecated
-  public final String getAsStringWithEncodedParameters (@Nonnull @Nonempty final String sParameterCharset)
-  {
-    ValueEnforcer.notEmpty (sParameterCharset, "ParameterCharset");
-
-    return URLUtils.getURLString (this, sParameterCharset);
-  }
-
-  @Nonnull
   public final String getAsStringWithEncodedParameters (@Nonnull final Charset aParameterCharset)
   {
     ValueEnforcer.notNull (aParameterCharset, "ParameterCharset");
@@ -187,8 +177,8 @@ public abstract class AbstractSimpleURL implements ISimpleURL
       return false;
     final AbstractSimpleURL rhs = (AbstractSimpleURL) o;
     return m_sPath.equals (rhs.m_sPath) &&
-           EqualsUtils.equals (m_aParams, rhs.m_aParams) &&
-           EqualsUtils.equals (m_sAnchor, rhs.m_sAnchor);
+        EqualsUtils.equals (m_aParams, rhs.m_aParams) &&
+        EqualsUtils.equals (m_sAnchor, rhs.m_sAnchor);
   }
 
   @Override
@@ -201,8 +191,8 @@ public abstract class AbstractSimpleURL implements ISimpleURL
   public String toString ()
   {
     return new ToStringGenerator (null).append ("path", m_sPath)
-                                       .appendIfNotNull ("params", m_aParams)
-                                       .appendIfNotNull ("anchor", m_sAnchor)
-                                       .toString ();
+        .appendIfNotNull ("params", m_aParams)
+        .appendIfNotNull ("anchor", m_sAnchor)
+        .toString ();
   }
 }

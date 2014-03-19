@@ -33,7 +33,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link MimeType}
- * 
+ *
  * @author Philip Helger
  */
 public final class MimeTypeTest extends AbstractPhlocTestCase
@@ -49,13 +49,13 @@ public final class MimeTypeTest extends AbstractPhlocTestCase
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (mt, new MimeType (EMimeContentType.TEXT, "junit"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mt, new MimeType (EMimeContentType.APPLICATION,
-                                                                                          "junit"));
+        "junit"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mt, new MimeType (EMimeContentType.TEXT,
-                                                                                          "testng"));
+        "testng"));
     PhlocTestUtils.testGetClone (mt);
     PhlocTestUtils.testDefaultSerialization (mt);
 
-    mt.addParameter ("charset", CCharset.CHARSET_UTF_8);
+    mt.addParameter ("charset", CCharset.CHARSET_UTF_8_OBJ.name ());
     PhlocTestUtils.testGetClone (mt);
     PhlocTestUtils.testDefaultSerialization (mt);
 

@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringHelper;
  * All kind of file handling stuff. For other operations, please see
  * {@link FileOperations} class or the instance based
  * {@link FileOperationManager} class.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -52,7 +52,7 @@ public final class SimpleFileIO
 
   /**
    * Get the content of the file as a byte array.
-   * 
+   *
    * @param aFile
    *        The file to read. May be <code>null</code>.
    * @return <code>null</code> if the passed file is <code>null</code> or if the
@@ -67,25 +67,7 @@ public final class SimpleFileIO
   /**
    * Get the content of the passed file as a string using the system line
    * separator. Note: the last line does not end with the passed line separator.
-   * 
-   * @param aFile
-   *        The file to read. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @return <code>null</code> if the file does not exist, the content
-   *         otherwise.
-   */
-  @Nullable
-  @Deprecated
-  public static String readFileAsString (@Nullable final File aFile, @Nonnull final String sCharset)
-  {
-    return aFile == null ? null : StreamUtils.getAllBytesAsString (FileUtils.getInputStream (aFile), sCharset);
-  }
-
-  /**
-   * Get the content of the passed file as a string using the system line
-   * separator. Note: the last line does not end with the passed line separator.
-   * 
+   *
    * @param aFile
    *        The file to read. May be <code>null</code>.
    * @param aCharset
@@ -102,25 +84,7 @@ public final class SimpleFileIO
   /**
    * Get the content of the passed file as a list of lines, whereas each line
    * does not contain a separator.
-   * 
-   * @param aFile
-   *        The file to read. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @return <code>null</code> if the file does not exist, the content
-   *         otherwise.
-   */
-  @Nullable
-  @Deprecated
-  public static List <String> readFileLines (@Nullable final File aFile, @Nonnull final String sCharset)
-  {
-    return aFile == null ? null : StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset);
-  }
-
-  /**
-   * Get the content of the passed file as a list of lines, whereas each line
-   * does not contain a separator.
-   * 
+   *
    * @param aFile
    *        The file to read. May be <code>null</code>.
    * @param aCharset
@@ -137,27 +101,7 @@ public final class SimpleFileIO
   /**
    * Get the content of the passed file as a list of lines, whereas each line
    * does not contain a separator.
-   * 
-   * @param aFile
-   *        The file to read. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param aTargetList
-   *        The target list to be filled. May not be <code>null</code>.
-   */
-  @Deprecated
-  public static void readFileLines (@Nullable final File aFile,
-                                    @Nonnull final String sCharset,
-                                    @Nonnull final List <String> aTargetList)
-  {
-    if (aFile != null)
-      StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset, aTargetList);
-  }
-
-  /**
-   * Get the content of the passed file as a list of lines, whereas each line
-   * does not contain a separator.
-   * 
+   *
    * @param aFile
    *        The file to read. May be <code>null</code>.
    * @param aCharset
@@ -191,31 +135,12 @@ public final class SimpleFileIO
   }
 
   @Nonnull
-  @Deprecated
-  public static ESuccess writeFile (@Nonnull final File aFile,
-                                    @Nonnull final String sContent,
-                                    @Nonnull final String sCharset)
-  {
-    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
-    return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, sCharset);
-  }
-
-  @Nonnull
   public static ESuccess writeFile (@Nonnull final File aFile,
                                     @Nonnull final String sContent,
                                     @Nonnull final Charset aCharset)
   {
     final OutputStream aFOS = FileUtils.getOutputStream (aFile);
     return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, aCharset);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static ESuccess writeFile (@Nonnull final File aFile,
-                                    @Nonnull final List <String> aContent,
-                                    @Nonnull final String sCharset)
-  {
-    return writeFile (aFile, StringHelper.getImploded (CGlobal.LINE_SEPARATOR, aContent), sCharset);
   }
 
   @Nonnull

@@ -38,7 +38,7 @@ import com.phloc.commons.url.encode.URLParameterEncoder;
 
 /**
  * Test class for class {@link URLUtils}.
- * 
+ *
  * @author Philip Helger
  */
 public final class URLUtilsTest
@@ -73,9 +73,9 @@ public final class URLUtilsTest
     assertEquals (sDec, URLUtils.urlDecode (sEnc));
 
     sDec = "äöü";
-    sEnc = URLUtils.urlEncode (sDec, CCharset.CHARSET_ISO_8859_1);
+    sEnc = URLUtils.urlEncode (sDec, CCharset.CHARSET_ISO_8859_1_OBJ);
     assertEquals ("%E4%F6%FC", sEnc);
-    assertEquals (sDec, URLUtils.urlDecode (sEnc, CCharset.CHARSET_ISO_8859_1));
+    assertEquals (sDec, URLUtils.urlDecode (sEnc, CCharset.CHARSET_ISO_8859_1_OBJ));
   }
 
   @Test
@@ -137,14 +137,14 @@ public final class URLUtilsTest
                                                               CMimeType.APPLICATION_X_WWW_FORM_URLENCODED,
                                                               CharsetManager.getAsBytes ("sender=true",
                                                                                          CCharset.CHARSET_UTF_8_OBJ),
-                                                              null,
-                                                              null,
-                                                              null);
+                                                                                         null,
+                                                                                         null,
+                                                                                         null);
       final byte [] aContent = StreamUtils.getAllBytes (aIS);
       s_aLogger.info ("Read " +
-                      aContent.length +
-                      " bytes: " +
-                      CharsetManager.getAsString (aContent, CCharset.CHARSET_UTF_8_OBJ));
+          aContent.length +
+          " bytes: " +
+          CharsetManager.getAsString (aContent, CCharset.CHARSET_UTF_8_OBJ));
     }
     catch (final Throwable t)
     {
