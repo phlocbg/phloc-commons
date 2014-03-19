@@ -17,23 +17,21 @@
  */
 package com.phloc.commons.bmx;
 
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
-
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.collections.trove.TroveUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
 final class BMXWriterStringTable
 {
   private final DataOutput m_aDO;
-  private final TObjectIntMap <String> m_aStrings;
+  private final Map <String, Integer> m_aStrings;
   private int m_nLastUsedIndex = CBMXIO.INDEX_NULL_STRING;
   private final boolean m_bReUseStrings;
 
@@ -41,7 +39,7 @@ final class BMXWriterStringTable
   {
     m_aDO = aDO;
     m_bReUseStrings = bReUseStrings;
-    m_aStrings = bReUseStrings ? new TObjectIntHashMap <String> (1000) : null;
+    m_aStrings = bReUseStrings ? new HashMap <String, Integer> (1000) : null;
   }
 
   private void _onNewString (@Nonnull final String sString) throws IOException
@@ -67,13 +65,12 @@ final class BMXWriterStringTable
 
     if (m_bReUseStrings)
     {
-      int nIndex = m_aStrings.putIfAbsent (sString, m_nLastUsedIndex + 1);
-      if (TroveUtils.isNotContained (nIndex))
-      {
-        // Real increment
-        nIndex = ++m_nLastUsedIndex;
-        _onNewString (sString);
-      }
+      final Integer aIndex = m_aStrings.putIfAbsent (sString, Integer.valueOf (m_nLastUsedIndex + 1));
+      if (aIndex != null)
+        return aIndex.intValue ();
+      // Real increment
+      final int nIndex = ++m_nLastUsedIndex;
+      _onNewString (sString);
       return nIndex;
     }
 
