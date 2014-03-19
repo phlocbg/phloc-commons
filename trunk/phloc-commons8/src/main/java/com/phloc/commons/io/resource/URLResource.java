@@ -48,7 +48,7 @@ import com.phloc.commons.url.URLUtils;
 
 /**
  * Implementation of the {@link IReadableResource} interface for URL objects.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -86,7 +86,7 @@ public class URLResource implements IReadableResource
 
   /**
    * Check if the passed resource name is an explicit URL resource.
-   * 
+   *
    * @param sName
    *        The name to check. May be <code>null</code>.
    * @return <code>true</code> if the passed name is an explicit URL resource.
@@ -157,13 +157,6 @@ public class URLResource implements IReadableResource
                                      @Nullable final IWrapper <IOException> aExceptionHolder)
   {
     return URLUtils.getInputStream (m_aURL, nConnectTimeoutMS, nReadTimeoutMS, aConnectionModifier, aExceptionHolder);
-  }
-
-  @Nullable
-  @Deprecated
-  public Reader getReader (@Nonnull final String sCharset)
-  {
-    return StreamUtils.createReader (getInputStream (), sCharset);
   }
 
   @Nullable

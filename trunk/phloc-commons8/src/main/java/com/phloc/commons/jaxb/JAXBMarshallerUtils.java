@@ -28,7 +28,7 @@ import javax.xml.bind.PropertyException;
 /**
  * This class contains utility methods for JAXB {@link Marshaller} objects. It
  * allows for setting type-safe properties.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -88,7 +88,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the standard property for the encoding charset.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param aEncoding
@@ -96,20 +96,7 @@ public final class JAXBMarshallerUtils
    */
   public static void setEncoding (@Nonnull final Marshaller aMarshaller, @Nullable final Charset aEncoding)
   {
-    setEncoding (aMarshaller, aEncoding == null ? null : aEncoding.name ());
-  }
-
-  /**
-   * Set the standard property for the encoding charset.
-   * 
-   * @param aMarshaller
-   *        The marshaller to set the property. May not be <code>null</code>.
-   * @param sEncoding
-   *        the value to be set
-   */
-  public static void setEncoding (@Nonnull final Marshaller aMarshaller, @Nullable final String sEncoding)
-  {
-    _setProperty (aMarshaller, Marshaller.JAXB_ENCODING, sEncoding);
+    _setProperty (aMarshaller, Marshaller.JAXB_ENCODING, aEncoding == null ? null : aEncoding.name ());
   }
 
   public static String getEncoding (@Nonnull final Marshaller aMarshaller)
@@ -119,7 +106,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the standard property for formatting the output or not.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param bFormattedOutput
@@ -137,7 +124,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the standard property for setting the namespace schema location
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param sSchemaLocation
@@ -155,7 +142,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the standard property for setting the no-namespace schema location
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param sSchemaLocation
@@ -174,7 +161,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the standard property for marshalling a fragment only.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param bFragment
@@ -192,7 +179,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the Sun specific property for the indent string.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param sIndentString
@@ -211,7 +198,7 @@ public final class JAXBMarshallerUtils
   /**
    * Set the Sun specific encoding handler. Value must implement
    * com.sun.xml.bind.marshaller.CharacterEscapeHandler
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param aCharacterEscapeHandler
@@ -233,7 +220,7 @@ public final class JAXBMarshallerUtils
    * com.sun.xml.bind.marshaller.NamespacePrefixMapper or
    * com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper depending on the
    * implementation type of Marshaller.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param aNamespacePrefixMapper
@@ -254,7 +241,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the Sun specific XML header string.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param sXMLHeaders
@@ -272,7 +259,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the Sun specific canonicalization property.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param bCanonicalize
@@ -290,7 +277,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Set the Sun specific canonicalization property.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param bObjectIdentityCycleDetection
@@ -310,7 +297,7 @@ public final class JAXBMarshallerUtils
   /**
    * Check if the passed Marshaller is a Sun JAXB v2 marshaller. Use this method
    * to determined, whether the Sun specific methods may be invoked or not.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to be checked. May be <code>null</code>.
    * @return <code>true</code> if the passed marshaller is not <code>null</code>
@@ -323,14 +310,14 @@ public final class JAXBMarshallerUtils
     final String sClassName = aMarshaller.getClass ().getName ();
     // When using jaxb-impl explicitly
     return sClassName.equals (JAXB_EXTERNAL_CLASS_NAME) ||
-    // When using the JAXB version integrated in the runtime
-           sClassName.equals (JAXB_INTERNAL_CLASS_NAME);
+        // When using the JAXB version integrated in the runtime
+        sClassName.equals (JAXB_INTERNAL_CLASS_NAME);
   }
 
   /**
    * Check if the passed marshaller is external to the one contained in the
    * runtime.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to check. May be <code>null</code>.
    * @return <code>true</code> if it is a JAXB marshaller from an external
@@ -343,7 +330,7 @@ public final class JAXBMarshallerUtils
 
   /**
    * Check if the passed marshaller is an internal one contained in the runtime.
-   * 
+   *
    * @param aMarshaller
    *        The marshaller to check. May be <code>null</code>.
    * @return <code>true</code> if it is a JAXB marshaller from the runtime

@@ -34,7 +34,6 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -70,7 +69,7 @@ import com.phloc.commons.stats.StatisticsManager;
  * Some very basic IO stream utility stuff. All input stream (=reading) related
  * stuff is quite <code>null</code> aware, where on writing an output stream may
  * never be null.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -83,9 +82,9 @@ public final class StreamUtils
   private static final Logger s_aLogger = LoggerFactory.getLogger (StreamUtils.class);
 
   private static final IStatisticsHandlerSize s_aByteSizeHdl = StatisticsManager.getSizeHandler (StreamUtils.class.getName () +
-                                                                                                 "$COPY");
+      "$COPY");
   private static final IStatisticsHandlerSize s_aCharSizeHdl = StatisticsManager.getSizeHandler (StreamUtils.class.getName () +
-                                                                                                 "$COPYCHARS");
+      "$COPYCHARS");
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -96,7 +95,7 @@ public final class StreamUtils
 
   /**
    * Check if the passed exception is a known EOF exception.
-   * 
+   *
    * @param t
    *        The throwable/exception to be checked. May be <code>null</code>.
    * @return <code>true</code> if it is a user-created EOF exception
@@ -108,7 +107,7 @@ public final class StreamUtils
 
   /**
    * Check if the passed class is a known EOF exception class.
-   * 
+   *
    * @param aClass
    *        The class to be checked. May be <code>null</code>.
    * @return <code>true</code> if it is a known EOF exception class.
@@ -120,14 +119,14 @@ public final class StreamUtils
 
     final String sClass = aClass.getName ();
     return sClass.equals ("java.io.EOFException") ||
-           sClass.equals ("org.mortbay.jetty.EofException") ||
-           sClass.equals ("org.eclipse.jetty.io.EofException") ||
-           sClass.equals ("org.apache.catalina.connector.ClientAbortException");
+        sClass.equals ("org.mortbay.jetty.EofException") ||
+        sClass.equals ("org.eclipse.jetty.io.EofException") ||
+        sClass.equals ("org.apache.catalina.connector.ClientAbortException");
   }
 
   /**
    * Close the passed object, without trying to call flush on it.
-   * 
+   *
    * @param aCloseable
    *        The object to be closed. May be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if the object was successfully closed.
@@ -157,7 +156,7 @@ public final class StreamUtils
    * Close the passed stream by encapsulating the declared {@link IOException}.
    * If the passed object also implements the {@link Flushable} interface, it is
    * tried to be flushed before it is closed.
-   * 
+   *
    * @param aCloseable
    *        The object to be closed. May be <code>null</code>.
    * @return {@link ESuccess} if the object was successfully closed.
@@ -196,7 +195,7 @@ public final class StreamUtils
   /**
    * Special close version for {@link Socket} as they are not implementing
    * {@link Closeable} :(
-   * 
+   *
    * @param aSocket
    *        The socket to be closed. May be <code>null</code>.
    * @return {@link ESuccess} if the object was successfully closed.
@@ -225,7 +224,7 @@ public final class StreamUtils
   /**
    * Special close version for {@link ServerSocket} as they are not implementing
    * {@link Closeable} :(
-   * 
+   *
    * @param aSocket
    *        The socket to be closed. May be <code>null</code>.
    * @return {@link ESuccess} if the object was successfully closed.
@@ -253,7 +252,7 @@ public final class StreamUtils
 
   /**
    * Flush the passed object encapsulating the declared {@link IOException}.
-   * 
+   *
    * @param aFlushable
    *        The flushable to be flushed. May be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if the object was successfully flushed.
@@ -263,27 +262,27 @@ public final class StreamUtils
   {
     if (aFlushable != null)
       try
-      {
+    {
         aFlushable.flush ();
         return ESuccess.SUCCESS;
-      }
-      catch (final NullPointerException ex)
-      {
-        // Happens if a java.io.FilterOutputStream is already closed!
-      }
-      catch (final IOException ex)
-      {
-        if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (),
-                           ex instanceof IMockException ? null : ex);
-      }
+    }
+    catch (final NullPointerException ex)
+    {
+      // Happens if a java.io.FilterOutputStream is already closed!
+    }
+    catch (final IOException ex)
+    {
+      if (!isKnownEOFException (ex))
+        s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (),
+                         ex instanceof IMockException ? null : ex);
+    }
     return ESuccess.FAILURE;
   }
 
   /**
    * Pass the content of the given input stream to the given output stream. Both
    * the input stream and the output stream are automatically closed.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -310,7 +309,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. Both
    * the input stream and the output stream are automatically closed.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -345,7 +344,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -365,7 +364,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -389,7 +388,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -417,7 +416,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -487,7 +486,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -514,7 +513,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    *        Automatically closed!
@@ -579,7 +578,7 @@ public final class StreamUtils
 
   /**
    * Get the number of available bytes in the passed input stream.
-   * 
+   *
    * @param aIS
    *        The input stream to use. May be <code>null</code>.
    * @return 0 in case of an error or if the parameter was <code>null</code>.
@@ -588,20 +587,20 @@ public final class StreamUtils
   {
     if (aIS != null)
       try
-      {
+    {
         return aIS.available ();
-      }
-      catch (final IOException ex)
-      {
-        // Fall through
-      }
+    }
+    catch (final IOException ex)
+    {
+      // Fall through
+    }
     return 0;
   }
 
   /**
    * Get a byte buffer with all the available content of the passed input
    * stream.
-   * 
+   *
    * @param aIS
    *        The source input stream. May not be <code>null</code>.
    * @return A new {@link NonBlockingByteArrayOutputStream} with all available
@@ -619,7 +618,7 @@ public final class StreamUtils
   /**
    * Get a byte buffer with all the available content of the passed input
    * stream.
-   * 
+   *
    * @param aIS
    *        The source input stream. May not be <code>null</code>.
    * @param nLimit
@@ -640,7 +639,7 @@ public final class StreamUtils
 
   /**
    * Read all bytes from the passed input stream into a byte array.
-   * 
+   *
    * @param aISP
    *        The input stream provider to read from. May be <code>null</code> .
    * @return The byte array or <code>null</code> if the parameter or the
@@ -657,7 +656,7 @@ public final class StreamUtils
 
   /**
    * Read all bytes from the passed input stream into a byte array.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @return The byte array or <code>null</code> if the input stream is
@@ -674,28 +673,7 @@ public final class StreamUtils
 
   /**
    * Read all bytes from the passed input stream into a string.
-   * 
-   * @param aISP
-   *        The input stream provider to read from. May be <code>null</code> .
-   * @param sCharset
-   *        The charset to use. May not be <code>null</code> .
-   * @return The String or <code>null</code> if the parameter or the resolved
-   *         input stream is <code>null</code>.
-   */
-  @Nullable
-  @Deprecated
-  public static String getAllBytesAsString (@Nullable final IInputStreamProvider aISP,
-                                            @Nonnull @Nonempty final String sCharset)
-  {
-    if (aISP == null)
-      return null;
-
-    return getAllBytesAsString (aISP.getInputStream (), sCharset);
-  }
-
-  /**
-   * Read all bytes from the passed input stream into a string.
-   * 
+   *
    * @param aISP
    *        The input stream provider to read from. May be <code>null</code> .
    * @param aCharset
@@ -715,30 +693,7 @@ public final class StreamUtils
 
   /**
    * Read all bytes from the passed input stream into a string.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The charset to use. May not be <code>null</code> .
-   * @return The String or <code>null</code> if the input stream is
-   *         <code>null</code>.
-   */
-  @Nullable
-  @Deprecated
-  public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
-                                            @Nonnull @Nonempty final String sCharset)
-  {
-    ValueEnforcer.notEmpty (sCharset, "Charset");
-
-    if (aIS == null)
-      return null;
-
-    return getCopy (aIS).getAsString (sCharset);
-  }
-
-  /**
-   * Read all bytes from the passed input stream into a string.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -761,7 +716,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader and
    * the writer are automatically closed!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -788,7 +743,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader and
    * the writer are automatically closed!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -823,7 +778,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -843,7 +798,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -867,7 +822,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -890,7 +845,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -961,7 +916,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -988,7 +943,7 @@ public final class StreamUtils
   /**
    * Pass the content of the given reader to the given writer. The reader is
    * automatically closed, whereas the writer stays open!
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>. Automatically
    *        closed!
@@ -1024,10 +979,10 @@ public final class StreamUtils
       {
         // both streams are not null
         final long nTotalCharsCopied = aLimit == null ? _copyReaderToWriter (aReader, aWriter, aBuffer)
-                                                     : _copyReaderToWriterWithLimit (aReader,
-                                                                                     aWriter,
-                                                                                     aBuffer,
-                                                                                     aLimit.longValue ());
+                                                      : _copyReaderToWriterWithLimit (aReader,
+                                                                                      aWriter,
+                                                                                      aBuffer,
+                                                                                      aLimit.longValue ());
 
         // Add to statistics
         s_aCharSizeHdl.addSize (nTotalCharsCopied);
@@ -1070,7 +1025,7 @@ public final class StreamUtils
 
   /**
    * Read all characters from the passed reader into a char array.
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>.
    * @return The character array or <code>null</code> if the reader is
@@ -1087,7 +1042,7 @@ public final class StreamUtils
 
   /**
    * Read all characters from the passed reader into a String.
-   * 
+   *
    * @param aReader
    *        The reader to read from. May be <code>null</code>.
    * @return The character array or <code>null</code> if the reader is
@@ -1105,27 +1060,7 @@ public final class StreamUtils
   /**
    * Get the content of the passed Spring resource as one big string in the
    * passed character set.
-   * 
-   * @param aISP
-   *        The resource to read. May not be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @return <code>null</code> if the resolved input stream is <code>null</code>
-   *         , the content otherwise.
-   */
-  @Nullable
-  @ReturnsMutableCopy
-  @Deprecated
-  public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
-                                               @Nonnull @Nonempty final String sCharset)
-  {
-    return readStreamLines (aISP, sCharset, 0, CGlobal.ILLEGAL_UINT);
-  }
-
-  /**
-   * Get the content of the passed Spring resource as one big string in the
-   * passed character set.
-   * 
+   *
    * @param aISP
    *        The resource to read. May not be <code>null</code>.
    * @param aCharset
@@ -1137,46 +1072,14 @@ public final class StreamUtils
   @ReturnsMutableCopy
   public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
                                                @Nonnull final Charset aCharset)
-  {
+                                               {
     return readStreamLines (aISP, aCharset, 0, CGlobal.ILLEGAL_UINT);
-  }
+                                               }
 
   /**
    * Get the content of the passed Spring resource as one big string in the
    * passed character set.
-   * 
-   * @param aISP
-   *        The resource to read. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param nLinesToSkip
-   *        The 0-based index of the first line to read. Pass in 0 to indicate
-   *        to read everything.
-   * @param nLinesToRead
-   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
-   *        indicate that all lines should be read. If the number passed here
-   *        exceeds the number of lines in the file, nothing happens.
-   * @return <code>null</code> if the resolved input stream is <code>null</code>
-   *         , the content otherwise.
-   */
-  @Nullable
-  @ReturnsMutableCopy
-  @Deprecated
-  public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
-                                               @Nonnull @Nonempty final String sCharset,
-                                               @Nonnegative final int nLinesToSkip,
-                                               final int nLinesToRead)
-  {
-    if (aISP == null)
-      return null;
-
-    return readStreamLines (aISP.getInputStream (), sCharset, nLinesToSkip, nLinesToRead);
-  }
-
-  /**
-   * Get the content of the passed Spring resource as one big string in the
-   * passed character set.
-   * 
+   *
    * @param aISP
    *        The resource to read. May be <code>null</code>.
    * @param aCharset
@@ -1197,37 +1100,17 @@ public final class StreamUtils
                                                @Nonnull final Charset aCharset,
                                                @Nonnegative final int nLinesToSkip,
                                                final int nLinesToRead)
-  {
+                                               {
     if (aISP == null)
       return null;
 
     return readStreamLines (aISP.getInputStream (), aCharset, nLinesToSkip, nLinesToRead);
-  }
+                                               }
 
   /**
    * Get the content of the passed stream as a list of lines in the passed
    * character set.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @return <code>null</code> if the input stream is <code>null</code>, the
-   *         content lines otherwise.
-   */
-  @Nullable
-  @ReturnsMutableCopy
-  @Deprecated
-  public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
-                                               @Nonnull @Nonempty final String sCharset)
-  {
-    return readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT);
-  }
-
-  /**
-   * Get the content of the passed stream as a list of lines in the passed
-   * character set.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -1239,40 +1122,14 @@ public final class StreamUtils
   @ReturnsMutableCopy
   public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
                                                @Nonnull @Nonempty final Charset aCharset)
-  {
+                                               {
     return readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT);
-  }
+                                               }
 
   /**
    * Get the content of the passed stream as a list of lines in the passed
    * character set.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param aTargetList
-   *        The list to be filled with the lines. May not be <code>null</code>.
-   */
-  @Deprecated
-  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
-                                      @Nonnull @Nonempty final String sCharset,
-                                      @Nonnull final List <String> aTargetList)
-  {
-    if (aIS != null)
-      readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
-      {
-        public void run (final String sLine)
-        {
-          aTargetList.add (sLine);
-        }
-      });
-  }
-
-  /**
-   * Get the content of the passed stream as a list of lines in the passed
-   * character set.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -1286,59 +1143,18 @@ public final class StreamUtils
   {
     if (aIS != null)
       readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
-      {
+                       {
         public void run (final String sLine)
         {
           aTargetList.add (sLine);
         }
-      });
+                       });
   }
 
   /**
    * Get the content of the passed stream as a list of lines in the passed
    * character set.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param nLinesToSkip
-   *        The 0-based index of the first line to read. Pass in 0 to indicate
-   *        to read everything.
-   * @param nLinesToRead
-   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
-   *        indicate that all lines should be read. If the number passed here
-   *        exceeds the number of lines in the file, nothing happens.
-   * @return <code>null</code> if the input stream is <code>null</code>, the
-   *         content lines otherwise.
-   */
-  @Nullable
-  @ReturnsMutableCopy
-  @Deprecated
-  public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
-                                               @Nonnull @Nonempty final String sCharset,
-                                               @Nonnegative final int nLinesToSkip,
-                                               final int nLinesToRead)
-  {
-    if (aIS == null)
-      return null;
-
-    // Read stream and collect all read lines in a list
-    final List <String> ret = new ArrayList <String> ();
-    readStreamLines (aIS, sCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
-    {
-      public void run (final String sLine)
-      {
-        ret.add (sLine);
-      }
-    });
-    return ret;
-  }
-
-  /**
-   * Get the content of the passed stream as a list of lines in the passed
-   * character set.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -1359,46 +1175,26 @@ public final class StreamUtils
                                                @Nonnull final Charset aCharset,
                                                @Nonnegative final int nLinesToSkip,
                                                final int nLinesToRead)
-  {
+                                               {
     if (aIS == null)
       return null;
 
     // Read stream and collect all read lines in a list
     final List <String> ret = new ArrayList <String> ();
     readStreamLines (aIS, aCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
-    {
+                     {
       public void run (final String sLine)
       {
         ret.add (sLine);
       }
-    });
+                     });
     return ret;
-  }
+                                               }
 
   /**
    * Read the complete content of the passed stream and pass each line
    * separately to the passed callback.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param aLineCallback
-   *        The callback that is invoked for all read lines. Each passed line
-   *        does NOT contain the line delimiter!
-   */
-  @Deprecated
-  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
-                                      @Nonnull @Nonempty final String sCharset,
-                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
-  {
-    readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, aLineCallback);
-  }
-
-  /**
-   * Read the complete content of the passed stream and pass each line
-   * separately to the passed callback.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -1460,7 +1256,7 @@ public final class StreamUtils
   /**
    * Read the content of the passed stream line by line and invoking a callback
    * on all matching lines.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param aCharset
@@ -1492,7 +1288,7 @@ public final class StreamUtils
 
     if (aIS != null)
       try
-      {
+    {
         // Start the action only if there is something to read
         if (bReadAllLines || nLinesToRead > 0)
         {
@@ -1513,84 +1309,18 @@ public final class StreamUtils
             close (aBR);
           }
         }
-      }
-      finally
-      {
-        // Close input stream in case something went wrong with the buffered
-        // reader.
-        close (aIS);
-      }
-  }
-
-  /**
-   * Read the content of the passed stream line by line and invoking a callback
-   * on all matching lines.
-   * 
-   * @param aIS
-   *        The input stream to read from. May be <code>null</code>.
-   * @param sCharset
-   *        The character set to use. May not be <code>null</code>.
-   * @param nLinesToSkip
-   *        The 0-based index of the first line to read. Pass in 0 to indicate
-   *        to read everything.
-   * @param nLinesToRead
-   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
-   *        indicate that all lines should be read. If the number passed here
-   *        exceeds the number of lines in the file, nothing happens.
-   * @param aLineCallback
-   *        The callback that is invoked for all read lines. Each passed line
-   *        does NOT contain the line delimiter! Note: it is not invoked for
-   *        skipped lines!
-   */
-  @Deprecated
-  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
-                                      @Nonnull @Nonempty final String sCharset,
-                                      @Nonnegative final int nLinesToSkip,
-                                      final int nLinesToRead,
-                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
-  {
-    ValueEnforcer.notNull (sCharset, "Charset");
-    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip");
-    final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
-    if (nLinesToRead < 0 && !bReadAllLines)
-      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
-    ValueEnforcer.notNull (aLineCallback, "LineCallback");
-
-    if (aIS != null)
-      try
-      {
-        // Start the action only if there is something to read
-        if (bReadAllLines || nLinesToRead > 0)
-        {
-          NonBlockingBufferedReader aBR = null;
-          try
-          {
-            // read with the passed charset
-            aBR = new NonBlockingBufferedReader (createReader (aIS, sCharset));
-            _readFromReader (nLinesToSkip, nLinesToRead, aLineCallback, bReadAllLines, aBR);
-          }
-          catch (final IOException ex)
-          {
-            s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex);
-          }
-          finally
-          {
-            // Close buffered reader
-            close (aBR);
-          }
-        }
-      }
-      finally
-      {
-        // Close input stream in case something went wrong with the buffered
-        // reader.
-        close (aIS);
-      }
+    }
+    finally
+    {
+      // Close input stream in case something went wrong with the buffered
+      // reader.
+      close (aIS);
+    }
   }
 
   /**
    * Write bytes to an {@link OutputStream}.
-   * 
+   *
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>. Is
    *        closed independent of error or success.
@@ -1632,7 +1362,7 @@ public final class StreamUtils
 
   /**
    * Write bytes to an {@link OutputStream}.
-   * 
+   *
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>. Is
    *        closed independent of error or success.
@@ -1648,31 +1378,7 @@ public final class StreamUtils
 
   /**
    * Write bytes to an {@link OutputStream}.
-   * 
-   * @param aOS
-   *        The output stream to write to. May not be <code>null</code>. Is
-   *        closed independent of error or success.
-   * @param sContent
-   *        The string to be written. May not be <code>null</code>.
-   * @param sCharset
-   *        The charset to be used, to convert the String to a byte array.
-   * @return {@link ESuccess}
-   */
-  @Nonnull
-  @Deprecated
-  public static ESuccess writeStream (@WillClose @Nonnull final OutputStream aOS,
-                                      @Nonnull final String sContent,
-                                      @Nonnull @Nonempty final String sCharset)
-  {
-    ValueEnforcer.notNull (sContent, "Content");
-    ValueEnforcer.notEmpty (sCharset, "Charset");
-
-    return writeStream (aOS, CharsetManager.getAsBytes (sContent, sCharset));
-  }
-
-  /**
-   * Write bytes to an {@link OutputStream}.
-   * 
+   *
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>. Is
    *        closed independent of error or success.
@@ -1706,37 +1412,9 @@ public final class StreamUtils
   }
 
   @Nullable
-  @Deprecated
-  public static InputStreamReader createReader (@Nullable final InputStream aIS, @Nonnull final String sCharset)
-  {
-    try
-    {
-      return aIS == null ? null : new InputStreamReader (aIS, sCharset);
-    }
-    catch (final UnsupportedEncodingException ex)
-    {
-      throw new IllegalArgumentException ("Failed to create Reader for charset '" + sCharset + "'", ex);
-    }
-  }
-
-  @Nullable
   public static InputStreamReader createReader (@Nullable final InputStream aIS, @Nonnull final Charset aCharset)
   {
     return aIS == null ? null : new InputStreamReader (aIS, aCharset);
-  }
-
-  @Nullable
-  @Deprecated
-  public static OutputStreamWriter createWriter (@Nullable final OutputStream aOS, @Nonnull final String sCharset)
-  {
-    try
-    {
-      return aOS == null ? null : new OutputStreamWriter (aOS, sCharset);
-    }
-    catch (final UnsupportedEncodingException ex)
-    {
-      throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex);
-    }
   }
 
   @Nullable
@@ -1748,7 +1426,7 @@ public final class StreamUtils
   /**
    * Fully skip the passed amounts in the input stream. Only forward skipping is
    * possible!
-   * 
+   *
    * @param aIS
    *        The input stream to skip in.
    * @param nBytesToSkip
@@ -1773,10 +1451,10 @@ public final class StreamUtils
         if (aIS.read () == -1)
         {
           throw new EOFException ("Failed to skip a total of " +
-                                  nBytesToSkip +
-                                  " bytes on input stream. Only skipped " +
-                                  (nBytesToSkip - nRemaining) +
-                                  " bytes so far!");
+              nBytesToSkip +
+              " bytes on input stream. Only skipped " +
+              (nBytesToSkip - nRemaining) +
+              " bytes so far!");
         }
         nRemaining--;
       }
@@ -1790,7 +1468,7 @@ public final class StreamUtils
 
   /**
    * Read the whole buffer from the input stream.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May not be <code>null</code>.
    * @param aBuffer
@@ -1805,7 +1483,7 @@ public final class StreamUtils
 
   /**
    * Read the whole buffer from the input stream.
-   * 
+   *
    * @param aIS
    *        The input stream to read from. May not be <code>null</code>.
    * @param aBuffer
@@ -1834,10 +1512,10 @@ public final class StreamUtils
       final int nBytesRead = aIS.read (aBuffer, nOfs + nTotalBytesRead, nLen - nTotalBytesRead);
       if (nBytesRead < 0)
         throw new EOFException ("Failed to read a total of " +
-                                nLen +
-                                " bytes from input stream. Only read " +
-                                nTotalBytesRead +
-                                " bytes so far.");
+            nLen +
+            " bytes from input stream. Only read " +
+            nTotalBytesRead +
+            " bytes so far.");
       nTotalBytesRead += nBytesRead;
     }
     return nTotalBytesRead;
@@ -1846,11 +1524,11 @@ public final class StreamUtils
   public static boolean isBuffered (@Nullable final InputStream aIS)
   {
     return aIS instanceof BufferedInputStream ||
-           aIS instanceof NonBlockingBufferedInputStream ||
-           aIS instanceof ByteArrayInputStream ||
-           aIS instanceof NonBlockingByteArrayInputStream ||
-           aIS instanceof ByteBufferInputStream ||
-           (aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ()));
+        aIS instanceof NonBlockingBufferedInputStream ||
+        aIS instanceof ByteArrayInputStream ||
+        aIS instanceof NonBlockingByteArrayInputStream ||
+        aIS instanceof ByteBufferInputStream ||
+        (aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ()));
   }
 
   @Nullable
@@ -1862,11 +1540,11 @@ public final class StreamUtils
   public static boolean isBuffered (@Nullable final OutputStream aOS)
   {
     return aOS instanceof BufferedOutputStream ||
-           aOS instanceof NonBlockingBufferedOutputStream ||
-           aOS instanceof ByteArrayOutputStream ||
-           aOS instanceof NonBlockingByteArrayOutputStream ||
-           aOS instanceof ByteBufferOutputStream ||
-           (aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ()));
+        aOS instanceof NonBlockingBufferedOutputStream ||
+        aOS instanceof ByteArrayOutputStream ||
+        aOS instanceof NonBlockingByteArrayOutputStream ||
+        aOS instanceof ByteBufferOutputStream ||
+        (aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ()));
   }
 
   @Nullable
@@ -1878,10 +1556,10 @@ public final class StreamUtils
   public static boolean isBuffered (@Nullable final Reader aReader)
   {
     return aReader instanceof BufferedReader ||
-           aReader instanceof NonBlockingBufferedReader ||
-           aReader instanceof StringReader ||
-           aReader instanceof NonBlockingStringReader ||
-           (aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ()));
+        aReader instanceof NonBlockingBufferedReader ||
+        aReader instanceof StringReader ||
+        aReader instanceof NonBlockingStringReader ||
+        (aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ()));
   }
 
   @Nullable
@@ -1893,10 +1571,10 @@ public final class StreamUtils
   public static boolean isBuffered (@Nullable final Writer aWriter)
   {
     return aWriter instanceof BufferedWriter ||
-           aWriter instanceof NonBlockingBufferedWriter ||
-           aWriter instanceof StringWriter ||
-           aWriter instanceof NonBlockingStringWriter ||
-           (aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ()));
+        aWriter instanceof NonBlockingBufferedWriter ||
+        aWriter instanceof StringWriter ||
+        aWriter instanceof NonBlockingStringWriter ||
+        (aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ()));
   }
 
   @Nullable

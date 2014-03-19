@@ -35,7 +35,7 @@ import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains helper classes for handling message digests and there results.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -66,15 +66,6 @@ public final class MessageDigestGeneratorHelper
   }
 
   @Nonnull
-  @Deprecated
-  public static byte [] getDigest (@Nonnull final EMessageDigestAlgorithm eAlgorithm,
-                                   @Nonnull final String sText,
-                                   @Nonnull @Nonempty final String sCharset)
-  {
-    return getDigest (sText, sCharset, eAlgorithm);
-  }
-
-  @Nonnull
   public static byte [] getDigest (@Nonnull final EMessageDigestAlgorithm eAlgorithm,
                                    @Nonnull final String sText,
                                    @Nonnull final Charset aCharset)
@@ -95,15 +86,6 @@ public final class MessageDigestGeneratorHelper
                                    @Nonnegative final int nLength)
   {
     return getDigest (aBytes, nOfs, nLength, eAlgorithm);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static byte [] getDigest (@Nonnull final String sContent,
-                                   @Nonnull @Nonempty final String sCharset,
-                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
-  {
-    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (sContent, sCharset).getDigest ();
   }
 
   @Nonnull
@@ -132,7 +114,7 @@ public final class MessageDigestGeneratorHelper
 
   /**
    * Create a hash value from the complete input stream.
-   * 
+   *
    * @param aIS
    *        The input stream to create the hash value from. May not be
    *        <code>null</code>.

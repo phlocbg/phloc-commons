@@ -23,20 +23,19 @@ import javax.annotation.Nonnull;
 
 import org.w3c.dom.Node;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 
 /**
  * A special input stream provider that takes an existing {@link Node} and
  * converts it to a byte array.
- * 
+ *
  * @author Philip Helger
  */
 public class DOMInputStreamProvider extends StringInputStreamProvider
 {
   /**
    * Constructor for W3C nodes using the default XML charset.
-   * 
+   *
    * @param aNode
    *        The node to be streamed. May not be <code>null</code>.
    */
@@ -47,21 +46,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
 
   /**
    * Constructor for W3C nodes.
-   * 
-   * @param aNode
-   *        The node to be streamed. May not be <code>null</code>.
-   * @param sCharset
-   *        The charset to use. May not be <code>null</code>.
-   */
-  @Deprecated
-  public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull @Nonempty final String sCharset)
-  {
-    this (aNode, new XMLWriterSettings ().setCharset (sCharset));
-  }
-
-  /**
-   * Constructor for W3C nodes.
-   * 
+   *
    * @param aNode
    *        The node to be streamed. May not be <code>null</code>.
    * @param aCharset
@@ -74,7 +59,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
 
   /**
    * Constructor for W3C nodes.
-   * 
+   *
    * @param aNode
    *        The node to be streamed. May not be <code>null</code>.
    * @param aSettings

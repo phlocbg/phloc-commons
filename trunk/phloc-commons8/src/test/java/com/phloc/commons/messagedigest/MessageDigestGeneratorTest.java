@@ -29,7 +29,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link MessageDigestGenerator}.
- * 
+ *
  * @author Philip Helger
  */
 public final class MessageDigestGeneratorTest
@@ -39,12 +39,12 @@ public final class MessageDigestGeneratorTest
   {
     final IMessageDigestGenerator x = new MessageDigestGenerator (aAlgo);
     assertEquals (aAlgo[0].getAlgorithm (), x.getAlgorithmName ());
-    x.update ("Any string", CCharset.CHARSET_ISO_8859_1);
+    x.update ("Any string", CCharset.CHARSET_ISO_8859_1_OBJ);
     x.update ("Any string", CCharset.CHARSET_ISO_8859_1_OBJ);
     final IMessageDigestGenerator y = new MessageDigestGenerator (aAlgo);
     assertEquals (aAlgo[0].getAlgorithm (), y.getAlgorithmName ());
-    y.update ("Any ", CCharset.CHARSET_ISO_8859_1);
-    y.update ("string", CCharset.CHARSET_ISO_8859_1);
+    y.update ("Any ", CCharset.CHARSET_ISO_8859_1_OBJ);
+    y.update ("string", CCharset.CHARSET_ISO_8859_1_OBJ);
     y.update ("Any ", CCharset.CHARSET_ISO_8859_1_OBJ);
     y.update ("string", CCharset.CHARSET_ISO_8859_1_OBJ);
     assertEquals (x.getDigestLong (), y.getDigestLong ());
@@ -121,13 +121,6 @@ public final class MessageDigestGeneratorTest
     {}
     try
     {
-      md.update ((String) null, CCharset.CHARSET_ISO_8859_1);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-    try
-    {
       md.update ((String) null, CCharset.CHARSET_ISO_8859_1_OBJ);
       fail ();
     }
@@ -136,7 +129,7 @@ public final class MessageDigestGeneratorTest
     md.update ((byte) 5);
     md.update (CharsetManager.getAsBytes ("abc", CCharset.CHARSET_ISO_8859_1_OBJ));
     md.update (CharsetManager.getAsBytes ("abc", CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
-    md.update ("abc", CCharset.CHARSET_UTF_8);
+    md.update ("abc", CCharset.CHARSET_UTF_8_OBJ);
     md.update ("äöü", CCharset.CHARSET_UTF_8_OBJ);
     assertNotNull (md.getDigest ());
     assertNotNull (md.getDigest (2));

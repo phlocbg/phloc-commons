@@ -39,7 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link CharsetManager}.
- * 
+ *
  * @author Philip Helger
  */
 public final class CharsetManagerTest
@@ -74,38 +74,6 @@ public final class CharsetManagerTest
     {}
   }
 
-  @SuppressWarnings ("deprecation")
-  @Test
-  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
-  public void testGetAsBytes ()
-  {
-    final String s = "äbc";
-    assertEquals (3, CharsetManager.getAsBytes (s, CCharset.CHARSET_ISO_8859_1).length);
-    assertEquals (4, CharsetManager.getAsBytes (s, CCharset.CHARSET_UTF_8).length);
-
-    try
-    {
-      CharsetManager.getAsBytes (s, (String) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-    try
-    {
-      CharsetManager.getAsBytes (s, "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      CharsetManager.getAsBytes (s, "bla");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-  }
-
   @Test
   public void testGetAsBytesCharset ()
   {
@@ -116,36 +84,6 @@ public final class CharsetManagerTest
     try
     {
       CharsetManager.getAsBytes (s, (Charset) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-  }
-
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testGetAsStringInOtherCharset ()
-  {
-    final String s = "äbc";
-    assertEquals (3, CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, CCharset.CHARSET_UTF_8)
-                                   .length ());
-    assertEquals (4, CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_UTF_8, CCharset.CHARSET_ISO_8859_1)
-                                   .length ());
-    assertNull (CharsetManager.getAsStringInOtherCharset (null, CCharset.CHARSET_ISO_8859_1, CCharset.CHARSET_UTF_8));
-    assertEquals (s,
-                  CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, CCharset.CHARSET_ISO_8859_1));
-    assertEquals (s, CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_UTF_8, CCharset.CHARSET_UTF_8));
-
-    try
-    {
-      CharsetManager.getAsStringInOtherCharset (s, null, CCharset.CHARSET_UTF_8);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-    try
-    {
-      CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -189,33 +127,15 @@ public final class CharsetManagerTest
     {}
   }
 
-  @SuppressWarnings ("deprecation")
   @Test
   public void testGreek () throws Exception
   {
     final String sAlpha = "?\u03B1";
-    byte [] b = CharsetManager.getAsBytes (sAlpha, CCharset.CHARSET_UTF_8);
-    assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8));
-    assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8_OBJ));
-    try
-    {
-      CharsetManager.getAsString (b, "charset bla");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    b = CharsetManager.getAsBytes (sAlpha, CCharset.CHARSET_UTF_8_OBJ);
-    assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8));
+    final byte [] b = CharsetManager.getAsBytes (sAlpha, CCharset.CHARSET_UTF_8_OBJ);
     assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8_OBJ));
 
-    NonBlockingBufferedReader aReader = new NonBlockingBufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
-                                                                                              CCharset.CHARSET_UTF_8));
-    assertEquals (sAlpha, aReader.readLine ());
-    StreamUtils.close (aReader);
-
-    aReader = new NonBlockingBufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
-                                                                    CCharset.CHARSET_UTF_8_OBJ));
+    final NonBlockingBufferedReader aReader = new NonBlockingBufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
+                                                                                                    CCharset.CHARSET_UTF_8_OBJ));
     assertEquals (sAlpha, aReader.readLine ());
     StreamUtils.close (aReader);
   }

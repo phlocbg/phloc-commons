@@ -44,7 +44,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Materializes micro nodes into a string representation.
- * 
+ *
  * @author Philip
  */
 public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
@@ -95,8 +95,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
                       _writeContainer (aXMLWriter, (IMicroContainer) aNode);
                     else
                       throw new IllegalArgumentException ("Passed node type " +
-                                                          aNode.getClass ().getName () +
-                                                          " is not yet supported");
+                          aNode.getClass ().getName () +
+                          " is not yet supported");
   }
 
   /**
@@ -106,7 +106,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
    * intensive since the objects are not directly linked. So to avoid this call,
    * we're manually retrieving the previous and next sibling by their index in
    * the list.
-   * 
+   *
    * @param aXMLWriter
    *        The XML writer to use. May not be <code>null</code>.
    * @param aChildren
@@ -120,15 +120,17 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     {
       emitNode (aXMLWriter,
                 nIndex == 0 ? null : aChildren.get (nIndex - 1),
-                aChildren.get (nIndex),
-                nIndex == nLastIndex ? null : aChildren.get (nIndex + 1));
+                            aChildren.get (nIndex),
+                            nIndex == nLastIndex ? null : aChildren.get (nIndex + 1));
     }
   }
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aXMLWriter, final IMicroDocument aDocument)
   {
     if (m_aSettings.getFormat ().isXML ())
-      aXMLWriter.onDocumentStart (m_aSettings.getXMLVersion (), m_aSettings.getCharset (), aDocument.isStandalone ());
+      aXMLWriter.onDocumentStart (m_aSettings.getXMLVersion (),
+                                  m_aSettings.getCharsetObj ().name (),
+                                  aDocument.isStandalone ());
 
     if (aDocument.hasChildren ())
       _writeNodeList (aXMLWriter, aDocument.getChildren ());

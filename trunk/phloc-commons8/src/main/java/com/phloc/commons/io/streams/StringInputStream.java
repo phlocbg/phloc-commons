@@ -21,22 +21,15 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
  * An input stream based on an input String.
- * 
+ *
  * @author Philip Helger
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {
-  @Deprecated
-  public StringInputStream (@Nonnull final String sInput, @Nonnull @Nonempty final String sCharset)
-  {
-    super (CharsetManager.getAsBytes (sInput, sCharset));
-  }
-
   public StringInputStream (@Nonnull final String sInput, @Nonnull final Charset aCharset)
   {
     super (CharsetManager.getAsBytes (sInput, aCharset));

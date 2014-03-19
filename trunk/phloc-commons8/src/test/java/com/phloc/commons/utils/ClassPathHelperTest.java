@@ -32,7 +32,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Test class for {@link ClassPathHelper}
- * 
+ *
  * @author Philip Helger
  */
 public final class ClassPathHelperTest
@@ -48,7 +48,7 @@ public final class ClassPathHelperTest
 
   /**
    * Test for method printClassPathEntries
-   * 
+   *
    * @throws UnsupportedEncodingException
    *         never
    */
@@ -57,14 +57,15 @@ public final class ClassPathHelperTest
   {
     // Use default separator
     NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
-    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1));
+    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1_OBJ.name ()));
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).length () > 0);
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).indexOf ("\n") > 0);
     StreamUtils.close (baos);
 
     // Use special separator
     baos = new NonBlockingByteArrayOutputStream ();
-    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1), "$$$");
+    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1_OBJ.name ()),
+                                           "$$$");
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).length () > 0);
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).indexOf ("$$$") > 0);
     assertTrue (baos.getAsString (CCharset.CHARSET_UTF_8_OBJ).indexOf ("$$$") > 0);

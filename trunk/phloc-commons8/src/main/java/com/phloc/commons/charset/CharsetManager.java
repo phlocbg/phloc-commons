@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.charset;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
@@ -36,7 +35,7 @@ import com.phloc.commons.string.StringHelper;
 
 /**
  * Whole lotta charset management routines.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -61,7 +60,7 @@ public final class CharsetManager
    * Resolve the charset by the specified name. The difference to
    * {@link Charset#forName(String)} is, that this method has no checked
    * exceptions but only unchecked exceptions.
-   * 
+   *
    * @param sCharsetName
    *        The charset to be resolved. May neither be <code>null</code> nor
    *        empty.
@@ -91,7 +90,7 @@ public final class CharsetManager
   /**
    * Resolve the charset by the specified name. The difference to
    * {@link Charset#forName(String)} is, that this method throws no exceptions.
-   * 
+   *
    * @param sCharsetName
    *        The charset to be resolved. May be <code>null</code> or empty.
    * @return The Charset object or <code>null</code> if no such charset was
@@ -102,13 +101,13 @@ public final class CharsetManager
   {
     if (StringHelper.hasText (sCharsetName))
       try
-      {
+    {
         return getCharsetFromName (sCharsetName);
-      }
-      catch (final IllegalArgumentException ex)
-      {
-        // Fall through
-      }
+    }
+    catch (final IllegalArgumentException ex)
+    {
+      // Fall through
+    }
     return null;
   }
 
@@ -138,38 +137,6 @@ public final class CharsetManager
     // ENDIF
   }
 
-  @Nonnull
-  @Deprecated
-  public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull @Nonempty final String sCharsetName)
-  {
-    ValueEnforcer.notNull (sText, "Text");
-    ValueEnforcer.notEmpty (sCharsetName, "CharsetName");
-
-    try
-    {
-      return sText.getBytes (sCharsetName);
-    }
-    catch (final UnsupportedEncodingException ex)
-    {
-      throw new IllegalArgumentException ("Failed to get string bytes in charset '" + sCharsetName + "'", ex);
-    }
-  }
-
-  @Nullable
-  @Deprecated
-  public static String getAsStringInOtherCharset (@Nullable final String sText,
-                                                  @Nonnull @Nonempty final String sCurrentCharset,
-                                                  @Nonnull @Nonempty final String sNewCharset)
-  {
-    ValueEnforcer.notEmpty (sCurrentCharset, "CurrentCharset");
-    ValueEnforcer.notEmpty (sNewCharset, "NewCharset");
-
-    if (sText == null || sCurrentCharset.equals (sNewCharset))
-      return sText;
-
-    return getAsString (getAsBytes (sText, sCurrentCharset), sNewCharset);
-  }
-
   @Nullable
   public static String getAsStringInOtherCharset (@Nullable final String sText,
                                                   @Nonnull final Charset aCurrentCharset,
@@ -182,35 +149,6 @@ public final class CharsetManager
       return sText;
 
     return getAsString (getAsBytes (sText, aCurrentCharset), aNewCharset);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull @Nonempty final String sCharsetName)
-  {
-    ValueEnforcer.notNull (aBuffer, "Buffer");
-
-    return getAsString (aBuffer, 0, aBuffer.length, sCharsetName);
-  }
-
-  @Nonnull
-  @Deprecated
-  public static String getAsString (@Nonnull final byte [] aBuffer,
-                                    @Nonnegative final int nOfs,
-                                    @Nonnegative final int nLength,
-                                    @Nonnull @Nonempty final String sCharsetName)
-  {
-    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLength);
-    ValueEnforcer.notEmpty (sCharsetName, "CharsetName");
-
-    try
-    {
-      return new String (aBuffer, nOfs, nLength, sCharsetName);
-    }
-    catch (final UnsupportedEncodingException ex)
-    {
-      throw new IllegalArgumentException ("Unknown charset '" + sCharsetName + "'", ex);
-    }
   }
 
   @Nonnull
@@ -240,7 +178,7 @@ public final class CharsetManager
   /**
    * Get the number of bytes necessary to represent the passed string as an
    * UTF-8 string.
-   * 
+   *
    * @param s
    *        The string to count the length. May be <code>null</code> or empty.
    * @return A non-negative value.
@@ -254,7 +192,7 @@ public final class CharsetManager
   /**
    * Get the number of bytes necessary to represent the passed char array as an
    * UTF-8 string.
-   * 
+   *
    * @param aChars
    *        The characters to count the length. May be <code>null</code> or
    *        empty.
@@ -278,7 +216,7 @@ public final class CharsetManager
 
   /**
    * Get the number of bytes necessary to represent the passed character.
-   * 
+   *
    * @param c
    *        The character to be evaluated.
    * @return A non-negative value.

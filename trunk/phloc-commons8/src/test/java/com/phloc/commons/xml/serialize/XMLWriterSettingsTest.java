@@ -35,7 +35,7 @@ import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * Test class for class {@link XMLWriterSettings}.
- * 
+ *
  * @author Philip Helger
  */
 public final class XMLWriterSettingsTest
@@ -48,7 +48,7 @@ public final class XMLWriterSettingsTest
     IXMLWriterSettings mws = XMLWriterSettings.DEFAULT_XML_SETTINGS;
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, mws.getCharsetObj ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
     assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
@@ -62,7 +62,7 @@ public final class XMLWriterSettingsTest
     mws = new XMLWriterSettings ();
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ, mws.getCharsetObj ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
     assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
@@ -123,7 +123,6 @@ public final class XMLWriterSettingsTest
               {
                 aXWS.setCharset (aCS);
                 assertEquals (aCS, aXWS.getCharsetObj ());
-                assertEquals (aCS.name (), aXWS.getCharset ());
                 for (final boolean bUseDoubleQuotesForAttributes : BOOLS)
                 {
                   aXWS.setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes);
@@ -173,7 +172,6 @@ public final class XMLWriterSettingsTest
                   assertTrue (bUseDoubleQuotesForAttributes == aXWS.isUseDoubleQuotesForAttributes ());
                 }
                 assertEquals (aCS, aXWS.getCharsetObj ());
-                assertEquals (aCS.name (), aXWS.getCharset ());
               }
               assertEquals (eIncorrectCharHandling, aXWS.getIncorrectCharacterHandling ());
             }

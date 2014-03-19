@@ -30,30 +30,11 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link StringInputStreamProvider}.
- * 
+ *
  * @author Philip Helger
  */
 public final class StringInputStreamProviderTest
 {
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testSimple ()
-  {
-    final String s = "Hallo Weltäöü";
-
-    // String constructor
-    InputStream aIS = new StringInputStreamProvider (s, CCharset.CHARSET_UTF_8).getInputStream ();
-    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8));
-
-    // char[] constructor
-    aIS = new StringInputStreamProvider (s.toCharArray (), CCharset.CHARSET_UTF_8).getInputStream ();
-    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8));
-
-    // CharSequence constructor
-    aIS = new StringInputStreamProvider (new StringBuilder (s), CCharset.CHARSET_UTF_8).getInputStream ();
-    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8));
-  }
-
   @Test
   public void testSimpleCharset ()
   {

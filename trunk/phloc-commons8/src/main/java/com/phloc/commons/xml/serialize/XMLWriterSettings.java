@@ -42,15 +42,13 @@ import com.phloc.commons.xml.EXMLVersion;
  * Default implementation of the {@link IXMLWriterSettings} interface.<br>
  * Describes the export settings for the MicroWriter. Defaults to indented and
  * aligned XML in the UTF-8 charset.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
 public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>
 {
   // Must be before the IXMLWriterSettings constants!
-  /** The default charset is UTF-8 */
-  public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
   /** The default charset is UTF-8 */
   public static final Charset DEFAULT_XML_CHARSET_OBJ = CCharset.CHARSET_UTF_8_OBJ;
   /** By default double quotes are used to wrap attribute values */
@@ -111,7 +109,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Copy constructor.
-   * 
+   *
    * @param aOther
    *        The object to copy the settings from. May not be <code>null</code>.
    */
@@ -137,7 +135,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the XML serialization format to use.
-   * 
+   *
    * @param eFormat
    *        The new format. May not be <code>null</code>.
    * @return this
@@ -157,7 +155,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the preferred XML version to use.
-   * 
+   *
    * @param eVersion
    *        The XML version. May not be <code>null</code>.
    * @return this
@@ -177,7 +175,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the way how to handle the doc type.
-   * 
+   *
    * @param eSerializeDocType
    *        Doc type handling. May not be <code>null</code>.
    * @return this
@@ -197,7 +195,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the way how comments should be handled.
-   * 
+   *
    * @param eSerializeComments
    *        The comment handling. May not be <code>null</code>.
    * @return this
@@ -217,7 +215,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the way how to indent/align
-   * 
+   *
    * @param eIndent
    *        Indent and align definition. May not be <code>null</code>.
    * @return this
@@ -237,7 +235,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the way how to handle invalid characters.
-   * 
+   *
    * @param eIncorrectCharacterHandling
    *        The invalid character handling. May not be <code>null</code>.
    * @return this
@@ -257,7 +255,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the serialization charset.
-   * 
+   *
    * @param aCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -269,27 +267,6 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
     return this;
   }
 
-  /**
-   * Set the serialization charset.
-   * 
-   * @param sCharset
-   *        The charset to be used. May not be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  @Deprecated
-  public final XMLWriterSettings setCharset (@Nonnull @Nonempty final String sCharset)
-  {
-    ValueEnforcer.notEmpty (sCharset, "Chrset");
-    return setCharset (CharsetManager.getCharsetFromName (sCharset));
-  }
-
-  @Nonnull
-  public String getCharset ()
-  {
-    return m_aCharset.name ();
-  }
-
   @Nonnull
   public Charset getCharsetObj ()
   {
@@ -298,7 +275,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
 
   /**
    * Set the namespace context to be used.
-   * 
+   *
    * @param aNamespaceContext
    *        The namespace context to be used. May be <code>null</code>.
    * @return this
@@ -416,19 +393,19 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
     final XMLWriterSettings rhs = (XMLWriterSettings) o;
     // namespace context does not necessarily implement equals/hashCode
     return m_eFormat.equals (rhs.m_eFormat) &&
-           m_eXMLVersion.equals (rhs.m_eXMLVersion) &&
-           m_eSerializeDocType.equals (rhs.m_eSerializeDocType) &&
-           m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
-           m_eIndent.equals (rhs.m_eIndent) &&
-           m_eIncorrectCharacterHandling.equals (rhs.m_eIncorrectCharacterHandling) &&
-           m_aCharset.equals (rhs.m_aCharset) &&
-           EqualsUtils.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
-           m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
-           m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement &&
-           m_sNewlineString.equals (rhs.m_sNewlineString) &&
-           m_sIndentationString.equals (rhs.m_sIndentationString) &&
-           m_bEmitNamespaces == rhs.m_bEmitNamespaces &&
-           m_bPutNamespaceContextPrefixesInRoot == rhs.m_bPutNamespaceContextPrefixesInRoot;
+        m_eXMLVersion.equals (rhs.m_eXMLVersion) &&
+        m_eSerializeDocType.equals (rhs.m_eSerializeDocType) &&
+        m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
+        m_eIndent.equals (rhs.m_eIndent) &&
+        m_eIncorrectCharacterHandling.equals (rhs.m_eIncorrectCharacterHandling) &&
+        m_aCharset.equals (rhs.m_aCharset) &&
+        EqualsUtils.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
+        m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
+        m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement &&
+        m_sNewlineString.equals (rhs.m_sNewlineString) &&
+        m_sIndentationString.equals (rhs.m_sIndentationString) &&
+        m_bEmitNamespaces == rhs.m_bEmitNamespaces &&
+        m_bPutNamespaceContextPrefixesInRoot == rhs.m_bPutNamespaceContextPrefixesInRoot;
   }
 
   @Override
@@ -436,44 +413,44 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   {
     // namespace context does not necessarily implement equals/hashCode
     return new HashCodeGenerator (this).append (m_eFormat)
-                                       .append (m_eXMLVersion)
-                                       .append (m_eSerializeDocType)
-                                       .append (m_eSerializeComments)
-                                       .append (m_eIndent)
-                                       .append (m_eIncorrectCharacterHandling)
-                                       .append (m_aCharset)
-                                       .append (m_aNamespaceContext)
-                                       .append (m_bUseDoubleQuotesForAttributes)
-                                       .append (m_bSpaceOnSelfClosedElement)
-                                       .append (m_sNewlineString)
-                                       .append (m_sIndentationString)
-                                       .append (m_bEmitNamespaces)
-                                       .append (m_bPutNamespaceContextPrefixesInRoot)
-                                       .getHashCode ();
+        .append (m_eXMLVersion)
+        .append (m_eSerializeDocType)
+        .append (m_eSerializeComments)
+        .append (m_eIndent)
+        .append (m_eIncorrectCharacterHandling)
+        .append (m_aCharset)
+        .append (m_aNamespaceContext)
+        .append (m_bUseDoubleQuotesForAttributes)
+        .append (m_bSpaceOnSelfClosedElement)
+        .append (m_sNewlineString)
+        .append (m_sIndentationString)
+        .append (m_bEmitNamespaces)
+        .append (m_bPutNamespaceContextPrefixesInRoot)
+        .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return new ToStringGenerator (this).append ("format", m_eFormat)
-                                       .append ("xmlVersion", m_eXMLVersion)
-                                       .append ("serializeDocType", m_eSerializeDocType)
-                                       .append ("serializeComments", m_eSerializeComments)
-                                       .append ("indent", m_eIndent)
-                                       .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
-                                       .append ("charset", m_aCharset)
-                                       .append ("namespaceContext", m_aNamespaceContext)
-                                       .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
-                                       .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
-                                       .append ("newlineString",
-                                                StringHelper.getHexEncoded (CharsetManager.getAsBytes (m_sNewlineString,
-                                                                                                       CCharset.CHARSET_ISO_8859_1_OBJ)))
-                                       .append ("indentationString",
-                                                StringHelper.getHexEncoded (CharsetManager.getAsBytes (m_sIndentationString,
-                                                                                                       CCharset.CHARSET_ISO_8859_1_OBJ)))
-                                       .append ("emitNamespaces", m_bEmitNamespaces)
-                                       .append ("putNamespaceContextPrefixesInRoot",
-                                                m_bPutNamespaceContextPrefixesInRoot)
-                                       .toString ();
+        .append ("xmlVersion", m_eXMLVersion)
+        .append ("serializeDocType", m_eSerializeDocType)
+        .append ("serializeComments", m_eSerializeComments)
+        .append ("indent", m_eIndent)
+        .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
+        .append ("charset", m_aCharset)
+        .append ("namespaceContext", m_aNamespaceContext)
+        .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
+        .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
+        .append ("newlineString",
+                 StringHelper.getHexEncoded (CharsetManager.getAsBytes (m_sNewlineString,
+                                                                        CCharset.CHARSET_ISO_8859_1_OBJ)))
+                                                                        .append ("indentationString",
+                                                                                 StringHelper.getHexEncoded (CharsetManager.getAsBytes (m_sIndentationString,
+                                                                                                                                        CCharset.CHARSET_ISO_8859_1_OBJ)))
+                                                                                                                                        .append ("emitNamespaces", m_bEmitNamespaces)
+                                                                                                                                        .append ("putNamespaceContextPrefixesInRoot",
+                                                                                                                                                 m_bPutNamespaceContextPrefixesInRoot)
+                                                                                                                                                 .toString ();
   }
 }

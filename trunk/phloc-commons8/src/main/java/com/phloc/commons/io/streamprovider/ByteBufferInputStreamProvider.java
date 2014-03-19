@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An {@link java.io.InputStream} provider based on a
  * {@link java.nio.ByteBuffer}.
- * 
+ *
  * @author Philip Helger
  */
 public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvider
@@ -54,13 +54,6 @@ public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvi
   public final ByteBufferInputStream getInputStream ()
   {
     return new ByteBufferInputStream (m_aBuffer);
-  }
-
-  @Nonnull
-  @Deprecated
-  public final InputStreamReader getReader (@Nonnull final String sCharset)
-  {
-    return StreamUtils.createReader (getInputStream (), sCharset);
   }
 
   @Nonnull

@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
- * 
+ *
  * @author Philip Helger
  * @see java.io.ByteArrayOutputStream
  */
@@ -64,7 +64,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   /**
    * Creates a new byte array output stream, with a buffer capacity of the
    * specified size, in bytes.
-   * 
+   *
    * @param nSize
    *        the initial size.
    * @exception IllegalArgumentException
@@ -86,7 +86,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
 
   /**
    * Writes the specified byte to this byte array output stream.
-   * 
+   *
    * @param b
    *        the byte to be written.
    */
@@ -113,7 +113,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   /**
    * Writes <code>nLen</code> bytes from the specified byte array starting at
    * offset <code>nOfs</code> to this byte array output stream.
-   * 
+   *
    * @param aBuf
    *        the data.
    * @param nOfs
@@ -140,7 +140,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * specified output stream argument, as if by calling the output stream's
    * write method using <code>out.write(buf, 0, count)</code>. The content of
    * this stream is not altered by calling this method.
-   * 
+   *
    * @param aOS
    *        the output stream to which to write the data. May not be
    *        <code>null</code>.
@@ -158,7 +158,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * write method using <code>out.write(buf, 0, count)</code> and afterwards
    * closes the passed output stream. The content of this stream is not altered
    * by calling this method.
-   * 
+   *
    * @param aOS
    *        the output stream to which to write the data. May not be
    *        <code>null</code>.
@@ -192,7 +192,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * Creates a newly allocated byte array. Its size is the current size of this
    * output stream and the valid contents of the buffer have been copied into
    * it.
-   * 
+   *
    * @return the current contents of this output stream, as a byte array.
    */
   @Nonnull
@@ -204,7 +204,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
 
   /**
    * Get the byte at the specified index
-   * 
+   *
    * @param nIndex
    *        The index to use. Must be &ge; 0 and &lt; count
    * @return The byte at the specified position
@@ -217,7 +217,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
 
   /**
    * Returns the current size of the buffer.
-   * 
+   *
    * @return the value of the <code>count</code> field, which is the number of
    *         valid bytes in this output stream.
    */
@@ -271,87 +271,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * sequences with this charset's default replacement string. The
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
-   * 
-   * @param sCharset
-   *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
-   * @return String decoded from the buffer's contents.
-   */
-  @Nonnull
-  @Deprecated
-  public String getAsString (@Nonnull final String sCharset)
-  {
-    return CharsetManager.getAsString (m_aBuf, 0, m_nCount, sCharset);
-  }
-
-  /**
-   * Converts the buffer's contents into a string by decoding the bytes using
-   * the specified {@link java.nio.charset.Charset charsetName}. The length of
-   * the new <tt>String</tt> is a function of the charset, and hence may not be
-   * equal to the length of the byte array.
-   * <p>
-   * This method always replaces malformed-input and unmappable-character
-   * sequences with this charset's default replacement string. The
-   * {@link java.nio.charset.CharsetDecoder} class should be used when more
-   * control over the decoding process is required.
-   * 
-   * @param nLength
-   *        The number of bytes to be converted to a String. Must be &ge; 0.
-   * @param sCharset
-   *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
-   * @return String decoded from the buffer's contents.
-   */
-  @Nonnull
-  @Deprecated
-  public String getAsString (@Nonnegative final int nLength, @Nonnull final String sCharset)
-  {
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, 0, nLength, sCharset);
-  }
-
-  /**
-   * Converts the buffer's contents into a string by decoding the bytes using
-   * the specified {@link java.nio.charset.Charset charsetName}. The length of
-   * the new <tt>String</tt> is a function of the charset, and hence may not be
-   * equal to the length of the byte array.
-   * <p>
-   * This method always replaces malformed-input and unmappable-character
-   * sequences with this charset's default replacement string. The
-   * {@link java.nio.charset.CharsetDecoder} class should be used when more
-   * control over the decoding process is required.
-   * 
-   * @param nIndex
-   *        The start index to use
-   * @param nLength
-   *        The number of bytes to be converted to a String. Must be &ge; 0.
-   * @param sCharset
-   *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
-   * @return String decoded from the buffer's contents.
-   */
-  @Nonnull
-  @Deprecated
-  public String getAsString (@Nonnegative final int nIndex,
-                             @Nonnegative final int nLength,
-                             @Nonnull final String sCharset)
-  {
-    ValueEnforcer.isGE0 (nIndex, "Index");
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, nIndex, nLength, sCharset);
-  }
-
-  /**
-   * Converts the buffer's contents into a string by decoding the bytes using
-   * the specified {@link java.nio.charset.Charset charsetName}. The length of
-   * the new <tt>String</tt> is a function of the charset, and hence may not be
-   * equal to the length of the byte array.
-   * <p>
-   * This method always replaces malformed-input and unmappable-character
-   * sequences with this charset's default replacement string. The
-   * {@link java.nio.charset.CharsetDecoder} class should be used when more
-   * control over the decoding process is required.
-   * 
+   *
    * @param aCharset
    *        the charset to be used. May not be <code>null</code>.
    * @return String decoded from the buffer's contents.
@@ -372,7 +292,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * sequences with this charset's default replacement string. The
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
-   * 
+   *
    * @param nLength
    *        The number of bytes to be converted to a String. Must be &ge; 0.
    * @param aCharset
@@ -396,7 +316,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * sequences with this charset's default replacement string. The
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
-   * 
+   *
    * @param nIndex
    *        The start index to use
    * @param nLength
@@ -429,7 +349,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   public String toString ()
   {
     return new ToStringGenerator (this).append ("buf#", ArrayHelper.getSize (m_aBuf))
-                                       .append ("size", m_nCount)
-                                       .toString ();
+        .append ("size", m_nCount)
+        .toString ();
   }
 }

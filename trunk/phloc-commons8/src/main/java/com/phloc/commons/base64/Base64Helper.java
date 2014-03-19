@@ -23,14 +23,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
  * A small helper class for easier usage of the {@link Base64} class without
  * exception catching.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -46,7 +45,7 @@ public final class Base64Helper
   /**
    * Decode the string with the default encoding (US-ASCII is the preferred
    * one).
-   * 
+   *
    * @param sEncoded
    *        The encoded string.
    * @return <code>null</code> if decoding failed.
@@ -66,7 +65,7 @@ public final class Base64Helper
 
   /**
    * Decode the byte array.
-   * 
+   *
    * @param aEncodedBytes
    *        The encoded byte array.
    * @return <code>null</code> if decoding failed.
@@ -86,30 +85,7 @@ public final class Base64Helper
 
   /**
    * Decode the string and convert it back to a string.
-   * 
-   * @param sEncoded
-   *        The encoded byte array.
-   * @param sCharset
-   *        The character set to be used.
-   * @return <code>null</code> if decoding failed.
-   */
-  @Nullable
-  @Deprecated
-  public static String safeDecodeAsString (@Nonnull final String sEncoded, @Nonnull final String sCharset)
-  {
-    try
-    {
-      return CharsetManager.getAsString (Base64.decode (sEncoded), sCharset);
-    }
-    catch (final Throwable t)
-    {
-      return null;
-    }
-  }
-
-  /**
-   * Decode the string and convert it back to a string.
-   * 
+   *
    * @param sEncoded
    *        The encoded byte array.
    * @param aCharset
@@ -131,30 +107,7 @@ public final class Base64Helper
 
   /**
    * Decode the byte array and convert it to a string.
-   * 
-   * @param aEncodedBytes
-   *        The encoded byte array.
-   * @param sCharset
-   *        The character set to be used.
-   * @return <code>null</code> if decoding failed.
-   */
-  @Nullable
-  @Deprecated
-  public static String safeDecodeAsString (@Nonnull final byte [] aEncodedBytes, @Nonnull final String sCharset)
-  {
-    try
-    {
-      return CharsetManager.getAsString (Base64.decode (aEncodedBytes), sCharset);
-    }
-    catch (final Throwable t)
-    {
-      return null;
-    }
-  }
-
-  /**
-   * Decode the byte array and convert it to a string.
-   * 
+   *
    * @param aEncodedBytes
    *        The encoded byte array.
    * @param aCharset
@@ -172,20 +125,6 @@ public final class Base64Helper
     {
       return null;
     }
-  }
-
-  /**
-   * @param s
-   *        The string to be encoded
-   * @param sCharset
-   *        The charset to be used
-   * @return The encoded byte array.
-   */
-  @Nullable
-  @Deprecated
-  public static String safeEncode (@Nonnull final String s, @Nonnull @Nonempty final String sCharset)
-  {
-    return Base64.encodeBytes (CharsetManager.getAsBytes (s, sCharset));
   }
 
   /**
