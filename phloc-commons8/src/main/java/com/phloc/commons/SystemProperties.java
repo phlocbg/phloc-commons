@@ -34,14 +34,12 @@ import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.priviledged.AccessControllerHelper;
-import com.phloc.commons.priviledged.PrivilegedActionSystemClearProperty;
 import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperties;
-import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperty;
-import com.phloc.commons.priviledged.PrivilegedActionSystemSetProperty;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * This class wraps all the Java system properties like version number etc.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -60,7 +58,7 @@ public final class SystemProperties
   @Nullable
   public static String getPropertyValueOrNull (@Nullable final String sKey)
   {
-    return sKey == null ? null : AccessControllerHelper.call (new PrivilegedActionSystemGetProperty (sKey));
+    return StringHelper.hasNoText (sKey) ? null : AccessControllerHelper.call ( () -> System.getProperty (sKey));
   }
 
   @Nullable
@@ -86,7 +84,7 @@ public final class SystemProperties
   /**
    * Set a system property value under consideration of an eventually present
    * {@link SecurityManager}.
-   * 
+   *
    * @param sKey
    *        The key of the system property. May not be <code>null</code>.
    * @param sValue
@@ -95,16 +93,17 @@ public final class SystemProperties
    */
   public static void setPropertyValue (@Nonnull final String sKey, @Nullable final String sValue)
   {
+    ValueEnforcer.notNull (sKey, "Key");
     if (sValue == null)
       removePropertyValue (sKey);
     else
-      AccessControllerHelper.run (new PrivilegedActionSystemSetProperty (sKey, sValue));
+      AccessControllerHelper.call ( () -> System.setProperty (sKey, sValue));
   }
 
   /**
    * Remove a system property value under consideration of an eventually present
    * {@link SecurityManager}.
-   * 
+   *
    * @param sKey
    *        The key of the system property to be removed. May not be
    *        <code>null</code>.
@@ -114,7 +113,8 @@ public final class SystemProperties
   @Nullable
   public static String removePropertyValue (@Nonnull final String sKey)
   {
-    return AccessControllerHelper.call (new PrivilegedActionSystemClearProperty (sKey));
+    ValueEnforcer.notNull (sKey, "Key");
+    return AccessControllerHelper.call ( () -> System.clearProperty (sKey));
   }
 
   @Nullable
@@ -305,7 +305,7 @@ public final class SystemProperties
 
   /**
    * Check if a system property with the given name exists.
-   * 
+   *
    * @param sPropertyName
    *        The name of the property.
    * @return <code>true</code> if such a system property is present,

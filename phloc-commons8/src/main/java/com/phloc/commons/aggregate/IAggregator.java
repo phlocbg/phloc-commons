@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 /**
  * Aggregate a list of input objects to an output object.
- * 
+ *
  * @author Philip Helger
  * @param <SRCTYPE>
  *        The input type.

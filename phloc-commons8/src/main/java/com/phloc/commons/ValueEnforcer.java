@@ -17,7 +17,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed value is not <code>null</code>.
-   * 
+   *
    * @param aValue
    *        The value to check.
    * @param sName
@@ -34,7 +34,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed String is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The String to check.
    * @param sName
@@ -52,7 +52,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -70,7 +70,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -88,7 +88,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -106,7 +106,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -124,7 +124,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -142,7 +142,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -160,7 +160,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -178,7 +178,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -196,7 +196,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Array is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -214,7 +214,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Collection is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The String to check.
    * @param sName
@@ -232,7 +232,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Iterable is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The String to check.
    * @param sName
@@ -250,7 +250,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed Collection is neither <code>null</code> nor empty.
-   * 
+   *
    * @param aValue
    *        The String to check.
    * @param sName
@@ -269,7 +269,7 @@ public final class ValueEnforcer
   /**
    * Check that the passed Array is neither <code>null</code> nor empty and that
    * no <code>null</code> value is contained.
-   * 
+   *
    * @param aValue
    *        The Array to check.
    * @param sName
@@ -293,7 +293,7 @@ public final class ValueEnforcer
   /**
    * Check that the passed collection is neither <code>null</code> nor empty and
    * that no <code>null</code> value is contained.
-   * 
+   *
    * @param aValue
    *        The collection to check.
    * @param sName
@@ -317,7 +317,7 @@ public final class ValueEnforcer
   /**
    * Check that the passed collection is neither <code>null</code> nor empty and
    * that no <code>null</code> value is contained.
-   * 
+   *
    * @param aValue
    *        The collection to check.
    * @param sName
@@ -340,7 +340,7 @@ public final class ValueEnforcer
 
   /**
    * Check that the passed value is not <code>null</code> and not equal to .
-   * 
+   *
    * @param aValue
    *        The value to check. May not be <code>null</code>.
    * @param sName
@@ -469,7 +469,7 @@ public final class ValueEnforcer
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -487,20 +487,20 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          nLowerBoundInclusive +
-                                          " and <= " +
-                                          nUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be >= " +
+          nLowerBoundInclusive +
+          " and <= " +
+          nUpperBoundInclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -518,20 +518,20 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          nLowerBoundInclusive +
-                                          " and <= " +
-                                          nUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be >= " +
+          nLowerBoundInclusive +
+          " and <= " +
+          nUpperBoundInclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -549,20 +549,20 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          nLowerBoundInclusive +
-                                          " and <= " +
-                                          nUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be >= " +
+          nLowerBoundInclusive +
+          " and <= " +
+          nUpperBoundInclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param fValue
    *        Value
    * @param sName
@@ -580,20 +580,20 @@ public final class ValueEnforcer
   {
     if (fValue < fLowerBoundInclusive || fValue > fUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          fLowerBoundInclusive +
-                                          " and <= " +
-                                          fUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          fValue);
+          sName +
+          "' must be >= " +
+          fLowerBoundInclusive +
+          " and <= " +
+          fUpperBoundInclusive +
+          "! The current value is: " +
+          fValue);
     return fValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param dValue
    *        Value
    * @param sName
@@ -611,20 +611,20 @@ public final class ValueEnforcer
   {
     if (dValue < dLowerBoundInclusive || dValue > dUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          dLowerBoundInclusive +
-                                          " and <= " +
-                                          dUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          dValue);
+          sName +
+          "' must be >= " +
+          dLowerBoundInclusive +
+          " and <= " +
+          dUpperBoundInclusive +
+          "! The current value is: " +
+          dValue);
     return dValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param aValue
    *        Value
    * @param sName
@@ -645,20 +645,20 @@ public final class ValueEnforcer
     notNull (aUpperBoundInclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundInclusive) < 0 || aValue.compareTo (aUpperBoundInclusive) > 0)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          aLowerBoundInclusive +
-                                          " and <= " +
-                                          aUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          aValue);
+          sName +
+          "' must be >= " +
+          aLowerBoundInclusive +
+          " and <= " +
+          aUpperBoundInclusive +
+          "! The current value is: " +
+          aValue);
     return aValue;
   }
 
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
-   * 
+   *
    * @param aValue
    *        Value
    * @param sName
@@ -679,20 +679,20 @@ public final class ValueEnforcer
     notNull (aUpperBoundInclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundInclusive) < 0 || aValue.compareTo (aUpperBoundInclusive) > 0)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be >= " +
-                                          aLowerBoundInclusive +
-                                          " and <= " +
-                                          aUpperBoundInclusive +
-                                          "! The current value is: " +
-                                          aValue);
+          sName +
+          "' must be >= " +
+          aLowerBoundInclusive +
+          " and <= " +
+          aUpperBoundInclusive +
+          "! The current value is: " +
+          aValue);
     return aValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -710,20 +710,20 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          nLowerBoundExclusive +
-                                          " and < " +
-                                          nUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be > " +
+          nLowerBoundExclusive +
+          " and < " +
+          nUpperBoundExclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -741,20 +741,20 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          nLowerBoundExclusive +
-                                          " and < " +
-                                          nUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be > " +
+          nLowerBoundExclusive +
+          " and < " +
+          nUpperBoundExclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param nValue
    *        Value
    * @param sName
@@ -772,20 +772,20 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          nLowerBoundExclusive +
-                                          " and < " +
-                                          nUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          nValue);
+          sName +
+          "' must be > " +
+          nLowerBoundExclusive +
+          " and < " +
+          nUpperBoundExclusive +
+          "! The current value is: " +
+          nValue);
     return nValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param fValue
    *        Value
    * @param sName
@@ -803,20 +803,20 @@ public final class ValueEnforcer
   {
     if (fValue <= fLowerBoundExclusive || fValue >= fUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          fLowerBoundExclusive +
-                                          " and < " +
-                                          fUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          fValue);
+          sName +
+          "' must be > " +
+          fLowerBoundExclusive +
+          " and < " +
+          fUpperBoundExclusive +
+          "! The current value is: " +
+          fValue);
     return fValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param dValue
    *        Value
    * @param sName
@@ -834,20 +834,20 @@ public final class ValueEnforcer
   {
     if (dValue <= dLowerBoundExclusive || dValue >= dUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          dLowerBoundExclusive +
-                                          " and < " +
-                                          dUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          dValue);
+          sName +
+          "' must be > " +
+          dLowerBoundExclusive +
+          " and < " +
+          dUpperBoundExclusive +
+          "! The current value is: " +
+          dValue);
     return dValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param aValue
    *        Value
    * @param sName
@@ -868,20 +868,20 @@ public final class ValueEnforcer
     notNull (aUpperBoundExclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundExclusive) <= 0 || aValue.compareTo (aUpperBoundExclusive) >= 0)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          aLowerBoundExclusive +
-                                          " and < " +
-                                          aUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          aValue);
+          sName +
+          "' must be > " +
+          aLowerBoundExclusive +
+          " and < " +
+          aUpperBoundExclusive +
+          "! The current value is: " +
+          aValue);
     return aValue;
   }
 
   /**
    * Check if
    * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
-   * 
+   *
    * @param aValue
    *        Value
    * @param sName
@@ -902,13 +902,13 @@ public final class ValueEnforcer
     notNull (aUpperBoundExclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundExclusive) <= 0 || aValue.compareTo (aUpperBoundExclusive) >= 0)
       throw new IllegalArgumentException ("The value of '" +
-                                          sName +
-                                          "' must be > " +
-                                          aLowerBoundExclusive +
-                                          " and < " +
-                                          aUpperBoundExclusive +
-                                          "! The current value is: " +
-                                          aValue);
+          sName +
+          "' must be > " +
+          aLowerBoundExclusive +
+          " and < " +
+          aUpperBoundExclusive +
+          "! The current value is: " +
+          aValue);
     return aValue;
   }
 
@@ -920,12 +920,12 @@ public final class ValueEnforcer
     isGE0 (nLen, "Length");
     if ((nOfs + nLen) > nArrayLen)
       throw new IllegalArgumentException ("Offset (" +
-                                          nOfs +
-                                          ") + length (" +
-                                          nLen +
-                                          ") exceeds array length (" +
-                                          nArrayLen +
-                                          ")");
+          nOfs +
+          ") + length (" +
+          nLen +
+          ") exceeds array length (" +
+          nArrayLen +
+          ")");
 
   }
 
