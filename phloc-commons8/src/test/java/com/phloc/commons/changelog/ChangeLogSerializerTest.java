@@ -45,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ChangeLogSerializer}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ChangeLogSerializerTest
@@ -58,7 +58,7 @@ public final class ChangeLogSerializerTest
     final ChangeLog aCL = ChangeLogSerializer.readChangeLog (new ClassPathResource (CChangeLog.CHANGELOG_XML_FILENAME));
     assertNotNull (aCL);
     assertEquals (new Version (1, 0), aCL.getVersion ());
-    assertEquals ("phloc-commons", aCL.getComponent ());
+    assertEquals ("phloc-commons8", aCL.getComponent ());
     assertTrue (aCL.getAllEntries ().size () > 0);
     assertTrue (aCL.getAllReleases ().size () > 0);
     assertNotNull (aCL.getLatestRelease ());
@@ -68,7 +68,7 @@ public final class ChangeLogSerializerTest
     // Read with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ClassPathResource (CChangeLog.CHANGELOG_XML_FILENAME),
                                                    new DOMReaderSettings ().setSchema (XMLSchemaCache.getInstance ()
-                                                                                                     .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
+                                                                                       .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
     assertNotNull (aW3CDoc);
 
     // Read invalid
@@ -111,9 +111,9 @@ public final class ChangeLogSerializerTest
     // 4. read again with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new MicroDOMInputStreamProvider (aDoc,
                                                                                                                         XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ),
-                                                                                       null),
-                                                   new DOMReaderSettings ().setSchema (XMLSchemaCache.getInstance ()
-                                                                                                     .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
+                                                                                                                        null),
+                                                                                                                        new DOMReaderSettings ().setSchema (XMLSchemaCache.getInstance ()
+                                                                                                                                                            .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
     assertNotNull (aW3CDoc);
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aCL, aCL2);

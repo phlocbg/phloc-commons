@@ -34,7 +34,6 @@ import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.priviledged.AccessControllerHelper;
-import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperties;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -293,7 +292,7 @@ public final class SystemProperties
   public static Map <String, String> getAllProperties ()
   {
     final Map <String, String> ret = new HashMap <String, String> ();
-    final Properties aProperties = AccessControllerHelper.call (new PrivilegedActionSystemGetProperties ());
+    final Properties aProperties = AccessControllerHelper.call (System::getProperties);
     if (aProperties != null)
       for (final Map.Entry <Object, Object> aEntry : aProperties.entrySet ())
       {
