@@ -7,12 +7,12 @@
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>phloc-commons</artifactId>
+  <artifactId>phloc-commons8</artifactId>
   <version>4.3.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>phloc-commons</name>
-  <description>phloc very basic stuff</description>
-  <url>http://repo.phloc.com/apidocs/phloc-commons/${project.version}</url>
+  <name>phloc-commons8</name>
+  <description>phloc very basic stuff for JDK8</description>
+  <url>http://repo.phloc.com/apidocs/phloc-commons8/${project.version}</url>
   
   <licenses>
     <license>
@@ -24,8 +24,8 @@
   
   <scm>
     <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons</developerConnection>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons8</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons8</developerConnection>
   </scm>
 
   <organization>
@@ -38,13 +38,6 @@
       <id>philip</id>
       <name>Philip Helger</name>
       <email>ph(at)phloc.com</email>
-      <url>http://www.phloc.com</url>
-      <organization>phloc systems</organization>
-    </developer>
-    <developer>
-      <id>boris</id>
-      <name>Boris Gregorcic</name>
-      <email>bg(at)phloc.com</email>
       <url>http://www.phloc.com</url>
       <organization>phloc systems</organization>
     </developer>
@@ -182,6 +175,14 @@
           <instructions>
             <Export-Package>com.phloc.commons.*</Export-Package>
           </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
     </plugins>

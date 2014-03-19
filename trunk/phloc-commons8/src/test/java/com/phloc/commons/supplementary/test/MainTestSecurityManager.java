@@ -18,7 +18,6 @@
 package com.phloc.commons.supplementary.test;
 
 import java.lang.reflect.Field;
-import java.rmi.RMISecurityManager;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -29,16 +28,16 @@ public class MainTestSecurityManager
    * -Djava.security.manager
    * -Djava.security.policy=src/test/resources/grant-all.policy
    * -Djava.security.debug=all
-   * 
+   *
    * @param args
    * @throws Exception
    *         Hopefully never
    */
   @SuppressFBWarnings (value = "DM_STRING_CTOR")
-  public static void main (final String args[]) throws Exception
+  public static void main (final String args []) throws Exception
   {
     if (false)
-      System.setSecurityManager (new RMISecurityManager ());
+      System.setSecurityManager (new SecurityManager ());
 
     // Important to use "new String!"
     final String originalString = new String ("abcdef");

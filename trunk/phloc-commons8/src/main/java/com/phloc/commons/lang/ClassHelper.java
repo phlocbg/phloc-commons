@@ -20,7 +20,6 @@ package com.phloc.commons.lang;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.security.AccessController;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -33,13 +32,11 @@ import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.priviledged.PrivilegedActionGetClassLoader;
-import com.phloc.commons.priviledged.PrivilegedActionGetContextClassLoader;
-import com.phloc.commons.priviledged.PrivilegedActionGetSystemClassLoader;
+import com.phloc.commons.priviledged.AccessControllerHelper;
 
 /**
  * Small class helper utility stuff class.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -81,7 +78,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return ClassLoader.getSystemClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedActionGetSystemClassLoader ());
+    return AccessControllerHelper.call ( () -> ClassLoader.getSystemClassLoader ());
   }
 
   @Nonnull
@@ -90,7 +87,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return Thread.currentThread ().getContextClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedActionGetContextClassLoader ());
+    return AccessControllerHelper.call ( () -> Thread.currentThread ().getContextClassLoader ());
   }
 
   @Nonnull
@@ -99,7 +96,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return aClass.getClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedActionGetClassLoader (aClass));
+    return AccessControllerHelper.call ( () -> aClass.getClassLoader ());
   }
 
   @Nonnull
@@ -145,7 +142,7 @@ public final class ClassHelper
   /**
    * Check if the passed class is public, instancable and has a no-argument
    * constructor.
-   * 
+   *
    * @param aClass
    *        The class to check. May be <code>null</code>.
    * @return <code>true</code> if the class is public, instancable and has a
@@ -176,7 +173,7 @@ public final class ClassHelper
   /**
    * Check if the passed class is an interface or not. Please note that
    * annotations are also interfaces!
-   * 
+   *
    * @param aClass
    *        The class to check.
    * @return <code>true</code> if the class is an interface (or an annotation)
@@ -200,7 +197,7 @@ public final class ClassHelper
    * Check if the passed class is abstract or not. Note: interfaces and
    * annotations are also considered as abstract whereas arrays are never
    * abstract.
-   * 
+   *
    * @param aClass
    *        The class to check.
    * @return <code>true</code> if the passed class is abstract
@@ -229,7 +226,7 @@ public final class ClassHelper
 
   /**
    * Get the primitive wrapper class of the passed primitive class.
-   * 
+   *
    * @param aClass
    *        The primitive class. May be <code>null</code>.
    * @return <code>null</code> if the passed class is not a primitive class.
@@ -244,7 +241,7 @@ public final class ClassHelper
 
   /**
    * Get the primitive class of the passed primitive wrapper class.
-   * 
+   *
    * @param aClass
    *        The primitive wrapper class. May be <code>null</code>.
    * @return <code>null</code> if the passed class is not a primitive wrapper
@@ -299,10 +296,10 @@ public final class ClassHelper
     if (aClass == null)
       return false;
     return Double.class.isAssignableFrom (aClass) ||
-           double.class.isAssignableFrom (aClass) ||
-           Float.class.isAssignableFrom (aClass) ||
-           float.class.isAssignableFrom (aClass) ||
-           BigDecimal.class.isAssignableFrom (aClass);
+        double.class.isAssignableFrom (aClass) ||
+        Float.class.isAssignableFrom (aClass) ||
+        float.class.isAssignableFrom (aClass) ||
+        BigDecimal.class.isAssignableFrom (aClass);
   }
 
   public static boolean isIntegerClass (@Nullable final Class <?> aClass)
@@ -310,20 +307,20 @@ public final class ClassHelper
     if (aClass == null)
       return false;
     return Byte.class.isAssignableFrom (aClass) ||
-           byte.class.isAssignableFrom (aClass) ||
-           Integer.class.isAssignableFrom (aClass) ||
-           int.class.isAssignableFrom (aClass) ||
-           Long.class.isAssignableFrom (aClass) ||
-           long.class.isAssignableFrom (aClass) ||
-           Short.class.isAssignableFrom (aClass) ||
-           short.class.isAssignableFrom (aClass) ||
-           BigInteger.class.isAssignableFrom (aClass);
+        byte.class.isAssignableFrom (aClass) ||
+        Integer.class.isAssignableFrom (aClass) ||
+        int.class.isAssignableFrom (aClass) ||
+        Long.class.isAssignableFrom (aClass) ||
+        long.class.isAssignableFrom (aClass) ||
+        Short.class.isAssignableFrom (aClass) ||
+        short.class.isAssignableFrom (aClass) ||
+        BigInteger.class.isAssignableFrom (aClass);
   }
 
   /**
    * Check if the passed classes are convertible. Includes conversion checks
    * between primitive types and primitive wrapper types.
-   * 
+   *
    * @param aSrcClass
    *        First class. May not be <code>null</code>.
    * @param aDstClass
@@ -355,7 +352,7 @@ public final class ClassHelper
 
   /**
    * <code>null</code>-safe helper method to determine the class of an object.
-   * 
+   *
    * @param aObject
    *        The object to query. May be <code>null</code>.
    * @return <code>null</code> if the passed object is <code>null</code>.
