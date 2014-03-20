@@ -2,14 +2,22 @@ package com.phloc.commons.io.file.filter;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
+import com.phloc.commons.regex.RegExHelper;
 
+/**
+ * This is the new main class for all file filter handling.
+ * 
+ * @author Philip Helger
+ */
 public final class FileFilters
 {
   private FileFilters ()
@@ -20,8 +28,8 @@ public final class FileFilters
   {
     ValueEnforcer.notNull (aFilenameFilter, "FilenameFilter");
     return aFile -> aFile != null &&
-        FileUtils.existsFile (aFile) &&
-        aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
+                    FileUtils.existsFile (aFile) &&
+                    aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }
 
   @Nonnull
@@ -29,8 +37,8 @@ public final class FileFilters
   {
     ValueEnforcer.notNull (aFilenameFilter, "FilenameFilter");
     return aFile -> aFile != null &&
-                    aFile.isDirectory () &&
-                    aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
+        aFile.isDirectory () &&
+        aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }
 
   @Nonnull
@@ -117,6 +125,34 @@ public final class FileFilters
     return aFile -> {
       final String sRealName = FilenameHelper.getSecureFilename (aFile.getName ());
       return sRealName != null && !sRealName.equalsIgnoreCase (sFilename);
+    };
+  }
+
+  @Nonnull
+  public static IFileFilter getNameMatchAnyRegEx (@Nonnull @Nonempty final String... aRegExs)
+  {
+    final List <String> aRegExList = ContainerHelper.newList (ValueEnforcer.notEmpty (aRegExs, "RegularExpressions"));
+    return aFile -> {
+      final String sRealName = FilenameHelper.getSecureFilename (aFile.getName ());
+      return sRealName != null &&
+          aRegExList.stream ()
+          .filter (p -> RegExHelper.stringMatchesPattern (p, sRealName))
+          .findFirst ()
+          .isPresent ();
+    };
+  }
+
+  @Nonnull
+  public static IFileFilter getNameMatchNoRegEx (@Nonnull @Nonempty final String... aRegExs)
+  {
+    final List <String> aRegExList = ContainerHelper.newList (ValueEnforcer.notEmpty (aRegExs, "RegularExpressions"));
+    return aFile -> {
+      final String sRealName = FilenameHelper.getSecureFilename (aFile.getName ());
+      return sRealName != null &&
+          !aRegExList.stream ()
+                        .filter (p -> RegExHelper.stringMatchesPattern (p, sRealName))
+                        .findFirst ()
+                        .isPresent ();
     };
   }
 }

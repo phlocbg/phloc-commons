@@ -20,10 +20,8 @@ package com.phloc.commons.io.file.filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
 import org.junit.Test;
 
@@ -31,7 +29,7 @@ import com.phloc.commons.io.file.FileOperations;
 
 /**
  * Test class for class {@link FilenameFilterPublicDirectory}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FilenameFilterPublicDirectoryTest
@@ -39,20 +37,14 @@ public final class FilenameFilterPublicDirectoryTest
   @Test
   public void testAll ()
   {
-    final FilenameFilter ff = FilenameFilterPublicDirectory.getInstance ();
+    final IFileFilter ff = FileFilters.getDirectoryPublic ();
     assertNotNull (ff);
 
     // null directory
     assertFalse (ff.accept (null, "file.html"));
 
-    try
-    {
-      // null file
-      ff.accept (new File ("dir"), null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
+    // null file
+    assertFalse (ff.accept (new File ("dir"), null));
 
     final File aDir = new File ("directory");
     FileOperations.createDir (aDir);

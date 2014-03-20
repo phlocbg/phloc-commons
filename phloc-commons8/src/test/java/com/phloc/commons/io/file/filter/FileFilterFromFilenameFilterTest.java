@@ -22,16 +22,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FilenameFilter;
 
 import org.junit.Test;
 
-import com.phloc.commons.mock.PhlocTestUtils;
-
 /**
  * Test class for class {@link FileFilterFromFilenameFilter}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FileFilterFromFilenameFilterTest
@@ -39,8 +35,7 @@ public final class FileFilterFromFilenameFilterTest
   @Test
   public void testGetFileNameFilter ()
   {
-    final FilenameFilter ff = new FilenameFilterMatchAnyRegEx (".*\\.xml$", ".*\\.htm$", "src");
-    final FileFilter aFilter = new FileFilterFromFilenameFilter (ff);
+    final IFileFilter aFilter = FileFilters.getNameMatchAnyRegEx (".*\\.xml$", ".*\\.htm$", "src");
     assertNotNull (aFilter);
 
     // file
@@ -53,7 +48,5 @@ public final class FileFilterFromFilenameFilterTest
     assertTrue (aFilter.accept (new File ("src")));
     // null
     assertFalse (aFilter.accept (null));
-
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aFilter, new FileFilterFromFilenameFilter (ff));
   }
 }

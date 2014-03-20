@@ -20,6 +20,7 @@ package com.phloc.commons.collections;//NOPMD
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -1282,7 +1283,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static boolean [] getCopy (@Nullable final boolean... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1303,7 +1304,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static boolean [] getCopy (@Nullable final boolean [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1329,11 +1330,7 @@ public final class ArrayHelper
                                     @Nonnegative final int nStartIndex,
                                     @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final boolean [] ret = new boolean [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1349,7 +1346,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static byte [] getCopy (@Nullable final byte... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1370,7 +1367,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static byte [] getCopy (@Nullable final byte [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1396,11 +1393,7 @@ public final class ArrayHelper
                                  @Nonnegative final int nStartIndex,
                                  @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final byte [] ret = new byte [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1416,7 +1409,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static char [] getCopy (@Nullable final char... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1437,7 +1430,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static char [] getCopy (@Nullable final char [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1463,11 +1456,7 @@ public final class ArrayHelper
                                  @Nonnegative final int nStartIndex,
                                  @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final char [] ret = new char [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1483,7 +1472,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static double [] getCopy (@Nullable final double... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1504,7 +1493,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static double [] getCopy (@Nullable final double [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1530,11 +1519,7 @@ public final class ArrayHelper
                                    @Nonnegative final int nStartIndex,
                                    @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final double [] ret = new double [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1550,7 +1535,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static float [] getCopy (@Nullable final float... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1571,7 +1556,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static float [] getCopy (@Nullable final float [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1597,11 +1582,7 @@ public final class ArrayHelper
                                   @Nonnegative final int nStartIndex,
                                   @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final float [] ret = new float [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1618,7 +1599,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static int [] getCopy (@Nullable final int... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1639,7 +1620,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static int [] getCopy (@Nullable final int [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1659,39 +1640,29 @@ public final class ArrayHelper
    *         <code>null</code> copy otherwise.
    * @see System#arraycopy(Object, int, Object, int, int)
    */
-  /**
-   * Get a 1:1 copy of the passed array. Nested elements are not deep-copied -
-   * the references are re-used!
-   *
-   * @param aArray
-   *        The array to be copied.
-   * @param nStartIndex
-   *        The index where the copying should start. Must be &gt;= 0!
-   * @param nLength
-   *        The number of elements to be copied into the new array. May not be
-   *        &lt; 0. If the passed number of elements exceeds the number of
-   *        elements in the array, an exception is thrown.
-   * @return <code>null</code> if the passed array is <code>null</code> - a non-
-   *         <code>null</code> copy otherwise.
-   */
   @Nullable
   @ReturnsMutableCopy
   public static int [] getCopy (@Nullable final int [] aArray,
                                 @Nonnegative final int nStartIndex,
                                 @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final int [] ret = new int [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
+  /**
+   * Get a 1:1 copy of the passed array. Nested elements are not deep-copied -
+   * the references are re-used!
+   *
+   * @param aArray
+   *        The array to be copied.
+   * @return <code>null</code> if the passed array is <code>null</code> - a non-
+   *         <code>null</code> copy otherwise.
+   */
   @Nullable
   @ReturnsMutableCopy
   public static long [] getCopy (@Nullable final long... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1712,7 +1683,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static long [] getCopy (@Nullable final long [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1738,11 +1709,7 @@ public final class ArrayHelper
                                  @Nonnegative final int nStartIndex,
                                  @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final long [] ret = new long [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1758,7 +1725,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static short [] getCopy (@Nullable final short... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1779,7 +1746,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static short [] getCopy (@Nullable final short [] aArray, @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1805,11 +1772,7 @@ public final class ArrayHelper
                                   @Nonnegative final int nStartIndex,
                                   @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final short [] ret = new short [nLength];
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -1826,7 +1789,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] getCopy (@Nullable final ELEMENTTYPE... aArray)
   {
-    return aArray == null ? null : getCopy (aArray, 0, aArray.length);
+    return aArray == null ? null : Arrays.copyOf (aArray, aArray.length);
   }
 
   /**
@@ -1848,7 +1811,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] getCopy (@Nullable final ELEMENTTYPE [] aArray,
                                                       @Nonnegative final int nLength)
   {
-    return aArray == null ? null : getCopy (aArray, 0, Math.min (aArray.length, nLength));
+    return aArray == null ? null : Arrays.copyOf (aArray, nLength);
   }
 
   /**
@@ -1874,11 +1837,7 @@ public final class ArrayHelper
                                                       @Nonnegative final int nStartIndex,
                                                       @Nonnegative final int nLength)
   {
-    if (aArray == null)
-      return null;
-    final ELEMENTTYPE [] ret = newArraySameType (aArray, nLength);
-    System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
-    return ret;
+    return aArray == null ? null : Arrays.copyOfRange (aArray, nStartIndex, nStartIndex + nLength);
   }
 
   /**
@@ -2753,12 +2712,9 @@ public final class ArrayHelper
     if (isEmpty (aArray) || isEmpty (aElementsToRemove))
       return aArray;
 
-    final ELEMENTTYPE [] tmp = getCopy (aArray);
-    int nDst = 0;
-    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
-      if (!contains (aElementsToRemove, tmp[nSrc]))
-        tmp[nDst++] = tmp[nSrc];
-    return getCopy (tmp, 0, nDst);
+    return Arrays.stream (aArray)
+        .filter (p -> !contains (aElementsToRemove, p))
+        .toArray (nSize -> newArraySameType (aArray, nSize));
   }
 
   /**
@@ -2861,13 +2817,7 @@ public final class ArrayHelper
   {
     if (isEmpty (aArray) || isEmpty (aElementsToRemove))
       return aArray;
-
-    final double [] tmp = getCopy (aArray);
-    int nDst = 0;
-    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
-      if (!contains (aElementsToRemove, tmp[nSrc]))
-        tmp[nDst++] = tmp[nSrc];
-    return getCopy (tmp, 0, nDst);
+    return Arrays.stream (aArray).filter (p -> !contains (aElementsToRemove, p)).toArray ();
   }
 
   /**
@@ -2916,12 +2866,7 @@ public final class ArrayHelper
     if (isEmpty (aArray) || isEmpty (aElementsToRemove))
       return aArray;
 
-    final int [] tmp = getCopy (aArray);
-    int nDst = 0;
-    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
-      if (!contains (aElementsToRemove, tmp[nSrc]))
-        tmp[nDst++] = tmp[nSrc];
-    return getCopy (tmp, 0, nDst);
+    return Arrays.stream (aArray).filter (p -> !contains (aElementsToRemove, p)).toArray ();
   }
 
   /**
@@ -2943,12 +2888,7 @@ public final class ArrayHelper
     if (isEmpty (aArray) || isEmpty (aElementsToRemove))
       return aArray;
 
-    final long [] tmp = getCopy (aArray);
-    int nDst = 0;
-    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
-      if (!contains (aElementsToRemove, tmp[nSrc]))
-        tmp[nDst++] = tmp[nSrc];
-    return getCopy (tmp, 0, nDst);
+    return Arrays.stream (aArray).filter (p -> !contains (aElementsToRemove, p)).toArray ();
   }
 
   /**
@@ -4030,11 +3970,7 @@ public final class ArrayHelper
    */
   public static <T> boolean containsAnyNullElement (@Nullable final T [] aArray)
   {
-    if (aArray != null)
-      for (final T aObj : aArray)
-        if (aObj == null)
-          return true;
-    return false;
+    return Arrays.stream (aArray).anyMatch (Objects::isNull);
   }
 
   /**
@@ -4051,9 +3987,6 @@ public final class ArrayHelper
     if (isEmpty (aArray))
       return false;
 
-    for (final Object aObj : aArray)
-      if (aObj != null)
-        return false;
-    return true;
+    return Arrays.stream (aArray).allMatch (Objects::isNull);
   }
 }

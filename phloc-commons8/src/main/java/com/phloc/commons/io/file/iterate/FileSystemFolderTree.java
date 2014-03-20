@@ -18,7 +18,6 @@
 package com.phloc.commons.io.file.iterate;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +31,7 @@ import com.phloc.commons.combine.CombinatorStringWithSeparatorIgnoreNull;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
+import com.phloc.commons.io.file.filter.IFileFilter;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
@@ -46,8 +46,8 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
 {
   private static void _iterate (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aTreeItem,
                                 @Nonnull final File aDir,
-                                @Nullable final FileFilter aDirFilter,
-                                @Nullable final FileFilter aFileFilter)
+                                @Nullable final IFileFilter aDirFilter,
+                                @Nullable final IFileFilter aFileFilter)
   {
     if (aDir != null)
       for (final File aChild : FileUtils.getDirectoryContent (aDir))
@@ -82,9 +82,10 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
 
   public FileSystemFolderTree (@Nonnull final File aStartDir)
   {
-    this (aStartDir, (FileFilter) null, (FileFilter) null);
+    this (aStartDir, (IFileFilter) null, (IFileFilter) null);
   }
 
+  @Deprecated
   public FileSystemFolderTree (@Nonnull final String sStartDir,
                                @Nullable final FilenameFilter aDirFilter,
                                @Nullable final FilenameFilter aFileFilter)
@@ -93,24 +94,25 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
   }
 
   public FileSystemFolderTree (@Nonnull final String sStartDir,
-                               @Nullable final FileFilter aDirFilter,
-                               @Nullable final FileFilter aFileFilter)
+                               @Nullable final IFileFilter aDirFilter,
+                               @Nullable final IFileFilter aFileFilter)
   {
     this (new File (sStartDir), aDirFilter, aFileFilter);
   }
 
+  @Deprecated
   public FileSystemFolderTree (@Nonnull final File aStartDir,
                                @Nullable final FilenameFilter aDirFilter,
                                @Nullable final FilenameFilter aFileFilter)
   {
     this (aStartDir,
-          aDirFilter == null ? null : (FileFilter) new FileFilterFileFromFilenameFilter (aDirFilter),
-                             aFileFilter == null ? null : (FileFilter) new FileFilterFileFromFilenameFilter (aFileFilter));
+          aDirFilter == null ? null : (IFileFilter) new FileFilterFileFromFilenameFilter (aDirFilter),
+                             aFileFilter == null ? null : (IFileFilter) new FileFilterFileFromFilenameFilter (aFileFilter));
   }
 
   public FileSystemFolderTree (@Nonnull final File aStartDir,
-                               @Nullable final FileFilter aDirFilter,
-                               @Nullable final FileFilter aFileFilter)
+                               @Nullable final IFileFilter aDirFilter,
+                               @Nullable final IFileFilter aFileFilter)
   {
     super (new CombinatorStringWithSeparatorIgnoreNull ("/"));
     ValueEnforcer.notNull (aStartDir, "StartDirectory");

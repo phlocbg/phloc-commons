@@ -38,6 +38,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -348,10 +349,7 @@ public final class ContainerHelper
     if (isEmpty (aCollection))
       return new HashMap <KEYTYPE, VALUETYPE> (0);
 
-    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aCollection.size ());
-    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aCollection)
-      ret.put (aEntry.getKey (), aEntry.getValue ());
-    return ret;
+    return aCollection.stream ().collect (Collectors.toMap (e -> e.getKey (), e -> e.getValue ()));
   }
 
   @Nonnull

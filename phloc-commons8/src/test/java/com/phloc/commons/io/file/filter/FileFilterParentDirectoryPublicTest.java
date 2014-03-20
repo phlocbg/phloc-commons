@@ -19,17 +19,15 @@ package com.phloc.commons.io.file.filter;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import org.junit.Test;
 
 /**
  * Test class for class {@link FileFilterParentDirectoryPublic}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FileFilterParentDirectoryPublicTest
@@ -37,7 +35,7 @@ public final class FileFilterParentDirectoryPublicTest
   @Test
   public void testGetParentDirectoryPublic ()
   {
-    final FileFilter aFilter = FileFilterParentDirectoryPublic.getInstance ();
+    final IFileFilter aFilter = FileFilters.getParentDirectoryPublic ();
     assertNotNull (aFilter);
 
     // file
@@ -50,7 +48,5 @@ public final class FileFilterParentDirectoryPublicTest
     assertFalse (aFilter.accept (null));
     // hidden file
     assertFalse (aFilter.accept (new File (".svn/pom.xml")));
-
-    assertSame (aFilter, FileFilterParentDirectoryPublic.getInstance ());
   }
 }

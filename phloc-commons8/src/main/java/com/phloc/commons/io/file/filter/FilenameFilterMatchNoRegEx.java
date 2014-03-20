@@ -40,6 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterMatchNoRegEx implements FilenameFilter
 {
   private final List <String> m_aRegExs;
