@@ -29,10 +29,11 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A filter that accepts all public directories (directories who's name does not
  * start with a dot!)
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterPublicDirectory implements FilenameFilter
 {
   private static final FilenameFilterPublicDirectory s_aInstance = new FilenameFilterPublicDirectory ();

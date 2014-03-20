@@ -26,14 +26,16 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.collections.iterate.IterableIterator;
+import com.phloc.commons.filter.FilterChainAND;
 import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
+import com.phloc.commons.io.file.filter.IFileFilter;
 
 /**
  * Iterate over the content of a single directory. Iteration is <b>not</b>
  * recursive.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -41,7 +43,7 @@ public final class FileSystemIterator extends IterableIterator <File>
 {
   /**
    * Constructor.
-   * 
+   *
    * @param sBaseDir
    *        The base directory to iterate. May not be <code>null</code>.
    */
@@ -52,7 +54,7 @@ public final class FileSystemIterator extends IterableIterator <File>
 
   /**
    * Constructor.
-   * 
+   *
    * @param aBaseDir
    *        The base directory to iterate. May not be <code>null</code>.
    */
@@ -64,7 +66,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses a certain
    * {@link FilenameFilter}.
-   * 
+   *
    * @param sBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFilenameFilter
@@ -72,6 +74,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final String sBaseDir,
                                                  @Nonnull final FilenameFilter aFilenameFilter)
   {
@@ -82,7 +85,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses a certain
    * {@link FilenameFilter}.
-   * 
+   *
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFilenameFilter
@@ -90,6 +93,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
                                                  @Nonnull final FilenameFilter aFilenameFilter)
   {
@@ -97,10 +101,17 @@ public final class FileSystemIterator extends IterableIterator <File>
                                       new FileFilterToIFilterAdapter (aFilenameFilter));
   }
 
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull final IFileFilter aFilenameFilter)
+  {
+    return new FilterIterator <File> (new FileSystemIterator (fBaseDir), aFilenameFilter);
+  }
+
   /**
    * Create a new non-recursive file system iterator that uses multiple
    * {@link FilenameFilter} objects that all need to match.
-   * 
+   *
    * @param sBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFilenameFilters
@@ -108,6 +119,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final String sBaseDir,
                                                  @Nonnull final FilenameFilter... aFilenameFilters)
   {
@@ -118,7 +130,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses multiple
    * {@link FilenameFilter} objects that all need to match.
-   * 
+   *
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFilenameFilters
@@ -126,6 +138,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
                                                  @Nonnull final FilenameFilter... aFilenameFilters)
   {
@@ -133,10 +146,24 @@ public final class FileSystemIterator extends IterableIterator <File>
                                       FileFilterToIFilterAdapter.getANDChained (aFilenameFilters));
   }
 
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final String sBaseDir,
+                                                 @Nonnull final IFileFilter... aFilenameFilters)
+  {
+    return new FilterIterator <File> (new FileSystemIterator (sBaseDir), new FilterChainAND <> (aFilenameFilters));
+  }
+
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File aBaseDir,
+                                                 @Nonnull final IFileFilter... aFilenameFilters)
+  {
+    return new FilterIterator <File> (new FileSystemIterator (aBaseDir), new FilterChainAND <> (aFilenameFilters));
+  }
+
   /**
    * Create a new non-recursive file system iterator that uses a certain
    * {@link FileFilter}.
-   * 
+   *
    * @param sBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFileFilter
@@ -144,6 +171,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final String sBaseDir, @Nonnull final FileFilter aFileFilter)
   {
     return new FilterIterator <File> (new FileSystemIterator (sBaseDir), new FileFilterToIFilterAdapter (aFileFilter));
@@ -152,7 +180,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses a certain
    * {@link FileFilter}.
-   * 
+   *
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFileFilter
@@ -160,6 +188,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFileFilter)
   {
     return new FilterIterator <File> (new FileSystemIterator (fBaseDir), new FileFilterToIFilterAdapter (aFileFilter));
@@ -168,7 +197,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses multiple
    * {@link FileFilter} objects that all need to match.
-   * 
+   *
    * @param sBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFileFilters
@@ -176,6 +205,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final String sBaseDir,
                                                  @Nonnull final FileFilter... aFileFilters)
   {
@@ -186,7 +216,7 @@ public final class FileSystemIterator extends IterableIterator <File>
   /**
    * Create a new non-recursive file system iterator that uses multiple
    * {@link FileFilter} objects that all need to match.
-   * 
+   *
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
    * @param aFileFilters
@@ -194,6 +224,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    * @return The matching iterator.
    */
   @Nonnull
+  @Deprecated
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
                                                  @Nonnull final FileFilter... aFileFilters)
   {

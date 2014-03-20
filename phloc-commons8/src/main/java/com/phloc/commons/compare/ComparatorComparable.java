@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends AbstractComparator <DATATYPE>
 {
   /**

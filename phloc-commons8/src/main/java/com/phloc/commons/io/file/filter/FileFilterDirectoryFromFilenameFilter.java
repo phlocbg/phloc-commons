@@ -30,9 +30,10 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A special directory file filter that uses and external filename filter to
  * determine the validity. This filter only works for directories.
- * 
+ *
  * @author Philip Helger
  */
+@Deprecated
 public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFilter
 {
   private final FilenameFilter m_aFilenameFilter;
@@ -48,7 +49,7 @@ public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFil
     return m_aFilenameFilter;
   }
 
-  public boolean accept (@Nullable final File aFile)
+  public boolean matchesFilter (@Nullable final File aFile)
   {
     return aFile != null && aFile.isDirectory () && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }

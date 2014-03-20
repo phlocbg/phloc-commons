@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
  *
  * @author Philip Helger
  */
+@Deprecated
 public class ComparatorStringLongestFirst extends AbstractComparator <String>
 {
   /**

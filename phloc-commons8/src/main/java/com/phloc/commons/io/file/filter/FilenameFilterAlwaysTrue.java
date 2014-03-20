@@ -28,10 +28,11 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A filename filter that accepts all files.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterAlwaysTrue implements FilenameFilter
 {
   private static final FilenameFilterAlwaysTrue s_aInstance = new FilenameFilterAlwaysTrue ();

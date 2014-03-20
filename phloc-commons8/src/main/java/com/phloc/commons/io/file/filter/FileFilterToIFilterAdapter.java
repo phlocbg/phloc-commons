@@ -36,17 +36,18 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Converts {@link FileFilter} and {@link FilenameFilter} objects to an
  * {@link IFilter} object.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public final class FileFilterToIFilterAdapter implements IFilter <File>
 {
   private final FileFilter m_aFileFilter;
 
   public FileFilterToIFilterAdapter (@Nonnull final FilenameFilter aFilenameFilter)
   {
-    this (new FileFilterFromFilenameFilter (aFilenameFilter));
+    this ((FileFilter) new FileFilterFromFilenameFilter (aFilenameFilter));
   }
 
   public FileFilterToIFilterAdapter (@Nonnull final FileFilter aFileFilter)
@@ -74,7 +75,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   @Nullable
   public static IFilter <File> create (@Nullable final FileFilter aFileFilter)
   {
-    return aFileFilter == null ? null : new FileFilterToIFilterAdapter (aFileFilter);
+    return aFileFilter == null ? null : p -> p != null && aFileFilter.accept (p);
   }
 
   @Nullable
@@ -84,6 +85,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   }
 
   @Nonnull
+  @Deprecated
   public static IFilter <File> getANDChained (@Nonnull final FileFilter... aFileFilters)
   {
     ValueEnforcer.notEmpty (aFileFilters, "FileFilters");
@@ -95,6 +97,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   }
 
   @Nonnull
+  @Deprecated
   public static IFilter <File> getANDChained (@Nonnull final FilenameFilter... aFilenameFilters)
   {
     ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
@@ -106,6 +109,14 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   }
 
   @Nonnull
+  public static IFilter <File> getANDChained (@Nonnull final IFileFilter... aFilenameFilters)
+  {
+    ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
+    return new FilterChainAND <File> (aFilenameFilters);
+  }
+
+  @Nonnull
+  @Deprecated
   public static IFilter <File> getORChained (@Nonnull final FileFilter... aFileFilters)
   {
     ValueEnforcer.notEmpty (aFileFilters, "FileFilters");
@@ -117,6 +128,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
   }
 
   @Nonnull
+  @Deprecated
   public static IFilter <File> getORChained (@Nonnull final FilenameFilter... aFilenameFilters)
   {
     ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
@@ -125,5 +137,12 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
     for (final FilenameFilter aFilenameFilter : aFilenameFilters)
       aFilters.add (new FileFilterToIFilterAdapter (aFilenameFilter));
     return new FilterChainOR <File> (aFilters);
+  }
+
+  @Nonnull
+  public static IFilter <File> getORChained (@Nonnull final IFileFilter... aFilenameFilters)
+  {
+    ValueEnforcer.notEmpty (aFilenameFilters, "FilenameFilters");
+    return new FilterChainOR <File> (aFilenameFilters);
   }
 }

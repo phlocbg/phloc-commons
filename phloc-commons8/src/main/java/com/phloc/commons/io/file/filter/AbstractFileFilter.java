@@ -17,10 +17,7 @@
  */
 package com.phloc.commons.io.file.filter;
 
-import java.io.File;
 import java.io.FileFilter;
-
-import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.filter.IFilter;
@@ -33,10 +30,6 @@ import com.phloc.commons.filter.IFilter;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public abstract class AbstractFileFilter implements FileFilter, IFilter <File>
-{
-  public final boolean matchesFilter (@Nullable final File aFile)
-  {
-    return accept (aFile);
-  }
-}
+@Deprecated
+public abstract class AbstractFileFilter implements IFileFilter
+{}

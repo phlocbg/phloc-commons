@@ -33,10 +33,11 @@ import com.phloc.commons.string.ToStringGenerator;
  * A filename filter that checks whether a file has the specified extension. The
  * implementation is done via {@link String#endsWith(String)} so it is case
  * sensitive.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterEndsWith implements FilenameFilter
 {
   private final String m_sSuffix;

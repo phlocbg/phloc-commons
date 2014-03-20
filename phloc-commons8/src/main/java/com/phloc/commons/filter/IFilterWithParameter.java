@@ -17,23 +17,26 @@
  */
 package com.phloc.commons.filter;
 
+import java.util.function.BiPredicate;
+
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
  * A generic filter interface for simple object selection based on a parameter.
  * If you don't need the parameter, use {@link IFilter} instead.
- * 
+ *
  * @author Philip
  * @param <DATATYPE>
  *        The type of object to filter.
  * @param <PARAMTYPE>
  *        The type of the parameter
  */
-public interface IFilterWithParameter <DATATYPE, PARAMTYPE>
+@FunctionalInterface
+public interface IFilterWithParameter <DATATYPE, PARAMTYPE> extends BiPredicate <DATATYPE, PARAMTYPE>
 {
   /**
    * Check if the given value matches the filter or not.
-   * 
+   *
    * @param aValue
    *        The object to filter. May be <code>null</code> depending on the
    *        implementation.
@@ -45,4 +48,9 @@ public interface IFilterWithParameter <DATATYPE, PARAMTYPE>
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
   boolean matchesFilter (DATATYPE aValue, PARAMTYPE aParam);
+
+  default boolean test (final DATATYPE aValue, final PARAMTYPE aParam)
+  {
+    return matchesFilter (aValue, aParam);
+  }
 }

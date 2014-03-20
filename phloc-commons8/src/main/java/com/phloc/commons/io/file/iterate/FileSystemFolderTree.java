@@ -38,7 +38,7 @@ import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 /**
  * Represents a folder tree with the file system contents. This structure is
  * eagerly filled!
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -104,8 +104,8 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
                                @Nullable final FilenameFilter aFileFilter)
   {
     this (aStartDir,
-          aDirFilter == null ? null : new FileFilterFileFromFilenameFilter (aDirFilter),
-          aFileFilter == null ? null : new FileFilterFileFromFilenameFilter (aFileFilter));
+          aDirFilter == null ? null : (FileFilter) new FileFilterFileFromFilenameFilter (aDirFilter),
+                             aFileFilter == null ? null : (FileFilter) new FileFilterFileFromFilenameFilter (aFileFilter));
   }
 
   public FileSystemFolderTree (@Nonnull final File aStartDir,

@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
  * Helper class to easily create commonly used {@link Comparator} objects.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -43,7 +43,7 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryKey ()
   {
-    return ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryKey (ESortOrder.DEFAULT);
+    return (p1, p2) -> CompareUtils.nullSafeCompare (p1.getKey (), p2.getKey ());
   }
 
   @Nonnull
@@ -63,19 +63,13 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryKey (final Comparator <? super KEYTYPE> aKeyComparator)
   {
-    return new Comparator <Map.Entry <KEYTYPE, VALUETYPE>> ()
-    {
-      public int compare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1, final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
-      {
-        return aKeyComparator.compare (aEntry1.getKey (), aEntry2.getKey ());
-      }
-    };
+    return (p1, p2) -> aKeyComparator.compare (p1.getKey (), p2.getKey ());
   }
 
   @Nonnull
   public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryValue ()
   {
-    return ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryValue (ESortOrder.DEFAULT);
+    return (p1, p2) -> CompareUtils.nullSafeCompare (p1.getValue (), p2.getValue ());
   }
 
   @Nonnull
@@ -95,12 +89,6 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryValue (@Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
-    return new Comparator <Map.Entry <KEYTYPE, VALUETYPE>> ()
-    {
-      public int compare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1, final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
-      {
-        return aValueComparator.compare (aEntry1.getValue (), aEntry2.getValue ());
-      }
-    };
+    return (p1, p2) -> aValueComparator.compare (p1.getValue (), p2.getValue ());
   }
 }

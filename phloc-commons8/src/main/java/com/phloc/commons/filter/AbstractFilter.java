@@ -26,12 +26,13 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An abstract implementation of {@link IFilter} that has an optional nested
  * filter.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to filter.
  */
 @NotThreadSafe
+@Deprecated
 public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
 {
   private final IFilter <DATATYPE> m_aNestedFilter;
@@ -48,7 +49,7 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
 
   /**
    * This is the method to be implemented to match this filter.
-   * 
+   *
    * @param aValue
    *        The value to be matched
    * @return <code>true</code> if the value matches the filter
