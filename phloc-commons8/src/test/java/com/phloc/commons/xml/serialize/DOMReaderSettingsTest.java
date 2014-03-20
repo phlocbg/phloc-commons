@@ -26,12 +26,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.phloc.commons.callback.DoNothingExceptionHandler;
 import com.phloc.commons.xml.XMLFactory;
 
 /**
  * Test class for {@link DOMReaderSettings}
- * 
+ *
  * @author Philip Helger
  */
 public final class DOMReaderSettingsTest
@@ -39,7 +38,7 @@ public final class DOMReaderSettingsTest
   @BeforeClass
   public static void bc ()
   {
-    DOMReaderDefaultSettings.setExceptionHandler (new DoNothingExceptionHandler ());
+    DOMReaderDefaultSettings.setExceptionHandler (ex -> {});
   }
 
   @AfterClass

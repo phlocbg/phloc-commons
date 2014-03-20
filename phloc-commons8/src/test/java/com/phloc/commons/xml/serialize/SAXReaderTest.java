@@ -26,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.phloc.commons.callback.DoNothingExceptionHandler;
 import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -34,7 +33,7 @@ import com.phloc.commons.xml.sax.CachingSAXInputSource;
 
 /**
  * Test class for {@link SAXReader}
- * 
+ *
  * @author Philip Helger
  */
 public final class SAXReaderTest
@@ -45,7 +44,7 @@ public final class SAXReaderTest
   @BeforeClass
   public static void bc ()
   {
-    SAXReaderDefaultSettings.setExceptionHandler (new DoNothingExceptionHandler ());
+    SAXReaderDefaultSettings.setExceptionHandler (ex -> {});
   }
 
   @AfterClass
@@ -63,7 +62,7 @@ public final class SAXReaderTest
       {
         assertTrue (SAXReader.readXMLSAX (new CachingSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")),
                                           new SAXReaderSettings ().setContentHandler (new DefaultHandler ()))
-                             .isSuccess ());
+                                          .isSuccess ());
       }
     });
   }
@@ -77,7 +76,7 @@ public final class SAXReaderTest
       {
         assertTrue (SAXReader.readXMLSAX (new ClassPathResource ("xml/buildinfo.xml"),
                                           new SAXReaderSettings ().setContentHandler (new DefaultHandler ()))
-                             .isSuccess ());
+                                          .isSuccess ());
       }
     });
   }

@@ -26,7 +26,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.phloc.commons.charset.CSpecialChars;
 import com.phloc.commons.collections.ContainerHelper;
 
 /**
@@ -94,7 +93,7 @@ public final class AbstractCollationComparatorTest
   {
     final String S1 = "bbc";
     final String S2 = "abc";
-    final String S3 = CSpecialChars.AUML_LC_STR + "bc";
+    final String S3 = "äbc";
     final String [] x = new String [] { S1, S2, S3 };
 
     // default: sort ascending
