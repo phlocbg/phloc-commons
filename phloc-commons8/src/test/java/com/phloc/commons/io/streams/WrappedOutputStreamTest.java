@@ -30,7 +30,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link WrappedOutputStream}.
- * 
+ *
  * @author Philip Helger
  */
 public final class WrappedOutputStreamTest
@@ -38,15 +38,17 @@ public final class WrappedOutputStreamTest
   @Test
   public void testAll () throws IOException
   {
-    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
-    final WrappedOutputStream ws = new WrappedOutputStream (baos);
-    ws.write ('a');
-    ws.write (CharsetManager.getAsBytes ("bc", CCharset.CHARSET_ISO_8859_1_OBJ));
-    ws.write (CharsetManager.getAsBytes ("cde", CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
-    ws.flush ();
-    ws.close ();
-    assertEquals ("abcd", baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
-    PhlocTestUtils.testToStringImplementation (ws);
+    try (final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
+         final WrappedOutputStream ws = new WrappedOutputStream (baos))
+    {
+      ws.write ('a');
+      ws.write (CharsetManager.getAsBytes ("bc", CCharset.CHARSET_ISO_8859_1_OBJ));
+      ws.write (CharsetManager.getAsBytes ("cde", CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
+      ws.flush ();
+      ws.close ();
+      assertEquals ("abcd", baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
+      PhlocTestUtils.testToStringImplementation (ws);
+    }
 
     try
     {

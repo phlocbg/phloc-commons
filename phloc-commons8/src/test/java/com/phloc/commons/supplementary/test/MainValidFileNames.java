@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import com.phloc.commons.io.file.FileUtils;
-import com.phloc.commons.io.streams.StreamUtils;
 
 public final class MainValidFileNames
 {
@@ -43,40 +42,22 @@ public final class MainValidFileNames
     System.out.println (sName + ".canWrite()=" + FileUtils.canWrite (f));
 
     System.out.println ("Writing into " + fileName + " ...");
-    OutputStream out = null;
-    try
+    try (OutputStream out = FileUtils.getOutputStream (f))
     {
-      out = FileUtils.getOutputStream (f);
       out.write (42);
     }// try
     catch (final IOException ex)
     {
       System.err.println (ex);
     }
-    finally
-    {
-      try
-      {
-        if (out != null)
-        {
-          out.close ();
-        }
-      }// try
-      catch (final IOException ex)
-      {
-        System.err.println ("error at closing " + fileName);
-      }
-    }// finally
 
     System.out.println (sName + ".exists()=" + f.exists ());
     System.out.println (sName + ".getAbsolutePath()=" + f.getAbsolutePath ());
     System.out.println (sName + ".canRead()=" + FileUtils.canRead (f));
     System.out.println (sName + ".canWrite()=" + FileUtils.canWrite (f));
     System.out.println ("Reading from " + fileName + " ...");
-    FileInputStream in = null;
-    try
+    try (FileInputStream in = new FileInputStream (f))
     {
-      in = new FileInputStream (f);
       System.out.println (in.read ());
     }
     catch (final FileNotFoundException ex)
@@ -86,10 +67,6 @@ public final class MainValidFileNames
     catch (final IOException ex)
     {
       System.err.println (ex);
-    }
-    finally
-    {
-      StreamUtils.close (in);
     }
   }
 

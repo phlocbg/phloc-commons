@@ -33,7 +33,7 @@ import com.phloc.commons.random.VerySecureRandom;
 
 /**
  * Test class for class {@link BitOutputStream}.
- * 
+ *
  * @author Philip Helger
  */
 public final class BitOutputStreamTest
@@ -49,39 +49,39 @@ public final class BitOutputStreamTest
     catch (final NullPointerException ex)
     {}
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
-    aBOS.writeBit (CGlobal.BIT_SET);
-    try
+    try (final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN))
     {
-      aBOS.writeBit (-1);
-      fail ();
+      aBOS.writeBit (CGlobal.BIT_SET);
+      try
+      {
+        aBOS.writeBit (-1);
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+      try
+      {
+        aBOS.writeBits (1, 0);
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+      try
+      {
+        aBOS.writeBits (1, 33);
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+      try
+      {
+        aBOS.writeBit (CGlobal.BIT_NOT_SET);
+        fail ();
+      }
+      catch (final IllegalStateException ex)
+      {}
+      assertNotNull (aBOS.toString ());
     }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      aBOS.writeBits (1, 0);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      aBOS.writeBits (1, 33);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    aBOS.close ();
-    try
-    {
-      aBOS.writeBit (CGlobal.BIT_NOT_SET);
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
-    aBOS.close ();
-    assertNotNull (aBOS.toString ());
   }
 
   @Test
@@ -210,12 +210,13 @@ public final class BitOutputStreamTest
   public void testWriteManual () throws IOException
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
-    aBOS.writeBits (15, 4);
-    aBOS.writeBits (15, 4);
-    aBOS.writeBits (0, 8);
-    aBOS.writeBits (255, 8);
-    aBOS.close ();
-    assertArrayEquals (new byte [] { (byte) 0xff, 0, (byte) 0xff }, aBAOS.toByteArray ());
+    try (final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN))
+    {
+      aBOS.writeBits (15, 4);
+      aBOS.writeBits (15, 4);
+      aBOS.writeBits (0, 8);
+      aBOS.writeBits (255, 8);
+      assertArrayEquals (new byte [] { (byte) 0xff, 0, (byte) 0xff }, aBAOS.toByteArray ());
+    }
   }
 }

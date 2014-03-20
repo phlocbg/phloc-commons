@@ -132,25 +132,27 @@ public final class Base64Test
   {
     final byte [] aData = _createData (length);
 
-    final NonBlockingByteArrayOutputStream aOutBytes = new NonBlockingByteArrayOutputStream ();
-    final Base64.OutputStream aOS = new Base64.OutputStream (aOutBytes);
-    aOS.write (aData);
-    aOS.suspendEncoding ();
-    aOS.resumeEncoding ();
-    aOS.close ();
-    final byte [] aEncoded = aOutBytes.toByteArray ();
-    byte [] aDecoded = Base64.decode (aEncoded);
-    assertArrayEquals (aData, aDecoded);
+    try (final NonBlockingByteArrayOutputStream aOutBytes = new NonBlockingByteArrayOutputStream ();
+        final Base64.OutputStream aOS = new Base64.OutputStream (aOutBytes))
+    {
+      aOS.write (aData);
+      aOS.suspendEncoding ();
+      aOS.resumeEncoding ();
+      aOS.close ();
+      final byte [] aEncoded = aOutBytes.toByteArray ();
+      byte [] aDecoded = Base64.decode (aEncoded);
+      assertArrayEquals (aData, aDecoded);
 
-    aOutBytes.reset ();
-    final Base64.InputStream aIS = new Base64.InputStream (new NonBlockingByteArrayInputStream (aEncoded));
-    final byte [] aBuffer = new byte [3];
-    for (int n = aIS.read (aBuffer); n > 0; n = aIS.read (aBuffer))
-      aOutBytes.write (aBuffer, 0, n);
-    aOutBytes.close ();
-    aIS.close ();
-    aDecoded = aOutBytes.toByteArray ();
-    assertArrayEquals (aData, aDecoded);
+      aOutBytes.reset ();
+      try (final Base64.InputStream aIS = new Base64.InputStream (new NonBlockingByteArrayInputStream (aEncoded)))
+      {
+        final byte [] aBuffer = new byte [3];
+        for (int n = aIS.read (aBuffer); n > 0; n = aIS.read (aBuffer))
+          aOutBytes.write (aBuffer, 0, n);
+      }
+      aDecoded = aOutBytes.toByteArray ();
+      assertArrayEquals (aData, aDecoded);
+    }
   }
 
   @Test
@@ -224,7 +226,7 @@ public final class Base64Test
       assertFalse (FileUtils.existsFile (f2));
       SimpleFileIO.writeFile (f1, CharsetManager.getAsBytes (Base64Helper.safeEncode ("Hallo Wält",
                                                                                       CCharset.CHARSET_UTF_8_OBJ),
-                                                             CCharset.CHARSET_ISO_8859_1_OBJ));
+                                                                                      CCharset.CHARSET_ISO_8859_1_OBJ));
       Base64.decodeFileToFile (f1.getAbsolutePath (), f2.getAbsolutePath ());
       assertTrue (FileUtils.existsFile (f2));
       final String sDecoded = SimpleFileIO.readFileAsString (f2, CCharset.CHARSET_UTF_8_OBJ);

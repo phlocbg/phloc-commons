@@ -29,7 +29,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link WrappedInputStream}.
- * 
+ *
  * @author Philip Helger
  */
 public final class WrappedInputStreamTest
@@ -37,20 +37,20 @@ public final class WrappedInputStreamTest
   @Test
   public void testAll () throws IOException
   {
-    final NonBlockingByteArrayInputStream baos = new NonBlockingByteArrayInputStream (new byte [100]);
-    final WrappedInputStream ws = new WrappedInputStream (baos);
-    assertTrue (ws.markSupported ());
-    assertEquals (100, ws.available ());
-    ws.mark (0);
-    ws.read ();
-    ws.read (new byte [4]);
-    ws.read (new byte [5], 1, 1);
-    ws.skip (4);
-    assertEquals (90, ws.available ());
-    ws.reset ();
-    assertEquals (100, ws.available ());
-    ws.close ();
-    PhlocTestUtils.testToStringImplementation (ws);
+    try (final WrappedInputStream ws = new WrappedInputStream (new NonBlockingByteArrayInputStream (new byte [100])))
+    {
+      assertTrue (ws.markSupported ());
+      assertEquals (100, ws.available ());
+      ws.mark (0);
+      ws.read ();
+      ws.read (new byte [4]);
+      ws.read (new byte [5], 1, 1);
+      ws.skip (4);
+      assertEquals (90, ws.available ());
+      ws.reset ();
+      assertEquals (100, ws.available ());
+      PhlocTestUtils.testToStringImplementation (ws);
+    }
 
     try
     {

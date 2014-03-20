@@ -32,7 +32,7 @@ import com.phloc.commons.io.file.FileOperations;
 
 /**
  * Test class for class {@link CountingFileOutputStream}.
- * 
+ *
  * @author Philip Helger
  */
 public final class CountingFileOutputStreamTest
@@ -43,26 +43,31 @@ public final class CountingFileOutputStreamTest
     final File f = new File ("CFOS.txt");
     try
     {
-      CountingFileOutputStream aCFOS = new CountingFileOutputStream (f);
-      assertEquals (0, aCFOS.getBytesWritten ());
-      StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1_OBJ), aCFOS);
-      aCFOS.write ('a');
-      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
-      assertEquals (7, aCFOS.getBytesWritten ());
-      aCFOS.close ();
-      aCFOS = new CountingFileOutputStream (f, EAppend.APPEND);
-      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
-      assertEquals (3, aCFOS.getBytesWritten ());
-      aCFOS.close ();
-      aCFOS = new CountingFileOutputStream (f.getAbsolutePath ());
-      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
-      assertEquals (3, aCFOS.getBytesWritten ());
-      aCFOS.close ();
-      aCFOS = new CountingFileOutputStream (f.getAbsolutePath (), EAppend.APPEND);
-      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
-      assertEquals (3, aCFOS.getBytesWritten ());
-      aCFOS.close ();
-      assertNotNull (aCFOS.toString ());
+      try (CountingFileOutputStream aCFOS = new CountingFileOutputStream (f))
+      {
+        assertEquals (0, aCFOS.getBytesWritten ());
+        StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1_OBJ),
+                                                   aCFOS);
+        aCFOS.write ('a');
+        aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
+        assertEquals (7, aCFOS.getBytesWritten ());
+      }
+      try (CountingFileOutputStream aCFOS = new CountingFileOutputStream (f, EAppend.APPEND))
+      {
+        aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
+        assertEquals (3, aCFOS.getBytesWritten ());
+      }
+      try (CountingFileOutputStream aCFOS = new CountingFileOutputStream (f.getAbsolutePath ()))
+      {
+        aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
+        assertEquals (3, aCFOS.getBytesWritten ());
+      }
+      try (CountingFileOutputStream aCFOS = new CountingFileOutputStream (f.getAbsolutePath (), EAppend.APPEND))
+      {
+        aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
+        assertEquals (3, aCFOS.getBytesWritten ());
+        assertNotNull (aCFOS.toString ());
+      }
     }
     finally
     {
