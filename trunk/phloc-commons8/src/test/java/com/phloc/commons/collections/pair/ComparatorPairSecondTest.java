@@ -19,16 +19,16 @@ package com.phloc.commons.collections.pair;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.ESortOrder;
 
 /**
- * Test class for class {@link ComparatorPairSecond}.
- * 
+ * Test class
+ *
  * @author Philip Helger
  */
 public final class ComparatorPairSecondTest
@@ -42,13 +42,15 @@ public final class ComparatorPairSecondTest
                                                                                  ReadonlyPair.create ("k1", "v1"));
     assertEquals (3, aList.size ());
 
-    ContainerHelper.getSortedInline (aList, new ComparatorPairSecond <String, String> ());
+    ContainerHelper.getSortedInline (aList, Comparator.comparing (p -> p.getSecond ()));
     assertEquals (3, aList.size ());
     assertEquals ("k1", aList.get (0).getFirst ());
     assertEquals ("k2", aList.get (1).getFirst ());
     assertEquals ("k3", aList.get (2).getFirst ());
 
-    ContainerHelper.getSortedInline (aList, new ComparatorPairSecond <String, String> (ESortOrder.DESCENDING));
+    ContainerHelper.getSortedInline (aList,
+                                     Comparator.<IReadonlyPair <String, String>, String> comparing (p -> p.getSecond ())
+                                     .reversed ());
     assertEquals (3, aList.size ());
     assertEquals ("k3", aList.get (0).getFirst ());
     assertEquals ("k2", aList.get (1).getFirst ());
