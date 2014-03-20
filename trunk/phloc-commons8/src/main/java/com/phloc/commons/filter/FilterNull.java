@@ -27,12 +27,13 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A filter implementation where all <code>null</code> values match.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to filter.
  */
 @Immutable
+@Deprecated
 public final class FilterNull <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
   private static final FilterNull <Object> s_aInstance = new FilterNull <Object> ();

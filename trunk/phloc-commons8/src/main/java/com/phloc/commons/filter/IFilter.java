@@ -17,22 +17,25 @@
  */
 package com.phloc.commons.filter;
 
+import java.util.function.Predicate;
+
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
  * A generic filter interface for simple object selection. If you need an
  * additional parameter for determining whether to filter an object or not, you
  * may use the {@link IFilterWithParameter} instead.
- * 
+ *
  * @author Philip
  * @param <DATATYPE>
  *        The type of object to filter.
  */
-public interface IFilter <DATATYPE>
+@FunctionalInterface
+public interface IFilter <DATATYPE> extends Predicate <DATATYPE>
 {
   /**
    * Check if the given value matches the filter or not.
-   * 
+   *
    * @param aValue
    *        The object to filter. May be <code>null</code> depending on the
    *        implementation.
@@ -41,4 +44,9 @@ public interface IFilter <DATATYPE>
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
   boolean matchesFilter (DATATYPE aValue);
+
+  default boolean test (final DATATYPE aValue)
+  {
+    return matchesFilter (aValue);
+  }
 }

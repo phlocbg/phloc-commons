@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.convert.collections;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
@@ -31,7 +32,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
 
 /**
  * This utility class provides conversions from array objects.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -54,11 +55,7 @@ public final class ArrayConversionHelper
     ValueEnforcer.notNull (aConv, "Converter");
     ValueEnforcer.notNull (aDstClass, "DestClass");
 
-    final DSTTYPE [] ret = ArrayHelper.newArray (aDstClass, aList.size ());
-    int i = 0;
-    for (final SRCTYPE aObj : aList)
-      ret[i++] = aConv.convert (aObj);
-    return ret;
+    return aList.stream ().map (aConv).toArray (p -> ArrayHelper.newArray (aDstClass, p));
   }
 
   @Nonnull
@@ -70,13 +67,8 @@ public final class ArrayConversionHelper
     ValueEnforcer.notNull (aConv, "Converter");
     ValueEnforcer.notNull (aDstClass, "DestClass");
 
-    final DSTTYPE [] ret = ArrayHelper.newArray (aDstClass, ArrayHelper.getSize (aArray));
     if (aArray != null)
-    {
-      int i = 0;
-      for (final SRCTYPE aObj : aArray)
-        ret[i++] = aConv.convert (aObj);
-    }
-    return ret;
+      return ArrayHelper.newArray (aDstClass, 0);
+    return Arrays.stream (aArray).map (aConv).toArray (p -> ArrayHelper.newArray (aDstClass, p));
   }
 }

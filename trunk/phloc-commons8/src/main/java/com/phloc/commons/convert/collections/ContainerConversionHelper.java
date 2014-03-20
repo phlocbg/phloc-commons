@@ -18,12 +18,14 @@
 package com.phloc.commons.convert.collections;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,7 +42,7 @@ import com.phloc.commons.filter.IFilter;
 
 /**
  * This utility class helps applying conversions onto collections.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -77,6 +79,14 @@ public final class ContainerConversionHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newSet (@Nonnull final Collection <? extends SRCTYPE> aCont,
+                                                         @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return aCont.stream ().map (aConverter).collect (Collectors.toSet ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newSet (@Nonnull final Iterable <? extends SRCTYPE> aCont,
                                                          @Nonnull final IFilter <? super SRCTYPE> aFilter,
                                                          @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
@@ -86,6 +96,15 @@ public final class ContainerConversionHelper
       if (aFilter.matchesFilter (aIn))
         ret.add (aConverter.convert (aIn));
     return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newSet (@Nonnull final Collection <? extends SRCTYPE> aCont,
+                                                         @Nonnull final IFilter <? super SRCTYPE> aFilter,
+                                                         @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return aCont.stream ().filter (aFilter).map (aConverter).collect (Collectors.toSet ());
   }
 
   @Nonnull
@@ -106,13 +125,28 @@ public final class ContainerConversionHelper
 
   @Nonnull
   @ReturnsImmutableObject
+  public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newUnmodifiableSet (@Nonnull final Collection <? extends SRCTYPE> aCont,
+                                                                     @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return ContainerHelper.makeUnmodifiable (newSet (aCont, aConverter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
   public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newUnmodifiableSet (@Nonnull final Iterable <? extends SRCTYPE> aCont,
                                                                      @Nonnull final IFilter <? super SRCTYPE> aFilter,
                                                                      @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    return ContainerHelper.makeUnmodifiable (ContainerConversionHelper.<SRCTYPE, DSTTYPE> newSet (aCont,
-                                                                                                  aFilter,
-                                                                                                  aConverter));
+    return ContainerHelper.makeUnmodifiable (newSet (aCont, aFilter, aConverter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <SRCTYPE, DSTTYPE> Set <DSTTYPE> newUnmodifiableSet (@Nonnull final Collection <? extends SRCTYPE> aCont,
+                                                                     @Nonnull final IFilter <? super SRCTYPE> aFilter,
+                                                                     @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return ContainerHelper.makeUnmodifiable (newSet (aCont, aFilter, aConverter));
   }
 
   @Nonnull
@@ -172,9 +206,7 @@ public final class ContainerConversionHelper
                                                                             @Nonnull final IFilter <? super SRCTYPE> aFilter,
                                                                             @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    return ContainerHelper.makeUnmodifiable (ContainerConversionHelper.<SRCTYPE, DSTTYPE> newOrderedSet (aCont,
-                                                                                                         aFilter,
-                                                                                                         aConverter));
+    return ContainerHelper.makeUnmodifiable (newOrderedSet (aCont, aFilter, aConverter));
   }
 
   @Nonnull
@@ -187,6 +219,14 @@ public final class ContainerConversionHelper
       for (final SRCTYPE aIn : aCont)
         ret.add (aConverter.convert (aIn));
     return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <SRCTYPE, DSTTYPE> List <DSTTYPE> newList (@Nullable final Collection <? extends SRCTYPE> aCont,
+                                                           @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return aCont.stream ().map (aConverter).collect (Collectors.toList ());
   }
 
   @Nonnull
@@ -216,8 +256,25 @@ public final class ContainerConversionHelper
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public static <SRCTYPE, DSTTYPE> List <DSTTYPE> newList (@Nullable final Collection <? extends SRCTYPE> aCont,
+                                                           @Nonnull final IFilter <? super SRCTYPE> aFilter,
+                                                           @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return aCont.stream ().filter (aFilter).map (aConverter).collect (Collectors.toList ());
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
   public static <SRCTYPE, DSTTYPE> List <DSTTYPE> newUnmodifiableList (@Nullable final Iterable <? extends SRCTYPE> aCont,
+                                                                       @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return ContainerHelper.makeUnmodifiable (newList (aCont, aConverter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <SRCTYPE, DSTTYPE> List <DSTTYPE> newUnmodifiableList (@Nullable final Collection <? extends SRCTYPE> aCont,
                                                                        @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
     return ContainerHelper.makeUnmodifiable (newList (aCont, aConverter));
@@ -237,14 +294,21 @@ public final class ContainerConversionHelper
                                                                        @Nonnull final IFilter <? super SRCTYPE> aFilter,
                                                                        @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    return ContainerHelper.makeUnmodifiable (ContainerConversionHelper.<SRCTYPE, DSTTYPE> newList (aCont,
-                                                                                                   aFilter,
-                                                                                                   aConverter));
+    return ContainerHelper.makeUnmodifiable (newList (aCont, aFilter, aConverter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <SRCTYPE, DSTTYPE> List <DSTTYPE> newUnmodifiableList (@Nullable final Collection <? extends SRCTYPE> aCont,
+                                                                       @Nonnull final IFilter <? super SRCTYPE> aFilter,
+                                                                       @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
+  {
+    return ContainerHelper.makeUnmodifiable (newList (aCont, aFilter, aConverter));
   }
 
   /**
    * Convert the given iterator to a sorted list.
-   * 
+   *
    * @param <SRCTYPE>
    *        The type of elements to iterate (source).
    * @param <DSTTYPE>
@@ -272,7 +336,7 @@ public final class ContainerConversionHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   * 
+   *
    * @param <SRCTYPE>
    *        The type of elements to iterate (source).
    * @param <DSTTYPE>
@@ -304,7 +368,36 @@ public final class ContainerConversionHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   * 
+   *
+   * @param <SRCTYPE>
+   *        The type of elements to iterate (source).
+   * @param <DSTTYPE>
+   *        The type of elements to return (destination).
+   * @param it
+   *        Input iterator. May not be <code>null</code>.
+   * @param aConverter
+   *        The converter to be used. May not be <code>null</code>.
+   * @param aComparator
+   *        The comparator to use. May not be <code>null</code>.
+   * @return a non-null {@link ArrayList} based on the results of
+   *         {@link ContainerHelper#getSortedInline(List, Comparator)}.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <SRCTYPE, DSTTYPE> List <DSTTYPE> getSorted (@Nonnull final Collection <? extends SRCTYPE> it,
+                                                             @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter,
+                                                             @Nonnull final Comparator <? super DSTTYPE> aComparator)
+  {
+    ValueEnforcer.notNull (it, "Iterator");
+    ValueEnforcer.notNull (aConverter, "Converter");
+    ValueEnforcer.notNull (aComparator, "Comparator");
+
+    return it.stream ().map (aConverter).sorted (aComparator).collect (Collectors.toList ());
+  }
+
+  /**
+   * Convert the given iterator to a sorted list.
+   *
    * @param <SRCTYPE>
    *        The type of elements to iterate (source).
    * @param <DSTTYPE>
@@ -332,7 +425,7 @@ public final class ContainerConversionHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   * 
+   *
    * @param <SRCTYPE>
    *        The type of elements to iterate (source).
    * @param <DSTTYPE>

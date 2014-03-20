@@ -26,12 +26,13 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An abstract implementation of {@link ISerializableFilter} that has an
  * optional nested filter.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to filter.
  */
 @NotThreadSafe
+@Deprecated
 public abstract class AbstractSerializableFilter <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
   private final ISerializableFilter <DATATYPE> m_aNestedFilter;
@@ -48,7 +49,7 @@ public abstract class AbstractSerializableFilter <DATATYPE> implements ISerializ
 
   /**
    * This is the method to be implemented to match this filter.
-   * 
+   *
    * @param aValue
    *        The value to be matched
    * @return <code>true</code> if the value matches the filter

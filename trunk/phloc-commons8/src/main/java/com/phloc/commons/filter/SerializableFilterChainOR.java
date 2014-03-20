@@ -37,6 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type to be filtered.
  */
 @Immutable
+@Deprecated
 public final class SerializableFilterChainOR <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
   private final List <? extends ISerializableFilter <? super DATATYPE>> m_aFilters;
@@ -55,9 +56,9 @@ public final class SerializableFilterChainOR <DATATYPE> implements ISerializable
   @Nonnull
   @ReturnsMutableCopy
   public List <? extends ISerializableFilter <? super DATATYPE>> getContainedFilters ()
-               {
+  {
     return ContainerHelper.newList (m_aFilters);
-               }
+  }
 
   public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {

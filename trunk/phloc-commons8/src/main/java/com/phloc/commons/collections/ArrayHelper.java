@@ -211,6 +211,7 @@ public final class ArrayHelper
    *        The array who's size is to be queried. May be <code>null</code>.
    * @return 0 if the passed array is <code>null</code> - it's length otherwise.
    */
+  @SafeVarargs
   @Nonnegative
   public static <ELEMENTTYPE> int getSize (@Nullable final ELEMENTTYPE... aArray)
   {
@@ -311,6 +312,7 @@ public final class ArrayHelper
    * @return <code>true</code> if the passed array is <code>null</code> or
    *         empty.
    */
+  @SafeVarargs
   public static <ELEMENTTYPE> boolean isEmpty (@Nullable final ELEMENTTYPE... aArray)
   {
     return getSize (aArray) == 0;
@@ -410,6 +412,7 @@ public final class ArrayHelper
    * @return <code>false</code> if the passed array is <code>null</code> or
    *         empty.
    */
+  @SafeVarargs
   public static <ELEMENTTYPE> boolean isNotEmpty (@Nullable final ELEMENTTYPE... aArray)
   {
     return getSize (aArray) > 0;
@@ -1059,6 +1062,7 @@ public final class ArrayHelper
    * @return <code>null</code> if the passed array is <code>null</code> or empty
    *         - the first element otherwise (may also be <code>null</code>).
    */
+  @SafeVarargs
   @Nullable
   public static <ELEMENTTYPE> ELEMENTTYPE getFirst (@Nullable final ELEMENTTYPE... aArray)
   {
@@ -1238,6 +1242,7 @@ public final class ArrayHelper
    * @return <code>null</code> if the passed array is <code>null</code> or empty
    *         - the last element otherwise (may also be <code>null</code>).
    */
+  @SafeVarargs
   @Nullable
   public static <ELEMENTTYPE> ELEMENTTYPE getLast (@Nullable final ELEMENTTYPE... aArray)
   {
@@ -1816,6 +1821,7 @@ public final class ArrayHelper
    * @return <code>null</code> if the passed array is <code>null</code> - a non-
    *         <code>null</code> copy otherwise.
    */
+  @SafeVarargs
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] getCopy (@Nullable final ELEMENTTYPE... aArray)
@@ -2692,6 +2698,7 @@ public final class ArrayHelper
    *         less than one element. A non-<code>null</code> copy of the array
    *         without the first element otherwise.
    */
+  @SafeVarargs
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] getAllExceptFirst (@Nullable final ELEMENTTYPE... aArray)
@@ -3308,6 +3315,7 @@ public final class ArrayHelper
    *         less than one element. A non-<code>null</code> copy of the array
    *         without the last element otherwise.
    */
+  @SafeVarargs
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] getAllExceptLast (@Nullable final ELEMENTTYPE... aArray)
@@ -3882,6 +3890,7 @@ public final class ArrayHelper
    *        The vararg array
    * @return The wrapped array
    */
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableObject (reason = "use getCopy otherwise")
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final ELEMENTTYPE... aArray)

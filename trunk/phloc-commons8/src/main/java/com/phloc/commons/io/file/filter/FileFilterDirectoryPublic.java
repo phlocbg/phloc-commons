@@ -29,9 +29,10 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A file filter that matches if the passed file is a directory and is public,
  * meaning it does not start with "." (hidden directory on Unix systems)
- * 
+ *
  * @author Philip Helger
  */
+@Deprecated
 @NotThreadSafe
 public final class FileFilterDirectoryPublic extends AbstractFileFilter
 {
@@ -45,7 +46,7 @@ public final class FileFilterDirectoryPublic extends AbstractFileFilter
     return s_aInstance;
   }
 
-  public boolean accept (@Nullable final File aFile)
+  public boolean matchesFilter (@Nullable final File aFile)
   {
     return aFile != null && aFile.isDirectory () && !FilenameHelper.isHiddenFilename (aFile);
   }

@@ -33,10 +33,11 @@ import com.phloc.commons.string.ToStringGenerator;
  * A filename filter that checks whether a file does not have the specified
  * name. The implementation is done via {@link String#equals(Object)} so it is
  * case sensitive.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterNotEquals implements FilenameFilter
 {
   private final String m_sFilename;

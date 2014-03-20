@@ -20,14 +20,13 @@ package com.phloc.commons.io.file.filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FilenameFilter;
 
 import org.junit.Test;
 
+import com.phloc.commons.filter.FilterChainAND;
+import com.phloc.commons.filter.FilterChainOR;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -35,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FileFilterToIFilterAdapter}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FileFilterToIFilterAdapterTest
@@ -44,23 +43,7 @@ public final class FileFilterToIFilterAdapterTest
   @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
-    try
-    {
-      new FileFilterToIFilterAdapter ((FilenameFilter) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    try
-    {
-      new FileFilterToIFilterAdapter ((FileFilter) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    IFilter <File> aFilter = new FileFilterToIFilterAdapter (FileFilterParentDirectoryPublic.getInstance ());
+    IFilter <File> aFilter = FileFilters.getParentDirectoryPublic ();
 
     // file
     assertTrue (aFilter.matchesFilter (new File ("pom.xml")));
@@ -73,8 +56,7 @@ public final class FileFilterToIFilterAdapterTest
 
     PhlocTestUtils.testToStringImplementation (aFilter);
 
-    aFilter = FileFilterToIFilterAdapter.getANDChained (FileFilterParentDirectoryPublic.getInstance (),
-                                                        FileFilterFileOnly.getInstance ());
+    aFilter = new FilterChainAND <> (FileFilters.getParentDirectoryPublic (), FileFilters.getFileOnly ());
     assertNotNull (aFilter);
 
     // file
@@ -88,8 +70,7 @@ public final class FileFilterToIFilterAdapterTest
 
     PhlocTestUtils.testToStringImplementation (aFilter);
 
-    aFilter = FileFilterToIFilterAdapter.getORChained (FileFilterParentDirectoryPublic.getInstance (),
-                                                       FileFilterFileOnly.getInstance ());
+    aFilter = new FilterChainOR <> (FileFilters.getParentDirectoryPublic (), FileFilters.getFileOnly ());
     assertNotNull (aFilter);
 
     // file
@@ -102,35 +83,5 @@ public final class FileFilterToIFilterAdapterTest
     assertFalse (aFilter.matchesFilter (null));
 
     PhlocTestUtils.testToStringImplementation (aFilter);
-
-    try
-    {
-      FileFilterToIFilterAdapter.getANDChained ((FileFilter []) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-    try
-    {
-      FileFilterToIFilterAdapter.getANDChained (new FileFilter [0]);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      FileFilterToIFilterAdapter.getORChained ((FileFilter []) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-    try
-    {
-      FileFilterToIFilterAdapter.getORChained (new FileFilter [0]);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
   }
 }

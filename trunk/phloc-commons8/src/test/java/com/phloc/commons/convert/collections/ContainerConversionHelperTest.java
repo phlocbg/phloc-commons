@@ -29,13 +29,13 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
-import com.phloc.commons.filter.FilterNotNull;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.string.StringParser;
 
@@ -130,7 +130,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   public void testNewSetIterableWithFilterAndConverter ()
   {
     Set <Integer> aSet = ContainerConversionHelper.newSet (ContainerHelper.newList ("100", null, "-733"),
-                                                           FilterNotNull.getInstance (),
+                                                           Objects::isNull,
                                                            a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
@@ -138,7 +138,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newUnmodifiableSet (ContainerHelper.newList ("100", null, "-733"),
-                                                         FilterNotNull.getInstance (),
+                                                         Objects::nonNull,
                                                          a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
@@ -146,7 +146,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newOrderedSet (ContainerHelper.newList ("100", null, "-733"),
-                                                    FilterNotNull.getInstance (),
+                                                    Objects::nonNull,
                                                     a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
@@ -154,7 +154,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aSet.contains (Integer.valueOf (-733)));
 
     aSet = ContainerConversionHelper.newUnmodifiableOrderedSet (ContainerHelper.newList ("100", null, "-733"),
-                                                                FilterNotNull.getInstance (),
+                                                                Objects::nonNull,
                                                                 a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
@@ -217,7 +217,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aSource.add ("-721"));
 
     List <Integer> aList = ContainerConversionHelper.newList (aSource,
-                                                              FilterNotNull.getInstance (),
+                                                              Objects::nonNull,
                                                               a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
@@ -225,14 +225,12 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
     assertTrue (aList.contains (Integer.valueOf (-721)));
 
     aList = ContainerConversionHelper.newList (new ArrayList <String> (),
-                                               FilterNotNull.getInstance (),
+                                               Objects::nonNull,
                                                a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertTrue (aList.isEmpty ());
 
-    aList = ContainerConversionHelper.newUnmodifiableList (aSource,
-                                                           FilterNotNull.getInstance (),
-                                                           a -> StringParser.parseIntObj (a));
+    aList = ContainerConversionHelper.newUnmodifiableList (aSource, Objects::nonNull, a -> StringParser.parseIntObj (a));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertTrue (aList.contains (Integer.valueOf (100)));

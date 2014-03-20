@@ -27,12 +27,13 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A filter implementation that always returns <code>false</code>.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to filter
  */
 @Immutable
+@Deprecated
 public final class FilterFalse <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
   private static final FilterFalse <Object> s_aInstance = new FilterFalse <Object> ();

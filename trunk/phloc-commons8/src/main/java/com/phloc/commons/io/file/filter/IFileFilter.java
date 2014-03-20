@@ -18,42 +18,30 @@
 package com.phloc.commons.io.file.filter;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.ThreadSafe;
 
-import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.io.file.FilenameHelper;
 
 /**
- * A filename filter that declines all files.
+ * Abstract base implementation of {@link FileFilter} with some conversion
+ * methods. Also implements {@link IFilter} and forwards the calls to the
+ * {@link FileFilter} API.
  *
  * @author Philip Helger
  */
-@ThreadSafe
-@Deprecated
-public final class FilenameFilterAlwaysFalse implements FilenameFilter
+public interface IFileFilter extends IFilter <File>, FileFilter, FilenameFilter
 {
-  private static final FilenameFilterAlwaysFalse s_aInstance = new FilenameFilterAlwaysFalse ();
-
-  private FilenameFilterAlwaysFalse ()
-  {}
-
-  @Nonnull
-  public static FilenameFilterAlwaysFalse getInstance ()
+  default boolean accept (@Nullable final File aFile)
   {
-    return s_aInstance;
+    return matchesFilter (aFile);
   }
 
-  public boolean accept (@Nullable final File aDir, @Nullable final String sName)
+  default boolean accept (final File dir, final String name)
   {
-    return false;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).toString ();
+    return matchesFilter (new File (dir, FilenameHelper.getSecureFilename (name)));
   }
 }

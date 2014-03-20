@@ -26,12 +26,13 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A filter implementation that inverts the result of another filter.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to filter
  */
 @Immutable
+@Deprecated
 public final class FilterInverted <DATATYPE> implements IFilter <DATATYPE>
 {
   private final IFilter <DATATYPE> m_aOriginalFilter;

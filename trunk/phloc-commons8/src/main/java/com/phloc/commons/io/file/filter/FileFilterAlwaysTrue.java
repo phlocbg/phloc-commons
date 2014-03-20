@@ -28,9 +28,10 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A file filter that accepts all elements.
- * 
+ *
  * @author Philip Helger
  */
+@Deprecated
 @NotThreadSafe
 public final class FileFilterAlwaysTrue extends AbstractFileFilter
 {
@@ -45,7 +46,7 @@ public final class FileFilterAlwaysTrue extends AbstractFileFilter
     return s_aInstance;
   }
 
-  public boolean accept (@Nullable final File aFile)
+  public boolean matchesFilter (@Nullable final File aFile)
   {
     return true;
   }
