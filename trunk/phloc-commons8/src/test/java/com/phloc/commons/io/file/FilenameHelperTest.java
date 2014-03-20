@@ -27,14 +27,13 @@ import java.io.File;
 
 import org.junit.Test;
 
-import com.phloc.commons.charset.CSpecialChars;
 import com.phloc.commons.system.EOperatingSystem;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FilenameHelper}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FilenameHelperTest
@@ -355,11 +354,8 @@ public final class FilenameHelperTest
     assertEquals ("ab_c", FilenameHelper.getAsSecureValidASCIIFilename ("ab\"c"));
 
     // Test Umlauts
-    assertEquals ("___",
-                  FilenameHelper.getAsSecureValidASCIIFilename (CSpecialChars.AUML_LC_STR +
-                                                                CSpecialChars.OUML_LC +
-                                                                CSpecialChars.UUML_LC));
-    assertEquals ("h_user.txt", FilenameHelper.getAsSecureValidASCIIFilename ("h" + CSpecialChars.AUML_LC + "user.txt"));
+    assertEquals ("___", FilenameHelper.getAsSecureValidASCIIFilename ("äöü"));
+    assertEquals ("h_user.txt", FilenameHelper.getAsSecureValidASCIIFilename ("häuser.txt"));
   }
 
   /**
