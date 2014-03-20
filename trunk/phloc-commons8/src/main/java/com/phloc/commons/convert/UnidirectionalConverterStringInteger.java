@@ -15,27 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.encode;
+package com.phloc.commons.convert;
 
 import javax.annotation.Nullable;
 
+import com.phloc.commons.string.StringParser;
+
 /**
- * The most basic encoding interface
+ * Get a generic data converter that converts a string to an Integer. If the
+ * conversion fails, the default value is returned from the converter.
  *
- * @param <DATATYPE>
- *        data type
  * @author Philip Helger
  */
-@FunctionalInterface
-public interface IEncoder <DATATYPE>
+@Deprecated
+public final class UnidirectionalConverterStringInteger implements IUnidirectionalConverter <String, Integer>
 {
-  /**
-   * Encode the passed source object
-   *
-   * @param aInput
-   *        The source object to be encoded
-   * @return The encoded value.
-   */
+  private final Integer m_aDefaultValue;
+
+  public UnidirectionalConverterStringInteger (@Nullable final Integer aDefaultValue)
+  {
+    m_aDefaultValue = aDefaultValue;
+  }
+
   @Nullable
-  DATATYPE encode (@Nullable DATATYPE aInput);
+  public Integer convert (@Nullable final String sInput)
+  {
+    return StringParser.parseIntObj (sInput, m_aDefaultValue);
+  }
 }

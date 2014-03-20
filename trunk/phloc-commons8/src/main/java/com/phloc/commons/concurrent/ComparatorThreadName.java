@@ -29,10 +29,11 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * {@link java.util.Comparator} for ordering {@link Thread} objects by their
  * name.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated
 public final class ComparatorThreadName extends AbstractCollationComparator <Thread>
 {
   public ComparatorThreadName (@Nullable final Locale aSortLocale)

@@ -28,6 +28,7 @@ import java.util.function.Function;
  *        destination type
  * @author Philip Helger
  */
+@FunctionalInterface
 public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE> extends Function <SRCTYPE, DSTTYPE>
 {
   /**

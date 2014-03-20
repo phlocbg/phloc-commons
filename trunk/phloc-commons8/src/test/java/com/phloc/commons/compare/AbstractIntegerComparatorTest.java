@@ -18,61 +18,32 @@
 package com.phloc.commons.compare;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-
-import javax.annotation.Nullable;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.phloc.commons.CGlobal;
-import com.phloc.commons.collections.ContainerHelper;
-
 /**
- * Test class for {@link AbstractIntegerComparator}
+ * Test class
  *
  * @author Philip Helger
  */
 public final class AbstractIntegerComparatorTest
 {
-  private static final class ComparatorMockNumeric extends AbstractIntegerComparator <Integer>
-  {
-    ComparatorMockNumeric ()
-    {}
-
-    ComparatorMockNumeric (final ESortOrder eSortOrder)
-    {
-      super (eSortOrder);
-    }
-
-    @Override
-    protected long asLong (@Nullable final Integer aInt)
-    {
-      return aInt == null ? CGlobal.ILLEGAL_ULONG : aInt.longValue ();
-    }
-  }
-
   @Test
   public void testAll ()
   {
     final Integer [] x = new Integer [] { Integer.valueOf (3),
-                                         Integer.valueOf (3),
-                                         Integer.valueOf (-56),
-                                         Integer.valueOf (1) };
+                                          Integer.valueOf (3),
+                                          Integer.valueOf (-56),
+                                          Integer.valueOf (1) };
 
     // default: sort ascending
-    List <Integer> l = ContainerHelper.getSorted (x, new ComparatorMockNumeric ());
-    assertNotNull (l);
-    assertEquals (-56, l.get (0).intValue ());
-    assertEquals (1, l.get (1).intValue ());
-    assertEquals (3, l.get (2).intValue ());
-    assertEquals (3, l.get (3).intValue ());
-
-    // Explicitly sort ascending
-    l = ContainerHelper.getSorted (x, new ComparatorMockNumeric (ESortOrder.ASCENDING));
+    List <Integer> l = Arrays.stream (x).sorted ().collect (Collectors.toList ());
     assertNotNull (l);
     assertEquals (-56, l.get (0).intValue ());
     assertEquals (1, l.get (1).intValue ());
@@ -80,36 +51,13 @@ public final class AbstractIntegerComparatorTest
     assertEquals (3, l.get (3).intValue ());
 
     // Explicitly sort descending
-    l = ContainerHelper.getSorted (x, new ComparatorMockNumeric (ESortOrder.DESCENDING));
+    l = Arrays.stream (x)
+              .sorted (Comparator.comparing (p -> Integer.valueOf (-p.intValue ())))
+              .collect (Collectors.toList ());
     assertNotNull (l);
     assertEquals (3, l.get (0).intValue ());
     assertEquals (3, l.get (1).intValue ());
     assertEquals (1, l.get (2).intValue ());
     assertEquals (-56, l.get (3).intValue ());
-
-    // change dynamically
-    final ComparatorMockNumeric c = new ComparatorMockNumeric (ESortOrder.ASCENDING);
-    l = ContainerHelper.getSorted (x, c);
-    assertEquals (-56, l.get (0).intValue ());
-    assertEquals (1, l.get (1).intValue ());
-    assertEquals (3, l.get (2).intValue ());
-    assertEquals (3, l.get (3).intValue ());
-
-    // change to descending
-    l = ContainerHelper.getSorted (x, c.setSortOrder (ESortOrder.DESCENDING));
-    assertEquals (3, l.get (0).intValue ());
-    assertEquals (3, l.get (1).intValue ());
-    assertEquals (1, l.get (2).intValue ());
-    assertEquals (-56, l.get (3).intValue ());
-  }
-
-  /**
-   * Test for method isAscending
-   */
-  @Test
-  public void testIsAscending ()
-  {
-    assertTrue (new ComparatorMockNumeric ().getSortOrder ().isAscending ());
-    assertFalse (new ComparatorMockNumeric (ESortOrder.DESCENDING).getSortOrder ().isAscending ());
   }
 }

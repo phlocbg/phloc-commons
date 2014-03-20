@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a double value.
  */
+@Deprecated
 public abstract class AbstractNumericComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
   public AbstractNumericComparator ()

@@ -150,7 +150,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues. The used
-   * char set is determined by {@link #CHARSET_URL}.
+   * char set is determined by {@link #CHARSET_URL_OBJ}.
    *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
@@ -248,7 +248,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues. The used
-   * char set is determined by {@link #CHARSET_URL}.
+   * char set is determined by {@link #CHARSET_URL_OBJ}.
    *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.

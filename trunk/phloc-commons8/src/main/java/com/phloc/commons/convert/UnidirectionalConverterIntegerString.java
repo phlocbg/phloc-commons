@@ -15,27 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.encode;
+package com.phloc.commons.convert;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * The most basic encoding interface
+ * A unidirectional converter that converts an {@link Integer} object to a
+ * {@link String}.
  *
- * @param <DATATYPE>
- *        data type
  * @author Philip Helger
  */
-@FunctionalInterface
-public interface IEncoder <DATATYPE>
+@Deprecated
+public final class UnidirectionalConverterIntegerString implements IUnidirectionalConverter <Integer, String>
 {
-  /**
-   * Encode the passed source object
-   *
-   * @param aInput
-   *        The source object to be encoded
-   * @return The encoded value.
-   */
+  private static final UnidirectionalConverterIntegerString s_aInstance = new UnidirectionalConverterIntegerString ();
+
+  private UnidirectionalConverterIntegerString ()
+  {}
+
   @Nullable
-  DATATYPE encode (@Nullable DATATYPE aInput);
+  public String convert (@Nullable final Integer aInput)
+  {
+    return aInput == null ? null : aInput.toString ();
+  }
+
+  @Nonnull
+  public static UnidirectionalConverterIntegerString getInstance ()
+  {
+    return s_aInstance;
+  }
 }

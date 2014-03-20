@@ -39,7 +39,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    *
    * @param aNode
    *        The node to be streamed. May not be <code>null</code>.
-   * @see XMLWriterSettings#DEFAULT_XML_CHARSET
+   * @see XMLWriterSettings#DEFAULT_XML_SETTINGS
    */
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode)
   {

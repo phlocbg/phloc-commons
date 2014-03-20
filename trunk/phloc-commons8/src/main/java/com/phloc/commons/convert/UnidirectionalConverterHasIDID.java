@@ -15,27 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.encode;
+package com.phloc.commons.convert;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.id.IHasID;
+
 /**
- * The most basic encoding interface
+ * A unidirectional converter that extracts the ID from an object implementing
+ * {@link IHasID}.
  *
- * @param <DATATYPE>
- *        data type
  * @author Philip Helger
+ * @param <DATATYPE>
+ *        The ID type
  */
-@FunctionalInterface
-public interface IEncoder <DATATYPE>
+@Deprecated
+public final class UnidirectionalConverterHasIDID <DATATYPE> implements IUnidirectionalConverter <IHasID <DATATYPE>, DATATYPE>
 {
-  /**
-   * Encode the passed source object
-   *
-   * @param aInput
-   *        The source object to be encoded
-   * @return The encoded value.
-   */
   @Nullable
-  DATATYPE encode (@Nullable DATATYPE aInput);
+  public DATATYPE convert (@Nullable final IHasID <DATATYPE> aInput)
+  {
+    return aInput == null ? null : aInput.getID ();
+  }
+
+  @Nonnull
+  public static <DATATYPE> UnidirectionalConverterHasIDID <DATATYPE> create ()
+  {
+    return new UnidirectionalConverterHasIDID <DATATYPE> ();
+  }
 }
