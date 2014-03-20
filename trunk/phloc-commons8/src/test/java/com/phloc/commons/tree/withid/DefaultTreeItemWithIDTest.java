@@ -25,16 +25,16 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemWithIDDataComparable;
-import com.phloc.commons.tree.utils.sort.ComparatorTreeItemIDComparable;
 
 /**
  * Test class for class {@link DefaultTreeItemWithID}.
- * 
+ *
  * @author Philip Helger
  */
 public final class DefaultTreeItemWithIDTest
@@ -152,7 +152,7 @@ public final class DefaultTreeItemWithIDTest
 
     // no items yet....
     assertFalse (ti.hasChildren ());
-    ti.reorderChildrenByItems (new ComparatorDefaultTreeItemWithIDDataComparable <String, String> ());
+    ti.reorderChildrenByItems (Comparator.comparing (p -> p.getData ()));
     assertFalse (ti.hasChildren ());
 
     // add 2 items
@@ -168,7 +168,7 @@ public final class DefaultTreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorDefaultTreeItemWithIDDataComparable <String, String> ());
+    ti.reorderChildrenByItems (Comparator.comparing (p -> p.getData ()));
 
     // check new order
     assertEquals (2, ti.getChildCount ());
@@ -202,7 +202,7 @@ public final class DefaultTreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorTreeItemIDComparable <String, String, DefaultTreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (Comparator.comparing (p -> p.getData ()));
 
     // check new order
     assertEquals (2, ti.getChildCount ());

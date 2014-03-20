@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An implementation of {@link IFilter} that chains multiple instances of
  * {@link IFilter} with an <b>OR</b> operator.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type to be filtered.
@@ -41,6 +41,7 @@ public final class FilterChainOR <DATATYPE> implements IFilter <DATATYPE>
 {
   private final List <? extends IFilter <? super DATATYPE>> m_aFilters;
 
+  @SafeVarargs
   public FilterChainOR (@Nullable final IFilter <? super DATATYPE>... aFilters)
   {
     m_aFilters = ContainerHelper.newList (aFilters);
@@ -89,6 +90,7 @@ public final class FilterChainOR <DATATYPE> implements IFilter <DATATYPE>
     return new ToStringGenerator (this).append ("filters", m_aFilters).toString ();
   }
 
+  @SafeVarargs
   @Nonnull
   public static <DATATYPE> FilterChainOR <DATATYPE> create (@Nullable final IFilter <? super DATATYPE>... aFilters)
   {

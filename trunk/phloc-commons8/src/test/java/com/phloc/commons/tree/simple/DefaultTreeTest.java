@@ -24,14 +24,15 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemComparable;
 
 /**
  * Test class for class {@link DefaultTree}.
- * 
+ *
  * @author Philip Helger
  */
 public final class DefaultTreeTest
@@ -100,7 +101,7 @@ public final class DefaultTreeTest
 
     // no items yet....
     assertFalse (ti.hasChildren ());
-    ti.reorderChildItems (new ComparatorDefaultTreeItemComparable <String> ());
+    ti.reorderChildItems (Comparator.comparing (p -> p.getData ()));
     assertFalse (ti.hasChildren ());
 
     // add 2 items
@@ -114,7 +115,7 @@ public final class DefaultTreeTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildItems (new ComparatorDefaultTreeItemComparable <String> ());
+    ti.reorderChildItems (Comparator.comparing (p -> p.getData ()));
 
     // check new order
     assertEquals (2, ti.getChildCount ());

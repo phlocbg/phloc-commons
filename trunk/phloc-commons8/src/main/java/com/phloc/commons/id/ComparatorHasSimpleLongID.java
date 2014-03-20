@@ -32,6 +32,7 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
+@Deprecated
 public class ComparatorHasSimpleLongID <DATATYPE extends IHasSimpleLongID> extends AbstractIntegerComparator <DATATYPE>
 {
   /**

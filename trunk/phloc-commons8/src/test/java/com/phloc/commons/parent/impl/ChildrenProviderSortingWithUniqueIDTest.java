@@ -24,15 +24,16 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
-import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.parent.MockChildrenProviderWithUniqueID;
 import com.phloc.commons.parent.MockHasChildren;
 
 /**
  * Test class for class {@link ChildrenProviderSortingWithUniqueID}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ChildrenProviderSortingWithUniqueIDTest
@@ -46,7 +47,7 @@ public final class ChildrenProviderSortingWithUniqueIDTest
     final ChildrenProviderSortingWithUniqueID <String, MockHasChildren> cr = new ChildrenProviderSortingWithUniqueID <String, MockHasChildren> (new MockChildrenProviderWithUniqueID (hca,
                                                                                                                                                                                       hcb,
                                                                                                                                                                                       hc1),
-                                                                                                                                                new ComparatorHasIDString <MockHasChildren> ());
+                                                                                                                                                Comparator.comparing (MockHasChildren::getID));
     assertFalse (cr.hasChildren (null));
     assertEquals (0, cr.getChildCount (null));
     assertNull (cr.getChildren (null));
