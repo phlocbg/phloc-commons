@@ -28,12 +28,12 @@ import java.util.NoSuchElementException;
 import org.junit.Test;
 
 import com.phloc.commons.collections.iterate.IIterableIterator;
-import com.phloc.commons.io.file.filter.FileFilterFileOnly;
+import com.phloc.commons.io.file.filter.FileFilters;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link FileSystemRecursiveIterator}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FileSystemRecursiveIteratorTest
@@ -84,16 +84,14 @@ public final class FileSystemRecursiveIteratorTest
     PhlocTestUtils.testToStringImplementation (it);
 
     // With one filter
-    it = FileSystemRecursiveIterator.create (new File ("."), FileFilterFileOnly.getInstance ());
+    it = FileSystemRecursiveIterator.create (new File ("."), FileFilters.getFileOnly ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())
       it.next ();
 
     // With one filter
-    it = FileSystemRecursiveIterator.create (new File ("."),
-                                             FileFilterFileOnly.getInstance (),
-                                             FileFilterFileOnly.getInstance ());
+    it = FileSystemRecursiveIterator.create (new File ("."), FileFilters.getFileOnly (), FileFilters.getFileOnly ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())

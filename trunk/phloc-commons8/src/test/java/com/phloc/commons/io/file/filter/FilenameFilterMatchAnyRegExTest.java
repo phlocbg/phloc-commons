@@ -20,37 +20,22 @@ package com.phloc.commons.io.file.filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FilenameFilter;
 
 import org.junit.Test;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Test class for class {@link FilenameFilterMatchAnyRegEx}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FilenameFilterMatchAnyRegExTest
 {
-
   @Test
-  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
-    try
-    {
-      // null not allowed
-      new FilenameFilterMatchAnyRegEx ((String []) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    final FilenameFilter ff = new FilenameFilterMatchAnyRegEx (".*htm$");
+    final IFileFilter ff = FileFilters.getNameMatchAnyRegEx (".*htm$");
     assertNotNull (ff);
     assertTrue (ff.accept (null, "file.htm"));
     assertTrue (ff.accept (new File ("dir"), "file.htm"));

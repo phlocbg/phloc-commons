@@ -37,11 +37,12 @@ public interface IFileFilter extends IFilter <File>, FileFilter, FilenameFilter
 {
   default boolean accept (@Nullable final File aFile)
   {
-    return matchesFilter (aFile);
+    return aFile != null && matchesFilter (aFile);
   }
 
-  default boolean accept (final File dir, final String name)
+  default boolean accept (final File aDir, final String sName)
   {
-    return matchesFilter (new File (dir, FilenameHelper.getSecureFilename (name)));
+    final String sRealName = FilenameHelper.getSecureFilename (sName);
+    return sRealName != null && matchesFilter (new File (aDir, sRealName));
   }
 }

@@ -40,6 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @ThreadSafe
+@Deprecated
 public final class FilenameFilterMatchAnyRegEx implements FilenameFilter
 {
   private final List <String> m_aRegExs;
@@ -64,9 +65,8 @@ public final class FilenameFilterMatchAnyRegEx implements FilenameFilter
   public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)
   {
     final String sRealName = FilenameHelper.getSecureFilename (sName);
-    if (sRealName == null)
-      return false;
-    return m_aRegExs.stream ().filter (p -> RegExHelper.stringMatchesPattern (p, sRealName)).findFirst ().isPresent ();
+    return sRealName != null &&
+        m_aRegExs.stream ().filter (p -> RegExHelper.stringMatchesPattern (p, sRealName)).findFirst ().isPresent ();
   }
 
   @Override

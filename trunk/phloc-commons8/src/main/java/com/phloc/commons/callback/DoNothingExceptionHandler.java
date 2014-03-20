@@ -24,9 +24,10 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A specific implementation of the {@link IExceptionHandler} interface, that
  * swallows all exceptions and does nothing.
- * 
+ *
  * @author Philip Helger
  */
+@Deprecated
 public final class DoNothingExceptionHandler implements IExceptionHandler <Throwable>
 {
   public void onException (@Nullable final Throwable t)

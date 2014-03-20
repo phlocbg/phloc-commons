@@ -19,17 +19,15 @@ package com.phloc.commons.io.file.filter;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import org.junit.Test;
 
 /**
  * Test class for class {@link FileFilterFileOnly}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FileFilterFileOnlyTest
@@ -37,7 +35,7 @@ public final class FileFilterFileOnlyTest
   @Test
   public void testGetFilterFileOnly ()
   {
-    final FileFilter aFilter = FileFilterFileOnly.getInstance ();
+    final IFileFilter aFilter = FileFilters.getFileOnly ();
     assertNotNull (aFilter);
 
     // file
@@ -48,7 +46,5 @@ public final class FileFilterFileOnlyTest
     assertFalse (aFilter.accept (new File ("src")));
     // null
     assertFalse (aFilter.accept (null));
-
-    assertSame (aFilter, FileFilterFileOnly.getInstance ());
   }
 }
