@@ -34,6 +34,7 @@ import com.phloc.commons.ValueEnforcer;
  * @param <PARTTYPE>
  *        The part type that is extracted from the data element and compared
  */
+@Deprecated
 public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends AbstractComparator <DATATYPE>
 {
   private final Comparator <? super PARTTYPE> m_aPartComparator;

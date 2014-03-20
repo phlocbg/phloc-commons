@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
  * @param <DSTTYPE>
  *        The output type.
  */
+@FunctionalInterface
 public interface IAggregator <SRCTYPE, DSTTYPE> extends Function <Collection <SRCTYPE>, DSTTYPE>
 {
   @Nullable

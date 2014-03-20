@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
  * @param <PARTTYPE>
  *        The part type that is extracted from the data element and compared
  */
+@Deprecated
 public abstract class AbstractPartComparatorComparable <DATATYPE, PARTTYPE extends Comparable <? super PARTTYPE>> extends AbstractComparator <DATATYPE>
 {
   /**

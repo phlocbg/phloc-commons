@@ -25,15 +25,15 @@ import com.phloc.commons.compare.ESortOrder;
 
 /**
  * Comparator comparing {@link IReadonlyPair} objects by the first element
- * 
+ *
  * @author Philip Helger
  * @param <DATA1TYPE>
  *        pair first type
  * @param <DATA2TYPE>
  *        pair second type
  */
-public class ComparatorPairFirst <DATA1TYPE extends Comparable <? super DATA1TYPE>, DATA2TYPE> extends
-                                                                                               AbstractPartComparatorComparable <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA1TYPE>
+@Deprecated
+public class ComparatorPairFirst <DATA1TYPE extends Comparable <? super DATA1TYPE>, DATA2TYPE> extends AbstractPartComparatorComparable <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA1TYPE>
 {
   public ComparatorPairFirst ()
   {

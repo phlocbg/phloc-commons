@@ -15,38 +15,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.concurrent;
+package com.phloc.commons.convert;
+
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.CGlobal;
-import com.phloc.commons.compare.AbstractIntegerComparator;
-import com.phloc.commons.compare.ESortOrder;
+import com.phloc.commons.ValueEnforcer;
 
 /**
- * {@link java.util.Comparator} for ordering {@link Thread} objects by their ID.
+ * An implementation of {@link IUnidirectionalConverter} that converts from a
+ * map key to a map value
  *
  * @author Philip Helger
+ * @param <KEYTYPE>
+ *        Map key type
+ * @param <VALUETYPE>
+ *        Map value type
  */
-@NotThreadSafe
 @Deprecated
-public final class ComparatorThreadID extends AbstractIntegerComparator <Thread>
+public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements IUnidirectionalConverter <KEYTYPE, VALUETYPE>
 {
-  public ComparatorThreadID ()
+  private final Map <KEYTYPE, VALUETYPE> m_aMap;
+
+  public UnidirectionalConverterMapGet (@Nonnull final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    super ();
+    m_aMap = ValueEnforcer.notNull (aMap, "Map");
   }
 
-  public ComparatorThreadID (@Nonnull final ESortOrder eSortOrder)
+  @Nullable
+  public VALUETYPE convert (@Nullable final KEYTYPE aKey)
   {
-    super (eSortOrder);
-  }
-
-  @Override
-  protected long asLong (@Nullable final Thread aThread)
-  {
-    return aThread == null ? CGlobal.ILLEGAL_ULONG : aThread.getId ();
+    return m_aMap.get (aKey);
   }
 }

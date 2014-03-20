@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a long value.
  */
+@Deprecated
 public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
   public AbstractIntegerComparator ()

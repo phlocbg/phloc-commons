@@ -18,6 +18,7 @@
 package com.phloc.commons.collections.pair;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -28,7 +29,7 @@ import com.phloc.commons.collections.ContainerHelper;
 
 /**
  * Some pair utils
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -42,7 +43,7 @@ public final class PairUtils
   public static <V1 extends Comparable <? super V1>, V2> List <IReadonlyPair <V1, V2>> getSortedByPairFirst (@Nonnull final Collection <? extends IReadonlyPair <V1, V2>> aList)
   {
     // get sorted entry list
-    return ContainerHelper.getSorted (aList, new ComparatorPairFirst <V1, V2> ());
+    return ContainerHelper.getSorted (aList, Comparator.comparing (p -> p.getFirst ()));
   }
 
   @Nonnull
@@ -50,6 +51,6 @@ public final class PairUtils
   public static <V1, V2 extends Comparable <? super V2>> List <IReadonlyPair <V1, V2>> getSortedByPairSecond (@Nonnull final Collection <? extends IReadonlyPair <V1, V2>> aList)
   {
     // get sorted entry list
-    return ContainerHelper.getSorted (aList, new ComparatorPairSecond <V1, V2> ());
+    return ContainerHelper.getSorted (aList, Comparator.comparing (p -> p.getSecond ()));
   }
 }

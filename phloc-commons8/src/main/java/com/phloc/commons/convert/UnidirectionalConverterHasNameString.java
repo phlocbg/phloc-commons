@@ -15,27 +15,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.encode;
+package com.phloc.commons.convert;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.name.IHasName;
+
 /**
- * The most basic encoding interface
+ * A unidirectional converter that extracts the name from an object implementing
+ * {@link IHasName}.
  *
- * @param <DATATYPE>
- *        data type
  * @author Philip Helger
  */
-@FunctionalInterface
-public interface IEncoder <DATATYPE>
+@Deprecated
+public final class UnidirectionalConverterHasNameString implements IUnidirectionalConverter <IHasName, String>
 {
-  /**
-   * Encode the passed source object
-   *
-   * @param aInput
-   *        The source object to be encoded
-   * @return The encoded value.
-   */
+  private static final UnidirectionalConverterHasNameString s_aInstance = new UnidirectionalConverterHasNameString ();
+
+  private UnidirectionalConverterHasNameString ()
+  {}
+
   @Nullable
-  DATATYPE encode (@Nullable DATATYPE aInput);
+  public String convert (@Nullable final IHasName aInput)
+  {
+    return aInput == null ? null : aInput.getName ();
+  }
+
+  @Nonnull
+  public static UnidirectionalConverterHasNameString getInstance ()
+  {
+    return s_aInstance;
+  }
 }
