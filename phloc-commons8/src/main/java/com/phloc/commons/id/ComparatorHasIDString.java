@@ -29,6 +29,7 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
+@Deprecated
 public class ComparatorHasIDString <DATATYPE extends IHasID <String>> extends ComparatorHasIDComparable <String, DATATYPE>
 {
   /**

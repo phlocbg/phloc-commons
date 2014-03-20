@@ -20,6 +20,8 @@ package com.phloc.commons.tree.utils.xml;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
 import com.phloc.commons.io.resource.ClassPathResource;
@@ -29,7 +31,6 @@ import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.name.MockHasName;
 import com.phloc.commons.tree.simple.DefaultTree;
-import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemComparable;
 import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
@@ -77,8 +78,6 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     aTree.getRootItem ().createChildItem (new MockHasName ("name2"));
     aTree.getRootItem ().createChildItem (new MockHasName ("name1"));
 
-    TreeXMLConverter.getTreeAsXML (aTree,
-                                   new ComparatorDefaultTreeItemComparable <MockHasName> (),
-                                   new MockHasNameConverter ());
+    TreeXMLConverter.getTreeAsXML (aTree, Comparator.comparing (p -> p.getData ()), new MockHasNameConverter ());
   }
 }

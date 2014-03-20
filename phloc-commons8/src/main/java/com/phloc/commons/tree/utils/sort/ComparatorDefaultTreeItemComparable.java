@@ -30,6 +30,7 @@ import com.phloc.commons.tree.simple.DefaultTreeItem;
  * @param <DATATYPE>
  *        tree item value type
  */
+@Deprecated
 public final class ComparatorDefaultTreeItemComparable <DATATYPE extends Comparable <? super DATATYPE>> extends ComparatorTreeItemDataComparable <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   /**

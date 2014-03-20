@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An implementation of {@link ISerializableFilter} that chains multiple
  * instances of {@link ISerializableFilter} with an <b>AND</b> operator.
- * 
+ *
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type to be filtered.
@@ -41,6 +41,7 @@ public final class SerializableFilterChainAND <DATATYPE> implements ISerializabl
 {
   private final List <? extends ISerializableFilter <? super DATATYPE>> m_aFilters;
 
+  @SafeVarargs
   public SerializableFilterChainAND (@Nullable final ISerializableFilter <? super DATATYPE>... aFilters)
   {
     m_aFilters = ContainerHelper.newList (aFilters);
@@ -54,9 +55,9 @@ public final class SerializableFilterChainAND <DATATYPE> implements ISerializabl
   @Nonnull
   @ReturnsMutableCopy
   public List <? extends ISerializableFilter <? super DATATYPE>> getContainedFilters ()
-  {
+               {
     return ContainerHelper.newList (m_aFilters);
-  }
+               }
 
   public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {
@@ -89,6 +90,7 @@ public final class SerializableFilterChainAND <DATATYPE> implements ISerializabl
     return new ToStringGenerator (this).append ("filters", m_aFilters).toString ();
   }
 
+  @SafeVarargs
   @Nonnull
   public static <DATATYPE> SerializableFilterChainAND <DATATYPE> create (@Nullable final ISerializableFilter <? super DATATYPE>... aFilters)
   {

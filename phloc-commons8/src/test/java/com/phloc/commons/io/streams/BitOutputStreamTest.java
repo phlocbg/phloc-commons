@@ -73,13 +73,6 @@ public final class BitOutputStreamTest
       }
       catch (final IllegalArgumentException ex)
       {}
-      try
-      {
-        aBOS.writeBit (CGlobal.BIT_NOT_SET);
-        fail ();
-      }
-      catch (final IllegalStateException ex)
-      {}
       assertNotNull (aBOS.toString ());
     }
   }

@@ -29,6 +29,7 @@ import com.phloc.commons.compare.ESortOrder;
  *
  * @author Philip Helger
  */
+@Deprecated
 public final class ComparatorChangeLogEntryDate extends AbstractComparator <ChangeLogEntry>
 {
   /**
@@ -59,7 +60,7 @@ public final class ComparatorChangeLogEntryDate extends AbstractComparator <Chan
     if (i == 0)
     {
       i = CompareUtils.nullSafeCompare (aEntry1.getChangeLog ().getComponent (), aEntry2.getChangeLog ()
-                                        .getComponent ());
+                                                                                        .getComponent ());
     }
     return i;
   }

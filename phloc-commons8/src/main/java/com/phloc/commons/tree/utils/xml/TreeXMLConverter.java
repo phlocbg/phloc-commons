@@ -27,7 +27,6 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.convert.IUnidirectionalConverter;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroElement;
@@ -80,7 +79,10 @@ public final class TreeXMLConverter
   public static <DATATYPE, ITEMTYPE extends ITreeItemWithID <String, DATATYPE, ITEMTYPE>> IMicroElement getTreeWithStringIDAsXML (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                                                   @Nonnull final IConverterTreeItemToMicroNode <? super DATATYPE> aConverter)
   {
-    return getTreeWithIDAsXML (aTree, new ComparatorHasIDString <ITEMTYPE> (), a -> a, aConverter);
+    return getTreeWithIDAsXML (aTree,
+                               Comparator.comparing (p -> p.getID ()),
+                               IUnidirectionalConverter.identity (),
+                               aConverter);
   }
 
   @Nonnull
@@ -208,7 +210,9 @@ public final class TreeXMLConverter
   public static <DATATYPE> DefaultTreeWithGlobalUniqueID <String, DATATYPE> getXMLAsTreeWithUniqueStringID (@Nonnull final IMicroElement aElement,
                                                                                                             @Nonnull final IConverterMicroNodeToTreeItem <? extends DATATYPE> aDataConverter)
   {
-    return TreeXMLConverter.<String, DATATYPE> getXMLAsTreeWithUniqueID (aElement, a -> a, aDataConverter);
+    return TreeXMLConverter.<String, DATATYPE> getXMLAsTreeWithUniqueID (aElement,
+                                                                         IUnidirectionalConverter.identity (),
+                                                                         aDataConverter);
   }
 
   @Nonnull

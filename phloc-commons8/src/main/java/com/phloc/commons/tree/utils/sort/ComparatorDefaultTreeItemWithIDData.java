@@ -32,6 +32,7 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * @param <DATATYPE>
  *        tree item value type
  */
+@Deprecated
 public final class ComparatorDefaultTreeItemWithIDData <IDTYYPE, DATATYPE> extends ComparatorTreeItemData <DATATYPE, DefaultTreeItemWithID <IDTYYPE, DATATYPE>>
 {
   /**

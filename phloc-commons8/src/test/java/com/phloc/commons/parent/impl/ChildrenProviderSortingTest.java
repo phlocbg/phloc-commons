@@ -23,15 +23,16 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Comparator;
+
 import org.junit.Test;
 
-import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.parent.MockChildrenProvider;
 import com.phloc.commons.parent.MockHasChildren;
 
 /**
  * Test class for class {@link ChildrenProviderSorting}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ChildrenProviderSortingTest
@@ -40,7 +41,7 @@ public final class ChildrenProviderSortingTest
   public void testAll ()
   {
     final ChildrenProviderSorting <MockHasChildren> cr = new ChildrenProviderSorting <MockHasChildren> (new MockChildrenProvider (),
-                                                                                                        new ComparatorHasIDString <MockHasChildren> ());
+                                                                                                        Comparator.comparing (MockHasChildren::getID));
     assertFalse (cr.hasChildren (null));
     assertEquals (0, cr.getChildCount (null));
     assertNull (cr.getChildren (null));

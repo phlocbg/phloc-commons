@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This is a small helper class for iterating over arrays.
- * 
+ *
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        Type of object to iterate.
@@ -44,6 +44,7 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
   private final ELEMENTTYPE [] m_aArray;
   private int m_nIndex;
 
+  @SafeVarargs
   public ArrayIterator (@Nonnull final ELEMENTTYPE... aArray)
   {
     ValueEnforcer.notNull (aArray, "Array");
@@ -53,7 +54,7 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
 
   /**
    * Private constructor with offset and length
-   * 
+   *
    * @param aArray
    *        Source array
    * @param nOfs
@@ -111,8 +112,8 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
   public String toString ()
   {
     return new ToStringGenerator (this).append ("array", Arrays.toString (m_aArray))
-                                       .append ("index", m_nIndex)
-                                       .toString ();
+        .append ("index", m_nIndex)
+        .toString ();
   }
 
   @Nonnull
@@ -125,17 +126,17 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
   public static <ELEMENTTYPE> ArrayIterator <ELEMENTTYPE> createOfsLen (@Nonnull final ELEMENTTYPE [] aArray,
                                                                         @Nonnegative final int nOfs,
                                                                         @Nonnegative final int nLength)
-  {
+                                                                        {
     return new ArrayIterator <ELEMENTTYPE> (aArray, nOfs, nLength);
-  }
+                                                                        }
 
   @Nonnull
   public static <ELEMENTTYPE> ArrayIterator <ELEMENTTYPE> createBeginEnd (@Nonnull final ELEMENTTYPE [] aArray,
                                                                           @Nonnegative final int nBegin,
                                                                           @Nonnegative final int nEnd)
-  {
+                                                                          {
     if (nEnd < nBegin)
       throw new IllegalArgumentException ("Begin (" + nBegin + ") must be between 0 and < end (" + nEnd + ")");
     return createOfsLen (aArray, nBegin, nEnd - nBegin);
-  }
+                                                                          }
 }

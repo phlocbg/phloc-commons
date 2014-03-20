@@ -276,6 +276,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  @SafeVarargs
   public static <ELEMENTTYPE> Map <ELEMENTTYPE, ELEMENTTYPE> newMap (@Nullable final ELEMENTTYPE... aValues)
   {
     if (ArrayHelper.isEmpty (aValues))
@@ -368,6 +369,7 @@ public final class ContainerHelper
     return Collections.singletonMap (aKey, aValue);
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Map <ELEMENTTYPE, ELEMENTTYPE> newUnmodifiableMap (@Nullable final ELEMENTTYPE... aValues)
@@ -422,6 +424,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Map <ELEMENTTYPE, ELEMENTTYPE> newOrderedMap (@Nullable final ELEMENTTYPE... aValues)
@@ -531,6 +534,7 @@ public final class ContainerHelper
     return Collections.singletonMap (aKey, aValue);
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Map <ELEMENTTYPE, ELEMENTTYPE> newUnmodifiableOrderedMap (@Nullable final ELEMENTTYPE... aValues)
@@ -585,6 +589,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeMap <ELEMENTTYPE, ELEMENTTYPE> newSortedMap (@Nullable final ELEMENTTYPE... aValues)
@@ -681,6 +686,7 @@ public final class ContainerHelper
     return makeUnmodifiable (newSortedMap (aKey, aValue));
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedMap <ELEMENTTYPE, ELEMENTTYPE> newUnmodifiableSortedMap (@Nullable final ELEMENTTYPE... aValues)
@@ -734,6 +740,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSet (@Nullable final ELEMENTTYPE... aValues)
@@ -798,6 +805,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Enum <ELEMENTTYPE>> EnumSet <ELEMENTTYPE> newEnumSet (@Nonnull final Class <ELEMENTTYPE> aEnumClass,
@@ -932,6 +940,7 @@ public final class ContainerHelper
     return Collections.singleton (aValue);
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSet (@Nullable final ELEMENTTYPE... aValues)
@@ -1048,6 +1057,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
@@ -1212,6 +1222,7 @@ public final class ContainerHelper
     return makeUnmodifiable (newSortedSet (aValue));
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final ELEMENTTYPE... aValues)
@@ -1326,6 +1337,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newOrderedSet (@Nullable final ELEMENTTYPE... aValues)
@@ -1492,6 +1504,7 @@ public final class ContainerHelper
     return Collections.singleton (aValue);
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableOrderedSet (@Nullable final ELEMENTTYPE... aValues)
@@ -1619,6 +1632,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newList (@Nullable final ELEMENTTYPE... aValues)
@@ -1724,6 +1738,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final ELEMENTTYPE... aValues)
@@ -1990,6 +2005,7 @@ public final class ContainerHelper
     return Collections.singletonList (aValue);
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newUnmodifiableList (@Nullable final ELEMENTTYPE... aValues)
@@ -2123,6 +2139,7 @@ public final class ContainerHelper
    *        be the top element on the stack. May not be <code>null</code> .
    * @return A non-<code>null</code> stack object.
    */
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> NonBlockingStack <ELEMENTTYPE> newStack (@Nullable final ELEMENTTYPE... aValues)
@@ -2163,6 +2180,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final ELEMENTTYPE... aValues)
@@ -2397,6 +2415,7 @@ public final class ContainerHelper
    * @return A {@link ArrayList} based on the results of
    *         {@link Collections#sort(List)}.
    */
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> List <ELEMENTTYPE> getSorted (@Nullable final ELEMENTTYPE... aCont)
@@ -2634,6 +2653,7 @@ public final class ContainerHelper
     return aIter == null ? EmptyIterator.<ELEMENTTYPE> getInstance () : aIter;
   }
 
+  @SafeVarargs
   @Nonnull
   public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> getIterator (@Nullable final ELEMENTTYPE... aArray)
   {
@@ -2710,6 +2730,7 @@ public final class ContainerHelper
    *        The array to enumerate.
    * @return an Enumeration object
    */
+  @SafeVarargs
   @Nonnull
   public static <ELEMENTTYPE> Enumeration <ELEMENTTYPE> getEnumeration (@Nullable final ELEMENTTYPE... aArray)
   {
@@ -3262,6 +3283,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> List <ELEMENTTYPE> getConcatenatedList (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
@@ -3319,6 +3341,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> getConcatenatedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
@@ -3357,6 +3380,7 @@ public final class ContainerHelper
     return ret;
   }
 
+  @SafeVarargs
   @Nonnull
   @ReturnsMutableObject (reason = "design")
   public static <ELEMENTTYPE, COLLTYPE extends Collection <? super ELEMENTTYPE>> COLLTYPE getConcatenatedInline (@Nonnull final COLLTYPE aCont,

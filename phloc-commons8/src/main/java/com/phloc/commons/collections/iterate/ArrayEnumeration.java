@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This is a small helper class implementing {@link Enumeration} for array input
  * data.
- * 
+ *
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        Type of object to iterate.
@@ -47,10 +47,11 @@ public final class ArrayEnumeration <ELEMENTTYPE> implements Enumeration <ELEMEN
 
   /**
    * Constructor iterating over the whole array
-   * 
+   *
    * @param aArray
    *        The array to enumerate. May not be <code>null</code>.
    */
+  @SafeVarargs
   public ArrayEnumeration (@Nonnull final ELEMENTTYPE... aArray)
   {
     this (aArray, 0, aArray.length);
@@ -58,7 +59,7 @@ public final class ArrayEnumeration <ELEMENTTYPE> implements Enumeration <ELEMEN
 
   /**
    * Constructor iterating an array partially.
-   * 
+   *
    * @param aArray
    *        The array to be enumerated. May not be <code>null</code>.
    * @param nStartIndex

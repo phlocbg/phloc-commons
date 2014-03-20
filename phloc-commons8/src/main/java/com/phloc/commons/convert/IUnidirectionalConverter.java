@@ -19,6 +19,8 @@ package com.phloc.commons.convert;
 
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+
 /**
  * This is a very simple type conversion interface for compile type conversions.
  *
@@ -45,5 +47,11 @@ public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE> extends Function <S
   default DSTTYPE apply (final SRCTYPE t)
   {
     return convert (t);
+  }
+
+  @Nonnull
+  static <T> IUnidirectionalConverter <T, T> identity ()
+  {
+    return p -> p;
   }
 }

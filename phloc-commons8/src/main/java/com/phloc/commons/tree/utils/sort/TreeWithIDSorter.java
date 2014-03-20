@@ -33,7 +33,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
 /**
  * Sort {@link com.phloc.commons.tree.withid.ITreeWithID} instances recursively
  * - either by ID or by value
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -69,7 +69,7 @@ public final class TreeWithIDSorter
 
   /**
    * Sort each level of the passed tree on the ID with the specified comparator.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    * @param aKeyComparator
@@ -79,28 +79,26 @@ public final class TreeWithIDSorter
   public static <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> void sortByID (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                                    @Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
-    final ComparatorTreeItemID <KEYTYPE, DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemID <KEYTYPE, DATATYPE, ITEMTYPE> (aKeyComparator);
-    _sort (aTree, aItemComp);
+    _sort (aTree, (p1, p2) -> aKeyComparator.compare (p1.getID (), p2.getID ()));
   }
 
   /**
    * Sort each level of the passed tree on the ID with the specified comparator.
    * This method assumes that the IDs in the tree item implement the
    * {@link Comparable} interface.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    */
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> void sortByID (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemIDComparable <KEYTYPE, DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemIDComparable <KEYTYPE, DATATYPE, ITEMTYPE> ();
-    _sort (aTree, aItemComp);
+    _sort (aTree, Comparator.comparing (p -> p.getID ()));
   }
 
   /**
    * Sort each level of the passed tree on the value with the specified
    * comparator.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    * @param aValueComparator
@@ -110,21 +108,19 @@ public final class TreeWithIDSorter
   public static <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> void sortByValue (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                                                       @Nonnull final Comparator <? super DATATYPE> aValueComparator)
   {
-    final ComparatorTreeItemData <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemData <DATATYPE, ITEMTYPE> (aValueComparator);
-    _sort (aTree, aItemComp);
+    _sort (aTree, (p1, p2) -> aValueComparator.compare (p1.getData (), p2.getData ()));
   }
 
   /**
    * Sort each level of the passed tree on the value with the specified
    * comparator. This method assumes that the values in the tree item implement
    * the {@link Comparable} interface.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    */
   public static <KEYTYPE, DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> void sortByValue (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> ();
-    _sort (aTree, aItemComp);
+    _sort (aTree, Comparator.comparing (p -> p.getData ()));
   }
 }

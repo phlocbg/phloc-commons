@@ -28,6 +28,7 @@ import com.phloc.commons.compare.ESortOrder;
  *
  * @author Philip Helger
  */
+@Deprecated
 public final class ComparatorChangeLogComponent extends AbstractPartComparatorComparable <ChangeLog, String>
 {
   /**

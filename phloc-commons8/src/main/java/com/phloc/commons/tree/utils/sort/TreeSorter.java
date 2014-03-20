@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
 import com.phloc.commons.tree.simple.ITreeItem;
@@ -32,7 +33,7 @@ import com.phloc.commons.tree.utils.walk.TreeWalker;
 
 /**
  * Sort {@link com.phloc.commons.tree.simple.ITree} instances recursively.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -68,7 +69,7 @@ public final class TreeSorter
 
   /**
    * Sort each level of the passed tree with the specified comparator.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    * @param aValueComparator
@@ -77,21 +78,19 @@ public final class TreeSorter
   public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                        @Nonnull final Comparator <? super DATATYPE> aValueComparator)
   {
-    final ComparatorTreeItemData <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemData <DATATYPE, ITEMTYPE> (aValueComparator);
-    _sort (aTree, aItemComp);
+    _sort (aTree, (p1, p2) -> CompareUtils.nullSafeCompare (p1.getData (), p2.getData (), aValueComparator));
   }
 
   /**
    * Sort each level of the passed tree with the specified comparator. This
    * method assumes that the values in the tree item implement the
    * {@link Comparable} interface.
-   * 
+   *
    * @param aTree
    *        The tree to be sorted.
    */
   public static <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> ();
-    _sort (aTree, aItemComp);
+    _sort (aTree, (p1, p2) -> CompareUtils.nullSafeCompare (p1.getData (), p2.getData ()));
   }
 }

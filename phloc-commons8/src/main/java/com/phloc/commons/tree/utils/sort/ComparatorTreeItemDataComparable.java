@@ -36,6 +36,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
+@Deprecated
 public class ComparatorTreeItemDataComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends AbstractPartComparatorComparable <ITEMTYPE, DATATYPE>
 {
   /**

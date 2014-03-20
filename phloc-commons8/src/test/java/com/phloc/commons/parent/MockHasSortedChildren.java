@@ -17,13 +17,13 @@
  */
 package com.phloc.commons.parent;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.id.IHasID;
 
 public final class MockHasSortedChildren implements IHasChildrenSorted <MockHasSortedChildren>, IHasID <String>
@@ -34,7 +34,7 @@ public final class MockHasSortedChildren implements IHasChildrenSorted <MockHasS
   public MockHasSortedChildren (@Nonnull final String sID, @Nullable final MockHasSortedChildren... aList)
   {
     m_sID = sID;
-    m_aList = ContainerHelper.getSorted (aList, new ComparatorHasIDString <IHasID <String>> ());
+    m_aList = ContainerHelper.getSorted (aList, Comparator.comparing (MockHasSortedChildren::getID));
   }
 
   public String getID ()
