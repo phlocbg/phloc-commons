@@ -30,7 +30,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 
 /**
  * Defines the available font resources available in this library.
- * 
+ *
  * @author Philip Helger
  */
 public enum EFontResource
@@ -52,6 +52,25 @@ public enum EFontResource
   ALGREYA_SANS_BLACK_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.BLACK, "fonts/ttf/AlegreyaSans/AlegreyaSans-BlackItalic.ttf"),
   // Anaheim Regular
   ANAHEIM_REGULAR (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.REGULAR, "fonts/ttf/Anaheim/Anaheim-Regular.ttf"),
+  // Lato2
+  LATO2_HAIRLINE (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.HAIRLINE, "fonts/ttf/Lato2/Lato-Hairline.ttf"),
+  LATO2_HAIRLINE_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.HAIRLINE, "fonts/ttf/Lato2/Lato-HairlineItalic.ttf"),
+  LATO2_THIN (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.THIN, "fonts/ttf/Lato2/Lato-Thin.ttf"),
+  LATO2_THIN_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.THIN, "fonts/ttf/Lato2/Lato-ThinItalic.ttf"),
+  LATO2_LIGHT (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.LIGHT, "fonts/ttf/Lato2/Lato-Light.ttf"),
+  LATO2_LIGHT_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.LIGHT, "fonts/ttf/Lato2/Lato-LightItalic.ttf"),
+  LATO2_NORMAL (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.REGULAR, "fonts/ttf/Lato2/Lato-Regular.ttf"),
+  LATO2_NORMAL_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.REGULAR, "fonts/ttf/Lato2/Lato-Italic.ttf"),
+  LATO2_MEDIUM (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.MEDIUM, "fonts/ttf/Lato2/Lato-Medium.ttf"),
+  LATO2_MEDIUM_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.MEDIUM, "fonts/ttf/Lato2/Lato-MediumItalic.ttf"),
+  LATO2_SEMI_BOLD (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.SEMI_BOLD, "fonts/ttf/Lato2/Lato-SemiBold.ttf"),
+  LATO2_SEMI_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.SEMI_BOLD, "fonts/ttf/Lato2/Lato-SemiBoldItalic.ttf"),
+  LATO2_BOLD (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.BOLD, "fonts/ttf/Lato2/Lato-Bold.ttf"),
+  LATO2_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.BOLD, "fonts/ttf/Lato2/Lato-BoldItalic.ttf"),
+  LATO2_HEAVY (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.EXTRA_BOLD, "fonts/ttf/Lato2/Lato-Heavy.ttf"),
+  LATO2_HEAVY_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.EXTRA_BOLD, "fonts/ttf/Lato2/Lato-HeavyItalic.ttf"),
+  LATO2_BLACK (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.BLACK, "fonts/ttf/Lato2/Lato-Black.ttf"),
+  LATO2_BLACK_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.BLACK, "fonts/ttf/Lato2/Lato-BlackItalic.ttf"),
   // Exo 2.0
   EXO2_THIN (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.THIN, "fonts/ttf/Exo2/Exo2.0-Thin.otf"),
   EXO2_THIN_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.THIN, "fonts/ttf/Exo2/Exo2.0-ThinItalic.otf"),
