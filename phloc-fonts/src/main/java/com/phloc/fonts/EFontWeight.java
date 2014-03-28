@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 
 public enum EFontWeight
 {
+  HAIRLINE (90),
   THIN (100),
   EXTRA_LIGHT (200),
   LIGHT (300),
