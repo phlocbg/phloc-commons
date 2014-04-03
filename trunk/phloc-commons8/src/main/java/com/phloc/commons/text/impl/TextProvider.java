@@ -43,15 +43,15 @@ import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.text.ISimpleMultiLingualText;
+import com.phloc.commons.text.IReadonlyMultiLingualText;
 
 /**
  * An in-memory implementation of the
  * {@link com.phloc.commons.text.ITextProvider} interface.
- * 
+ *
  * @author Philip Helger
  */
-public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
+public class TextProvider extends AbstractTextProvider implements IReadonlyMultiLingualText
 {
   /** German locale used */
   public static final Locale DE = LocaleCache.getLocale ("de");
@@ -68,7 +68,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 
   /**
    * Enable or disable the internal consistency checks.
-   * 
+   *
    * @param bPerformConsistencyChecks
    *        <code>true</code> to enable them, <code>false</code> to disable
    *        them.
@@ -262,19 +262,19 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   }
 
   @Nonnull
-  public static ISimpleMultiLingualText create_DE (@Nonnull final String sDE)
+  public static TextProvider create_DE (@Nonnull final String sDE)
   {
     return new TextProvider ().addTextDE (sDE);
   }
 
   @Nonnull
-  public static ISimpleMultiLingualText create_EN (@Nonnull final String sEN)
+  public static TextProvider create_EN (@Nonnull final String sEN)
   {
     return new TextProvider ().addTextEN (sEN);
   }
 
   @Nonnull
-  public static ISimpleMultiLingualText create_DE_EN (@Nonnull final String sDE, @Nonnull final String sEN)
+  public static TextProvider create_DE_EN (@Nonnull final String sDE, @Nonnull final String sEN)
   {
     return new TextProvider ().addTextDE (sDE).addTextEN (sEN);
   }
