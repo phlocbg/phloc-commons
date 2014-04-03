@@ -30,11 +30,11 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
 /**
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent string.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
-public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyMultiLingualText
+public class ReadonlyMultiLingualText extends TextProvider
 {
   /**
    * Create an empty read-only multilingual text. Handle with care, as this type
