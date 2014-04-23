@@ -71,24 +71,96 @@ public interface ISettings extends IReadonlySettings
   @Nonnull
   EChange removeValue (@Nullable String sFieldName);
 
+  /**
+   * Remove all values from this settings object.
+   * 
+   * @return {@link EChange#CHANGED} if at least one value was removed.
+   */
   @Nonnull
   EChange clear ();
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param aNewValue
+   *        The new value to be set. If the value is <code>null</code> the value
+   *        is removed.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
   EChange setValue (@Nonnull @Nonempty String sFieldName, @Nullable Object aNewValue);
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param bNewValue
+   *        The new value to be set.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
-  EChange setValue (@Nonnull @Nonempty String sFieldName, boolean bValue);
+  EChange setValue (@Nonnull @Nonempty String sFieldName, boolean bNewValue);
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param nNewValue
+   *        The new value to be set.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
-  EChange setValue (@Nonnull @Nonempty String sFieldName, int nValue);
+  EChange setValue (@Nonnull @Nonempty String sFieldName, int nNewValue);
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param nNewValue
+   *        The new value to be set.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
-  EChange setValue (@Nonnull @Nonempty String sFieldName, long nValue);
+  EChange setValue (@Nonnull @Nonempty String sFieldName, long nNewValue);
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param fNewValue
+   *        The new value to be set.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
-  EChange setValue (@Nonnull @Nonempty String sFieldName, float fValue);
+  EChange setValue (@Nonnull @Nonempty String sFieldName, float fNewValue);
 
+  /**
+   * Set the value of a settings field.
+   * 
+   * @param sFieldName
+   *        The name of the field to be set. May neither be <code>null</code>
+   *        nor empty.
+   * @param dNewValue
+   *        The new value to be set.
+   * @return {@link EChange#CHANGED} if the value changed,
+   *         {@link EChange#UNCHANGED} if no change was performed.
+   */
   @Nonnull
-  EChange setValue (@Nonnull @Nonempty String sFieldName, double dValue);
+  EChange setValue (@Nonnull @Nonempty String sFieldName, double dNewValue);
 }
