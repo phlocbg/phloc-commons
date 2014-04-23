@@ -28,6 +28,7 @@ import javax.annotation.WillClose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -39,6 +40,12 @@ import com.phloc.settings.factory.ISettingsFactory;
 import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
+/**
+ * A special {@link AbstractSettingsPersistence} implementation that reads and
+ * writes .properties files.
+ * 
+ * @author Philip Helger
+ */
 public class SettingsPersistenceProperties extends AbstractSettingsPersistence
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (SettingsPersistenceProperties.class);
@@ -53,9 +60,7 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
   public SettingsPersistenceProperties (@Nonnull final ISettingsFactory aSettingsFactory)
   {
     super (CCharset.CHARSET_ISO_8859_1_OBJ);
-    if (aSettingsFactory == null)
-      throw new NullPointerException ("SettingsFactory");
-    m_aSettingsFactory = aSettingsFactory;
+    m_aSettingsFactory = ValueEnforcer.notNull (aSettingsFactory, "SettingsFactory");
   }
 
   @Nonnull
@@ -68,8 +73,7 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
   @Nonnull
   public ISettings readSettings (@Nonnull @WillClose final InputStream aIS)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     final NonBlockingProperties aProps = new NonBlockingProperties ();
     try
@@ -95,8 +99,7 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
   @Nonnull
   public ESuccess writeSettings (@Nonnull final IReadonlySettings aSettings, @Nonnull @WillClose final OutputStream aOS)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     try
     {

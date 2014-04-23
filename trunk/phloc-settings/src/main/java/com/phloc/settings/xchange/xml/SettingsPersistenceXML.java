@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -40,6 +41,12 @@ import com.phloc.settings.factory.ISettingsFactory;
 import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
+/**
+ * A special {@link AbstractSettingsPersistence} implementation that reads and
+ * writes .xml files.
+ * 
+ * @author Philip Helger
+ */
 public class SettingsPersistenceXML extends AbstractSettingsPersistence
 {
   public static final boolean DEFAULT_MARSHAL_TYPES = true;
@@ -73,9 +80,7 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
                                  @Nonnull final IXMLWriterSettings aXWS)
   {
     super (aXWS.getCharsetObj ());
-    if (aSettingsFactory == null)
-      throw new NullPointerException ("SettingsFactory");
-    m_aSettingsFactory = aSettingsFactory;
+    m_aSettingsFactory = ValueEnforcer.notNull (aSettingsFactory, "SettingsFactory");
     m_bMarshalTypes = bMarshalTypes;
     m_aXWS = aXWS;
   }
@@ -83,8 +88,7 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
   @Nonnull
   public ISettings readSettings (@Nonnull @WillClose final InputStream aIS)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
+    ValueEnforcer.notNull (aIS, "InputStream");
 
     final IMicroDocument aDoc = MicroReader.readMicroXML (aIS);
     if (aDoc == null)
@@ -114,14 +118,12 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
   @Nonnull
   public ESuccess writeSettings (@Nonnull final IReadonlySettings aSettings, @Nonnull @WillClose final OutputStream aOS)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     try
     {
       // Inside try so that OS is closed
-      if (aSettings == null)
-        throw new NullPointerException ("settings");
+      ValueEnforcer.notNull (aSettings, "Settings");
 
       // No event manager invocation on writing
       final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (m_bMarshalTypes,

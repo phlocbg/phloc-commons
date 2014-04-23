@@ -31,6 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -231,10 +232,8 @@ public class Settings implements ISettings
 
   public void restoreValue (@Nonnull @Nonempty final String sFieldName, @Nonnull final Object aNewValue)
   {
-    if (StringHelper.hasNoText (sFieldName))
-      throw new IllegalArgumentException ("Empty field name");
-    if (aNewValue == null)
-      throw new NullPointerException ("newValue");
+    ValueEnforcer.notEmpty (sFieldName, "FieldName");
+    ValueEnforcer.notNull (aNewValue, "NewValue");
 
     m_aMap.put (sFieldName, aNewValue);
   }
@@ -242,8 +241,7 @@ public class Settings implements ISettings
   @Nonnull
   public EChange setValues (@Nonnull final IReadonlySettings aOtherSettings)
   {
-    if (aOtherSettings == null)
-      throw new NullPointerException ("otherSettings");
+    ValueEnforcer.notNull (aOtherSettings, "OtherSettings");
 
     EChange eChange = EChange.UNCHANGED;
     for (final String sFieldName : aOtherSettings.getAllFieldNames ())

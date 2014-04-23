@@ -19,6 +19,7 @@ package com.phloc.settings.impl;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.settings.ISettings;
@@ -36,9 +37,13 @@ public class SettingsCache extends AbstractNotifyingCache <String, ISettings>
   public SettingsCache (@Nonnull final ISettingsFactory aSettingsFactory)
   {
     super ("SettingsCache");
-    if (aSettingsFactory == null)
-      throw new NullPointerException ("SettingsFactory");
-    m_aSettingsFactory = aSettingsFactory;
+    m_aSettingsFactory = ValueEnforcer.notNull (aSettingsFactory, "SettingsFactory");
+  }
+
+  @Nonnull
+  public ISettingsFactory getSettingsFactory ()
+  {
+    return m_aSettingsFactory;
   }
 
   @Override

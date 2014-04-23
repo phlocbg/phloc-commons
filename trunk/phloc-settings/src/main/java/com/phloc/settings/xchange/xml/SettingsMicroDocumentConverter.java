@@ -20,6 +20,7 @@ package com.phloc.settings.xchange.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.microdom.IMicroElement;
@@ -50,10 +51,19 @@ public class SettingsMicroDocumentConverter implements IMicroTypeConverter
    */
   public SettingsMicroDocumentConverter (final boolean bMarshalTypes, @Nonnull final ISettingsFactory aSettingsFactory)
   {
-    if (aSettingsFactory == null)
-      throw new NullPointerException ("Factory");
     m_bMarshalTypes = bMarshalTypes;
-    m_aSettingFactory = aSettingsFactory;
+    m_aSettingFactory = ValueEnforcer.notNull (aSettingsFactory, "SettingsFactory");
+  }
+
+  public boolean isMarshalTypes ()
+  {
+    return m_bMarshalTypes;
+  }
+
+  @Nonnull
+  public ISettingsFactory getSettingsFactory ()
+  {
+    return m_aSettingFactory;
   }
 
   @Nonnull
