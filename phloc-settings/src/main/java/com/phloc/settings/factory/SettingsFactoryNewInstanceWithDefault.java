@@ -19,6 +19,7 @@ package com.phloc.settings.factory;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.impl.Settings;
@@ -36,9 +37,13 @@ public class SettingsFactoryNewInstanceWithDefault implements ISettingsFactory
 
   public SettingsFactoryNewInstanceWithDefault (@Nonnull final IReadonlySettings aDefaultSettings)
   {
-    if (aDefaultSettings == null)
-      throw new NullPointerException ("DefaultSettings");
-    m_aDefaultSettings = aDefaultSettings;
+    m_aDefaultSettings = ValueEnforcer.notNull (aDefaultSettings, "DefaultSettings");
+  }
+
+  @Nonnull
+  public IReadonlySettings getDefaultSettings ()
+  {
+    return m_aDefaultSettings;
   }
 
   @Nonnull

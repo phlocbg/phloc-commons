@@ -20,6 +20,7 @@ package com.phloc.settings.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -46,9 +47,7 @@ public class SettingsWithDefault extends Settings implements ISettingsWithDefaul
   public SettingsWithDefault (@Nonnull @Nonempty final String sName, @Nonnull final IReadonlySettings aDefaultSettings)
   {
     super (sName);
-    if (aDefaultSettings == null)
-      throw new NullPointerException ("DefaultSettings");
-    m_aDefaultSettings = aDefaultSettings;
+    m_aDefaultSettings = ValueEnforcer.notNull (aDefaultSettings, "DefaultSettings");
   }
 
   @Override
@@ -87,6 +86,15 @@ public class SettingsWithDefault extends Settings implements ISettingsWithDefaul
 
     // set if field is present in the configuration
     return setValue (sFieldName, aDefaultValue);
+  }
+
+  @Nonnull
+  public EChange setAllToDefault ()
+  {
+    EChange eChange = EChange.UNCHANGED;
+    for (final String sFieldName : m_aDefaultSettings.getAllFieldNames ())
+      eChange = eChange.or (setToDefault (sFieldName));
+    return eChange;
   }
 
   public boolean isSetToDefault (@Nullable final String sFieldName)

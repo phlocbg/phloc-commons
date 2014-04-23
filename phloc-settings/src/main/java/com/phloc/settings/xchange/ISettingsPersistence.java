@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 
-import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
@@ -60,16 +60,16 @@ public interface ISettingsPersistence
   ISettings readSettings (@Nonnull File aFile);
 
   /**
-   * Read settings from a resource and convert it to an {@link ISettings}
-   * object.
+   * Read settings from an InputStream provider and convert it to an
+   * {@link ISettings} object.
    * 
-   * @param aRes
-   *        The resource to read. May not be <code>null</code>.
+   * @param aISP
+   *        The InputStream provider to read from. May not be <code>null</code>.
    * @return <code>null</code> if reading failed, a non-<code>null</code>
    *         settings object otherwise.
    */
   @Nonnull
-  ISettings readSettings (@Nonnull IReadableResource aRes);
+  ISettings readSettings (@Nonnull IInputStreamProvider aISP);
 
   /**
    * Read settings from an input stream and convert it to an {@link ISettings}

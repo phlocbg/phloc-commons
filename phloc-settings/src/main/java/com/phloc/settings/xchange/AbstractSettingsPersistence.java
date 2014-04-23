@@ -23,7 +23,8 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.ValueEnforcer;
+import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StringInputStream;
@@ -49,9 +50,7 @@ public abstract class AbstractSettingsPersistence implements ISettingsPersistenc
    */
   public AbstractSettingsPersistence (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("Charset");
-    m_aCharset = aCharset;
+    m_aCharset = ValueEnforcer.notNull (aCharset, "Charset");
   }
 
   /**
@@ -66,8 +65,7 @@ public abstract class AbstractSettingsPersistence implements ISettingsPersistenc
   @Nonnull
   public ISettings readSettings (@Nonnull final String sSettings)
   {
-    if (sSettings == null)
-      throw new NullPointerException ("Settings");
+    ValueEnforcer.notNull (sSettings, "Settings");
 
     return readSettings (new StringInputStream (sSettings, m_aCharset));
   }
@@ -75,19 +73,17 @@ public abstract class AbstractSettingsPersistence implements ISettingsPersistenc
   @Nonnull
   public ISettings readSettings (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("File");
+    ValueEnforcer.notNull (aFile, "File");
 
     return readSettings (FileUtils.getInputStream (aFile));
   }
 
   @Nonnull
-  public ISettings readSettings (@Nonnull final IReadableResource aRes)
+  public ISettings readSettings (@Nonnull final IInputStreamProvider aISP)
   {
-    if (aRes == null)
-      throw new NullPointerException ("Res");
+    ValueEnforcer.notNull (aISP, "InputStreamProvider");
 
-    return readSettings (aRes.getInputStream ());
+    return readSettings (aISP.getInputStream ());
   }
 
   @Nullable

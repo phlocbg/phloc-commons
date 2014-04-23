@@ -17,7 +17,6 @@
  */
 package com.phloc.settings.xchange.properties;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,7 +27,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.io.streams.NonBlockingBufferedWriter;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -689,7 +693,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
     return outBuffer.toString ();
   }
 
-  private static void _writeComments (final BufferedWriter bw, final String comments) throws IOException
+  private static void _writeComments (final Writer bw, final String comments) throws IOException
   {
     bw.write ("#");
     final int len = comments.length ();
@@ -715,7 +719,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
         }
         else
         {
-          bw.newLine ();
+          bw.write (CGlobal.LINE_SEPARATOR);
           if (c == '\r' && current != len - 1 && comments.charAt (current + 1) == '\n')
           {
             current++;
@@ -729,7 +733,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
     }
     if (last != current)
       bw.write (comments.substring (last, current));
-    bw.newLine ();
+    bw.write (CGlobal.LINE_SEPARATOR);
   }
 
   /**
@@ -783,11 +787,9 @@ public class NonBlockingProperties extends TreeMap <String, String>
    *            if <code>writer</code> is null.
    * @since 1.6
    */
-  public void store (final Writer writer, final String comments) throws IOException
+  public void store (@Nonnull final Writer writer, final String comments) throws IOException
   {
-    _store0 ((writer instanceof BufferedWriter) ? (BufferedWriter) writer : new BufferedWriter (writer),
-             comments,
-             false);
+    _store0 (StreamUtils.getBuffered (writer), comments, false);
   }
 
   /**
@@ -831,19 +833,21 @@ public class NonBlockingProperties extends TreeMap <String, String>
    *            if <code>out</code> is null.
    * @since 1.2
    */
-  public void store (final OutputStream out, final String comments) throws IOException
+  public void store (@Nonnull final OutputStream out, final String comments) throws IOException
   {
-    _store0 (new BufferedWriter (new OutputStreamWriter (out, CCharset.CHARSET_ISO_8859_1_OBJ)), comments, true);
+    _store0 (new NonBlockingBufferedWriter (new OutputStreamWriter (out, CCharset.CHARSET_ISO_8859_1_OBJ)),
+             comments,
+             true);
   }
 
-  private void _store0 (final BufferedWriter bw, final String comments, final boolean escUnicode) throws IOException
+  private void _store0 (@Nonnull final Writer bw, final String comments, final boolean escUnicode) throws IOException
   {
     if (comments != null)
     {
       _writeComments (bw, comments);
     }
     bw.write ("#" + new Date ().toString ());
-    bw.newLine ();
+    bw.write (CGlobal.LINE_SEPARATOR);
     for (final Map.Entry <String, String> aEntry : entrySet ())
     {
       String key = aEntry.getKey ();
@@ -855,7 +859,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
        */
       val = _saveConvert (val, false, escUnicode);
       bw.write (key + "=" + val);
-      bw.newLine ();
+      bw.write (CGlobal.LINE_SEPARATOR);
     }
     bw.flush ();
   }
