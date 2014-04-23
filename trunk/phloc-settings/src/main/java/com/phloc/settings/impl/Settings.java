@@ -39,7 +39,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.settings.IReadonlySettings;
@@ -57,9 +56,7 @@ public class Settings implements ISettings
 
   public Settings (@Nonnull @Nonempty final String sName)
   {
-    if (StringHelper.hasNoText (sName))
-      throw new IllegalArgumentException ("The passed name is empty");
-    m_sName = sName;
+    m_sName = ValueEnforcer.notEmpty (sName, "Name");
   }
 
   @Nonnull
@@ -272,7 +269,8 @@ public class Settings implements ISettings
    * @param aOldValue
    *        The old value. May be <code>null</code>.
    * @param aNewValue
-   *        The new value. May be <code>null</code>.
+   *        The new value. May be <code>null</code> in which case the value was
+   *        removed.
    */
   @OverrideOnDemand
   protected void onAfterSettingsChanged (@Nonnull @Nonempty final String sFieldName,
@@ -283,8 +281,7 @@ public class Settings implements ISettings
   @Nonnull
   public EChange setValue (@Nonnull @Nonempty final String sFieldName, @Nullable final Object aNewValue)
   {
-    if (StringHelper.hasNoText (sFieldName))
-      throw new IllegalArgumentException ("Empty field name");
+    ValueEnforcer.notEmpty (sFieldName, "FieldName");
 
     // Get the old value
     final Object aOldValue = getValue (sFieldName);
@@ -292,39 +289,43 @@ public class Settings implements ISettings
       return EChange.UNCHANGED;
 
     // Value changed -> trigger update
-    m_aMap.put (sFieldName, aNewValue);
+    if (aNewValue == null)
+      m_aMap.remove (sFieldName);
+    else
+      m_aMap.put (sFieldName, aNewValue);
+
     onAfterSettingsChanged (sFieldName, aOldValue, aNewValue);
     return EChange.CHANGED;
   }
 
   @Nonnull
-  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final boolean bValue)
+  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final boolean bNewValue)
   {
-    return setValue (sFieldName, Boolean.valueOf (bValue));
+    return setValue (sFieldName, Boolean.valueOf (bNewValue));
   }
 
   @Nonnull
-  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final int nValue)
+  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final int nNewValue)
   {
-    return setValue (sFieldName, Integer.valueOf (nValue));
+    return setValue (sFieldName, Integer.valueOf (nNewValue));
   }
 
   @Nonnull
-  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final long nValue)
+  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final long nNewValue)
   {
-    return setValue (sFieldName, Long.valueOf (nValue));
+    return setValue (sFieldName, Long.valueOf (nNewValue));
   }
 
   @Nonnull
-  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final float fValue)
+  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final float fNewValue)
   {
-    return setValue (sFieldName, Float.valueOf (fValue));
+    return setValue (sFieldName, Float.valueOf (fNewValue));
   }
 
   @Nonnull
-  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final double dValue)
+  public EChange setValue (@Nonnull @Nonempty final String sFieldName, final double dNewValue)
   {
-    return setValue (sFieldName, Double.valueOf (dValue));
+    return setValue (sFieldName, Double.valueOf (dNewValue));
   }
 
   @Override

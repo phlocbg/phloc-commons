@@ -364,8 +364,16 @@ public class NonBlockingProperties extends TreeMap <String, String>
    * from the beginning of a "natural line". Method returns the char length of
    * the "logical line" and stores the line in "lineBuf".
    */
-  class LineReader
+  static class LineReader
   {
+    private byte [] m_aInByteBuf;
+    private char [] m_aInCharBuf;
+    private char [] lineBuf = new char [1024];
+    private int inLimit = 0;
+    private int inOff = 0;
+    private InputStream m_aIS;
+    private Reader m_aReader;
+
     public LineReader (final InputStream inStream)
     {
       m_aIS = inStream;
@@ -377,14 +385,6 @@ public class NonBlockingProperties extends TreeMap <String, String>
       m_aReader = reader;
       m_aInCharBuf = new char [8192];
     }
-
-    byte [] m_aInByteBuf;
-    char [] m_aInCharBuf;
-    char [] lineBuf = new char [1024];
-    int inLimit = 0;
-    int inOff = 0;
-    InputStream m_aIS;
-    Reader m_aReader;
 
     int readLine () throws IOException
     {
