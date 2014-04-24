@@ -112,7 +112,7 @@ public final class SettingsTest
       new Settings (null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
@@ -130,7 +130,7 @@ public final class SettingsTest
       new Settings ("xxx").setValue (null, "my value");
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
 
     try
