@@ -91,7 +91,9 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       return new URLResource (aSystemURL);
     }
 
-    if (StringHelper.startsWith (sBaseURI, "jar:file:"))
+    // jar:file - regular JDK
+    // wsjar:file - Websphere
+    if (StringHelper.startsWith (sBaseURI, "jar:file:") || StringHelper.startsWith (sBaseURI, "wsjar:file:"))
     {
       // Base URI is inside a jar file? Skip the JAR file
       final int i = sBaseURI.indexOf ('!');
