@@ -20,6 +20,22 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2014-04-28" version="4.3.1" />
+  <entry date="2014-04-25" category="tech" action="update">
+    <change>
+      <text locale="en">Extended SimpleLSResourceResolver to support Websphere JAR files</text>
+    </change>
+  </entry>
+  <entry date="2014-04-03" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Static TextProvider methods now return TextProvider objects</text>
+    </change>
+  </entry>
+  <entry date="2014-04-03" category="api" action="change">
+    <change>
+      <text locale="en">TextProvider directly implements IReadonlyMultilingualText</text>
+    </change>
+  </entry>
   <release date="2014-03-18" version="4.3.0" />
   <entry date="2014-03-18" category="api" action="remove" incompatible="true">
     <change>
