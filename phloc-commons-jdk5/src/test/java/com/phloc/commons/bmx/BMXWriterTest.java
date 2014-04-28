@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.phloc.commons.collections.trove.TroveInit;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
@@ -40,16 +39,11 @@ import com.phloc.commons.timing.StopWatch;
 
 /**
  * Test class for class {@link BMXWriter}
- * 
+ *
  * @author Philip Helger
  */
 public final class BMXWriterTest
 {
-  static
-  {
-    TroveInit.initTrove (false);
-  }
-
   @Test
   public void testBasic ()
   {

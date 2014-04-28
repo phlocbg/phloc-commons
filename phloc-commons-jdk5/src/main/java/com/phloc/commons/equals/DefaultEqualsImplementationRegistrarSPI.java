@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -36,12 +37,13 @@ import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.io.file.FilenameHelper;
+import com.phloc.commons.system.EJavaVersion;
 
 /**
  * This class registers the default equals implementations. The implementations
  * in here should be aligned with the implementations in the
  * {@link com.phloc.commons.hash.DefaultHashCodeImplementationRegistrarSPI}
- * 
+ *
  * @author Philip Helger
  */
 @IsSPIImplementation
@@ -360,6 +362,16 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
+  private static final class EqualsImplementationLocale implements IEqualsImplementation
+  {
+    public boolean areEqual (final Object aObj1, final Object aObj2)
+    {
+      final Locale aRealObj1 = (Locale) aObj1;
+      final Locale aRealObj2 = (Locale) aObj2;
+      return aRealObj1.toString ().equals (aRealObj2.toString ());
+    }
+  }
+
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
   {
     /**
@@ -427,5 +439,9 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
     // Special handling for File
     aRegistry.registerEqualsImplementation (File.class, new EqualsImplementationFile ());
+
+    // Special handling for Locale in JDK >= 1.7
+    if (EJavaVersion.JDK_17.isSupportedVersion ())
+      aRegistry.registerEqualsImplementation (Locale.class, new EqualsImplementationLocale ());
   }
 }
