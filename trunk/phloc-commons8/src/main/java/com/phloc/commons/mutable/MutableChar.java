@@ -170,7 +170,8 @@ public final class MutableChar extends Number implements IMutableInteger <Mutabl
 
   public boolean isSmaller0 ()
   {
-    return m_cValue < 0;
+    // char is always >= 0
+    return false;
   }
 
   public boolean isSmallerOrEqual0 ()
@@ -185,7 +186,8 @@ public final class MutableChar extends Number implements IMutableInteger <Mutabl
 
   public boolean isGreaterOrEqual0 ()
   {
-    return m_cValue >= 0;
+    // char is always >= 0
+    return true;
   }
 
   public boolean isEven ()
