@@ -21,14 +21,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+import java.util.Locale;
 
 import org.junit.Test;
 
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.state.ESuccess;
-import com.phloc.commons.typeconvert.TypeConverterException;
 
 /**
  * Test class for class {@link DynamicValueLocale}.
@@ -53,17 +53,11 @@ public final class DynamicValueLocaleTest extends AbstractPhlocTestCase
     assertEquals (L_DE, aDTD.getValue ());
     assertEquals (ESuccess.FAILURE, aDTD.setAsSerializationText ("abc die Katze lief im Schnee"));
     assertEquals (L_DE, aDTD.getValue ());
-    try
-    {
-      aDTD.setValue ("");
-      fail ();
-    }
-    catch (final TypeConverterException ex)
-    {}
-    assertEquals (L_DE, aDTD.getValue ());
+    assertTrue (aDTD.setValue ("").isChanged ());
+    assertEquals (new Locale (""), aDTD.getValue ());
 
     // Check display text
-    assertEquals ("Deutsch", aDTD.getAsDisplayText (L_DE));
+    assertEquals ("", aDTD.getAsDisplayText (L_DE));
     // Check null
     assertTrue (aDTD.setValue (null).isChanged ());
     assertNull (aDTD.getAsSerializationText ());
