@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>22.7</version>
+    <version>23</version>
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -43,6 +43,7 @@
     </developer>
   </developers>
   
+  <!-- [OSS] not required
   <repositories>
     <repository>
       <id>phloc.com</id>
@@ -75,12 +76,13 @@
       <url>sftp://www.phloc.com:23040/var/www/html-repo/maven2</url>
     </repository>
   </distributionManagement>
+   -->
   
   <dependencies>
     <dependency>
       <groupId>com.phloc</groupId>
       <artifactId>phloc-commons</artifactId>
-      <version>4.3.1</version>
+      <version>4.3.2</version>
     </dependency>
   </dependencies>
 
