@@ -127,4 +127,22 @@ public final class CloneHelper
     // generic clone
     return _getGenericClone (aObject);
   }
+
+  /**
+   * Get a clone (= deep copy) of the passed value for all objects implementing
+   * {@link ICloneable}.
+   * 
+   * @param aObject
+   *        The object to be copied. May be <code>null</code>.
+   * @return <code>null</code> if the passed value is <code>null</code> or a
+   *         clone of the object.
+   */
+  @Nullable
+  public static <DATATYPE extends ICloneable <DATATYPE>> DATATYPE getCloneIfNotNull (@Nullable final DATATYPE aObject)
+  {
+    // null -> null
+    if (aObject == null)
+      return null;
+    return aObject.getClone ();
+  }
 }

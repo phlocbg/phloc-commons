@@ -112,6 +112,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   {
     if (pos < 0 || pos >= limit ())
       return null;
+
     final char c1 = get (pos);
     if (Character.isHighSurrogate (c1) && pos < limit ())
     {
@@ -120,16 +121,16 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
         return new char [] { c1, c2 };
       throw new InvalidCharacterException (c2);
     }
-    else
-      if (Character.isLowSurrogate (c1) && pos > 1)
-      {
-        final char c2 = get (pos - 1);
-        if (Character.isHighSurrogate (c2))
-          return new char [] { c2, c1 };
-        throw new InvalidCharacterException (c2);
-      }
-      else
-        return new char [] { c1 };
+
+    if (Character.isLowSurrogate (c1) && pos > 1)
+    {
+      final char c2 = get (pos - 1);
+      if (Character.isHighSurrogate (c2))
+        return new char [] { c2, c1 };
+      throw new InvalidCharacterException (c2);
+    }
+
+    return new char [] { c1 };
   }
 
   @Nullable
