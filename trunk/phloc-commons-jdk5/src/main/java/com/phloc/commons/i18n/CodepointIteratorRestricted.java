@@ -63,7 +63,8 @@ public class CodepointIteratorRestricted extends DelegatingCodepointIterator
     {
       try
       {
-        final int cp = peek (position ()).getValue ();
+        final Codepoint aCP = peek (position ());
+        final int cp = aCP == null ? -1 : aCP.getValue ();
         if (b && cp != -1 && _doFilter (cp))
           return false;
       }
