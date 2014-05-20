@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>5/20/14</td><td colspan="4">_Release *4.3.2*_</td></tr>
+<tr><td>5/20/14</td><td>change</td><td>tech</td><td></td><td>Modified POM to work with Maven central</td></tr>
+<tr><td>5/20/14</td><td>remove</td><td>api</td><td></td><td>Moved the contents of package com.phloc.commons.collections.trove to [http://code.google.com/p/phloc-math phloc-math]</td></tr>
 <tr border="1"><td>4/28/14</td><td colspan="4">_Release *4.3.1*_</td></tr>
 <tr><td>4/25/14</td><td>update</td><td>tech</td><td></td><td>Extended SimpleLSResourceResolver to support Websphere JAR files</td></tr>
 <tr><td>4/3/14</td><td>change</td><td>api</td><td>*yes*</td><td>Static TextProvider methods now return TextProvider objects</td></tr>
