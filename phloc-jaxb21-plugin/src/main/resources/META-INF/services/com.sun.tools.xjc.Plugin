@@ -1,8 +1,0 @@
-com.sun.tools.xjc.addon.phloc.PluginAnnotate
-com.sun.tools.xjc.addon.phloc.PluginCodeQuality
-com.sun.tools.xjc.addon.phloc.PluginDefaultLocale
-com.sun.tools.xjc.addon.phloc.PluginEqualsHashCode
-com.sun.tools.xjc.addon.phloc.PluginFieldsPrivate
-com.sun.tools.xjc.addon.phloc.PluginImplements
-com.sun.tools.xjc.addon.phloc.PluginListExtension
-com.sun.tools.xjc.addon.phloc.PluginToString
