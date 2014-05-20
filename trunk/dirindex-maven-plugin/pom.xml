@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.phloc.maven</groupId>
   <artifactId>dirindex-maven-plugin</artifactId>
-  <version>1.0.4</version>
+  <version>1.0.5-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>dirindex-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
@@ -24,9 +24,9 @@
   </licenses>
 
   <scm>
-    <url>scm:svn:https://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.4</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.4</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.4</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/dirindex-maven-plugin</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/dirindex-maven-plugin</developerConnection>
   </scm>
 
   <organization>
