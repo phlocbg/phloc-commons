@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-fonts</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-fonts</name>
   <description>Contains OSS fonts</description>
@@ -23,9 +23,9 @@
   </licenses>
        
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/tags/phloc-fonts-1.0.2</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/phloc-fonts-1.0.2</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/phloc-fonts-1.0.2</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-fonts</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-fonts</developerConnection>
   </scm>
 
   <organization>
