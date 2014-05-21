@@ -27,7 +27,7 @@
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <artifactId>phloc-jaxb21-plugin</artifactId>
-  <version>2.1.11.1</version>
+  <version>2.1.11.2-SNAPSHOT</version>
   <name>phloc-jaxb21-plugin</name>
   <description>JAXB 2.1 plugin to improve created output</description>
   <url>http://repo.phloc.com/apidocs/phloc-jaxb21-plugin/${project.version}</url>
@@ -41,9 +41,9 @@
   </licenses>
 
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/tags/phloc-jaxb21-plugin-2.1.11.1</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/phloc-jaxb21-plugin-2.1.11.1</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/phloc-jaxb21-plugin-2.1.11.1</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-jaxb21-plugin</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-jaxb21-plugin</developerConnection>
   </scm>
 
   <organization>
