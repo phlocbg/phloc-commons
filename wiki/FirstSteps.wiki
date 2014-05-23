@@ -11,9 +11,12 @@ Prerequisites: *phloc-commpns depends* on [http://www.slf4j.org/ SLF4J].
 
 To build phloc-commons from source, Maven 3.0.4 is required. Any version below does *NOT* work!
 
+Since version 4.3.3 phloc-commons is available on Maven Central
+
 To use phloc-commons put the following to your pom.xml:
 {{{
 ...
+  <!-- Required only for versions before 4.3.3 -->
   <repositories>
 ...
     <repository>
@@ -33,7 +36,7 @@ To use phloc-commons put the following to your pom.xml:
     <dependency>
       <groupId>com.phloc</groupId>
       <artifactId>phloc-commons</artifactId>
-      <version>4.2.0</version>
+      <version>4.3.3</version>
     </dependency>
   </dependencies>
 ...
