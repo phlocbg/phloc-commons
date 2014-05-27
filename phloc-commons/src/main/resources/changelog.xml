@@ -25,6 +25,11 @@
       <text locale="en">Extended SuccessWithValue API</text>
     </change>
   </entry>
+  <entry date="2014-05-26" category="api" action="add">
+    <change>
+      <text locale="en">Added new BigDecimal and BigInteger constants in CGlobal</text>
+    </change>
+  </entry>
   <entry date="2014-05-23" category="api" action="add">
     <change>
       <text locale="en">Added new method XMLHelper.getPathToNode2 that excludes the document node and has better index formatting</text>
