@@ -332,6 +332,12 @@ public final class CGlobal
   /** The year when the application was started. */
   public static final int CURRENT_YEAR = Calendar.getInstance ().get (Calendar.YEAR);
 
+  /** Centimeter per inch */
+  public static final float CM_PER_INCH = 2.54f;
+
+  /** Millimeter per inch */
+  public static final float MM_PER_INCH = 25.4f;
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final CGlobal s_aInstance = new CGlobal ();
