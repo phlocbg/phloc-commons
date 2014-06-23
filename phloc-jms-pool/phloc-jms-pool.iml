@@ -12,10 +12,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: com.phloc:phloc-commons:4.3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.phloc:phloc-commons:4.3.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.5" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: com.phloc:phloc-jms:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.phloc:phloc-jms:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: javax.jms:jms-api:1.1-rev-1" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jta_1.0.1B_spec:1.1.1" level="project" />
