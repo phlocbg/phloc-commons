@@ -75,7 +75,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   MavenProject project;
 
   /**
-   * The directory which should be index. This directory must be specified!
+   * The directory which should be index. This directory must be specified! This
+   * directory is included in the resulting index file.
    * 
    * @required
    * @parameter property=sourceDirectory
@@ -91,7 +92,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   private String filenameRegEx;
 
   /**
-   * Should all directories be scanned recursively for files?
+   * Should the source directory be scanned recursively for files? true by
+   * default.
    * 
    * @parameter property="recursive" default-value="true"
    */
@@ -107,15 +109,18 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   private File tempDirectory;
 
   /**
-   * The directory within the target artifact where the file should reside.
+   * The directory within the target artifact where the file should reside. This
+   * directory is relative to the tempDirectory and must not be provided. If
+   * this directory is not specified, than the created target file will reside
+   * by default in the root directory of the final artifact.
    * 
-   * @required
    * @parameter property=targetDirectory default-value=""
    */
   private String targetDirectory;
 
   /**
-   * The filename within the temp and the target directory to be used.
+   * The filename within the tempDirectory and the targetDirectory to be used.
+   * The resulting file will always be UTF-8 encoded.
    * 
    * @required
    * @parameter property=targetFilename default-value="dirindex.xml"
@@ -266,11 +271,19 @@ public final class GenerateDirIndexMojo extends AbstractMojo
             return false;
           }
         };
+
+      // Build the filename filter
       FilenameFilter aFileFilter = null;
       if (StringHelper.hasText (filenameRegEx))
         aFileFilter = new FilenameFilterMatchAnyRegEx (filenameRegEx);
+
+      // Build the tree to be handled
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, aFileFilter);
+
+      // Convert file system tree to XML
       final IMicroDocument aDoc = _getAsXML (aFileTree);
+
+      // And write the XML to the file
       final File aTempFile = new File (aTempTargetDir, targetFilename);
       SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
 
