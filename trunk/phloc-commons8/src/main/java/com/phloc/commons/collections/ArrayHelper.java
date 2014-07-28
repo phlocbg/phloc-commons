@@ -2713,8 +2713,8 @@ public final class ArrayHelper
       return aArray;
 
     return Arrays.stream (aArray)
-        .filter (p -> !contains (aElementsToRemove, p))
-        .toArray (nSize -> newArraySameType (aArray, nSize));
+                 .filter (p -> !contains (aElementsToRemove, p))
+                 .toArray (nSize -> newArraySameType (aArray, nSize));
   }
 
   /**
@@ -3970,6 +3970,9 @@ public final class ArrayHelper
    */
   public static <T> boolean containsAnyNullElement (@Nullable final T [] aArray)
   {
+    if (isEmpty (aArray))
+      return false;
+
     return Arrays.stream (aArray).anyMatch (Objects::isNull);
   }
 
