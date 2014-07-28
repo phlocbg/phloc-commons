@@ -483,6 +483,112 @@ public final class ValueEnforcer
     return aValue;
   }
 
+  public static short isLE0 (final short nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static int isLE0 (final int nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static long isLE0 (final long nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static double isLE0 (final double dValue, final String sName)
+  {
+    if (dValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + dValue);
+    return dValue;
+  }
+
+  public static float isLE0 (final float fValue, final String sName)
+  {
+    if (fValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + fValue);
+    return fValue;
+  }
+
+  @Nonnull
+  public static BigDecimal isLE0 (@Nonnull final BigDecimal aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigDecimal.ZERO) > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  @Nonnull
+  public static BigInteger isLE0 (@Nonnull final BigInteger aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigInteger.ZERO) > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  public static short isLT0 (final short nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static int isLT0 (final int nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static long isLT0 (final long nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static double isLT0 (final double dValue, final String sName)
+  {
+    if (dValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + dValue);
+    return dValue;
+  }
+
+  public static float isLT0 (final float fValue, final String sName)
+  {
+    if (fValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + fValue);
+    return fValue;
+  }
+
+  @Nonnull
+  public static BigDecimal isLT0 (@Nonnull final BigDecimal aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigDecimal.ZERO) >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  @Nonnull
+  public static BigInteger isLT0 (@Nonnull final BigInteger aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigInteger.ZERO) >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + aValue);
+    return aValue;
+  }
+
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
@@ -504,13 +610,13 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          nLowerBoundInclusive +
-          " and <= " +
-          nUpperBoundInclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be >= " +
+                                          nLowerBoundInclusive +
+                                          " and <= " +
+                                          nUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -535,13 +641,13 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          nLowerBoundInclusive +
-          " and <= " +
-          nUpperBoundInclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be >= " +
+                                          nLowerBoundInclusive +
+                                          " and <= " +
+                                          nUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -566,13 +672,13 @@ public final class ValueEnforcer
   {
     if (nValue < nLowerBoundInclusive || nValue > nUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          nLowerBoundInclusive +
-          " and <= " +
-          nUpperBoundInclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be >= " +
+                                          nLowerBoundInclusive +
+                                          " and <= " +
+                                          nUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -597,13 +703,13 @@ public final class ValueEnforcer
   {
     if (fValue < fLowerBoundInclusive || fValue > fUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          fLowerBoundInclusive +
-          " and <= " +
-          fUpperBoundInclusive +
-          "! The current value is: " +
-          fValue);
+                                          sName +
+                                          "' must be >= " +
+                                          fLowerBoundInclusive +
+                                          " and <= " +
+                                          fUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          fValue);
     return fValue;
   }
 
@@ -628,13 +734,13 @@ public final class ValueEnforcer
   {
     if (dValue < dLowerBoundInclusive || dValue > dUpperBoundInclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          dLowerBoundInclusive +
-          " and <= " +
-          dUpperBoundInclusive +
-          "! The current value is: " +
-          dValue);
+                                          sName +
+                                          "' must be >= " +
+                                          dLowerBoundInclusive +
+                                          " and <= " +
+                                          dUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          dValue);
     return dValue;
   }
 
@@ -662,13 +768,13 @@ public final class ValueEnforcer
     notNull (aUpperBoundInclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundInclusive) < 0 || aValue.compareTo (aUpperBoundInclusive) > 0)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          aLowerBoundInclusive +
-          " and <= " +
-          aUpperBoundInclusive +
-          "! The current value is: " +
-          aValue);
+                                          sName +
+                                          "' must be >= " +
+                                          aLowerBoundInclusive +
+                                          " and <= " +
+                                          aUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          aValue);
     return aValue;
   }
 
@@ -696,13 +802,13 @@ public final class ValueEnforcer
     notNull (aUpperBoundInclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundInclusive) < 0 || aValue.compareTo (aUpperBoundInclusive) > 0)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be >= " +
-          aLowerBoundInclusive +
-          " and <= " +
-          aUpperBoundInclusive +
-          "! The current value is: " +
-          aValue);
+                                          sName +
+                                          "' must be >= " +
+                                          aLowerBoundInclusive +
+                                          " and <= " +
+                                          aUpperBoundInclusive +
+                                          "! The current value is: " +
+                                          aValue);
     return aValue;
   }
 
@@ -727,13 +833,13 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          nLowerBoundExclusive +
-          " and < " +
-          nUpperBoundExclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be > " +
+                                          nLowerBoundExclusive +
+                                          " and < " +
+                                          nUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -758,13 +864,13 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          nLowerBoundExclusive +
-          " and < " +
-          nUpperBoundExclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be > " +
+                                          nLowerBoundExclusive +
+                                          " and < " +
+                                          nUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -789,13 +895,13 @@ public final class ValueEnforcer
   {
     if (nValue <= nLowerBoundExclusive || nValue >= nUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          nLowerBoundExclusive +
-          " and < " +
-          nUpperBoundExclusive +
-          "! The current value is: " +
-          nValue);
+                                          sName +
+                                          "' must be > " +
+                                          nLowerBoundExclusive +
+                                          " and < " +
+                                          nUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          nValue);
     return nValue;
   }
 
@@ -820,13 +926,13 @@ public final class ValueEnforcer
   {
     if (fValue <= fLowerBoundExclusive || fValue >= fUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          fLowerBoundExclusive +
-          " and < " +
-          fUpperBoundExclusive +
-          "! The current value is: " +
-          fValue);
+                                          sName +
+                                          "' must be > " +
+                                          fLowerBoundExclusive +
+                                          " and < " +
+                                          fUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          fValue);
     return fValue;
   }
 
@@ -851,13 +957,13 @@ public final class ValueEnforcer
   {
     if (dValue <= dLowerBoundExclusive || dValue >= dUpperBoundExclusive)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          dLowerBoundExclusive +
-          " and < " +
-          dUpperBoundExclusive +
-          "! The current value is: " +
-          dValue);
+                                          sName +
+                                          "' must be > " +
+                                          dLowerBoundExclusive +
+                                          " and < " +
+                                          dUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          dValue);
     return dValue;
   }
 
@@ -885,13 +991,13 @@ public final class ValueEnforcer
     notNull (aUpperBoundExclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundExclusive) <= 0 || aValue.compareTo (aUpperBoundExclusive) >= 0)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          aLowerBoundExclusive +
-          " and < " +
-          aUpperBoundExclusive +
-          "! The current value is: " +
-          aValue);
+                                          sName +
+                                          "' must be > " +
+                                          aLowerBoundExclusive +
+                                          " and < " +
+                                          aUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          aValue);
     return aValue;
   }
 
@@ -919,13 +1025,13 @@ public final class ValueEnforcer
     notNull (aUpperBoundExclusive, "UpperBoundInclusive");
     if (aValue.compareTo (aLowerBoundExclusive) <= 0 || aValue.compareTo (aUpperBoundExclusive) >= 0)
       throw new IllegalArgumentException ("The value of '" +
-          sName +
-          "' must be > " +
-          aLowerBoundExclusive +
-          " and < " +
-          aUpperBoundExclusive +
-          "! The current value is: " +
-          aValue);
+                                          sName +
+                                          "' must be > " +
+                                          aLowerBoundExclusive +
+                                          " and < " +
+                                          aUpperBoundExclusive +
+                                          "! The current value is: " +
+                                          aValue);
     return aValue;
   }
 
@@ -937,12 +1043,12 @@ public final class ValueEnforcer
     isGE0 (nLen, "Length");
     if ((nOfs + nLen) > nArrayLen)
       throw new IllegalArgumentException ("Offset (" +
-          nOfs +
-          ") + length (" +
-          nLen +
-          ") exceeds array length (" +
-          nArrayLen +
-          ")");
+                                          nOfs +
+                                          ") + length (" +
+                                          nLen +
+                                          ") exceeds array length (" +
+                                          nArrayLen +
+                                          ")");
 
   }
 

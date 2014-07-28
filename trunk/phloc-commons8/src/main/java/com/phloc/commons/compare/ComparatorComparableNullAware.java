@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 /**
  * This is another *lol* class: a {@link Comparator} for {@link Comparable}
- * objects. In comparison to {@link ComparatorComparable} this class can handle
+ * objects. In comparison to ComparatorComparable this class can handle
  * <code>null</code> values.
  *
  * @author Philip Helger
