@@ -67,7 +67,7 @@ public final class ArrayConversionHelper
     ValueEnforcer.notNull (aConv, "Converter");
     ValueEnforcer.notNull (aDstClass, "DestClass");
 
-    if (aArray != null)
+    if (aArray == null)
       return ArrayHelper.newArray (aDstClass, 0);
     return Arrays.stream (aArray).map (aConv).toArray (p -> ArrayHelper.newArray (aDstClass, p));
   }

@@ -130,7 +130,7 @@ public final class ContainerConversionHelperTest extends AbstractPhlocTestCase
   public void testNewSetIterableWithFilterAndConverter ()
   {
     Set <Integer> aSet = ContainerConversionHelper.newSet (ContainerHelper.newList ("100", null, "-733"),
-                                                           Objects::isNull,
+                                                           Objects::nonNull,
                                                            a -> StringParser.parseIntObj (a));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
