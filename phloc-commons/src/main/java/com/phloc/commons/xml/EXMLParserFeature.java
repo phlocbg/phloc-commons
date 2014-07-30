@@ -19,6 +19,7 @@ package com.phloc.commons.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +35,7 @@ import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
 
@@ -500,6 +502,16 @@ public enum EXMLParserFeature implements IHasName
    * (http://xml.org/sax/features/xml-1.1)
    */
   SAX_IS_XML11_PARSER (EXMLParserFeatureType.SAX, "http://xml.org/sax/features/xml-1.1");
+
+  /**
+   * This map contains all necessary settings to avoid XXE attacks.
+   */
+  public static final Map <EXMLParserFeature, Boolean> AVOID_XXE_SETTINGS = ContainerHelper.newUnmodifiableMap (new EXMLParserFeature [] { DISALLOW_DOCTYPE_DECL,
+                                                                                                                                          EXTERNAL_GENERAL_ENTITIES,
+                                                                                                                                          EXTERNAL_PARAMETER_ENTITIES },
+                                                                                                                new Boolean [] { Boolean.TRUE,
+                                                                                                                                Boolean.FALSE,
+                                                                                                                                Boolean.FALSE });
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLParserFeature.class);
 
