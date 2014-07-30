@@ -483,6 +483,112 @@ public final class ValueEnforcer
     return aValue;
   }
 
+  public static short isLE0 (final short nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static int isLE0 (final int nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static long isLE0 (final long nValue, final String sName)
+  {
+    if (nValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static double isLE0 (final double dValue, final String sName)
+  {
+    if (dValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + dValue);
+    return dValue;
+  }
+
+  public static float isLE0 (final float fValue, final String sName)
+  {
+    if (fValue > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + fValue);
+    return fValue;
+  }
+
+  @Nonnull
+  public static BigDecimal isLE0 (@Nonnull final BigDecimal aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigDecimal.ZERO) > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  @Nonnull
+  public static BigInteger isLE0 (@Nonnull final BigInteger aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigInteger.ZERO) > 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be <= 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  public static short isLT0 (final short nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static int isLT0 (final int nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static long isLT0 (final long nValue, final String sName)
+  {
+    if (nValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + nValue);
+    return nValue;
+  }
+
+  public static double isLT0 (final double dValue, final String sName)
+  {
+    if (dValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + dValue);
+    return dValue;
+  }
+
+  public static float isLT0 (final float fValue, final String sName)
+  {
+    if (fValue >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + fValue);
+    return fValue;
+  }
+
+  @Nonnull
+  public static BigDecimal isLT0 (@Nonnull final BigDecimal aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigDecimal.ZERO) >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + aValue);
+    return aValue;
+  }
+
+  @Nonnull
+  public static BigInteger isLT0 (@Nonnull final BigInteger aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.compareTo (BigInteger.ZERO) >= 0)
+      throw new IllegalArgumentException ("The value of '" + sName + "' must be < 0! The current value is: " + aValue);
+    return aValue;
+  }
+
   /**
    * Check if
    * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>

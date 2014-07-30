@@ -306,7 +306,8 @@ public final class XMLHelper
   }
 
   /**
-   * Get the path from root node to the passed node.
+   * Get the path from root node to the passed node. This includes all nodes up
+   * to the document node!
    * 
    * @param aNode
    *        The node to start. May not be <code>null</code>.
@@ -331,7 +332,8 @@ public final class XMLHelper
         // get index of my current element
         final Element aCurElement = (Element) aCurNode;
         int nIndex = 0;
-        for (final Element x : getChildElementIteratorNoNS (aCurNode.getParentNode ()))
+        // For all elements of the parent node
+        for (final Element x : new ChildElementIterator (aCurNode.getParentNode ()))
         {
           if (x == aCurNode)// NOPMD
             break;
@@ -342,6 +344,86 @@ public final class XMLHelper
       }
 
       aRet.insert (0, sSep).insert (0, aName);
+
+      // goto parent
+      aCurNode = aCurNode.getParentNode ();
+    }
+    return aRet.toString ();
+  }
+
+  /**
+   * Shortcut for {@link #getPathToNode2(Node)} using "/" as the separator.
+   * 
+   * @param aNode
+   *        The node to check.
+   * @return A non-<code>null</code> path.
+   */
+  @Nonnull
+  public static String getPathToNode2 (@Nonnull final Node aNode)
+  {
+    return getPathToNode2 (aNode, "/");
+  }
+
+  /**
+   * Get the path from root node to the passed node. This includes all nodes but
+   * excluding the document node!
+   * 
+   * @param aNode
+   *        The node to start. May not be <code>null</code>.
+   * @param sSep
+   *        The separator string to use. May not be <code>null</code>.
+   * @return The path to the node.
+   */
+  @Nonnull
+  public static String getPathToNode2 (@Nonnull final Node aNode, @Nonnull final String sSep)
+  {
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (sSep, "Separator");
+
+    final StringBuilder aRet = new StringBuilder ();
+    Node aCurNode = aNode;
+    while (aCurNode != null)
+    {
+      if (aCurNode.getNodeType () == Node.DOCUMENT_NODE && aRet.length () > 0)
+      {
+        // Add leading separator
+        aRet.insert (0, sSep);
+        break;
+      }
+
+      final StringBuilder aName = new StringBuilder (aCurNode.getNodeName ());
+
+      if (aCurNode.getNodeType () == Node.ELEMENT_NODE &&
+          aCurNode.getParentNode () != null &&
+          aCurNode.getParentNode ().getNodeType () == Node.ELEMENT_NODE)
+      {
+        // get index of current element in parent element
+        final Element aCurElement = (Element) aCurNode;
+        int nIndex = 0;
+        int nMatchingIndex = -1;
+        for (final Element x : new ChildElementIterator (aCurNode.getParentNode ()))
+        {
+          if (x == aCurNode)// NOPMD
+            nMatchingIndex = nIndex;
+
+          if (x.getTagName ().equals (aCurElement.getTagName ()))
+            ++nIndex;
+        }
+        if (nMatchingIndex < 0)
+          throw new IllegalStateException ("Failed to find Node at parent");
+        if (nIndex > 1)
+        {
+          // Append index only, if more than one element is present
+          aName.append ('[').append (nMatchingIndex).append (']');
+        }
+      }
+
+      if (aRet.length () > 0)
+      {
+        // Avoid trailing separator
+        aRet.insert (0, sSep);
+      }
+      aRet.insert (0, aName);
 
       // goto parent
       aCurNode = aCurNode.getParentNode ();

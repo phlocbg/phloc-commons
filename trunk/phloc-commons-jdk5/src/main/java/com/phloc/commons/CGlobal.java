@@ -182,6 +182,30 @@ public final class CGlobal
   /** Nano seconds per second. */
   public static final long NANOSECONDS_PER_SECOND = 1000000000L;
 
+  /** The BigInteger for the largest possible byte value */
+  public static final BigInteger BIGINT_MAX_BYTE = BigInteger.valueOf (Byte.MAX_VALUE);
+
+  /** The BigInteger for the smallest possible byte value */
+  public static final BigInteger BIGINT_MIN_BYTE = BigInteger.valueOf (Byte.MIN_VALUE);
+
+  /** The BigInteger for the largest possible character value */
+  public static final BigInteger BIGINT_MAX_CHAR = BigInteger.valueOf (Character.MAX_VALUE);
+
+  /** The BigInteger for the smallest possible character value */
+  public static final BigInteger BIGINT_MIN_CHAR = BigInteger.valueOf (Character.MIN_VALUE);
+
+  /** The BigInteger for the largest possible short value */
+  public static final BigInteger BIGINT_MAX_SHORT = BigInteger.valueOf (Short.MAX_VALUE);
+
+  /** The BigInteger for the smallest possible short value */
+  public static final BigInteger BIGINT_MIN_SHORT = BigInteger.valueOf (Short.MIN_VALUE);
+
+  /** The BigInteger for the largest possible int value */
+  public static final BigInteger BIGINT_MAX_INT = BigInteger.valueOf (Integer.MAX_VALUE);
+
+  /** The BigInteger for the smallest possible int value */
+  public static final BigInteger BIGINT_MIN_INT = BigInteger.valueOf (Integer.MIN_VALUE);
+
   /** The BigInteger for the largest possible long value */
   public static final BigInteger BIGINT_MAX_LONG = BigInteger.valueOf (Long.MAX_VALUE);
 
@@ -191,14 +215,50 @@ public final class CGlobal
   /** The BigInteger representation of -1 */
   public static final BigInteger BIGINT_MINUS_ONE = BigInteger.ONE.negate ();
 
+  /** The BigInteger representation of 10 */
+  public static final BigInteger BIGINT_10 = BigInteger.TEN;
+
   /** The BigInteger representation of 100 */
   public static final BigInteger BIGINT_100 = BigInteger.valueOf (100);
+
+  /** The BigInteger representation of 1000 */
+  public static final BigInteger BIGINT_1000 = BigInteger.valueOf (1000);
+
+  /** The BigDecimal for the largest possible byte value */
+  public static final BigDecimal BIGDEC_MAX_BYTE = BigDecimal.valueOf (Byte.MAX_VALUE);
+
+  /** The BigDecimal for the smallest possible byte value */
+  public static final BigDecimal BIGDEC_MIN_BYTE = BigDecimal.valueOf (Byte.MIN_VALUE);
+
+  /** The BigDecimal for the largest possible character value */
+  public static final BigDecimal BIGDEC_MAX_CHAR = BigDecimal.valueOf (Character.MAX_VALUE);
+
+  /** The BigDecimal for the smallest possible character value */
+  public static final BigDecimal BIGDEC_MIN_CHAR = BigDecimal.valueOf (Character.MIN_VALUE);
+
+  /** The BigDecimal for the largest possible short value */
+  public static final BigDecimal BIGDEC_MAX_SHORT = BigDecimal.valueOf (Short.MAX_VALUE);
+
+  /** The BigDecimal for the smallest possible short value */
+  public static final BigDecimal BIGDEC_MIN_SHORT = BigDecimal.valueOf (Short.MIN_VALUE);
+
+  /** The BigDecimal for the largest possible int value */
+  public static final BigDecimal BIGDEC_MAX_INT = BigDecimal.valueOf (Integer.MAX_VALUE);
+
+  /** The BigDecimal for the smallest possible int value */
+  public static final BigDecimal BIGDEC_MIN_INT = BigDecimal.valueOf (Integer.MIN_VALUE);
 
   /** The BigDecimal for the largest possible long value */
   public static final BigDecimal BIGDEC_MAX_LONG = BigDecimal.valueOf (Long.MAX_VALUE);
 
   /** The BigDecimal for the smallest possible long value */
   public static final BigDecimal BIGDEC_MIN_LONG = BigDecimal.valueOf (Long.MIN_VALUE);
+
+  /** The BigDecimal for the largest possible float value */
+  public static final BigDecimal BIGDEC_MAX_FLOAT = BigDecimal.valueOf (Float.MAX_VALUE);
+
+  /** The BigDecimal for the smallest possible float value */
+  public static final BigDecimal BIGDEC_MIN_FLOAT = BigDecimal.valueOf (Float.MIN_VALUE);
 
   /** The BigDecimal for the largest possible double value */
   public static final BigDecimal BIGDEC_MAX_DOUBLE = BigDecimal.valueOf (Double.MAX_VALUE);
@@ -209,8 +269,14 @@ public final class CGlobal
   /** The BigDecimal representation of -1 */
   public static final BigDecimal BIGDEC_MINUS_ONE = BigDecimal.ONE.negate ();
 
+  /** The BigDecimal representation of 10 */
+  public static final BigDecimal BIGDEC_10 = BigDecimal.TEN;
+
   /** The BigDecimal representation of 100 */
   public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");
+
+  /** The BigDecimal representation of 1000 */
+  public static final BigDecimal BIGDEC_1000 = new BigDecimal ("1000");
 
   /** The system line separator */
   public static final String LINE_SEPARATOR = SystemProperties.getLineSeparator ();
@@ -265,6 +331,12 @@ public final class CGlobal
 
   /** The year when the application was started. */
   public static final int CURRENT_YEAR = Calendar.getInstance ().get (Calendar.YEAR);
+
+  /** Centimeter per inch */
+  public static final float CM_PER_INCH = 2.54f;
+
+  /** Millimeter per inch */
+  public static final float MM_PER_INCH = 25.4f;
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")

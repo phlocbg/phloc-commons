@@ -47,6 +47,17 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
    * 
    * @param aSuccessIndicator
    *        The success indicator. May not be <code>null</code>.
+   */
+  public SuccessWithValue (@Nonnull final ISuccessIndicator aSuccessIndicator)
+  {
+    this (aSuccessIndicator, null);
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param aSuccessIndicator
+   *        The success indicator. May not be <code>null</code>.
    * @param aObj
    *        The assigned value. May be <code>null</code>.
    */
@@ -155,6 +166,22 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
   public String toString ()
   {
     return new ToStringGenerator (this).append ("success", m_eSuccess).append ("obj", m_aObj).toString ();
+  }
+
+  /**
+   * Create a new object with the given value.
+   * 
+   * @param aSuccessIndicator
+   *        The success indicator. May not be <code>null</code>.
+   * @param aValue
+   *        The value to be used. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static <DATATYPE> SuccessWithValue <DATATYPE> create (@Nonnull final ISuccessIndicator aSuccessIndicator,
+                                                               @Nullable final DATATYPE aValue)
+  {
+    return new SuccessWithValue <DATATYPE> (aSuccessIndicator, aValue);
   }
 
   /**
