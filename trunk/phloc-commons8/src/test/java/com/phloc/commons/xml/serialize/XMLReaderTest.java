@@ -17,12 +17,17 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.MalformedURLException;
 
 import javax.xml.validation.Schema;
 
@@ -30,19 +35,27 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.resource.FileSystemResource;
+import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.mock.PhlocTestUtils;
+import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.sax.CachingSAXInputSource;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
@@ -50,7 +63,7 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
 
 /**
  * Test class for {@link XMLReader}
- * 
+ *
  * @author Philip Helger
  */
 public final class XMLReaderTest
@@ -60,7 +73,7 @@ public final class XMLReaderTest
 
   /**
    * Test method readXMLDOM
-   * 
+   *
    * @throws SAXException
    */
   @Test
@@ -108,7 +121,7 @@ public final class XMLReaderTest
 
   /**
    * Test method readXMLDOM
-   * 
+   *
    * @throws SAXException
    */
   @Test
@@ -153,7 +166,7 @@ public final class XMLReaderTest
 
   /**
    * Test method readXMLDOM
-   * 
+   *
    * @throws SAXException
    */
   @Test
@@ -352,5 +365,93 @@ public final class XMLReaderTest
         assertNotNull (XMLReader.readXMLDOM (new ClassPathResource ("xml/buildinfo.xml")));
       }
     });
+  }
+
+  @Test
+  public void testExternalEntityExpansion () throws SAXException, MalformedURLException
+  {
+    // Include a dummy file
+    final File aFile = new File ("src/test/resources/test1.txt");
+    assertTrue (aFile.exists ());
+    final String sFileContent = StreamUtils.getAllBytesAsString (new FileSystemResource (aFile),
+                                                                 CCharset.CHARSET_ISO_8859_1_OBJ);
+
+    // The XML with XXE problem
+    final String sXML = "<?xml version='1.0' encoding='utf-8'?>" +
+                        "<!DOCTYPE root [" +
+                        " <!ELEMENT root ANY >" +
+                        " <!ENTITY xxe SYSTEM \"" +
+                        aFile.toURI ().toURL ().toExternalForm () +
+                        "\" >]>" +
+                        "<root>&xxe;</root>";
+    final DOMReaderSettings aDRS = new DOMReaderSettings ().setEntityResolver (new EntityResolver ()
+    {
+      public InputSource resolveEntity (final String publicId, final String systemId) throws SAXException, IOException
+      {
+        // Read as URL
+        return InputSourceFactory.create (new URLResource (systemId));
+      }
+    });
+
+    // Read successful - entity expansion!
+    final Document aDoc = XMLReader.readXMLDOM (sXML, aDRS);
+    assertNotNull (aDoc);
+    assertEquals (sFileContent, aDoc.getDocumentElement ().getTextContent ());
+
+    // Should fail because inline DTD is present
+    try
+    {
+      XMLReader.readXMLDOM (sXML, aDRS.getClone ().setFeatureValues (EXMLParserFeature.AVOID_XXE_SETTINGS));
+      fail ();
+    }
+    catch (final SAXParseException ex)
+    {
+      // Expected
+      assertTrue (ex.getMessage ().contains ("http://apache.org/xml/features/disallow-doctype-decl"));
+    }
+  }
+
+  @Test
+  public void testEntityExpansionLimit () throws SAXException
+  {
+    // The XML with XXE problem
+    final String sXML = "<?xml version='1.0' encoding='utf-8'?>"
+                        + "<!DOCTYPE root ["
+                        + " <!ELEMENT root ANY >"
+                        + " <!ENTITY e1 \"value\" >"
+                        + " <!ENTITY e2 \"&e1;&e1;&e1;&e1;&e1;&e1;&e1;&e1;&e1;&e1;\" >"
+                        + " <!ENTITY e3 \"&e2;&e2;&e2;&e2;&e2;&e2;&e2;&e2;&e2;&e2;\" >"
+                        + " <!ENTITY e4 \"&e3;&e3;&e3;&e3;&e3;&e3;&e3;&e3;&e3;&e3;\" >"
+                        + " <!ENTITY e5 \"&e4;&e4;&e4;&e4;&e4;&e4;&e4;&e4;&e4;&e4;\" >"
+                        + " <!ENTITY e6 \"&e5;&e5;&e5;&e5;&e5;&e5;&e5;&e5;&e5;&e5;\" >"
+                        // +
+                        // " <!ENTITY e7 \"&e6;&e6;&e6;&e6;&e6;&e6;&e6;&e6;&e6;&e6;\" >"
+                        // +
+                        // " <!ENTITY e8 \"&e7;&e7;&e7;&e7;&e7;&e7;&e7;&e7;&e7;&e7;\" >"
+                        // +
+                        // " <!ENTITY e9 \"&e8;&e8;&e8;&e8;&e8;&e8;&e8;&e8;&e8;&e8;\" >"
+                        // +
+                        // " <!ENTITY e10 \"&e9;&e9;&e9;&e9;&e9;&e9;&e9;&e9;&e9;&e9;\" >"
+                        + "]>"
+                        + "<root>&e6;</root>";
+    final DOMReaderSettings aDRS = new DOMReaderSettings ();
+
+    // Read successful - entity expansion!
+    final Document aDoc = XMLReader.readXMLDOM (sXML, aDRS);
+    assertNotNull (aDoc);
+    assertEquals (StringHelper.getRepeated ("value", (int) Math.pow (10, 5)), aDoc.getDocumentElement ()
+                                                                                  .getTextContent ());
+
+    // Should fail because too many entity expansions
+    try
+    {
+      XMLReader.readXMLDOM (sXML, aDRS.getClone ().setFeatureValues (EXMLParserFeature.AVOID_DOS_SETTINGS));
+      fail ();
+    }
+    catch (final SAXParseException ex)
+    {
+      // Expected
+      assertTrue (ex.getMessage ().contains ("entity expansions"));
+    }
   }
 }

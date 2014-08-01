@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -46,8 +45,6 @@ import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
-import com.phloc.commons.xml.EXMLParserFeature;
-import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.sax.InputSourceFactory;
 
 /**
@@ -227,20 +224,9 @@ public final class SAXReader
       try
       {
         final StopWatch aSW = new StopWatch (true);
-        aParser.setContentHandler (aSettings.getContentHandler ());
-        aParser.setDTDHandler (aSettings.getDTDHandler ());
-        aParser.setEntityResolver (aSettings.getEntityResolver ());
-        aParser.setErrorHandler (aSettings.getErrorHandler ());
 
-        // Apply properties
-        if (aSettings.hasAnyProperties ())
-          for (final Map.Entry <EXMLParserProperty, Object> aEntry : aSettings.getAllPropertyValues ().entrySet ())
-            aEntry.getKey ().applyTo (aParser, aEntry.getValue ());
-
-        // Apply features
-        if (aSettings.hasAnyFeature ())
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
-            aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+        // Apply settings
+        aSettings.applyToSAXReader (aParser);
 
         // Start parsing
         aParser.parse (aIS);

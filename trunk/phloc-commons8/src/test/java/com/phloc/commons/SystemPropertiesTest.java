@@ -32,7 +32,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
  * Test class for class {@link SystemProperties}
- * 
+ *
  * @author Philip Helger
  */
 public final class SystemPropertiesTest extends AbstractPhlocTestCase
@@ -92,5 +92,16 @@ public final class SystemPropertiesTest extends AbstractPhlocTestCase
     assertTrue (SystemProperties.containsPropertyName ("phloc.x"));
     SystemProperties.setPropertyValue ("phloc.x", null);
     assertFalse (SystemProperties.containsPropertyName ("phloc.x"));
+  }
+
+  @Test
+  public void testXMLProperties ()
+  {
+    assertTrue (SystemProperties.getXMLEntityExpansionLimit () > 0);
+    assertEquals (10000, SystemProperties.getXMLElementAttributeLimit ());
+    assertEquals (5000, SystemProperties.getXMLMaxOccur ());
+    assertEquals (5 * (int) 10E7, SystemProperties.getXMLTotalEntitySizeLimit ());
+    assertEquals (0, SystemProperties.getXMLMaxGeneralEntitySizeLimit ());
+    assertEquals (0, SystemProperties.getXMLMaxParameterEntitySizeLimit ());
   }
 }

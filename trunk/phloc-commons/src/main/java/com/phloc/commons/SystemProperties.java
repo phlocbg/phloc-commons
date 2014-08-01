@@ -315,4 +315,151 @@ public final class SystemProperties
   {
     return getAllProperties ().containsKey (sPropertyName);
   }
+
+  /**
+   * Limit the number of entity expansions.
+   * 
+   * @param nEntityExpansionLimit
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLEntityExpansionLimit (final int nEntityExpansionLimit)
+  {
+    setPropertyValue ("entityExpansionLimit", Integer.toString (nEntityExpansionLimit));
+    setPropertyValue ("jdx.xml.entityExpansionLimit", Integer.toString (nEntityExpansionLimit));
+  }
+
+  public static int getXMLEntityExpansionLimit ()
+  {
+    // Default value depends.
+    // JDK 1.6: 100.000
+    // JDK 1.7+: 64.0000
+    String sPropertyValue = getPropertyValueOrNull ("jdx.xml.entityExpansionLimit");
+    if (sPropertyValue == null)
+      sPropertyValue = getPropertyValueOrNull ("entityExpansionLimit");
+    if (sPropertyValue == null)
+      return 64000;
+    return Integer.parseInt (sPropertyValue);
+  }
+
+  /**
+   * Limit the number of attributes an element can have
+   * 
+   * @param nElementAttributeLimit
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLElementAttributeLimit (final int nElementAttributeLimit)
+  {
+    setPropertyValue ("elementAttributeLimit", Integer.toString (nElementAttributeLimit));
+    setPropertyValue ("jdx.xml.elementAttributeLimit", Integer.toString (nElementAttributeLimit));
+  }
+
+  public static int getXMLElementAttributeLimit ()
+  {
+    // Default value depends.
+    // JDK 1.7+: 10.0000
+    String sPropertyValue = getPropertyValueOrNull ("jdx.xml.elementAttributeLimit");
+    if (sPropertyValue == null)
+      sPropertyValue = getPropertyValueOrNull ("elementAttributeLimit");
+    if (sPropertyValue == null)
+      return 10000;
+    return Integer.parseInt (sPropertyValue);
+  }
+
+  /**
+   * Limit the number of contentmodel nodes that may be created when building a
+   * grammar for a W3C XML Schema that contains maxOccurs attributes with values
+   * other than "unbounded".
+   * 
+   * @param nMaxOccur
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLMaxOccur (final int nMaxOccur)
+  {
+    setPropertyValue ("maxOccur", Integer.toString (nMaxOccur));
+    setPropertyValue ("jdx.xml.maxOccur", Integer.toString (nMaxOccur));
+  }
+
+  public static int getXMLMaxOccur ()
+  {
+    // Default value depends.
+    // JDK 1.7+: 5.0000
+    String sPropertyValue = getPropertyValueOrNull ("jdx.xml.maxOccur");
+    if (sPropertyValue == null)
+      sPropertyValue = getPropertyValueOrNull ("maxOccur");
+    if (sPropertyValue == null)
+      return 5000;
+    return Integer.parseInt (sPropertyValue);
+  }
+
+  /**
+   * Limit the total size of all entities that include general and parameter
+   * entities. The size is calculated as an aggregation of all entities.<br>
+   * This is available since JDK 1.7.0_45/1.8
+   * 
+   * @param nTotalEntitySizeLimit
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLTotalEntitySizeLimit (final int nTotalEntitySizeLimit)
+  {
+    setPropertyValue ("jdx.xml.totalEntitySizeLimit", Integer.toString (nTotalEntitySizeLimit));
+  }
+
+  public static int getXMLTotalEntitySizeLimit ()
+  {
+    // Default value:
+    // JDK 1.7.0_45: 5x10^7
+    final String sPropertyValue = getPropertyValueOrNull ("jdx.xml.totalEntitySizeLimit");
+    if (sPropertyValue == null)
+      return 5 * (int) 10e7;
+    return Integer.parseInt (sPropertyValue);
+  }
+
+  /**
+   * Limit the maximum size of any general entities. It is recommended that
+   * users set the limit to the smallest possible number so that malformed xml
+   * files can be caught quickly.<br>
+   * This is available since JDK 1.7.0_45/1.8
+   * 
+   * @param nMaxGeneralEntitySizeLimit
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLMaxGeneralEntitySizeLimit (final int nMaxGeneralEntitySizeLimit)
+  {
+    setPropertyValue ("jdx.xml.maxGeneralEntitySizeLimit", Integer.toString (nMaxGeneralEntitySizeLimit));
+  }
+
+  public static int getXMLMaxGeneralEntitySizeLimit ()
+  {
+    // Default value:
+    // JDK 1.7.0_45: 0
+    final String sPropertyValue = getPropertyValueOrNull ("jdx.xml.maxGeneralEntitySizeLimit");
+    if (sPropertyValue == null)
+      return 0;
+    return Integer.parseInt (sPropertyValue);
+  }
+
+  /**
+   * Limit the maximum size of any parameter entities, including the result of
+   * nesting multiple parameter entities. It is recommended that users set the
+   * limit to the smallest possible number so that malformed xml files can be
+   * caught quickly.<br>
+   * This is available since JDK 1.7.0_45/1.8
+   * 
+   * @param nMaxParameterEntitySizeLimit
+   *        A positive integer. Values &ge; 0 are treated as no limit.
+   */
+  public static void setXMLMaxParameterEntitySizeLimit (final int nMaxParameterEntitySizeLimit)
+  {
+    setPropertyValue ("jdx.xml.maxParameterEntitySizeLimit", Integer.toString (nMaxParameterEntitySizeLimit));
+  }
+
+  public static int getXMLMaxParameterEntitySizeLimit ()
+  {
+    // Default value:
+    // JDK 1.7.0_45: 0
+    final String sPropertyValue = getPropertyValueOrNull ("jdx.xml.maxParameterEntitySizeLimit");
+    if (sPropertyValue == null)
+      return 0;
+    return Integer.parseInt (sPropertyValue);
+  }
 }

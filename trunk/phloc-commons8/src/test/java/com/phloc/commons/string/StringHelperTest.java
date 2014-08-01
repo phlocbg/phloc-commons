@@ -45,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link StringHelper}.
- * 
+ *
  * @author Philip Helger
  */
 public final class StringHelperTest extends AbstractPhlocTestCase
@@ -771,6 +771,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       StringHelper.getRepeated (" ", -1);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    // Check overflow
+    try
+    {
+      StringHelper.getRepeated ("  ", Integer.MAX_VALUE);
       fail ();
     }
     catch (final IllegalArgumentException ex)

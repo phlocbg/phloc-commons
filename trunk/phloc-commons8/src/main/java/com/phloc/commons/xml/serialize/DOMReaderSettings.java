@@ -24,6 +24,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
@@ -439,6 +441,55 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   public DOMReaderSettings getClone ()
   {
     return new DOMReaderSettings (this);
+  }
+
+  public void applyToDocumentBuilderFactory (@Nonnull final DocumentBuilderFactory aDocumentBuilderFactory)
+  {
+    ValueEnforcer.notNull (aDocumentBuilderFactory, "DocumentBuilderFactory");
+
+    aDocumentBuilderFactory.setNamespaceAware (isNamespaceAware ());
+    aDocumentBuilderFactory.setValidating (isValidating ());
+    aDocumentBuilderFactory.setIgnoringElementContentWhitespace (isIgnoringElementContentWhitespace ());
+    aDocumentBuilderFactory.setExpandEntityReferences (isExpandEntityReferences ());
+    aDocumentBuilderFactory.setIgnoringComments (isIgnoringComments ());
+    aDocumentBuilderFactory.setCoalescing (isCoalescing ());
+    try
+    {
+      aDocumentBuilderFactory.setSchema (getSchema ());
+    }
+    catch (final UnsupportedOperationException ex)
+    {
+      s_aLogger.warn ("DocumentBuilderFactory does not support XML Schema: " + ex.getMessage ());
+    }
+    try
+    {
+      aDocumentBuilderFactory.setXIncludeAware (isXIncludeAware ());
+    }
+    catch (final UnsupportedOperationException ex)
+    {
+      s_aLogger.warn ("DocumentBuilderFactory does not support XInclude setting: " + ex.getMessage ());
+    }
+
+    // Apply properties
+    if (hasAnyProperties ())
+      for (final Map.Entry <EXMLParserProperty, Object> aEntry : getAllPropertyValues ().entrySet ())
+        aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ());
+
+    // Apply features
+    if (hasAnyFeature ())
+      for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : getAllFeatureValues ().entrySet ())
+        aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ().booleanValue ());
+  }
+
+  public void applyToDocumentBuilder (@Nonnull final DocumentBuilder aDocumentBuilder)
+  {
+    ValueEnforcer.notNull (aDocumentBuilder, "DocumentBuilder");
+
+    // Set error handler
+    aDocumentBuilder.setErrorHandler (getErrorHandler ());
+
+    // Set optional entity resolver
+    aDocumentBuilder.setEntityResolver (getEntityResolver ());
   }
 
   @Override

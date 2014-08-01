@@ -344,6 +344,19 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aMaps)
+  {
+    if (aMaps == null || aMaps.length == 0)
+      return new HashMap <KEYTYPE, VALUETYPE> (0);
+
+    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> ();
+    for (final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap : aMaps)
+      ret.putAll (aMap);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
@@ -396,6 +409,13 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     return makeUnmodifiable (aMap);
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aMaps)
+  {
+    return makeUnmodifiable (newMap (aMaps));
   }
 
   @Nonnull
@@ -506,6 +526,19 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aMaps)
+  {
+    if (aMaps == null || aMaps.length == 0)
+      return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
+
+    final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> ();
+    for (final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap : aMaps)
+      ret.putAll (aMap);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
@@ -561,6 +594,13 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aOrderedMap)
   {
     return makeUnmodifiable (aOrderedMap);
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aOrderedMaps)
+  {
+    return makeUnmodifiable (newOrderedMap (aOrderedMaps));
   }
 
   @Nonnull
@@ -658,6 +698,19 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aMaps)
+  {
+    if (aMaps == null || aMaps.length == 0)
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    for (final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap : aMaps)
+      ret.putAll (aMap);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
@@ -713,6 +766,13 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aMap)
   {
     return makeUnmodifiable (aMap);
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final Map <KEYTYPE, ? extends VALUETYPE> [] aMaps)
+  {
+    return makeUnmodifiable (newSortedMap (aMaps));
   }
 
   @Nonnull

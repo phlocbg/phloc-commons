@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -35,6 +36,7 @@ import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
@@ -42,11 +44,23 @@ import com.phloc.commons.name.IHasName;
 /**
  * Contains constants for parser features.<br>
  * Source: http://xerces.apache.org/xerces2-j/features.html
- *
+ * 
  * @author Philip Helger
  */
 public enum EXMLParserFeature implements IHasName
 {
+  /**
+   * When true: instructs the implementation to process XML securely. This may
+   * set limits on XML constructs to avoid conditions such as denial of service
+   * attacks.<br>
+   * When false: instructs the implementation to process XML acording the letter
+   * of the XML specifications ingoring security issues such as limits on XML
+   * constructs to avoid conditions such as denial of service attacks.<br>
+   * Default: false<br>
+   * ({@link XMLConstants#FEATURE_SECURE_PROCESSING})
+   */
+  SECURE_PROCESSING (EXMLParserFeatureType.GENERAL, XMLConstants.FEATURE_SECURE_PROCESSING),
+
   /**
    * When true: Perform namespace processing: prefixes will be stripped off
    * element and attribute names and replaced with the corresponding namespace
@@ -356,7 +370,7 @@ public enum EXMLParserFeature implements IHasName
    * Default: true<br>
    * (http://apache.org/xml/features/xinclude/fixup-base-uris)
    */
-  XINCLUDE_FIXUP_BASE_URIS (EXMLParserFeatureType.GENERAL, "http://apache.org/xml/features/xinclude/fixup-base-uris"),
+  XINCLUDE_FIXUP_BASE_URIS (EXMLParserFeatureType.XINCLUDE, "http://apache.org/xml/features/xinclude/fixup-base-uris"),
 
   /**
    * When true: Perform language fixup as specified by the XInclude
@@ -366,7 +380,7 @@ public enum EXMLParserFeature implements IHasName
    * Default: true<br>
    * (http://apache.org/xml/features/xinclude/fixup-language)
    */
-  XINCLUDE_FIXUP_LANGUAGE (EXMLParserFeatureType.GENERAL, "http://apache.org/xml/features/xinclude/fixup-language"),
+  XINCLUDE_FIXUP_LANGUAGE (EXMLParserFeatureType.XINCLUDE, "http://apache.org/xml/features/xinclude/fixup-language"),
 
   /**
    * When true: Lazily expand the DOM nodes.<br>
@@ -512,6 +526,20 @@ public enum EXMLParserFeature implements IHasName
                                                                                                                 new Boolean [] { Boolean.TRUE,
                                                                                                                                 Boolean.FALSE,
                                                                                                                                 Boolean.FALSE });
+
+  /**
+   * This map contains all necessary settings to avoid entity expansion overflow
+   * attacks.
+   */
+  public static final Map <EXMLParserFeature, Boolean> AVOID_DOS_SETTINGS = ContainerHelper.newUnmodifiableMap (new EXMLParserFeature [] { SECURE_PROCESSING },
+                                                                                                                new Boolean [] { Boolean.TRUE });
+
+  /**
+   * This map contains all necessary settings to avoid all known XML attacks
+   */
+  @SuppressWarnings ("unchecked")
+  public static final Map <EXMLParserFeature, Boolean> AVOID_XML_ATTACKS = ContainerHelper.newUnmodifiableMap (ArrayHelper.newArray (AVOID_XXE_SETTINGS,
+                                                                                                                                     AVOID_DOS_SETTINGS));
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLParserFeature.class);
 

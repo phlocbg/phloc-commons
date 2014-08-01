@@ -23,7 +23,6 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.ByteBuffer;
-import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -33,8 +32,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
@@ -51,8 +48,6 @@ import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
-import com.phloc.commons.xml.EXMLParserFeature;
-import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -74,7 +69,6 @@ public final class XMLReader
     }
   }
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReader.class);
   private static final IStatisticsHandlerTimer s_aDomTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
                                                                                                    "$DOM");
   private static final IStatisticsHandlerTimer s_aDomSchemaTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
@@ -300,40 +294,11 @@ public final class XMLReader
       boolean bFromPool = false;
       if (aSettings.requiresNewXMLParser ())
       {
-        // We need to create a new DocumentBuilder
+        // We need to create a new DocumentBuilderFactory
         final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
-        aDocumentBuilderFactory.setNamespaceAware (aSettings.isNamespaceAware ());
-        aDocumentBuilderFactory.setValidating (aSettings.isValidating ());
-        aDocumentBuilderFactory.setIgnoringElementContentWhitespace (aSettings.isIgnoringElementContentWhitespace ());
-        aDocumentBuilderFactory.setExpandEntityReferences (aSettings.isExpandEntityReferences ());
-        aDocumentBuilderFactory.setIgnoringComments (aSettings.isIgnoringComments ());
-        aDocumentBuilderFactory.setCoalescing (aSettings.isCoalescing ());
-        try
-        {
-          aDocumentBuilderFactory.setSchema (aSettings.getSchema ());
-        }
-        catch (final UnsupportedOperationException ex)
-        {
-          s_aLogger.warn ("DocumentBuilderFactory does not support XML Schema: " + ex.getMessage ());
-        }
-        try
-        {
-          aDocumentBuilderFactory.setXIncludeAware (aSettings.isXIncludeAware ());
-        }
-        catch (final UnsupportedOperationException ex)
-        {
-          s_aLogger.warn ("DocumentBuilderFactory does not support XInclude setting: " + ex.getMessage ());
-        }
 
-        // Apply properties
-        if (aSettings.hasAnyProperties ())
-          for (final Map.Entry <EXMLParserProperty, Object> aEntry : aSettings.getAllPropertyValues ().entrySet ())
-            aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ());
-
-        // Apply features
-        if (aSettings.hasAnyFeature ())
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
-            aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ().booleanValue ());
+        // Apply the settings on the DocumentBuilderFactory
+        aSettings.applyToDocumentBuilderFactory (aDocumentBuilderFactory);
 
         // Ready to create document builder
         aDocumentBuilder = aDocumentBuilderFactory.newDocumentBuilder ();
@@ -347,17 +312,19 @@ public final class XMLReader
 
       try
       {
+        // Apply settings on DocumentBuilder
+        aSettings.applyToDocumentBuilder (aDocumentBuilder);
+
         // Ensure a collecting error handler is present
         CollectingSAXErrorHandler aCEH;
         final ErrorHandler aCustomErrorHandler = aSettings.getErrorHandler ();
         if (aCustomErrorHandler instanceof CollectingSAXErrorHandler)
           aCEH = (CollectingSAXErrorHandler) aCustomErrorHandler;
         else
+        {
           aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler);
-        aDocumentBuilder.setErrorHandler (aCEH);
-
-        // Set optional entity resolver
-        aDocumentBuilder.setEntityResolver (aSettings.getEntityResolver ());
+          aDocumentBuilder.setErrorHandler (aCEH);
+        }
 
         // Main parsing
         aDoc = aDocumentBuilder.parse (aInputSource);
