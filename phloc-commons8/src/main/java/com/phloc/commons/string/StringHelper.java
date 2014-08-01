@@ -64,34 +64,34 @@ public final class StringHelper
   public static final int STRING_NOT_FOUND = -1;
 
   private static final int [] s_aSizeTableInt = { 9,
-                                                  99,
-                                                  999,
-                                                  9999,
-                                                  99999,
-                                                  999999,
-                                                  9999999,
-                                                  99999999,
-                                                  999999999,
-                                                  Integer.MAX_VALUE };
+                                                 99,
+                                                 999,
+                                                 9999,
+                                                 99999,
+                                                 999999,
+                                                 9999999,
+                                                 99999999,
+                                                 999999999,
+                                                 Integer.MAX_VALUE };
   private static final long [] s_aSizeTableLong = { 9L,
-                                                    99L,
-                                                    999L,
-                                                    9999L,
-                                                    99999L,
-                                                    999999L,
-                                                    9999999L,
-                                                    99999999L,
-                                                    999999999L,
-                                                    9999999999L,
-                                                    99999999999L,
-                                                    999999999999L,
-                                                    9999999999999L,
-                                                    99999999999999L,
-                                                    999999999999999L,
-                                                    9999999999999999L,
-                                                    99999999999999999L,
-                                                    999999999999999999L,
-                                                    Long.MAX_VALUE };
+                                                   99L,
+                                                   999L,
+                                                   9999L,
+                                                   99999L,
+                                                   999999L,
+                                                   9999999L,
+                                                   99999999L,
+                                                   999999999L,
+                                                   9999999999L,
+                                                   99999999999L,
+                                                   999999999999L,
+                                                   9999999999999L,
+                                                   99999999999999L,
+                                                   999999999999999L,
+                                                   9999999999999999L,
+                                                   99999999999999999L,
+                                                   999999999999999999L,
+                                                   Long.MAX_VALUE };
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final StringHelper s_aInstance = new StringHelper ();
@@ -1232,7 +1232,7 @@ public final class StringHelper
   public static List <String> getExploded (final char cSep, @Nullable final String sElements, final int nMaxItems)
   {
     return getExploded (cSep, sElements, nMaxItems, nMaxItems >= 1 ? new ArrayList <String> (nMaxItems)
-                                                                   : new ArrayList <String> ());
+                                                                  : new ArrayList <String> ());
   }
 
   /**
@@ -1342,10 +1342,10 @@ public final class StringHelper
   public static List <String> getExploded (@Nonnull final String sSep,
                                            @Nullable final String sElements,
                                            final int nMaxItems)
-                                           {
+  {
     return getExploded (sSep, sElements, nMaxItems, nMaxItems >= 1 ? new ArrayList <String> (nMaxItems)
-                                                                   : new ArrayList <String> ());
-                                           }
+                                                                  : new ArrayList <String> ());
+  }
 
   /**
    * Take a concatenated String and return a {@link Set} of all elements in the
@@ -1450,17 +1450,23 @@ public final class StringHelper
     ValueEnforcer.notNull (sElement, "Element");
     ValueEnforcer.isGE0 (nRepeats, "Repeats");
 
-    if (sElement.length () == 0 || nRepeats == 0)
+    final int nElementLength = sElement.length ();
+
+    // Check if result length would exceed int range
+    if ((long) nElementLength * nRepeats > Integer.MAX_VALUE)
+      throw new IllegalArgumentException ("Resulting string exceeds the maximum integer length");
+
+    if (nElementLength == 0 || nRepeats == 0)
       return "";
     if (nRepeats == 1)
       return sElement;
 
     // use character version
-    if (sElement.length () == 1)
+    if (nElementLength == 1)
       return getRepeated (sElement.charAt (0), nRepeats);
 
     // combine via StringBuilder
-    final StringBuilder ret = new StringBuilder (sElement.length () * nRepeats);
+    final StringBuilder ret = new StringBuilder (nElementLength * nRepeats);
     for (int i = 0; i < nRepeats; ++i)
       ret.append (sElement);
     return ret.toString ();
@@ -1621,7 +1627,7 @@ public final class StringHelper
     final int nStrLength = sStr.length ();
     final int nSearchLength = sSearch.length ();
     return nStrLength >= nSearchLength &&
-        sStr.substring (nStrLength - nSearchLength, nStrLength).equalsIgnoreCase (sSearch);
+           sStr.substring (nStrLength - nSearchLength, nStrLength).equalsIgnoreCase (sSearch);
   }
 
   /**
@@ -1639,7 +1645,7 @@ public final class StringHelper
   public static int getIndexOf (@Nullable final String sText, @Nullable final String sSearch)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.indexOf (sSearch)
-                                                                                    : STRING_NOT_FOUND;
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1662,7 +1668,7 @@ public final class StringHelper
   {
     return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.indexOf (sSearch,
                                                                                                                     nFromIndex)
-                                                                                                                    : STRING_NOT_FOUND;
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1680,7 +1686,7 @@ public final class StringHelper
   public static int getLastIndexOf (@Nullable final String sText, @Nullable final String sSearch)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.lastIndexOf (sSearch)
-                                                                                    : STRING_NOT_FOUND;
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1703,7 +1709,7 @@ public final class StringHelper
   {
     return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.lastIndexOf (sSearch,
                                                                                                                         nFromIndex)
-                                                                                                                        : STRING_NOT_FOUND;
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1740,7 +1746,7 @@ public final class StringHelper
   public static int getIndexOf (@Nullable final String sText, @Nonnegative final int nFromIndex, final char cSearch)
   {
     return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.indexOf (cSearch, nFromIndex)
-                                                                : STRING_NOT_FOUND;
+                                                               : STRING_NOT_FOUND;
   }
 
   /**
@@ -1777,7 +1783,7 @@ public final class StringHelper
   public static int getLastIndexOf (@Nullable final String sText, @Nonnegative final int nFromIndex, final char cSearch)
   {
     return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.lastIndexOf (cSearch, nFromIndex)
-                                                                : STRING_NOT_FOUND;
+                                                               : STRING_NOT_FOUND;
   }
 
   /**
@@ -1799,8 +1805,8 @@ public final class StringHelper
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                    .indexOf (sSearch.toLowerCase (aSortLocale))
-                                                                                    : STRING_NOT_FOUND;
+                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1826,9 +1832,9 @@ public final class StringHelper
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                                   .indexOf (sSearch.toLowerCase (aSortLocale),
-                                                                                                             nFromIndex)
-                                                                                                             : STRING_NOT_FOUND;
+                                                                                                          .indexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                    nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1850,8 +1856,8 @@ public final class StringHelper
                                               @Nonnull final Locale aSortLocale)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                    .lastIndexOf (sSearch.toLowerCase (aSortLocale))
-                                                                                    : STRING_NOT_FOUND;
+                                                                                           .lastIndexOf (sSearch.toLowerCase (aSortLocale))
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1877,9 +1883,9 @@ public final class StringHelper
                                               @Nonnull final Locale aSortLocale)
   {
     return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                                   .lastIndexOf (sSearch.toLowerCase (aSortLocale),
-                                                                                                                 nFromIndex)
-                                                                                                                 : STRING_NOT_FOUND;
+                                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                        nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1901,7 +1907,7 @@ public final class StringHelper
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
-                                                 .indexOf (Character.toLowerCase (cSearch)) : STRING_NOT_FOUND;
+                                                        .indexOf (Character.toLowerCase (cSearch)) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1927,8 +1933,8 @@ public final class StringHelper
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.toLowerCase (aSortLocale)
-                                                                .indexOf (Character.toLowerCase (cSearch),
-                                                                          nFromIndex) : STRING_NOT_FOUND;
+                                                                       .indexOf (Character.toLowerCase (cSearch),
+                                                                                 nFromIndex) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1950,8 +1956,8 @@ public final class StringHelper
                                               @Nonnull final Locale aSortLocale)
   {
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
-                                                 .lastIndexOf (Character.toLowerCase (cSearch))
-                                                 : STRING_NOT_FOUND;
+                                                        .lastIndexOf (Character.toLowerCase (cSearch))
+                                                : STRING_NOT_FOUND;
   }
 
   /**
@@ -1977,8 +1983,8 @@ public final class StringHelper
                                               @Nonnull final Locale aSortLocale)
   {
     return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.toLowerCase (aSortLocale)
-                                                                .lastIndexOf (Character.toLowerCase (cSearch),
-                                                                              nFromIndex) : STRING_NOT_FOUND;
+                                                                       .lastIndexOf (Character.toLowerCase (cSearch),
+                                                                                     nFromIndex) : STRING_NOT_FOUND;
   }
 
   /**
@@ -2558,7 +2564,7 @@ public final class StringHelper
 
     // build output buffer
     final StringBuilder ret = new StringBuilder (nOldLength >= nNewLength ? sInputString.length ()
-                                                                          : sInputString.length () * 2);
+                                                                         : sInputString.length () * 2);
     int nOldIndex = 0;
     do
     {
@@ -3315,7 +3321,7 @@ public final class StringHelper
 
     final int nIndex = getIndexOf (sStr, sSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
-                                                               (bIncludingSearchChar ? sSearch.length () : 0));
+                                                                  (bIncludingSearchChar ? sSearch.length () : 0));
   }
 
   /**
@@ -3403,7 +3409,7 @@ public final class StringHelper
 
     final int nIndex = getLastIndexOf (sStr, sSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
-                                                               (bIncludingSearchChar ? sSearch.length () : 0));
+                                                                  (bIncludingSearchChar ? sSearch.length () : 0));
   }
 
   /**

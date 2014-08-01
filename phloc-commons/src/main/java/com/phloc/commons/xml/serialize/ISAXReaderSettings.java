@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.xml.sax.ContentHandler;
@@ -25,7 +26,9 @@ import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
 /**
- * Read only interface for the {@link SAXReaderSettings}.
+ * Read only interface for the {@link SAXReaderSettings}. Implementations of
+ * this interface are meant to define settings that can be used with
+ * org.xml.sax.XMLReader instances.
  * 
  * @author Philip Helger
  */
@@ -72,4 +75,13 @@ public interface ISAXReaderSettings extends IBaseXMLReaderSettings
    *         <code>false</code> if not.
    */
   boolean requiresNewXMLParser ();
+
+  /**
+   * Apply all settings of this object onto the specified XMLReader object
+   * 
+   * @param aParser
+   *        The XML reader to apply the settings onto. May not be
+   *        <code>null</code>.
+   */
+  void applyToSAXReader (@Nonnull final org.xml.sax.XMLReader aParser);
 }

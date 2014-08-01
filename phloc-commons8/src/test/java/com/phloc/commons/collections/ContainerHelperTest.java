@@ -119,7 +119,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ContainerHelper}
- * 
+ *
  * @author Philip Helger
  */
 public final class ContainerHelperTest extends AbstractPhlocTestCase
@@ -251,6 +251,35 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (aMap.size (), 1);
     assertNotNull (aMap.get ("Hallo"));
     assertEquals (I5, aMap.get ("Hallo"));
+  }
+
+  @Test
+  public void testNewMap_Map ()
+  {
+    final Map <String, Integer> aMap = newMap ("Hallo", I5);
+    assertNotNull (aMap);
+
+    final Map <String, Integer> aMap2 = ContainerHelper.newMap (aMap);
+    assertEquals (aMap2.size (), 1);
+    assertNotNull (aMap2.get ("Hallo"));
+    assertEquals (I5, aMap2.get ("Hallo"));
+  }
+
+  @SuppressWarnings ("unchecked")
+  @Test
+  public void testNewMap_MapArray ()
+  {
+    final Map <String, Integer> aMapA = newMap ("Hallo", I5);
+    final Map <String, Integer> aMapB = newMap ("Welt", I3);
+
+    Map <String, Integer> aMap2 = ContainerHelper.newMap (ArrayHelper.newArray (aMapA, aMapB));
+    assertEquals (aMap2.size (), 2);
+    assertEquals (I5, aMap2.get ("Hallo"));
+    assertEquals (I3, aMap2.get ("Welt"));
+
+    aMap2 = ContainerHelper.newMap (ArrayHelper.newArray (aMapA, aMapA));
+    assertEquals (aMap2.size (), 1);
+    assertEquals (I5, aMap2.get ("Hallo"));
   }
 
   @Test

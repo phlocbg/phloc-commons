@@ -1447,17 +1447,23 @@ public final class StringHelper
     ValueEnforcer.notNull (sElement, "Element");
     ValueEnforcer.isGE0 (nRepeats, "Repeats");
 
-    if (sElement.length () == 0 || nRepeats == 0)
+    final int nElementLength = sElement.length ();
+
+    // Check if result length would exceed int range
+    if ((long) nElementLength * nRepeats > Integer.MAX_VALUE)
+      throw new IllegalArgumentException ("Resulting string exceeds the maximum integer length");
+
+    if (nElementLength == 0 || nRepeats == 0)
       return "";
     if (nRepeats == 1)
       return sElement;
 
     // use character version
-    if (sElement.length () == 1)
+    if (nElementLength == 1)
       return getRepeated (sElement.charAt (0), nRepeats);
 
     // combine via StringBuilder
-    final StringBuilder ret = new StringBuilder (sElement.length () * nRepeats);
+    final StringBuilder ret = new StringBuilder (nElementLength * nRepeats);
     for (int i = 0; i < nRepeats; ++i)
       ret.append (sElement);
     return ret.toString ();

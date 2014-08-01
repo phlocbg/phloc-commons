@@ -20,6 +20,31 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2014-07-31 category="api" action="add">
+    <change>
+      <text locale="en">Extended SystemProperties class to get and set JDK XML limits</text>
+    </change>
+  </entry>
+  <entry date="2014-07-31 category="api" action="add">
+    <change>
+      <text locale="en">Extended I(SAX|DOM)ReaderSettings interfaces with methods to easily apply the settings onto the destination objects</text>
+    </change>
+  </entry>
+  <entry date="2014-07-31 category="api" action="add">
+    <change>
+      <text locale="en">Added new ContainerHelper.new(|Sorted|Ordered)Map overloads with other maps</text>
+    </change>
+  </entry>
+  <entry date="2014-07-31 category="tech" action="update">
+    <change>
+      <text locale="en">Added an exception in StringHelper.getRepeated(String,int) if the result length would exceed int range</text>
+    </change>
+  </entry>
+  <entry date="2014-07-31 category="api" action="add">
+    <change>
+      <text locale="en">Extended EXMLParserFeature to include XMLConstants.FEATURE_SECURE_PROCESSING</text>
+    </change>
+  </entry>
   <release date="2014-07-30" version="4.3.4" />
   <entry date="2014-07-29" category="api" action="add">
     <change>

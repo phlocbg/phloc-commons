@@ -35,6 +35,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 
@@ -42,6 +43,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
 import com.phloc.commons.ValueEnforcer;
@@ -61,8 +63,12 @@ import com.phloc.commons.jaxb.validation.CollectingValidationEventHandler;
 import com.phloc.commons.jaxb.validation.IValidationEventHandlerFactory;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
+import com.phloc.commons.xml.serialize.SAXReaderFactory;
+import com.phloc.commons.xml.serialize.SAXReaderSettings;
 import com.phloc.commons.xml.transform.TransformResultFactory;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
@@ -75,14 +81,19 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 @NotThreadSafe
 public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 {
-  public static final boolean DEFAULT_FORMATTED = false;
+  public static final boolean DEFAULT_READ_SECURE = true;
+  public static final boolean DEFAULT_WRITE_FORMATTED = false;
+  @Deprecated
+  public static final boolean DEFAULT_FORMATTED = DEFAULT_WRITE_FORMATTED;
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractJAXBMarshaller.class);
 
   private final Class <JAXBTYPE> m_aType;
   private final List <IReadableResource> m_aXSDs = new ArrayList <IReadableResource> ();
   private IValidationEventHandlerFactory m_aVEHFactory = new CollectingLoggingValidationEventHandlerFactory ();
   private ValidationEventHandler m_aLastEventHandler;
-  private boolean m_bWriteFormatted = DEFAULT_FORMATTED;
+  private boolean m_bReadSecure = DEFAULT_READ_SECURE;
+  private boolean m_bWriteFormatted = DEFAULT_WRITE_FORMATTED;
 
   /**
    * Constructor.
@@ -245,7 +256,31 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
-   * CHange the way formatting happens when calling write.
+   * Enable or disable secure reading. Secure reading means that documents are
+   * checked for XXE and XML bombs (infinite entity expansions). By default
+   * secure reading is enabled.
+   * 
+   * @param bReadSecure
+   *        <code>true</code> to read secure, <code>false</code> to disable
+   *        secure reading.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public final EChange setReadSecure (final boolean bReadSecure)
+  {
+    if (bReadSecure == m_bReadSecure)
+      return EChange.UNCHANGED;
+    m_bReadSecure = bReadSecure;
+    return EChange.CHANGED;
+  }
+
+  public final boolean isReadSecure ()
+  {
+    return m_bReadSecure;
+  }
+
+  /**
+   * Change the way formatting happens when calling write.
    * 
    * @param bWriteFormatted
    *        <code>true</code> to write formatted output.
@@ -333,8 +368,29 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     return aUnmarshaller;
   }
 
+  @Nullable
+  private JAXBTYPE _readSecurelyFromInputSource (@Nonnull final InputSource aInputSource)
+  {
+    // Initialize settings with defaults
+    final SAXReaderSettings aSettings = new SAXReaderSettings ();
+    if (m_bReadSecure)
+    {
+      // Apply settings that make reading more secure
+      aSettings.setFeatureValues (EXMLParserFeature.AVOID_XML_ATTACKS);
+    }
+
+    // Create new XML reader
+    final org.xml.sax.XMLReader aParser = SAXReaderFactory.createXMLReader ();
+
+    // Apply settings
+    aSettings.applyToSAXReader (aParser);
+
+    return read (new SAXSource (aParser, aInputSource));
+  }
+
   /**
-   * Read a document from the specified file.
+   * Read a document from the specified file. The secure reading feature has
+   * affect when using this method.
    * 
    * @param aFile
    *        The file to read. May not be <code>null</code>.
@@ -345,11 +401,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     ValueEnforcer.notNull (aFile, "File");
 
-    return read (TransformSourceFactory.create (aFile));
+    return _readSecurelyFromInputSource (InputSourceFactory.create (aFile));
   }
 
   /**
-   * Read a document from the specified resource.
+   * Read a document from the specified resource. The secure reading feature has
+   * affect when using this method.
    * 
    * @param aResource
    *        The resource to read. May not be <code>null</code>.
@@ -360,11 +417,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     ValueEnforcer.notNull (aResource, "Resource");
 
-    return read (TransformSourceFactory.create (aResource));
+    return _readSecurelyFromInputSource (InputSourceFactory.create (aResource));
   }
 
   /**
-   * Read a document from the specified input stream.
+   * Read a document from the specified input stream. The secure reading feature
+   * has affect when using this method.
    * 
    * @param aIS
    *        The input stream to read. May not be <code>null</code>.
@@ -375,11 +433,30 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     ValueEnforcer.notNull (aIS, "InputStream");
 
-    return read (TransformSourceFactory.create (aIS));
+    return _readSecurelyFromInputSource (InputSourceFactory.create (aIS));
   }
 
   /**
-   * Read a document from the specified DOM node.
+   * Read a document from the specified String. The secure reading feature has
+   * affect when using this method.
+   * 
+   * @param sXML
+   *        The XML string to read. May not be <code>null</code>.
+   * @return <code>null</code> in case reading fails.
+   */
+  @Nullable
+  public final JAXBTYPE read (@Nonnull final String sXML)
+  {
+    ValueEnforcer.notNull (sXML, "XML");
+
+    return _readSecurelyFromInputSource (InputSourceFactory.create (sXML));
+  }
+
+  /**
+   * Read a document from the specified DOM node. The secure reading feature has
+   * <b>NO</b> affect when using this method because no parsing happens! To
+   * ensure secure reading the Node must first be serialized to a String and be
+   * parsed again!
    * 
    * @param aNode
    *        The DOM node to read. May not be <code>null</code>.
@@ -394,7 +471,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
-   * Customize the passed unmarshaller before un something.
+   * Customize the passed unmarshaller before unmarshalling (reading) something.
    * 
    * @param aUnmarshaller
    *        The object to customize. Never <code>null</code>.
@@ -425,7 +502,9 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
-   * Read a document from the specified source.
+   * Read a document from the specified source. The secure reading feature has
+   * <b>NO</b> affect when using this method because the parameter type is too
+   * generic.
    * 
    * @param aSource
    *        The source to read. May not be <code>null</code>.

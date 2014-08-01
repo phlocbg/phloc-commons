@@ -359,6 +359,26 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     return new SAXReaderSettings (this);
   }
 
+  public void applyToSAXReader (@Nonnull final org.xml.sax.XMLReader aParser)
+  {
+    ValueEnforcer.notNull (aParser, "Parser");
+
+    aParser.setContentHandler (getContentHandler ());
+    aParser.setDTDHandler (getDTDHandler ());
+    aParser.setEntityResolver (getEntityResolver ());
+    aParser.setErrorHandler (getErrorHandler ());
+
+    // Apply properties
+    if (hasAnyProperties ())
+      for (final Map.Entry <EXMLParserProperty, Object> aEntry : getAllPropertyValues ().entrySet ())
+        aEntry.getKey ().applyTo (aParser, aEntry.getValue ());
+
+    // Apply features
+    if (hasAnyFeature ())
+      for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : getAllFeatureValues ().entrySet ())
+        aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+  }
+
   @Override
   public String toString ()
   {

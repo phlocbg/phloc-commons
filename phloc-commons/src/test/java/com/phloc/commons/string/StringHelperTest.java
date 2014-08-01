@@ -775,6 +775,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     }
     catch (final IllegalArgumentException ex)
     {}
+
+    // Check overflow
+    try
+    {
+      StringHelper.getRepeated ("  ", Integer.MAX_VALUE);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
   }
 
   @Test
