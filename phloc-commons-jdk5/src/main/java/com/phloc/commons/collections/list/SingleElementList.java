@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Implementation of the {@link List} interface handling exactly one element and
  * no more!
- * 
+ *
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the element in the list
@@ -88,6 +88,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
 
   public boolean addAll (@Nonnull final Collection <? extends ELEMENTTYPE> aElements)
   {
+    ValueEnforcer.notNull (aElements, "Elements");
     if (aElements.size () > 1)
       throw new IllegalArgumentException ("Cannot add lists with more than one element!");
     if (m_bHasElement)
@@ -176,7 +177,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
     return aElement;
   }
 
-  public boolean remove (final Object aElement)
+  public boolean remove (@Nullable final Object aElement)
   {
     if (!contains (aElement))
       return false;
@@ -185,18 +186,20 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
     return true;
   }
 
-  public boolean removeAll (final Collection <?> aElements)
+  public boolean removeAll (@Nullable final Collection <?> aElements)
   {
     boolean bRemovedAll = true;
-    for (final Object aElement : aElements)
-      if (!remove (aElement))
-        bRemovedAll = false;
+    if (aElements != null)
+      for (final Object aElement : aElements)
+        if (!remove (aElement))
+          bRemovedAll = false;
     return bRemovedAll;
   }
 
   @UnsupportedOperation
   public boolean retainAll (@Nonnull final Collection <?> aElements)
   {
+    ValueEnforcer.notNull (aElements, "Elements");
     if (m_bHasElement)
     {
       if (aElements.contains (m_aElement))
