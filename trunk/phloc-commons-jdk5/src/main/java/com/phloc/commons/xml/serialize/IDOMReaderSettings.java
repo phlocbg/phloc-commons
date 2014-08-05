@@ -17,7 +17,10 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
 /**
@@ -92,4 +95,24 @@ public interface IDOMReaderSettings extends IBaseXMLReaderSettings
    *         <code>false</code> if not.
    */
   boolean requiresNewXMLParser ();
+
+  /**
+   * Apply settings of this object onto the specified
+   * {@link DocumentBuilderFactory} object.
+   * 
+   * @param aDBF
+   *        The {@link DocumentBuilderFactory} to apply the settings onto. May
+   *        not be <code>null</code>.
+   */
+  void applyToDocumentBuilderFactory (@Nonnull final DocumentBuilderFactory aDBF);
+
+  /**
+   * Apply settings of this object onto the specified {@link DocumentBuilder}
+   * object.
+   * 
+   * @param aDB
+   *        The {@link DocumentBuilder} to apply the settings onto. May not be
+   *        <code>null</code>.
+   */
+  void applyToDocumentBuilder (@Nonnull final DocumentBuilder aDB);
 }

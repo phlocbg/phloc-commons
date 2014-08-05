@@ -2,6 +2,12 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>8/5/14</td><td colspan="4">_Release *4.3.5*_</td></tr>
+<tr><td>7/31/14</td><td>add</td><td>api</td><td></td><td>Extended SystemProperties class to get and set JDK XML limits</td></tr>
+<tr><td>7/31/14</td><td>add</td><td>api</td><td></td><td>Extended I(SAX|DOM)ReaderSettings interfaces with methods to easily apply the settings onto the destination objects</td></tr>
+<tr><td>7/31/14</td><td>add</td><td>api</td><td></td><td>Added new ContainerHelper.new(|Sorted|Ordered)Map overloads with other maps</td></tr>
+<tr><td>7/31/14</td><td>update</td><td>tech</td><td></td><td>Added an exception in StringHelper.getRepeated(String,int) if the result length would exceed int range</td></tr>
+<tr><td>7/31/14</td><td>add</td><td>api</td><td></td><td>Extended EXMLParserFeature to include XMLConstants.FEATURE`_`SECURE`_`PROCESSING</td></tr>
 <tr border="1"><td>7/30/14</td><td colspan="4">_Release *4.3.4*_</td></tr>
 <tr><td>7/29/14</td><td>add</td><td>api</td><td></td><td>Extended EXMLParserFeature to include all known features</td></tr>
 <tr><td>6/18/14</td><td>add</td><td>api</td><td></td><td>Added ValueEnforcer.isLT0 and isLE0 methods</td></tr>
