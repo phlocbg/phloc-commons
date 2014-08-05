@@ -20,6 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2014-08-05" version="4.3.5" />
   <entry date="2014-07-31" category="api" action="add">
     <change>
       <text locale="en">Extended SystemProperties class to get and set JDK XML limits</text>
