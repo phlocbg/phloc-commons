@@ -2,15 +2,16 @@
 <pmd>
     <useProjectRuleSet>false</useProjectRuleSet>
     <ruleSetFile>.ruleset</ruleSetFile>
+    <excludePatterns>
+        <excludePattern>**/*.xml</excludePattern>
+        <excludePattern>.*/target/.*</excludePattern>
+        <excludePattern>.*/registry/.*</excludePattern>
+    </excludePatterns>
+    <includePatterns>
+        <includePattern>**/*.java</includePattern>
+        <includePattern>**/*.js</includePattern>
+    </includePatterns>
     <rules>
-        <rule>
-            <name>UseCorrectExceptionLogging</name>
-            <ruleset>Jakarta Commons Logging</ruleset>
-        </rule>
-        <rule>
-            <name>ProperLogger</name>
-            <ruleset>Jakarta Commons Logging</ruleset>
-        </rule>
         <rule>
             <name>LocalVariableCouldBeFinal</name>
             <ruleset>Optimization</ruleset>
@@ -98,10 +99,6 @@
         <rule>
             <name>LooseCoupling</name>
             <ruleset>Coupling</ruleset>
-        </rule>
-        <rule>
-            <name>UseSingleton</name>
-            <ruleset>Design</ruleset>
         </rule>
         <rule>
             <name>SimplifyBooleanReturns</name>
