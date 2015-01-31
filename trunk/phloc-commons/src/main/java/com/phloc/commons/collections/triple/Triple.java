@@ -19,7 +19,6 @@ package com.phloc.commons.collections.triple;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
@@ -41,7 +40,6 @@ import com.phloc.commons.string.ToStringGenerator;
  * @param <DATA3TYPE>
  *        Third type.
  */
-@Immutable
 public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <DATA1TYPE, DATA2TYPE, DATA3TYPE>
 {
   private DATA1TYPE m_aFirst;
@@ -52,61 +50,67 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
                                                                                     @Nullable final U2 aSecond,
                                                                                     @Nullable final V2 aThird)
   {
-    m_aFirst = aFirst;
-    m_aSecond = aSecond;
-    m_aThird = aThird;
+    this.m_aFirst = aFirst;
+    this.m_aSecond = aSecond;
+    this.m_aThird = aThird;
   }
 
   public Triple (@Nonnull final IReadonlyTriple <? extends DATA1TYPE, ? extends DATA2TYPE, ? extends DATA3TYPE> rhs)
   {
-    ValueEnforcer.notNull (rhs, "Triple");
-    m_aFirst = rhs.getFirst ();
-    m_aSecond = rhs.getSecond ();
-    m_aThird = rhs.getThird ();
+    ValueEnforcer.notNull (rhs, "Triple"); //$NON-NLS-1$
+    this.m_aFirst = rhs.getFirst ();
+    this.m_aSecond = rhs.getSecond ();
+    this.m_aThird = rhs.getThird ();
   }
 
+  @Override
   @Nullable
   public DATA1TYPE getFirst ()
   {
-    return m_aFirst;
+    return this.m_aFirst;
   }
 
+  @Override
   @Nonnull
   public EChange setFirst (@Nullable final DATA1TYPE aFirst)
   {
-    if (EqualsUtils.equals (aFirst, m_aFirst))
+    if (EqualsUtils.equals (aFirst, this.m_aFirst))
       return EChange.UNCHANGED;
-    m_aFirst = aFirst;
+    this.m_aFirst = aFirst;
     return EChange.CHANGED;
   }
 
+  @Override
   @Nullable
   public DATA2TYPE getSecond ()
   {
-    return m_aSecond;
+    return this.m_aSecond;
   }
 
+  @Override
   @Nonnull
   public EChange setSecond (@Nullable final DATA2TYPE aSecond)
   {
-    if (EqualsUtils.equals (aSecond, m_aSecond))
+    if (EqualsUtils.equals (aSecond, this.m_aSecond))
       return EChange.UNCHANGED;
-    m_aSecond = aSecond;
+    this.m_aSecond = aSecond;
     return EChange.CHANGED;
   }
 
+  @Override
   @Nullable
   public DATA3TYPE getThird ()
   {
-    return m_aThird;
+    return this.m_aThird;
   }
 
+  @Override
   @Nonnull
   public EChange setThird (@Nullable final DATA3TYPE aThird)
   {
-    if (EqualsUtils.equals (aThird, m_aThird))
+    if (EqualsUtils.equals (aThird, this.m_aThird))
       return EChange.UNCHANGED;
-    m_aThird = aThird;
+    this.m_aThird = aThird;
     return EChange.CHANGED;
   }
 
@@ -118,23 +122,26 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
     if (!(o instanceof Triple <?, ?, ?>))
       return false;
     final Triple <?, ?, ?> rhs = (Triple <?, ?, ?>) o;
-    return EqualsUtils.equals (m_aFirst, rhs.m_aFirst) &&
-           EqualsUtils.equals (m_aSecond, rhs.m_aSecond) &&
-           EqualsUtils.equals (m_aThird, rhs.m_aThird);
+    return EqualsUtils.equals (this.m_aFirst, rhs.m_aFirst) &&
+           EqualsUtils.equals (this.m_aSecond, rhs.m_aSecond) &&
+           EqualsUtils.equals (this.m_aThird, rhs.m_aThird);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aFirst).append (m_aSecond).append (m_aThird).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_aFirst)
+                                       .append (this.m_aSecond)
+                                       .append (this.m_aThird)
+                                       .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("first", m_aFirst)
-                                       .append ("second", m_aSecond)
-                                       .append ("third", m_aThird)
+    return new ToStringGenerator (null).append ("first", this.m_aFirst) //$NON-NLS-1$
+                                       .append ("second", this.m_aSecond) //$NON-NLS-1$
+                                       .append ("third", this.m_aThird) //$NON-NLS-1$
                                        .toString ();
   }
 
