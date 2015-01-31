@@ -45,7 +45,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ValueEnforcer;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -72,16 +71,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * {@link Set} and {@link Map}.
  * 
  * @author Philip Helger
+ * @author Boris Gregorcic
  */
 @Immutable
 public final class ContainerHelper
 {
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final ContainerHelper s_aInstance = new ContainerHelper ();
-
   private ContainerHelper ()
-  {}
+  {
+    // private
+  }
 
   @Nonnull
   public static <ELEMENTTYPE> List <? extends ELEMENTTYPE> getNotNull (final List <? extends ELEMENTTYPE> aList)
@@ -282,7 +280,7 @@ public final class ContainerHelper
       return new HashMap <ELEMENTTYPE, ELEMENTTYPE> (0);
 
     if ((aValues.length % 2) != 0)
-      throw new IllegalArgumentException ("The passed array needs an even number of elements!");
+      throw new IllegalArgumentException ("The passed array needs an even number of elements!"); //$NON-NLS-1$
 
     final Map <ELEMENTTYPE, ELEMENTTYPE> ret = new HashMap <ELEMENTTYPE, ELEMENTTYPE> (aValues.length / 2);
     for (int i = 0; i < aValues.length; i += 2)
@@ -301,7 +299,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
-      throw new IllegalArgumentException ("The passed arrays have different length!");
+      throw new IllegalArgumentException ("The passed arrays have different length!"); //$NON-NLS-1$
 
     final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aKeys.length);
     for (int i = 0; i < aKeys.length; ++i)
@@ -320,7 +318,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
-      throw new IllegalArgumentException ("Number of keys is different from number of values");
+      throw new IllegalArgumentException ("Number of keys is different from number of values"); //$NON-NLS-1$
 
     final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aKeys.size ());
     final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
@@ -450,7 +448,7 @@ public final class ContainerHelper
       return new LinkedHashMap <ELEMENTTYPE, ELEMENTTYPE> (0);
 
     if ((aValues.length % 2) != 0)
-      throw new IllegalArgumentException ("The passed array needs an even number of elements!");
+      throw new IllegalArgumentException ("The passed array needs an even number of elements!"); //$NON-NLS-1$
 
     final Map <ELEMENTTYPE, ELEMENTTYPE> ret = new LinkedHashMap <ELEMENTTYPE, ELEMENTTYPE> (aValues.length / 2);
     for (int i = 0; i < aValues.length; i += 2)
@@ -484,7 +482,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
-      throw new IllegalArgumentException ("The passed arrays have different length!");
+      throw new IllegalArgumentException ("The passed arrays have different length!"); //$NON-NLS-1$
 
     final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (aKeys.length);
     for (int i = 0; i < aKeys.length; ++i)
@@ -503,7 +501,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
-      throw new IllegalArgumentException ("Number of keys is different from number of values");
+      throw new IllegalArgumentException ("Number of keys is different from number of values"); //$NON-NLS-1$
 
     final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (aKeys.size ());
     final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
@@ -633,7 +631,7 @@ public final class ContainerHelper
       return new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
 
     if ((aValues.length % 2) != 0)
-      throw new IllegalArgumentException ("The passed array needs an even number of elements!");
+      throw new IllegalArgumentException ("The passed array needs an even number of elements!"); //$NON-NLS-1$
 
     final TreeMap <ELEMENTTYPE, ELEMENTTYPE> ret = new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     for (int i = 0; i < aValues.length; i += 2)
@@ -652,7 +650,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
-      throw new IllegalArgumentException ("The passed arrays have different length!");
+      throw new IllegalArgumentException ("The passed arrays have different length!"); //$NON-NLS-1$
 
     final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
     for (int i = 0; i < aKeys.length; ++i)
@@ -671,7 +669,7 @@ public final class ContainerHelper
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
-      throw new IllegalArgumentException ("Number of keys is different from number of values");
+      throw new IllegalArgumentException ("Number of keys is different from number of values"); //$NON-NLS-1$
 
     final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
     final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
@@ -1655,7 +1653,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newListPrefilled (@Nullable final ELEMENTTYPE aValue,
                                                                    @Nonnegative final int nElements)
   {
-    ValueEnforcer.isGE0 (nElements, "Elements");
+    ValueEnforcer.isGE0 (nElements, "Elements"); //$NON-NLS-1$
 
     final List <ELEMENTTYPE> ret = new ArrayList <ELEMENTTYPE> (nElements);
     for (int i = 0; i < nElements; ++i)
@@ -1760,7 +1758,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVectorPrefilled (@Nullable final ELEMENTTYPE aValue,
                                                                        @Nonnegative final int nElements)
   {
-    ValueEnforcer.isGE0 (nElements, "Elements");
+    ValueEnforcer.isGE0 (nElements, "Elements"); //$NON-NLS-1$
 
     final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> (nElements);
     for (int i = 0; i < nElements; ++i)
@@ -2498,7 +2496,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> getSortedInline (@Nullable final List <ELEMENTTYPE> aList,
                                                                   @Nonnull final Comparator <? super ELEMENTTYPE> aComparator)
   {
-    ValueEnforcer.notNull (aComparator, "Comparator");
+    ValueEnforcer.notNull (aComparator, "Comparator"); //$NON-NLS-1$
 
     if (isNotEmpty (aList))
       Collections.sort (aList, aComparator);
@@ -2568,7 +2566,7 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
                                                                               @Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
-    ValueEnforcer.notNull (aKeyComparator, "KeyComparator");
+    ValueEnforcer.notNull (aKeyComparator, "KeyComparator"); //$NON-NLS-1$
 
     if (isEmpty (aMap))
       return aMap;
@@ -2642,7 +2640,7 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
                                                                                 @Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
-    ValueEnforcer.notNull (aValueComparator, "ValueComparator");
+    ValueEnforcer.notNull (aValueComparator, "ValueComparator"); //$NON-NLS-1$
 
     if (isEmpty (aMap))
       return aMap;
@@ -3422,7 +3420,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE, COLLTYPE extends Collection <? super ELEMENTTYPE>> COLLTYPE getConcatenatedInline (@Nonnull final COLLTYPE aCont,
                                                                                                                  @Nullable final ELEMENTTYPE... aElementsToAdd)
   {
-    ValueEnforcer.notNull (aCont, "Container");
+    ValueEnforcer.notNull (aCont, "Container"); //$NON-NLS-1$
 
     if (aElementsToAdd != null)
       Collections.addAll (aCont, aElementsToAdd);
@@ -3434,7 +3432,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE, COLLTYPE extends Collection <? super ELEMENTTYPE>> COLLTYPE getConcatenatedInline (@Nonnull final COLLTYPE aCont,
                                                                                                                  @Nullable final Collection <? extends ELEMENTTYPE> aElementsToAdd)
   {
-    ValueEnforcer.notNull (aCont, "Container");
+    ValueEnforcer.notNull (aCont, "Container"); //$NON-NLS-1$
 
     if (aElementsToAdd != null)
       aCont.addAll (aElementsToAdd);
@@ -3627,11 +3625,12 @@ public final class ContainerHelper
     // the rest
     final Object [] aArray = (Object []) aValue;
     if (ArrayHelper.isEmpty (aArray))
+    {
       return null;
-
-    final List <Object> ret = new ArrayList <Object> (aArray.length);
-    Collections.addAll (ret, aArray);
-    return ret;
+    }
+    final List <Object> aRet = new ArrayList <Object> (aArray.length);
+    Collections.addAll (aRet, aArray);
+    return aRet;
   }
 
   /**
@@ -3656,17 +3655,23 @@ public final class ContainerHelper
                                                              @Nonnegative final int nStartIndex,
                                                              @Nonnegative final int nSectionLength)
   {
-    ValueEnforcer.isGE0 (nStartIndex, "StartIndex");
-    ValueEnforcer.isGE0 (nSectionLength, "SectionLength");
+    ValueEnforcer.isGE0 (nStartIndex, "StartIndex"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nSectionLength, "SectionLength"); //$NON-NLS-1$
 
     final int nSize = getSize (aCont);
     if (nSize == 0)
+    {
       return new ArrayList <ELEMENTTYPE> (0);
-
+    }
+    if (nStartIndex >= nSize)
+    {
+      return new ArrayList <ELEMENTTYPE> (0);
+    }
     int nEndIndex = nStartIndex + nSectionLength;
     if (nEndIndex > nSize)
+    {
       nEndIndex = nSize;
-
+    }
     // Create a copy of the list because "subList" only returns a view of the
     // original list!
     return newList (aCont.subList (nStartIndex, nEndIndex));
