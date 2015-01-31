@@ -2149,6 +2149,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     public MyStringCompi ()
     {}
 
+    @Override
     public int compare (final String sStr1, final String sStr2)
     {
       if (sStr1.equals ("b"))
@@ -2981,6 +2982,16 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
 
     aSubList = getSubList (aSource, 4, 2);
     assertNotNull (aSubList);
+  }
+
+  @Test
+  public void testGetSubListInvalid ()
+  {
+    // start:50 end:30 with size:11 throws exception!
+    final List <String> aList = ContainerHelper.newList ("a", "b", "c");
+    final List <String> aSubList = ContainerHelper.getSubList (aList, 5, 2);
+    assertNotNull (aSubList);
+    assertEquals (aSubList.size (), 0);
   }
 
   @Test

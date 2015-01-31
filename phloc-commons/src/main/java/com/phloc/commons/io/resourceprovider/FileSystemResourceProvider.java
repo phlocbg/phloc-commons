@@ -47,7 +47,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @Immutable
 public final class FileSystemResourceProvider implements IWritableResourceProvider
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (FileSystemResourceProvider.class);
+  private static final Logger LOG = LoggerFactory.getLogger (FileSystemResourceProvider.class);
   private final File m_aBasePath;
 
   public FileSystemResourceProvider ()
@@ -65,35 +65,36 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
     if (aBasePath != null)
     {
       if (!aBasePath.exists ())
-        throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' does not exist!");
+        throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' does not exist!"); //$NON-NLS-1$ //$NON-NLS-2$
       if (!aBasePath.isDirectory ())
-        throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' is not a directory!");
+        throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' is not a directory!"); //$NON-NLS-1$ //$NON-NLS-2$
       if (!FileUtils.canRead (aBasePath))
-        s_aLogger.warn ("Cannot read passed base path '" + aBasePath + "'!");
+        LOG.warn ("Cannot read passed base path '" + aBasePath + "'!"); //$NON-NLS-1$ //$NON-NLS-2$
       if (!FileUtils.canWrite (aBasePath))
-        s_aLogger.warn ("Cannot write passed base path '" + aBasePath + "'!");
+        LOG.warn ("Cannot write passed base path '" + aBasePath + "'!"); //$NON-NLS-1$ //$NON-NLS-2$
       if (!FileUtils.canExecute (aBasePath))
-        s_aLogger.warn ("Cannot execute in passed base path '" + aBasePath + "'!");
+        LOG.warn ("Cannot execute in passed base path '" + aBasePath + "'!"); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    m_aBasePath = aBasePath;
+    this.m_aBasePath = aBasePath;
   }
 
   @Nullable
   public File getBasePath ()
   {
-    return m_aBasePath;
+    return this.m_aBasePath;
   }
 
   @Nonnull
   private File _getFile (@Nonnull final String sName)
   {
-    ValueEnforcer.notNull (sName, "Name");
+    ValueEnforcer.notNull (sName, "Name"); //$NON-NLS-1$
 
     // Don't add special handling for absolute paths here!
     // Breaks Unix handling!
-    return m_aBasePath == null ? new File (sName) : new File (m_aBasePath, sName);
+    return this.m_aBasePath == null ? new File (sName) : new File (this.m_aBasePath, sName);
   }
 
+  @Override
   public boolean supportsReading (@Nullable final String sName)
   {
     if (ClassPathResource.isExplicitClassPathResource (sName))
@@ -104,6 +105,7 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
     return StringHelper.hasText (sName) && _getFile (sName).isAbsolute ();
   }
 
+  @Override
   public boolean supportsWriting (@Nullable final String sName)
   {
     if (ClassPathResource.isExplicitClassPathResource (sName))
@@ -114,12 +116,14 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
     return StringHelper.hasText (sName);
   }
 
+  @Override
   @Nonnull
   public IReadableResource getReadableResource (@Nonnull final String sName)
   {
     return new FileSystemResource (_getFile (sName));
   }
 
+  @Override
   @Nonnull
   public IWritableResource getWritableResource (@Nonnull final String sName)
   {
@@ -134,18 +138,18 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
     if (!(o instanceof FileSystemResourceProvider))
       return false;
     final FileSystemResourceProvider rhs = (FileSystemResourceProvider) o;
-    return EqualsUtils.equals (m_aBasePath, rhs.m_aBasePath);
+    return EqualsUtils.equals (this.m_aBasePath, rhs.m_aBasePath);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aBasePath).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_aBasePath).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("basePath", m_aBasePath).toString ();
+    return new ToStringGenerator (this).appendIfNotNull ("basePath", this.m_aBasePath).toString (); //$NON-NLS-1$
   }
 }
