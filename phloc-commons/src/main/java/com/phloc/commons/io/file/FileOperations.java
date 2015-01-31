@@ -23,7 +23,6 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +40,6 @@ import com.phloc.commons.state.ESuccess;
  * 
  * @author Philip Helger
  */
-@Immutable
 public final class FileOperations
 {
   /** The default value for warning if we're about to delete the root directory. */
