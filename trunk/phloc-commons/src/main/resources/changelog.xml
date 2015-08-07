@@ -20,6 +20,13 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+
+  <release date="2015-08-07" version="4.3.7" />
+  <entry date="2015-08-07" category="tech" action="fix">
+    <change>
+      <text locale="en">Added support for woff2 mime type</text>
+    </change>
+  </entry>
   <release date="2015-01-31" version="4.3.6" />
   <entry date="2015-01-31" category="tech" action="fix">
     <change>

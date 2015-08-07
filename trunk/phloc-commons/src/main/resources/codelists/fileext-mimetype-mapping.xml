@@ -778,6 +778,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="wmv" value="video/x-ms-wmv" />
   <map key="wmx" value="audio/x-ms-asx" />
   <map key="woff" value="application/x-font-woff" />
+  <map key="woff2" value="application/x-font-woff2" />
   <map key="wp" value="application/vnd.wordperfect" />
   <map key="wp4" value="application/vnd.wordperfect" />
   <map key="wp5" value="application/vnd.wordperfect" />
