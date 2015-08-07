@@ -213,7 +213,9 @@ public final class FilenameHelper
   {
     final int nIndex = getIndexOfExtension (sFilename);
     if (nIndex == CGlobal.ILLEGAL_UINT)
+    {
       return "";
+    }
     return sFilename.substring (nIndex + 1);
   }
 
