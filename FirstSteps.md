@@ -1,0 +1,40 @@
+# Introduction #
+
+phloc-css is a Java library that provides support for many basic issues.
+
+Prerequisites: **phloc-commpns depends** on [SLF4J](http://www.slf4j.org/).
+
+# Usage with Maven #
+
+To build phloc-commons from source, Maven 3.0.4 is required. Any version below does **NOT** work!
+
+Since version 4.3.3 phloc-commons is available on Maven Central
+
+To use phloc-commons put the following to your pom.xml:
+```
+...
+  <!-- Required only for versions before 4.3.3 -->
+  <repositories>
+...
+    <repository>
+      <id>phloc.com</id>
+      <url>http://repo.phloc.com/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+...
+  <dependencies>
+    ...
+    <dependency>
+      <groupId>com.phloc</groupId>
+      <artifactId>phloc-commons</artifactId>
+      <version>4.3.3</version>
+    </dependency>
+  </dependencies>
+...
+```

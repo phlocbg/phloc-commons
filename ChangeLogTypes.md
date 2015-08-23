@@ -1,0 +1,42 @@
+# Change log #
+<a href='Hidden comment: This content is generated. Do not modify!'></a>
+<table border='1' cellspacing='0'><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border='1'><td>1/2/14</td><td><i>Release <b>1.4.1</b></i></td></tr>
+<tr><td>1/2/14</td><td>update</td><td>tech</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 4.1.0</td></tr>
+<tr><td>4/24/13</td><td>update</td><td>tech</td><td></td><td>Moved to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> repository</td></tr>
+<tr><td>4/17/13</td><td>update</td><td>tech</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 4.0.3</td></tr>
+<tr border='1'><td>2/25/13</td><td><i>Release <b>1.4.0</b></i></td></tr>
+<tr><td>2/25/13</td><td>remove</td><td>api</td><td><b>yes</b></td><td>Removed EBaseType enum as it is now contained in <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a></td></tr>
+<tr><td>9/20/12</td><td>update</td><td>performance</td><td></td><td>Performance improvement by using <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.8.4</td></tr>
+<tr border='1'><td>9/10/12</td><td><i>Release <b>1.3.0</b></i></td></tr>
+<tr><td>9/10/12</td><td>update</td><td>performance</td><td></td><td>Performance improvement in DynamicTypeRegistry by not retrieving the class hierarchy if not necessary</td></tr>
+<tr><td>9/7/12</td><td>add</td><td>api</td><td></td><td>Added new DynamicValueDOMNode for org.w3c.dom.Node objects</td></tr>
+<tr><td>9/7/12</td><td>change</td><td>api</td><td><b>yes</b></td><td>Moved all dynamic type implementations into a single package</td></tr>
+<tr border='1'><td>9/6/12</td><td><i>Release <b>1.2.5</b></i></td></tr>
+<tr><td>9/6/12</td><td>update</td><td>tech</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.8.0 and <a href='http://code.google.com/p/phloc-datetime'>phloc-datetime</a> 3.0.0</td></tr>
+<tr border='1'><td>9/5/12</td><td><i>Release <b>1.2.1</b></i></td></tr>
+<tr><td>9/5/12</td><td>update</td><td>tech</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.8.0-RC1</td></tr>
+<tr border='1'><td>7/31/12</td><td><i>Release <b>1.2.0</b></i></td></tr>
+<tr><td>7/30/12</td><td>update</td><td>tech</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.7.0</td></tr>
+<tr border='1'><td>4/23/12</td><td><i>Release <b>1.1.5</b></i></td></tr>
+<tr><td>4/23/12</td><td>update</td><td>tech</td><td><b>yes</b></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.5.0</td></tr>
+<tr border='1'><td>1/21/12</td><td><i>Release <b>1.1.3</b></i></td></tr>
+<tr><td>1/21/12</td><td>update</td><td>api</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.3.9 and <a href='http://code.google.com/p/phloc-datetime'>phloc-datetime</a> 2.8.6</td></tr>
+<tr><td>1/20/12</td><td>update</td><td>api</td><td></td><td>All thread-safe implementations wont return an unmodifiable view of the underlying data structures but a copy instead</td></tr>
+<tr border='1'><td>1/11/12</td><td><i>Release <b>1.1.2</b></i></td></tr>
+<tr><td>1/11/12</td><td>update</td><td>api</td><td><b>yes</b></td><td>Updated to <a href='http://code.google.com/p/phloc-datetime'>phloc-datetime</a> 2.8.5</td></tr>
+<tr border='1'><td>1/4/12</td><td><i>Release <b>1.1.1</b></i></td></tr>
+<tr><td>1/4/12</td><td>update</td><td>api</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.3.8</td></tr>
+<tr border='1'><td>11/6/11</td><td><i>Release <b>1.1.0</b></i></td></tr>
+<tr><td>10/5/11</td><td>update</td><td>api</td><td></td><td>Updated to <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.3.0 and <a href='http://code.google.com/p/phloc-datetime'>phloc-datetime</a> 2.8.0</td></tr>
+<tr><td>10/4/11</td><td>add</td><td>tech</td><td></td><td>Added test cases for complex data type</td></tr>
+<tr><td>10/4/11</td><td>update</td><td>api</td><td></td><td>Improved equals/hashCode/toString implementation of complex data types</td></tr>
+<tr><td>10/4/11</td><td>fix</td><td>api</td><td></td><td>AbstractComplexDataType.isComplex accidentally returned false instead of true</td></tr>
+<tr><td>10/4/11</td><td>change</td><td>api</td><td></td><td>Made class AbstractComplexDataType public</td></tr>
+<tr border='1'><td>9/14/11</td><td><i>Release <b>1.0.0</b></i></td></tr>
+<tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Dynamic values now implement ICloneable</td></tr>
+<tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Added dynamic value implementation for Locale</td></tr>
+<tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Each dynamic value references now a SimpleDataType</td></tr>
+<tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Added new package datatype for generic data type handling</td></tr>
+<tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Added package dyntypes and beans form <a href='http://code.google.com/p/phloc-commons'>phloc-commons</a> 3.0.12</td></tr>
+</tbody></table>
