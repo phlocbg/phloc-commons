@@ -31,6 +31,7 @@ import com.phloc.commons.version.Version;
 /**
  * Represents a custom license.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 @Immutable
@@ -58,36 +59,40 @@ public final class CustomLicense implements ILicense
                         @Nullable final Version aVersion,
                         @Nullable final String sURL)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_sName = ValueEnforcer.notEmpty (sName, "Name");
-    m_aVersion = aVersion;
-    m_sWebSiteURL = sURL;
+    this.m_sID = ValueEnforcer.notEmpty (sID, "ID"); //$NON-NLS-1$
+    this.m_sName = ValueEnforcer.notEmpty (sName, "Name"); //$NON-NLS-1$
+    this.m_aVersion = aVersion;
+    this.m_sWebSiteURL = sURL;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getID ()
   {
-    return m_sID;
+    return this.m_sID;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getDisplayName ()
   {
-    return m_sName;
+    return this.m_sName;
   }
 
+  @Override
   @Nullable
   public Version getVersion ()
   {
-    return m_aVersion;
+    return this.m_aVersion;
   }
 
+  @Override
   @Nullable
   public String getURL ()
   {
-    return m_sWebSiteURL;
+    return this.m_sWebSiteURL;
   }
 
   @Override
@@ -98,29 +103,29 @@ public final class CustomLicense implements ILicense
     if (!(o instanceof CustomLicense))
       return false;
     final CustomLicense rhs = (CustomLicense) o;
-    return m_sID.equals (rhs.m_sID) &&
-           m_sName.equals (rhs.m_sName) &&
-           EqualsUtils.equals (m_aVersion, rhs.m_aVersion) &&
-           EqualsUtils.equals (m_sWebSiteURL, rhs.m_sWebSiteURL);
+    return this.m_sID.equals (rhs.m_sID) &&
+           this.m_sName.equals (rhs.m_sName) &&
+           EqualsUtils.equals (this.m_aVersion, rhs.m_aVersion) &&
+           EqualsUtils.equals (this.m_sWebSiteURL, rhs.m_sWebSiteURL);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID)
-                                       .append (m_sName)
-                                       .append (m_aVersion)
-                                       .append (m_sWebSiteURL)
+    return new HashCodeGenerator (this).append (this.m_sID)
+                                       .append (this.m_sName)
+                                       .append (this.m_aVersion)
+                                       .append (this.m_sWebSiteURL)
                                        .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID)
-                                       .append ("name", m_sName)
-                                       .appendIfNotNull ("version", m_aVersion)
-                                       .appendIfNotNull ("website", m_sWebSiteURL)
+    return new ToStringGenerator (this).append ("ID", this.m_sID) //$NON-NLS-1$
+                                       .append ("name", this.m_sName) //$NON-NLS-1$
+                                       .appendIfNotNull ("version", this.m_aVersion) //$NON-NLS-1$
+                                       .appendIfNotNull ("website", this.m_sWebSiteURL) //$NON-NLS-1$
                                        .toString ();
   }
 }

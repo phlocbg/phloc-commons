@@ -27,39 +27,44 @@ import com.phloc.commons.version.Version;
 /**
  * Represents a bunch of Open Source licenses regularly used.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public enum ELicense implements ILicense
 {
   // Apache
-  APACHE1 ("apache1", "Apache License", new Version (1, 0), "http://www.apache.org/licenses/LICENSE-1.0.txt"),
-  APACHE2 ("apache2", "Apache License", new Version (2, 0), "http://www.apache.org/licenses/LICENSE-2.0.txt"),
+  APACHE1 ("apache1", "Apache License", new Version (1, 0), "http://www.apache.org/licenses/LICENSE-1.0.txt"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  APACHE2 ("apache2", "Apache License", new Version (2, 0), "http://www.apache.org/licenses/LICENSE-2.0.txt"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // Mozilla
-  MPL10 ("mpl10", "MOZILLA PUBLIC LICENSE", new Version (1, 0), "http://www.mozilla.org/MPL/1.0/"),
-  MPL11 ("mpl11", "MOZILLA PUBLIC LICENSE", new Version (1, 1), "http://www.mozilla.org/MPL/1.1/"),
-  MPL20 ("mpl20", "MOZILLA PUBLIC LICENSE VERSION 2.0", new Version (2, 0), "http://www.mozilla.org/MPL/2.0/"),
+  MPL10 ("mpl10", "MOZILLA PUBLIC LICENSE", new Version (1, 0), "http://www.mozilla.org/MPL/1.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  MPL11 ("mpl11", "MOZILLA PUBLIC LICENSE", new Version (1, 1), "http://www.mozilla.org/MPL/1.1/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  MPL20 ("mpl20", "MOZILLA PUBLIC LICENSE VERSION 2.0", new Version (2, 0), "http://www.mozilla.org/MPL/2.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // BSD/MIT
-  BSD ("bsd", "The BSD License", null, "http://www.opensource.org/licenses/bsd-license.php"),
-  MIT ("mit", "MIT License", null, "http://www.opensource.org/licenses/mit-license.php"),
+  BSD ("bsd", "The BSD License", null, "http://www.opensource.org/licenses/bsd-license.php"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  MIT ("mit", "MIT License", null, "http://www.opensource.org/licenses/mit-license.php"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // GPL
-  GPL20 ("gpl20", "GNU GENERAL PUBLIC LICENSE", new Version (2, 0), "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"),
-  GPL30 ("gpl30", "GNU GENERAL PUBLIC LICENSE", new Version (3, 0), "http://www.gnu.org/licenses/gpl.html"),
+  GPL20 ("gpl20", "GNU GENERAL PUBLIC LICENSE", new Version (2, 0), "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  GPL30 ("gpl30", "GNU GENERAL PUBLIC LICENSE", new Version (3, 0), "http://www.gnu.org/licenses/gpl.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // LGPL
-  LGPL20 ("lgpl20", "GNU LIBRARY GENERAL PUBLIC LICENSE", new Version (2, 0), "http://www.gnu.org/licenses/old-licenses/lgpl-2.0.html"),
-  LGPL21 ("lgpl21", "GNU LESSER GENERAL PUBLIC LICENSE", new Version (2, 1), "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"),
-  LGPL30 ("lgpl30", "GNU LESSER GENERAL PUBLIC LICENSE", new Version (3, 0), "http://www.gnu.org/licenses/lgpl.html"),
+  LGPL20 ("lgpl20", "GNU LIBRARY GENERAL PUBLIC LICENSE", new Version (2, 0), "http://www.gnu.org/licenses/old-licenses/lgpl-2.0.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  LGPL21 ("lgpl21", "GNU LESSER GENERAL PUBLIC LICENSE", new Version (2, 1), "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  LGPL30 ("lgpl30", "GNU LESSER GENERAL PUBLIC LICENSE", new Version (3, 0), "http://www.gnu.org/licenses/lgpl.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // Eclipse Public License
-  EPL10 ("epl10", "Eclipse Public License", new Version (1, 0), "http://www.eclipse.org/legal/epl-v10.html"),
+  EPL10 ("epl10", "Eclipse Public License", new Version (1, 0), "http://www.eclipse.org/legal/epl-v10.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // EUPL
-  EUPL11 ("eupl11", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"),
-  EUPL12 ("eupl12", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"),
+  EUPL11 ("eupl11", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  EUPL12 ("eupl12", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   // Creative commons
-  CCBY10 ("ccby10", "Creative Commons Attributation", new Version (1, 0), "http://creativecommons.org/licenses/by/1.0/"),
-  CCBY20 ("ccby20", "Creative Commons Attributation", new Version (2, 0), "http://creativecommons.org/licenses/by/2.0/"),
-  CCBY25 ("ccby25", "Creative Commons Attributation", new Version (2, 5), "http://creativecommons.org/licenses/by/2.5/"),
-  CCBY30 ("ccby30", "Creative Commons Attributation", new Version (3, 0), "http://creativecommons.org/licenses/by/3.0/"),
+  CCBY10 ("ccby10", "Creative Commons Attributation", new Version (1, 0), "http://creativecommons.org/licenses/by/1.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  CCBY20 ("ccby20", "Creative Commons Attributation", new Version (2, 0), "http://creativecommons.org/licenses/by/2.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  CCBY25 ("ccby25", "Creative Commons Attributation", new Version (2, 5), "http://creativecommons.org/licenses/by/2.5/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  CCBY30 ("ccby30", "Creative Commons Attributation", new Version (3, 0), "http://creativecommons.org/licenses/by/3.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  CCBYSA30 ("ccby-sa30", "Creative Commons Attributation-ShareAlike", new Version (3, 0), "http://creativecommons.org/licenses/by-sa/3.0/"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+  CDDL1 ("CDDL1", "Common Development and Distribution License", new Version (1), "https://glassfish.dev.java.net/public/CDDLv1.0.html"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
   // Public domain
-  PUBLIC_DOMAIN ("pd", "Public Domain", null, null);
+  PUBLIC_DOMAIN ("pd", "Public Domain", null, null); //$NON-NLS-1$ //$NON-NLS-2$
 
   private final String m_sID;
   private final String m_sName;
@@ -83,36 +88,40 @@ public enum ELicense implements ILicense
                     @Nullable final Version aVersion,
                     @Nullable final String sURL)
   {
-    m_sID = sID;
-    m_sName = sName;
-    m_aVersion = aVersion;
-    m_sURL = sURL;
+    this.m_sID = sID;
+    this.m_sName = sName;
+    this.m_aVersion = aVersion;
+    this.m_sURL = sURL;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getID ()
   {
-    return m_sID;
+    return this.m_sID;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getDisplayName ()
   {
-    return m_sName;
+    return this.m_sName;
   }
 
+  @Override
   @Nullable
   public Version getVersion ()
   {
-    return m_aVersion;
+    return this.m_aVersion;
   }
 
+  @Override
   @Nullable
   public String getURL ()
   {
-    return m_sURL;
+    return this.m_sURL;
   }
 
   @Nullable
