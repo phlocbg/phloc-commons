@@ -42,11 +42,18 @@
   </licenses>
   
   <scm>
+    <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
+    <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
+    <url>http://github.com/phlocbg/phloc-commons</url>
+    <tag>phloc-commons-${project.version}</tag>
+  </scm>
+<!--
+  <scm>
     <url>http://code.google.com/p/phloc-commons/source/browse/</url>
     <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons</connection>
     <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons</developerConnection>
   </scm>
-
+-->
   <organization>
     <name>phloc systems</name>
     <url>http://www.phloc.com</url>
