@@ -28,7 +28,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.phloc.maven</groupId>
   <artifactId>buildinfo-maven-plugin</artifactId>
-  <version>1.1.3</version>
+  <version>1.1.4-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>buildinfo-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
@@ -46,7 +46,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
   <url>http://github.com/phlocbg/phloc-commons</url>
-    <tag>buildinfo-maven-plugin-1.1.3</tag>
+    <tag>HEAD</tag>
   </scm>
   
   <organization>
