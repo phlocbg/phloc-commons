@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>23.1</version>
+    <version>24.0</version>
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -32,7 +32,7 @@
   <packaging>maven-plugin</packaging>
   <name>buildinfo-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
-  <url>http://repo.phloc.com/apidocs/buildinfo-maven-plugin/${project.version}</url>
+  <url>http://github.com/phlocbg/phloc-commons</url>
 
   <licenses>
     <license>
@@ -43,9 +43,10 @@
   </licenses>
   
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/buildinfo-maven-plugin</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/buildinfo-maven-plugin</developerConnection>
+    <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
+    <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
+  <url>http://github.com/phlocbg/phloc-commons</url>
+    <tag>HEAD</tag>
   </scm>
   
   <organization>
@@ -54,13 +55,6 @@
   </organization>
 
   <developers>
-    <developer>
-      <id>philip</id>
-      <name>Philip Helger</name>
-      <email>ph(at)phloc.com</email>
-      <url>http://www.phloc.com</url>
-      <organization>phloc systems</organization>
-    </developer>
     <developer>
       <id>boris</id>
       <name>Boris Gregorcic</name>
@@ -133,10 +127,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <configuration>
+<!--        <configuration>
           <tagBase>https://phloc-commons.googlecode.com/svn/tags</tagBase>
         </configuration>
-      </plugin>
+-->      </plugin>
     </plugins>
   </build>
   
