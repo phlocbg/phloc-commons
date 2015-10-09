@@ -27,7 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-fonts</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-fonts</name>
   <description>Contains OSS fonts</description>
@@ -45,7 +45,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
   <url>http://github.com/phlocbg/phloc-commons</url>
-    <tag>phloc-fonts-1.1.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <organization>
