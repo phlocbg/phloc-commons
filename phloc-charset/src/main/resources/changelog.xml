@@ -20,6 +20,8 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-charset">
+  
+  <release date="2015-08-28" version="1.1.0" />
   <entry date="2014-03-12" category="feature" action="add">
     <change>
       <text locale="en">Added support for UTF-7 Charset - based on https://sourceforge.net/projects/jutf7/</text>
