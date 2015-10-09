@@ -27,7 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-charset</artifactId>
-  <version>1.0.2-SNAPSHOT</version>
+  <version>1.2.0</version>
   <packaging>bundle</packaging>
   <name>phloc-charset</name>
   <description>phloc additional charsets</description>  
@@ -47,7 +47,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
     <url>http://github.com/phlocbg/phloc-commons</url>
-    <tag>HEAD</tag>
+    <tag>phloc-charset-1.2.0</tag>
   </scm>
 
   <organization>
