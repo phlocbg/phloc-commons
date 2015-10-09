@@ -27,7 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-events</artifactId>
-  <version>2.8.0</version>
+  <version>2.8.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-events</name>
   <description>phloc in-process event library</description>
@@ -45,7 +45,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
     <url>http://github.com/phlocbg/phloc-commons</url>
-    <tag>phloc-events-2.8.0</tag>
+    <tag>HEAD</tag>
   </scm>  
 
   <organization>
