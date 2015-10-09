@@ -31,7 +31,7 @@
   <packaging>bundle</packaging>
   <name>phloc-charset</name>
   <description>phloc additional charsets</description>
-  <url>http://github.com/phlocbg/phloc-commons</url>
+  <url>https://github.com/phlocbg/phloc-commons/tree/master/phloc-charset</url>
   
   <licenses>
     <license>
@@ -44,7 +44,7 @@
   <scm>
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
-  <url>http://github.com/phlocbg/phloc-commons</url>
+    <url>http://github.com/phlocbg/phloc-commons</url>
     <tag>HEAD</tag>
   </scm>
 
