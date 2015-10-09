@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2006-2015 phloc systems
+    http://www.phloc.com
+    office[at]phloc[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>com.phloc</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>24.0</version>
+    <relativePath>../phloc-parent-pom/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>phloc-charset</artifactId>
+  <version>1.1.0</version>
+  <packaging>bundle</packaging>
+  <name>phloc-charset</name>
+  <description>phloc additional charsets</description>
+  <url>http://github.com/phlocbg/phloc-commons</url>
+  
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
+  <scm>
+    <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
+    <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
+  <url>http://github.com/phlocbg/phloc-commons</url>
+    <tag>phloc-charset-1.1.0</tag>
+  </scm>
+
+  <organization>
+    <name>phloc systems</name>
+    <url>http://www.phloc.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>boris</id>
+      <name>Boris Gregorcic</name>
+      <email>bg(at)phloc.com</email>
+      <url>http://www.phloc.com</url>
+      <organization>phloc systems</organization>
+    </developer>
+  </developers>
+  
+  <dependencies>
+    <dependency>
+      <groupId>com.phloc</groupId>
+      <artifactId>phloc-commons</artifactId>
+      <version>4.3.3</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>com.phloc.charset.*</Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
