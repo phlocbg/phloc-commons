@@ -122,33 +122,34 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Philip Helger
  */
+@SuppressWarnings ("static-method")
 public final class ContainerHelperTest extends AbstractPhlocTestCase
 {
   @Test
   public void testGetNotNull ()
   {
     assertNotNull (getNotNull ((List <?>) null));
-    assertEquals (2, getNotNull (newList ("1", "2")).size ());
+    assertEquals (2, getNotNull (newList ("1", "2")).size ()); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (getNotNull ((Set <?>) null));
-    assertEquals (2, getNotNull (newSet ("1", "2")).size ());
+    assertEquals (2, getNotNull (newSet ("1", "2")).size ()); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (getNotNull ((Map <?, ?>) null));
-    assertEquals (1, getNotNull (newMap ("1", "2")).size ());
+    assertEquals (1, getNotNull (newMap ("1", "2")).size ()); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
   public void testGetDifference ()
   {
-    final List <String> l1 = newList ("Hello", "Welt", "from", "Vienna");
-    final List <String> l2 = newList ("Welt", "from");
+    final List <String> l1 = newList ("Hello", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    final List <String> l2 = newList ("Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$
 
     // Result should be "Hello" and "Vienna"
     final Set <String> ret = getDifference (l1, l2);
     assertNotNull (ret);
     assertEquals (ret.size (), 2);
-    assertTrue (ret.contains ("Hello"));
-    assertFalse (ret.contains ("Welt"));
-    assertFalse (ret.contains ("from"));
-    assertTrue (ret.contains ("Vienna"));
+    assertTrue (ret.contains ("Hello")); //$NON-NLS-1$
+    assertFalse (ret.contains ("Welt")); //$NON-NLS-1$
+    assertFalse (ret.contains ("from")); //$NON-NLS-1$
+    assertTrue (ret.contains ("Vienna")); //$NON-NLS-1$
 
     assertEquals (4, getDifference (l1, new Vector <String> ()).size ());
     assertEquals (4, getDifference (l1, null).size ());
@@ -159,17 +160,17 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetIntersected ()
   {
-    final List <String> l1 = newList ("Hallo", "Welt", "from", "Vienna");
-    final List <String> l2 = newList ("Welt", "from");
+    final List <String> l1 = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    final List <String> l2 = newList ("Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$
 
     // Result should be "Hello" and "Vienna"
     final Set <String> ret = getIntersected (l1, l2);
     assertNotNull (ret);
     assertEquals (ret.size (), 2);
-    assertFalse (ret.contains ("Hello"));
-    assertTrue (ret.contains ("Welt"));
-    assertTrue (ret.contains ("from"));
-    assertFalse (ret.contains ("Vienna"));
+    assertFalse (ret.contains ("Hello")); //$NON-NLS-1$
+    assertTrue (ret.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (ret.contains ("from")); //$NON-NLS-1$
+    assertFalse (ret.contains ("Vienna")); //$NON-NLS-1$
 
     assertEquals (0, getIntersected (l1, null).size ());
     assertEquals (0, getIntersected (null, l2).size ());
@@ -185,19 +186,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNull (makeUnmodifiable ((Map <?, ?>) null));
     assertNull (makeUnmodifiable ((SortedMap <?, ?>) null));
 
-    final Collection <String> c = newList ("s1", "s2");
+    final Collection <String> c = newList ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiable (c));
     assertTrue (c != makeUnmodifiable (c));
-    final List <String> l = newList ("s1", "s2");
+    final List <String> l = newList ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiable (l));
     assertTrue (l != makeUnmodifiable (l));
-    final Set <String> s = newSet ("s1", "s2");
+    final Set <String> s = newSet ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiable (s));
     assertTrue (s != makeUnmodifiable (s));
     final SortedSet <String> ss = new TreeSet <String> (s);
     assertNotNull (makeUnmodifiable (ss));
     assertTrue (ss != makeUnmodifiable (ss));
-    final Map <String, String> m = newMap ("s1", "s2");
+    final Map <String, String> m = newMap ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiable (m));
     assertTrue (m != makeUnmodifiable (m));
     final SortedMap <String, String> sm = new TreeMap <String, String> (m);
@@ -216,19 +217,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNotNull (makeUnmodifiableNotNull ((Map <?, ?>) null));
     assertNotNull (makeUnmodifiableNotNull ((SortedMap <?, ?>) null));
 
-    final Collection <String> c = newList ("s1", "s2");
+    final Collection <String> c = newList ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiableNotNull (c));
     assertTrue (c != makeUnmodifiableNotNull (c));
-    final List <String> l = newList ("s1", "s2");
+    final List <String> l = newList ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiableNotNull (l));
     assertTrue (l != makeUnmodifiableNotNull (l));
-    final Set <String> s = newSet ("s1", "s2");
+    final Set <String> s = newSet ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiableNotNull (s));
     assertTrue (s != makeUnmodifiableNotNull (s));
     final SortedSet <String> ss = new TreeSet <String> (s);
     assertNotNull (makeUnmodifiableNotNull (ss));
     assertTrue (ss != makeUnmodifiableNotNull (ss));
-    final Map <String, String> m = newMap ("s1", "s2");
+    final Map <String, String> m = newMap ("s1", "s2"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (makeUnmodifiableNotNull (m));
     assertTrue (m != makeUnmodifiableNotNull (m));
     final SortedMap <String, String> sm = new TreeMap <String, String> (m);
@@ -246,40 +247,40 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewMap_KeyValue ()
   {
-    final Map <String, Integer> aMap = newMap ("Hallo", I5);
+    final Map <String, Integer> aMap = newMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 1);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (I5, aMap.get ("Hallo"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
   public void testNewMap_Map ()
   {
-    final Map <String, Integer> aMap = newMap ("Hallo", I5);
+    final Map <String, Integer> aMap = newMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aMap);
 
     final Map <String, Integer> aMap2 = ContainerHelper.newMap (aMap);
     assertEquals (aMap2.size (), 1);
-    assertNotNull (aMap2.get ("Hallo"));
-    assertEquals (I5, aMap2.get ("Hallo"));
+    assertNotNull (aMap2.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aMap2.get ("Hallo")); //$NON-NLS-1$
   }
 
   @SuppressWarnings ("unchecked")
   @Test
   public void testNewMap_MapArray ()
   {
-    final Map <String, Integer> aMapA = newMap ("Hallo", I5);
-    final Map <String, Integer> aMapB = newMap ("Welt", I3);
+    final Map <String, Integer> aMapA = newMap ("Hallo", I5); //$NON-NLS-1$
+    final Map <String, Integer> aMapB = newMap ("Welt", I3); //$NON-NLS-1$
 
     Map <String, Integer> aMap2 = ContainerHelper.newMap (ArrayHelper.newArray (aMapA, aMapB));
     assertEquals (aMap2.size (), 2);
-    assertEquals (I5, aMap2.get ("Hallo"));
-    assertEquals (I3, aMap2.get ("Welt"));
+    assertEquals (I5, aMap2.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I3, aMap2.get ("Welt")); //$NON-NLS-1$
 
     aMap2 = ContainerHelper.newMap (ArrayHelper.newArray (aMapA, aMapA));
     assertEquals (aMap2.size (), 1);
-    assertEquals (I5, aMap2.get ("Hallo"));
+    assertEquals (I5, aMap2.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -291,19 +292,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newMap ("Hallo", "Welt", "from");
+      newMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final Map <String, String> aMap = newMap ("Hallo", "Welt", "from", "Vienna");
+    final Map <String, String> aMap = newMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 2);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (aMap.get ("Hallo"), "Welt");
-    assertNotNull (aMap.get ("from"));
-    assertEquals (aMap.get ("from"), "Vienna");
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -312,7 +313,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null keys not allowed
-      newMap ((Object []) null, new String [] { "a" });
+      newMap ((Object []) null, new String [] { "a" }); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -321,7 +322,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null values not allowed
-      newMap (new String [] { "a" }, (Object []) null);
+      newMap (new String [] { "a" }, (Object []) null); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -336,13 +337,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
 
-    Map <Integer, String> aMap = newMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" });
+    Map <Integer, String> aMap = newMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aMap);
     assertEquals (2, aMap.size ());
     assertNotNull (aMap.get (I2));
-    assertEquals ("Hallo", aMap.get (I2));
+    assertEquals ("Hallo", aMap.get (I2)); //$NON-NLS-1$
     assertNotNull (aMap.get (I4));
-    assertEquals ("Welt", aMap.get (I4));
+    assertEquals ("Welt", aMap.get (I4)); //$NON-NLS-1$
 
     aMap = newMap (new Integer [] {}, new String [] {});
     assertNotNull (aMap);
@@ -352,7 +353,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -415,11 +416,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableMap_KeyValue ()
   {
-    final Map <String, Integer> aMap = newUnmodifiableMap ("Hallo", I5);
+    final Map <String, Integer> aMap = newUnmodifiableMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 1);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (I5, aMap.get ("Hallo"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -431,19 +432,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newUnmodifiableMap ("Hallo", "Welt", "from");
+      newUnmodifiableMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final Map <String, String> aMap = newUnmodifiableMap ("Hallo", "Welt", "from", "Vienna");
+    final Map <String, String> aMap = newUnmodifiableMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 2);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (aMap.get ("Hallo"), "Welt");
-    assertNotNull (aMap.get ("from"));
-    assertEquals (aMap.get ("from"), "Vienna");
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -452,7 +453,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null keys not allowed
-      newUnmodifiableMap ((Object []) null, new String [] { "a" });
+      newUnmodifiableMap ((Object []) null, new String [] { "a" }); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -461,7 +462,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null values not allowed
-      newUnmodifiableMap (new String [] { "a" }, (Object []) null);
+      newUnmodifiableMap (new String [] { "a" }, (Object []) null); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -476,13 +477,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
 
-    Map <Integer, String> aMap = newUnmodifiableMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" });
+    Map <Integer, String> aMap = newUnmodifiableMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aMap);
     assertEquals (2, aMap.size ());
     assertNotNull (aMap.get (I2));
-    assertEquals ("Hallo", aMap.get (I2));
+    assertEquals ("Hallo", aMap.get (I2)); //$NON-NLS-1$
     assertNotNull (aMap.get (I4));
-    assertEquals ("Welt", aMap.get (I4));
+    assertEquals ("Welt", aMap.get (I4)); //$NON-NLS-1$
 
     aMap = newUnmodifiableMap (new Integer [] {}, new String [] {});
     assertNotNull (aMap);
@@ -492,7 +493,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -555,11 +556,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedMap_KeyValue ()
   {
-    final SortedMap <String, Integer> aSortedMap = newSortedMap ("Hallo", I5);
+    final SortedMap <String, Integer> aSortedMap = newSortedMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aSortedMap);
     assertEquals (aSortedMap.size (), 1);
-    assertNotNull (aSortedMap.get ("Hallo"));
-    assertEquals (I5, aSortedMap.get ("Hallo"));
+    assertNotNull (aSortedMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aSortedMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -571,19 +572,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newSortedMap ("Hallo", "Welt", "from");
+      newSortedMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final SortedMap <String, String> aSortedMap = newSortedMap ("Hallo", "Welt", "from", "Vienna");
+    final SortedMap <String, String> aSortedMap = newSortedMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aSortedMap);
     assertEquals (aSortedMap.size (), 2);
-    assertNotNull (aSortedMap.get ("Hallo"));
-    assertEquals (aSortedMap.get ("Hallo"), "Welt");
-    assertNotNull (aSortedMap.get ("from"));
-    assertEquals (aSortedMap.get ("from"), "Vienna");
+    assertNotNull (aSortedMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aSortedMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aSortedMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aSortedMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -592,7 +593,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null keys not allowed
-      newSortedMap ((String []) null, new String [] { "a" });
+      newSortedMap ((String []) null, new String [] { "a" }); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -601,7 +602,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null values not allowed
-      newSortedMap (new String [] { "a" }, (Object []) null);
+      newSortedMap (new String [] { "a" }, (Object []) null); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -616,13 +617,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
 
-    SortedMap <Integer, String> aSortedMap = newSortedMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" });
+    SortedMap <Integer, String> aSortedMap = newSortedMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSortedMap);
     assertEquals (2, aSortedMap.size ());
     assertNotNull (aSortedMap.get (I2));
-    assertEquals ("Hallo", aSortedMap.get (I2));
+    assertEquals ("Hallo", aSortedMap.get (I2)); //$NON-NLS-1$
     assertNotNull (aSortedMap.get (I4));
-    assertEquals ("Welt", aSortedMap.get (I4));
+    assertEquals ("Welt", aSortedMap.get (I4)); //$NON-NLS-1$
 
     aSortedMap = newSortedMap (new Integer [] {}, new String [] {});
     assertNotNull (aSortedMap);
@@ -632,7 +633,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -695,11 +696,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedMap_KeyValue ()
   {
-    final SortedMap <String, Integer> aSortedMap = newUnmodifiableSortedMap ("Hallo", I5);
+    final SortedMap <String, Integer> aSortedMap = newUnmodifiableSortedMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aSortedMap);
     assertEquals (aSortedMap.size (), 1);
-    assertNotNull (aSortedMap.get ("Hallo"));
-    assertEquals (I5, aSortedMap.get ("Hallo"));
+    assertNotNull (aSortedMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aSortedMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -711,19 +712,19 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newUnmodifiableSortedMap ("Hallo", "Welt", "from");
+      newUnmodifiableSortedMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final SortedMap <String, String> aSortedMap = newUnmodifiableSortedMap ("Hallo", "Welt", "from", "Vienna");
+    final SortedMap <String, String> aSortedMap = newUnmodifiableSortedMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aSortedMap);
     assertEquals (aSortedMap.size (), 2);
-    assertNotNull (aSortedMap.get ("Hallo"));
-    assertEquals (aSortedMap.get ("Hallo"), "Welt");
-    assertNotNull (aSortedMap.get ("from"));
-    assertEquals (aSortedMap.get ("from"), "Vienna");
+    assertNotNull (aSortedMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aSortedMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aSortedMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aSortedMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -732,7 +733,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null keys not allowed
-      newUnmodifiableSortedMap ((String []) null, new String [] { "a" });
+      newUnmodifiableSortedMap ((String []) null, new String [] { "a" }); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -741,7 +742,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null values not allowed
-      newUnmodifiableSortedMap (new String [] { "a" }, (Object []) null);
+      newUnmodifiableSortedMap (new String [] { "a" }, (Object []) null); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -757,13 +758,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     {}
 
     SortedMap <Integer, String> aSortedMap = newUnmodifiableSortedMap (new Integer [] { I2, I4 },
-                                                                       new String [] { "Hallo", "Welt" });
+                                                                       new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSortedMap);
     assertEquals (2, aSortedMap.size ());
     assertNotNull (aSortedMap.get (I2));
-    assertEquals ("Hallo", aSortedMap.get (I2));
+    assertEquals ("Hallo", aSortedMap.get (I2)); //$NON-NLS-1$
     assertNotNull (aSortedMap.get (I4));
-    assertEquals ("Welt", aSortedMap.get (I4));
+    assertEquals ("Welt", aSortedMap.get (I4)); //$NON-NLS-1$
 
     aSortedMap = newUnmodifiableSortedMap (new Integer [] {}, new String [] {});
     assertNotNull (aSortedMap);
@@ -773,7 +774,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -836,11 +837,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedMap_KeyValue ()
   {
-    final Map <String, Integer> aMap = newOrderedMap ("Hallo", I5);
+    final Map <String, Integer> aMap = newOrderedMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 1);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (I5, aMap.get ("Hallo"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -852,39 +853,39 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newOrderedMap ("Hallo", "Welt", "from");
+      newOrderedMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final Map <String, String> aMap = newOrderedMap ("Hallo", "Welt", "from", "Vienna");
+    final Map <String, String> aMap = newOrderedMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 2);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (aMap.get ("Hallo"), "Welt");
-    assertNotNull (aMap.get ("from"));
-    assertEquals (aMap.get ("from"), "Vienna");
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
   public void testNewOrderedMap_ArrayArray ()
   {
-    Map <String, Integer> aMap = newOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, I2 });
+    Map <String, Integer> aMap = newOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, I2 }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aMap);
     assertEquals (2, aMap.size ());
-    assertNotNull (aMap.get ("Hallo"));
-    assertNotNull (aMap.get ("Alice"));
-    assertEquals (I1, aMap.get ("Hallo"));
-    assertEquals (I2, aMap.get ("Alice"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertNotNull (aMap.get ("Alice")); //$NON-NLS-1$
+    assertEquals (I1, aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I2, aMap.get ("Alice")); //$NON-NLS-1$
 
     // check order
     final Iterator <String> it = aMap.keySet ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
-    assertEquals ("Hallo", it.next ());
+    assertEquals ("Hallo", it.next ()); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals ("Alice", it.next ());
+    assertEquals ("Alice", it.next ()); //$NON-NLS-1$
     assertFalse (it.hasNext ());
 
     try
@@ -899,7 +900,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // value array may not be null
-      newOrderedMap (new String [] { "Hallo", "Alice" }, null);
+      newOrderedMap (new String [] { "Hallo", "Alice" }, null); //$NON-NLS-1$ //$NON-NLS-2$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -908,7 +909,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // key and value array need to have the same length
-      newOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, });
+      newOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, }); //$NON-NLS-1$ //$NON-NLS-2$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -922,7 +923,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -985,11 +986,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedMap_KeyValue ()
   {
-    final Map <String, Integer> aMap = newUnmodifiableOrderedMap ("Hallo", I5);
+    final Map <String, Integer> aMap = newUnmodifiableOrderedMap ("Hallo", I5); //$NON-NLS-1$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 1);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (I5, aMap.get ("Hallo"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I5, aMap.get ("Hallo")); //$NON-NLS-1$
   }
 
   @Test
@@ -1001,40 +1002,40 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd number of parameters not allowed
-      newUnmodifiableOrderedMap ("Hallo", "Welt", "from");
+      newUnmodifiableOrderedMap ("Hallo", "Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    final Map <String, String> aMap = newUnmodifiableOrderedMap ("Hallo", "Welt", "from", "Vienna");
+    final Map <String, String> aMap = newUnmodifiableOrderedMap ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aMap);
     assertEquals (aMap.size (), 2);
-    assertNotNull (aMap.get ("Hallo"));
-    assertEquals (aMap.get ("Hallo"), "Welt");
-    assertNotNull (aMap.get ("from"));
-    assertEquals (aMap.get ("from"), "Vienna");
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (aMap.get ("Hallo"), "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (aMap.get ("from")); //$NON-NLS-1$
+    assertEquals (aMap.get ("from"), "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
   public void testNewUnmodifiableOrderedMap_ArrayArray ()
   {
-    Map <String, Integer> aMap = newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" },
+    Map <String, Integer> aMap = newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" }, //$NON-NLS-1$ //$NON-NLS-2$
                                                             new Integer [] { I1, I2 });
     assertNotNull (aMap);
     assertEquals (2, aMap.size ());
-    assertNotNull (aMap.get ("Hallo"));
-    assertNotNull (aMap.get ("Alice"));
-    assertEquals (I1, aMap.get ("Hallo"));
-    assertEquals (I2, aMap.get ("Alice"));
+    assertNotNull (aMap.get ("Hallo")); //$NON-NLS-1$
+    assertNotNull (aMap.get ("Alice")); //$NON-NLS-1$
+    assertEquals (I1, aMap.get ("Hallo")); //$NON-NLS-1$
+    assertEquals (I2, aMap.get ("Alice")); //$NON-NLS-1$
 
     // check order
     final Iterator <String> it = aMap.keySet ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
-    assertEquals ("Hallo", it.next ());
+    assertEquals ("Hallo", it.next ()); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals ("Alice", it.next ());
+    assertEquals ("Alice", it.next ()); //$NON-NLS-1$
     assertFalse (it.hasNext ());
 
     try
@@ -1049,7 +1050,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // value array may not be null
-      newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" }, null);
+      newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" }, null); //$NON-NLS-1$ //$NON-NLS-2$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -1058,7 +1059,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // key and value array need to have the same length
-      newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, });
+      newUnmodifiableOrderedMap (new String [] { "Hallo", "Alice" }, new Integer [] { I1, }); //$NON-NLS-1$ //$NON-NLS-2$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -1072,7 +1073,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedMap_CollectionCollection ()
   {
-    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <String> aKeys = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <Integer> aValues = newList (Integer.valueOf (4),
                                             Integer.valueOf (3),
                                             Integer.valueOf (2),
@@ -1136,10 +1137,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSet_SingleValue ()
   {
-    Set <String> aSet = newSet ("Hallo");
+    Set <String> aSet = newSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aSet);
     assertEquals (1, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
 
     aSet = newSet ((String) null);
     assertNotNull (aSet);
@@ -1150,11 +1151,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSet_Array ()
   {
-    Set <String> aSet = newSet ("Hallo", "Welt");
+    Set <String> aSet = newSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSet (new String [0]);
     assertNotNull (aSet);
@@ -1166,11 +1167,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSetIterable ()
   {
-    Set <String> aSet = newSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    Set <String> aSet = newSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aSet);
@@ -1180,11 +1181,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSetCollection ()
   {
-    Set <String> aSet = newSet (newList ("Hallo", "Welt"));
+    Set <String> aSet = newSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSet (new ArrayList <String> ());
     assertNotNull (aSet);
@@ -1194,11 +1195,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSetIIterableIterator ()
   {
-    Set <String> aSet = newSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    Set <String> aSet = newSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aSet);
@@ -1208,11 +1209,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSetEnumeration ()
   {
-    Set <String> aSet = newSet (getEnumeration (newList ("Hallo", "Welt")));
+    Set <String> aSet = newSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aSet);
@@ -1222,12 +1223,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSetIterator ()
   {
-    final Iterator <String> it = newSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final Set <String> aUnmodifiableSet = newSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -1241,10 +1242,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetSingleValue ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet ("Hallo");
+    Set <String> aUnmodifiableSet = newUnmodifiableSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aUnmodifiableSet);
     assertEquals (1, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet ((String) null);
     assertNotNull (aUnmodifiableSet);
@@ -1255,11 +1256,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetArray ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet ("Hallo", "Welt");
+    Set <String> aUnmodifiableSet = newUnmodifiableSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet (new String [0]);
     assertNotNull (aUnmodifiableSet);
@@ -1271,11 +1272,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetIterable ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    Set <String> aUnmodifiableSet = newUnmodifiableSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aUnmodifiableSet);
@@ -1285,11 +1286,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetCollection ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet (newList ("Hallo", "Welt"));
+    Set <String> aUnmodifiableSet = newUnmodifiableSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet (new ArrayList <String> ());
     assertNotNull (aUnmodifiableSet);
@@ -1299,11 +1300,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetIIterableIterator ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    Set <String> aUnmodifiableSet = newUnmodifiableSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableSet);
@@ -1313,11 +1314,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetEnumeration ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSet (getEnumeration (newList ("Hallo", "Welt")));
+    Set <String> aUnmodifiableSet = newUnmodifiableSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableSet);
@@ -1327,12 +1328,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSetIterator ()
   {
-    final Iterator <String> it = newUnmodifiableSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newUnmodifiableSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final Set <String> aUnmodifiableSet = newUnmodifiableSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -1347,10 +1348,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewSortedSet_SingleValue ()
   {
-    SortedSet <String> aSet = newSortedSet ("Hallo");
+    SortedSet <String> aSet = newSortedSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aSet);
     assertEquals (1, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
 
     aSet = newSortedSet ((String) null);
     assertNotNull (aSet);
@@ -1361,11 +1362,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSet_Array ()
   {
-    SortedSet <String> aSet = newSortedSet ("Hallo", "Welt");
+    SortedSet <String> aSet = newSortedSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSortedSet (new String [0]);
     assertNotNull (aSet);
@@ -1377,11 +1378,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetIterable ()
   {
-    SortedSet <String> aSet = newSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    SortedSet <String> aSet = newSortedSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSortedSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aSet);
@@ -1391,11 +1392,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetCollection ()
   {
-    SortedSet <String> aSet = newSortedSet (newList ("Hallo", "Welt"));
+    SortedSet <String> aSet = newSortedSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSortedSet (new ArrayList <String> ());
     assertNotNull (aSet);
@@ -1406,12 +1407,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewSortedSetIIterableIterator ()
   {
-    SortedSet <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt", null)));
+    SortedSet <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt", null))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (3, aSet.size ());
     assertNull (aSet.first ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
     assertTrue (aSet.contains (null));
 
     aSet = newSortedSet (IterableIterator.create (new ArrayList <String> ()));
@@ -1422,11 +1423,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetEnumeration ()
   {
-    SortedSet <String> aSet = newSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    SortedSet <String> aSet = newSortedSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
-    assertTrue (aSet.contains ("Hallo"));
-    assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSet.contains ("Welt")); //$NON-NLS-1$
 
     aSet = newSortedSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aSet);
@@ -1436,12 +1437,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetIterator ()
   {
-    final Iterator <String> it = newSortedSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newSortedSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final SortedSet <String> aUnmodifiableSet = newSortedSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -1456,10 +1457,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewUnmodifiableSortedSetSingleValue ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo");
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aUnmodifiableSet);
     assertEquals (1, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet ((String) null);
     assertNotNull (aUnmodifiableSet);
@@ -1470,11 +1471,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetArray ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo", "Welt");
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet (new String [0]);
     assertNotNull (aUnmodifiableSet);
@@ -1486,11 +1487,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIterable ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aUnmodifiableSet);
@@ -1500,11 +1501,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetCollection ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (newList ("Hallo", "Welt"));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet (new ArrayList <String> ());
     assertNotNull (aUnmodifiableSet);
@@ -1514,11 +1515,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIIterableIterator ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableSet);
@@ -1528,11 +1529,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetEnumeration ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableSet);
@@ -1542,12 +1543,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIterator ()
   {
-    final Iterator <String> it = newUnmodifiableSortedSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newUnmodifiableSortedSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
-    assertTrue (aUnmodifiableSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableSet.contains ("Welt"));
+    assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -1561,10 +1562,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetSingleValue ()
   {
-    Set <String> aOrderedSet = newOrderedSet ("Hallo");
+    Set <String> aOrderedSet = newOrderedSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aOrderedSet);
     assertEquals (1, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet ((String) null);
     assertNotNull (aOrderedSet);
@@ -1575,11 +1576,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetArray ()
   {
-    Set <String> aOrderedSet = newOrderedSet ("Hallo", "Welt");
+    Set <String> aOrderedSet = newOrderedSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet (new String [0]);
     assertNotNull (aOrderedSet);
@@ -1591,11 +1592,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetIterable ()
   {
-    Set <String> aOrderedSet = newOrderedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    Set <String> aOrderedSet = newOrderedSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aOrderedSet);
@@ -1605,11 +1606,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetCollection ()
   {
-    Set <String> aOrderedSet = newOrderedSet (newList ("Hallo", "Welt"));
+    Set <String> aOrderedSet = newOrderedSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet (new ArrayList <String> ());
     assertNotNull (aOrderedSet);
@@ -1619,11 +1620,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetIIterableIterator ()
   {
-    Set <String> aOrderedSet = newOrderedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    Set <String> aOrderedSet = newOrderedSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aOrderedSet);
@@ -1633,11 +1634,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetEnumeration ()
   {
-    Set <String> aOrderedSet = newOrderedSet (getEnumeration (newList ("Hallo", "Welt")));
+    Set <String> aOrderedSet = newOrderedSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aOrderedSet = newOrderedSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aOrderedSet);
@@ -1647,12 +1648,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewOrderedSetIterator ()
   {
-    final Iterator <String> it = newOrderedSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newOrderedSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final Set <String> aOrderedSet = newOrderedSet (it);
     assertNotNull (aOrderedSet);
     assertEquals (2, aOrderedSet.size ());
-    assertTrue (aOrderedSet.contains ("Hallo"));
-    assertTrue (aOrderedSet.contains ("Welt"));
+    assertTrue (aOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aOrderedSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -1666,10 +1667,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetSingleValue ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ("Hallo");
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ("Hallo"); //$NON-NLS-1$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (1, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ((String) null);
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1680,11 +1681,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetArray ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ("Hallo", "Welt");
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (new String [0]);
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1696,11 +1697,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetIterable ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ((Iterable <String>) newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1710,11 +1711,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetCollection ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (newList ("Hallo", "Welt"));
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (newList ("Hallo", "Welt")); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (new ArrayList <String> ());
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1724,11 +1725,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetIIterableIterator ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1738,11 +1739,11 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetEnumeration ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (getEnumeration (newList ("Hallo", "Welt")));
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (getEnumeration (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
 
     aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (getEnumeration (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableOrderedSet);
@@ -1752,31 +1753,31 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetIterator ()
   {
-    final Iterator <String> it = newUnmodifiableOrderedSet ("Hallo", "Welt").iterator ();
+    final Iterator <String> it = newUnmodifiableOrderedSet ("Hallo", "Welt").iterator (); //$NON-NLS-1$ //$NON-NLS-2$
     final Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (it);
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
-    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo"));
-    assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
+    assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableOrderedSet.contains ("Welt")); //$NON-NLS-1$
   }
 
   @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testNewListPrefilled ()
   {
-    List <String> aList = newListPrefilled ("s", 5);
+    List <String> aList = newListPrefilled ("s", 5); //$NON-NLS-1$
     assertNotNull (aList);
     assertEquals (5, aList.size ());
     for (int i = 0; i < 5; ++i)
-      assertEquals ("s", aList.get (i));
+      assertEquals ("s", aList.get (i)); //$NON-NLS-1$
 
-    aList = newListPrefilled ("s", 0);
+    aList = newListPrefilled ("s", 0); //$NON-NLS-1$
     assertNotNull (aList);
     assertEquals (0, aList.size ());
 
     try
     {
-      newListPrefilled ("s", -1);
+      newListPrefilled ("s", -1); //$NON-NLS-1$
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -1794,10 +1795,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListSingleValue ()
   {
-    List <String> aList = newList ("Hallo");
+    List <String> aList = newList ("Hallo"); //$NON-NLS-1$
     assertNotNull (aList);
     assertEquals (1, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
 
     aList = newList ((String) null);
     assertNotNull (aList);
@@ -1808,13 +1809,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListArray ()
   {
-    List <String> aList = newList ("Hallo", "Welt", "from", "Vienna");
+    List <String> aList = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList ((String []) null);
     assertNotNull (aList);
@@ -1826,13 +1827,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListEnumeration ()
   {
-    List <String> aList = newList (new ArrayEnumeration <String> ("Hallo", "Welt", "from", "Vienna"));
+    List <String> aList = newList (new ArrayEnumeration <String> ("Hallo", "Welt", "from", "Vienna")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList (ContainerHelper.<String> getEmptyEnumeration ());
     assertNotNull (aList);
@@ -1845,18 +1846,18 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   public void testNewListIterator ()
   {
     final List <String> aSource = new ArrayList <String> ();
-    assertTrue (aSource.add ("Hallo"));
-    assertTrue (aSource.add ("Welt"));
-    assertTrue (aSource.add ("from"));
-    assertTrue (aSource.add ("Vienna"));
+    assertTrue (aSource.add ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSource.add ("Welt")); //$NON-NLS-1$
+    assertTrue (aSource.add ("from")); //$NON-NLS-1$
+    assertTrue (aSource.add ("Vienna")); //$NON-NLS-1$
 
     List <String> aList = newList (aSource.iterator ());
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList (ContainerHelper.<String> getEmptyIterator ());
     assertNotNull (aList);
@@ -1868,15 +1869,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListCollection ()
   {
-    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aList = newList (aSource);
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList (new ArrayList <String> ());
     assertNotNull (aList);
@@ -1888,15 +1889,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListIterable ()
   {
-    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aList = newList ((Iterable <String>) aSource);
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aList);
@@ -1908,15 +1909,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewListIIterableIterator ()
   {
-    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aList = newList (IterableIterator.create (aSource));
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertTrue (aList.contains ("Hallo"));
-    assertTrue (aList.contains ("Welt"));
-    assertTrue (aList.contains ("from"));
-    assertTrue (aList.contains ("Vienna"));
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
 
     aList = newList (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aList);
@@ -1936,10 +1937,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListSingleValue ()
   {
-    List <String> aUnmodifiableList = newUnmodifiableList ("Hallo");
+    List <String> aUnmodifiableList = newUnmodifiableList ("Hallo"); //$NON-NLS-1$
     assertNotNull (aUnmodifiableList);
     assertEquals (1, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList ((String) null);
     assertNotNull (aUnmodifiableList);
@@ -1950,13 +1951,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListArray ()
   {
-    List <String> aUnmodifiableList = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna");
+    List <String> aUnmodifiableList = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList ((String []) null);
     assertNotNull (aUnmodifiableList);
@@ -1968,16 +1969,16 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListEnumeration ()
   {
-    List <String> aUnmodifiableList = newUnmodifiableList (new ArrayEnumeration <String> ("Hallo",
-                                                                                          "Welt",
-                                                                                          "from",
-                                                                                          "Vienna"));
+    List <String> aUnmodifiableList = newUnmodifiableList (new ArrayEnumeration <String> ("Hallo", //$NON-NLS-1$
+                                                                                          "Welt", //$NON-NLS-1$
+                                                                                          "from", //$NON-NLS-1$
+                                                                                          "Vienna")); //$NON-NLS-1$
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList (ContainerHelper.<String> getEmptyEnumeration ());
     assertNotNull (aUnmodifiableList);
@@ -1987,18 +1988,18 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   public void testNewUnmodifiableListIterator ()
   {
     final List <String> aSource = new ArrayList <String> ();
-    assertTrue (aSource.add ("Hallo"));
-    assertTrue (aSource.add ("Welt"));
-    assertTrue (aSource.add ("from"));
-    assertTrue (aSource.add ("Vienna"));
+    assertTrue (aSource.add ("Hallo")); //$NON-NLS-1$
+    assertTrue (aSource.add ("Welt")); //$NON-NLS-1$
+    assertTrue (aSource.add ("from")); //$NON-NLS-1$
+    assertTrue (aSource.add ("Vienna")); //$NON-NLS-1$
 
     List <String> aUnmodifiableList = newUnmodifiableList (aSource.iterator ());
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList (ContainerHelper.<String> getEmptyIterator ());
     assertNotNull (aUnmodifiableList);
@@ -2007,15 +2008,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListCollection ()
   {
-    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aUnmodifiableList = newUnmodifiableList (aSource);
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList (new ArrayList <String> ());
     assertNotNull (aUnmodifiableList);
@@ -2027,15 +2028,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListIterable ()
   {
-    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aUnmodifiableList = newUnmodifiableList ((Iterable <String>) aSource);
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList ((Iterable <String>) new ArrayList <String> ());
     assertNotNull (aUnmodifiableList);
@@ -2047,15 +2048,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableListIIterableIterator ()
   {
-    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna");
+    final List <String> aSource = newUnmodifiableList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aUnmodifiableList = newUnmodifiableList (IterableIterator.create (aSource));
     assertNotNull (aUnmodifiableList);
     assertEquals (4, aUnmodifiableList.size ());
-    assertTrue (aUnmodifiableList.contains ("Hallo"));
-    assertTrue (aUnmodifiableList.contains ("Welt"));
-    assertTrue (aUnmodifiableList.contains ("from"));
-    assertTrue (aUnmodifiableList.contains ("Vienna"));
+    assertTrue (aUnmodifiableList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aUnmodifiableList.contains ("Vienna")); //$NON-NLS-1$
 
     aUnmodifiableList = newUnmodifiableList (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aUnmodifiableList);
@@ -2069,27 +2070,27 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     NonBlockingStack <String> aStack = newStack ();
     assertNotNull (aStack);
-    aStack = newStack ("Hallo");
+    aStack = newStack ("Hallo"); //$NON-NLS-1$
     assertNotNull (aStack);
     assertEquals (aStack.size (), 1);
-    assertTrue (aStack.contains ("Hallo"));
-    assertEquals ("Hallo", aStack.peek ());
-    assertEquals ("Hallo", aStack.pop ());
+    assertTrue (aStack.contains ("Hallo")); //$NON-NLS-1$
+    assertEquals ("Hallo", aStack.peek ()); //$NON-NLS-1$
+    assertEquals ("Hallo", aStack.pop ()); //$NON-NLS-1$
   }
 
   @Test
   public void testNewStackArray ()
   {
-    final NonBlockingStack <String> aStack = newStack ("Hallo", "Welt");
-    assertEquals (getStackCopyWithoutTop (aStack), newStack ("Hallo"));
+    final NonBlockingStack <String> aStack = newStack ("Hallo", "Welt"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals (getStackCopyWithoutTop (aStack), newStack ("Hallo")); //$NON-NLS-1$
     assertNotNull (aStack);
     assertEquals (aStack.size (), 2);
-    assertTrue (aStack.contains ("Welt"));
-    assertTrue (aStack.contains ("Hallo"));
-    assertEquals ("Welt", aStack.peek ());
-    assertEquals ("Welt", aStack.pop ());
-    assertEquals ("Hallo", aStack.peek ());
-    assertEquals ("Hallo", aStack.pop ());
+    assertTrue (aStack.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aStack.contains ("Hallo")); //$NON-NLS-1$
+    assertEquals ("Welt", aStack.peek ()); //$NON-NLS-1$
+    assertEquals ("Welt", aStack.pop ()); //$NON-NLS-1$
+    assertEquals ("Hallo", aStack.peek ()); //$NON-NLS-1$
+    assertEquals ("Hallo", aStack.pop ()); //$NON-NLS-1$
     assertTrue (aStack.isEmpty ());
 
     assertNull (getStackCopyWithoutTop (new NonBlockingStack <String> ()));
@@ -2100,13 +2101,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((Iterator <String>) null));
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <String> aSorted = getSorted (aList.iterator ());
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "a");
-    assertEquals (aSorted.get (1), "b");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
@@ -2114,13 +2115,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((Iterable <String>) null));
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final List <String> aSorted = getSorted (aList);
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "a");
-    assertEquals (aSorted.get (1), "b");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
@@ -2128,20 +2129,20 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((IIterableIterator <String>) null));
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     List <String> aSorted = getSorted (IterableIterator.create (aList));
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "a");
-    assertEquals (aSorted.get (1), "b");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
 
     aSorted = getSorted (IterableIterator.create (aList), new ComparatorString ());
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "a");
-    assertEquals (aSorted.get (1), "b");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   private static final class MyStringCompi implements Comparator <String>, Serializable
@@ -2152,9 +2153,9 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     @Override
     public int compare (final String sStr1, final String sStr2)
     {
-      if (sStr1.equals ("b"))
+      if (sStr1.equals ("b")) //$NON-NLS-1$
         return -1;
-      if (sStr2.equals ("b"))
+      if (sStr2.equals ("b")) //$NON-NLS-1$
         return +1;
       return sStr1.compareTo (sStr2);
     }
@@ -2165,7 +2166,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((Iterator <String>) null, new MyStringCompi ()));
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     try
     {
@@ -2178,10 +2179,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
 
     final List <String> aSorted = getSorted (aList.iterator (), new MyStringCompi ());
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "b");
-    assertEquals (aSorted.get (1), "a");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
@@ -2189,7 +2190,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((Iterable <String>) null, new MyStringCompi ()));
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     try
     {
@@ -2202,10 +2203,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
 
     final List <String> aSorted = getSorted (aList, new MyStringCompi ());
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "b");
-    assertEquals (aSorted.get (1), "a");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
@@ -2213,12 +2214,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getSorted ((String []) null));
 
-    final List <String> aSorted = getSorted ("d", "c", "b", "a");
+    final List <String> aSorted = getSorted ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "a");
-    assertEquals (aSorted.get (1), "b");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
@@ -2235,27 +2236,27 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final NullPointerException ex)
     {}
 
-    final List <String> aSorted = getSorted (new String [] { "d", "c", "b", "a" }, new MyStringCompi ());
+    final List <String> aSorted = getSorted (new String [] { "d", "c", "b", "a" }, new MyStringCompi ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertEquals (aSorted.size (), 4);
-    assertEquals (aSorted.get (0), "b");
-    assertEquals (aSorted.get (1), "a");
-    assertEquals (aSorted.get (2), "c");
-    assertEquals (aSorted.get (3), "d");
+    assertEquals (aSorted.get (0), "b"); //$NON-NLS-1$
+    assertEquals (aSorted.get (1), "a"); //$NON-NLS-1$
+    assertEquals (aSorted.get (2), "c"); //$NON-NLS-1$
+    assertEquals (aSorted.get (3), "d"); //$NON-NLS-1$
   }
 
   @Test
   public void testGetEnumeratorFromIterator ()
   {
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     Enumeration <String> aEnum = getEnumeration (aList.iterator ());
     assertTrue (aEnum.hasMoreElements ());
-    assertEquals (aEnum.nextElement (), "d");
+    assertEquals (aEnum.nextElement (), "d"); //$NON-NLS-1$
     assertTrue (aEnum.hasMoreElements ());
-    assertEquals (aEnum.nextElement (), "c");
+    assertEquals (aEnum.nextElement (), "c"); //$NON-NLS-1$
     assertTrue (aEnum.hasMoreElements ());
-    assertEquals (aEnum.nextElement (), "b");
+    assertEquals (aEnum.nextElement (), "b"); //$NON-NLS-1$
     assertTrue (aEnum.hasMoreElements ());
-    assertEquals (aEnum.nextElement (), "a");
+    assertEquals (aEnum.nextElement (), "a"); //$NON-NLS-1$
     assertFalse (aEnum.hasMoreElements ());
     assertFalse (aEnum.hasMoreElements ());
 
@@ -2270,7 +2271,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (isEmpty ((Map <?, ?>) null));
     assertTrue (isEmpty (new Vector <String> ()));
     assertTrue (isEmpty (new HashMap <Short, String> ()));
-    assertFalse (isEmpty (newList ("d", "c", "b", "a")));
+    assertFalse (isEmpty (newList ("d", "c", "b", "a"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertTrue (isEmpty ((Iterable <String>) new NonBlockingStack <String> ()));
     assertTrue (isEmpty (EmptyEnumeration.<Double> getInstance ()));
     assertTrue (isEmpty (EmptyIterator.<Double> getInstance ()));
@@ -2282,16 +2283,16 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNotNull (getReverseIterator (null));
     assertFalse (getReverseIterator (null).hasNext ());
 
-    final List <String> aList = newList ("d", "c", "b", "a");
+    final List <String> aList = newList ("d", "c", "b", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     final Iterator <String> it = getReverseIterator (aList);
     assertTrue (it.hasNext ());
-    assertEquals (it.next (), "a");
+    assertEquals (it.next (), "a"); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals (it.next (), "b");
+    assertEquals (it.next (), "b"); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals (it.next (), "c");
+    assertEquals (it.next (), "c"); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals (it.next (), "d");
+    assertEquals (it.next (), "d"); //$NON-NLS-1$
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
     try
@@ -2363,15 +2364,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (isEmpty (new HashMap <String, String> ()));
     assertTrue (isEmpty (new LinkedHashMap <String, String> ()));
 
-    assertFalse (isEmpty (newList ("Hallo")));
-    assertFalse (isEmpty (newMap ("Hallo", "Welt")));
+    assertFalse (isEmpty (newList ("Hallo"))); //$NON-NLS-1$
+    assertFalse (isEmpty (newMap ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
   public void testSize ()
   {
-    assertEquals (2, getSize (newList ("Ha", "We")));
-    assertEquals (1, getSize (newMap ("Ha", "We")));
+    assertEquals (2, getSize (newList ("Ha", "We"))); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals (1, getSize (newMap ("Ha", "We"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertEquals (0, getSize ((Collection <String>) null));
     assertEquals (0, getSize ((Map <String, Double>) null));
   }
@@ -2379,18 +2380,18 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetIteratorFromEnumeration ()
   {
-    final Enumeration <String> aSourceEnum = Collections.enumeration (newList ("a", "b", "c", "d"));
+    final Enumeration <String> aSourceEnum = Collections.enumeration (newList ("a", "b", "c", "d")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     IIterableIterator <String> it = getIterator (aSourceEnum);
     assertNotNull (it);
     assertSame (it, it.iterator ());
     assertTrue (it.hasNext ());
-    assertEquals ("a", it.next ());
+    assertEquals ("a", it.next ()); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals ("b", it.next ());
+    assertEquals ("b", it.next ()); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals ("c", it.next ());
+    assertEquals ("c", it.next ()); //$NON-NLS-1$
     assertTrue (it.hasNext ());
-    assertEquals ("d", it.next ());
+    assertEquals ("d", it.next ()); //$NON-NLS-1$
     assertFalse (it.hasNext ());
 
     try
@@ -2417,15 +2418,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetFilteredMap ()
   {
-    assertNull (getFilteredMap (null, newList ("a")));
-    assertNull (getFilteredMap (newMap ("a", "value-of-a"), null));
+    assertNull (getFilteredMap (null, newList ("a"))); //$NON-NLS-1$
+    assertNull (getFilteredMap (newMap ("a", "value-of-a"), null)); //$NON-NLS-1$ //$NON-NLS-2$
 
-    final Map <String, String> aFilteredMap = getFilteredMap (newMap ("a", "value-of-a", "b", "value-of-b"),
-                                                              newList ("a"));
+    final Map <String, String> aFilteredMap = getFilteredMap (newMap ("a", "value-of-a", "b", "value-of-b"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                                                              newList ("a")); //$NON-NLS-1$
     assertNotNull (aFilteredMap);
     assertEquals (1, aFilteredMap.size ());
-    assertTrue (aFilteredMap.containsKey ("a"));
-    assertEquals ("value-of-a", aFilteredMap.get ("a"));
+    assertTrue (aFilteredMap.containsKey ("a")); //$NON-NLS-1$
+    assertEquals ("value-of-a", aFilteredMap.get ("a")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -2446,20 +2447,20 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final NullPointerException ex)
     {}
 
-    final Map <String, String> aMap = newMap ("K2", "ValueA", "K3", "ValueB", "K1", "ValueC");
+    final Map <String, String> aMap = newMap ("K2", "ValueA", "K3", "ValueB", "K1", "ValueC"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     assertNotNull (aMap);
     assertEquals (3, aMap.size ());
 
     Iterator <Map.Entry <String, String>> it = getSortedByKey (aMap).entrySet ().iterator ();
-    assertEquals ("K1", it.next ().getKey ());
-    assertEquals ("K2", it.next ().getKey ());
-    assertEquals ("K3", it.next ().getKey ());
+    assertEquals ("K1", it.next ().getKey ()); //$NON-NLS-1$
+    assertEquals ("K2", it.next ().getKey ()); //$NON-NLS-1$
+    assertEquals ("K3", it.next ().getKey ()); //$NON-NLS-1$
 
     // reverse sort
     it = getSortedByKey (aMap, new ComparatorString (ESortOrder.DESCENDING)).entrySet ().iterator ();
-    assertEquals ("K3", it.next ().getKey ());
-    assertEquals ("K2", it.next ().getKey ());
-    assertEquals ("K1", it.next ().getKey ());
+    assertEquals ("K3", it.next ().getKey ()); //$NON-NLS-1$
+    assertEquals ("K2", it.next ().getKey ()); //$NON-NLS-1$
+    assertEquals ("K1", it.next ().getKey ()); //$NON-NLS-1$
   }
 
   /**
@@ -2480,20 +2481,20 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final NullPointerException ex)
     {}
 
-    final Map <String, String> aMap = newMap ("K1", "ValueB", "K2", "ValueC", "K3", "ValueA");
+    final Map <String, String> aMap = newMap ("K1", "ValueB", "K2", "ValueC", "K3", "ValueA"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
     assertNotNull (aMap);
     assertEquals (3, aMap.size ());
 
     Iterator <Map.Entry <String, String>> it = getSortedByValue (aMap).entrySet ().iterator ();
-    assertEquals ("ValueA", it.next ().getValue ());
-    assertEquals ("ValueB", it.next ().getValue ());
-    assertEquals ("ValueC", it.next ().getValue ());
+    assertEquals ("ValueA", it.next ().getValue ()); //$NON-NLS-1$
+    assertEquals ("ValueB", it.next ().getValue ()); //$NON-NLS-1$
+    assertEquals ("ValueC", it.next ().getValue ()); //$NON-NLS-1$
 
     // reverse sort
     it = getSortedByValue (aMap, new ComparatorString (ESortOrder.DESCENDING)).entrySet ().iterator ();
-    assertEquals ("ValueC", it.next ().getValue ());
-    assertEquals ("ValueB", it.next ().getValue ());
-    assertEquals ("ValueA", it.next ().getValue ());
+    assertEquals ("ValueC", it.next ().getValue ()); //$NON-NLS-1$
+    assertEquals ("ValueB", it.next ().getValue ()); //$NON-NLS-1$
+    assertEquals ("ValueA", it.next ().getValue ()); //$NON-NLS-1$
   }
 
   /**
@@ -2504,7 +2505,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getIterator ((ArrayList <?>) null));
     assertFalse (getIterator ((ArrayList <?>) null).hasNext ());
-    assertTrue (getIterator (newList ("abc")).hasNext ());
+    assertTrue (getIterator (newList ("abc")).hasNext ()); //$NON-NLS-1$
   }
 
   /**
@@ -2515,7 +2516,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getIterator ((Iterator <?>) null));
     assertFalse (getIterator ((Iterator <?>) null).hasNext ());
-    assertTrue (getIterator (newList ("abc").iterator ()).hasNext ());
+    assertTrue (getIterator (newList ("abc").iterator ()).hasNext ()); //$NON-NLS-1$
   }
 
   /**
@@ -2526,7 +2527,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertNotNull (getIterator (new String [0]));
     assertFalse (getIterator (new String [0]).hasNext ());
-    assertTrue (getIterator ("a").hasNext ());
+    assertTrue (getIterator ("a").hasNext ()); //$NON-NLS-1$
   }
 
   @Test
@@ -2536,32 +2537,32 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (getReverseList (null).isEmpty ());
 
     // Make it not sorted :)
-    final List <String> aList = newList ("1", "3", "2");
+    final List <String> aList = newList ("1", "3", "2"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     final List <String> aReverse = getReverseList (aList);
     assertNotNull (aReverse);
     assertEquals (3, aReverse.size ());
-    assertEquals ("2", aReverse.get (0));
-    assertEquals ("3", aReverse.get (1));
-    assertEquals ("1", aReverse.get (2));
+    assertEquals ("2", aReverse.get (0)); //$NON-NLS-1$
+    assertEquals ("3", aReverse.get (1)); //$NON-NLS-1$
+    assertEquals ("1", aReverse.get (2)); //$NON-NLS-1$
 
     // Check original
     assertEquals (3, aList.size ());
-    assertEquals ("1", aList.get (0));
-    assertEquals ("3", aList.get (1));
-    assertEquals ("2", aList.get (2));
+    assertEquals ("1", aList.get (0)); //$NON-NLS-1$
+    assertEquals ("3", aList.get (1)); //$NON-NLS-1$
+    assertEquals ("2", aList.get (2)); //$NON-NLS-1$
   }
 
   @Test
   public void testGetReverseInlineList ()
   {
-    List <String> aList = newList ("1", "3", "2");
+    List <String> aList = newList ("1", "3", "2"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     // Sort inline
     assertSame (aList, getReverseInlineList (aList));
     assertEquals (3, aList.size ());
-    assertEquals ("2", aList.get (0));
-    assertEquals ("3", aList.get (1));
-    assertEquals ("1", aList.get (2));
+    assertEquals ("2", aList.get (0)); //$NON-NLS-1$
+    assertEquals ("3", aList.get (1)); //$NON-NLS-1$
+    assertEquals ("1", aList.get (2)); //$NON-NLS-1$
 
     aList = newList ();
     assertSame (aList, getReverseInlineList (aList));
@@ -2573,29 +2574,29 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetCombinedEnumeration ()
   {
-    Enumeration <String> e = getCombinedEnumeration (getEnumeration ("a", "b"), getEnumeration ("c", "d"));
+    Enumeration <String> e = getCombinedEnumeration (getEnumeration ("a", "b"), getEnumeration ("c", "d")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     assertTrue (e.hasMoreElements ());
     List <String> aList = newList (e);
     assertNotNull (aList);
     assertEquals (4, aList.size ());
-    assertEquals ("a", aList.get (0));
-    assertEquals ("b", aList.get (1));
-    assertEquals ("c", aList.get (2));
-    assertEquals ("d", aList.get (3));
+    assertEquals ("a", aList.get (0)); //$NON-NLS-1$
+    assertEquals ("b", aList.get (1)); //$NON-NLS-1$
+    assertEquals ("c", aList.get (2)); //$NON-NLS-1$
+    assertEquals ("d", aList.get (3)); //$NON-NLS-1$
 
-    e = getCombinedEnumeration (getEnumeration ("a", "b"), null);
+    e = getCombinedEnumeration (getEnumeration ("a", "b"), null); //$NON-NLS-1$ //$NON-NLS-2$
     aList = newList (e);
     assertNotNull (aList);
     assertEquals (2, aList.size ());
-    assertEquals ("a", aList.get (0));
-    assertEquals ("b", aList.get (1));
+    assertEquals ("a", aList.get (0)); //$NON-NLS-1$
+    assertEquals ("b", aList.get (1)); //$NON-NLS-1$
 
-    e = getCombinedEnumeration (null, getEnumeration ("c", "d"));
+    e = getCombinedEnumeration (null, getEnumeration ("c", "d")); //$NON-NLS-1$ //$NON-NLS-2$
     aList = newList (e);
     assertNotNull (aList);
     assertEquals (2, aList.size ());
-    assertEquals ("c", aList.get (0));
-    assertEquals ("d", aList.get (1));
+    assertEquals ("c", aList.get (0)); //$NON-NLS-1$
+    assertEquals ("d", aList.get (1)); //$NON-NLS-1$
 
     e = getCombinedEnumeration (null, null);
     assertFalse (e.hasMoreElements ());
@@ -2607,16 +2608,16 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testFirstAndLast ()
   {
-    final List <String> aList = newList ("s1", "s2", "s3");
+    final List <String> aList = newList ("s1", "s2", "s3"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     final Set <String> aSet = new LinkedHashSet <String> (aList);
 
     assertNull (removeFirstElement (new ArrayList <String> ()));
     assertNull (removeFirstElement ((List <String>) null));
 
-    assertEquals ("s1", getFirstElement (aList));
-    assertEquals ("s1", getFirstElement (aSet));
-    assertEquals ("s1", getFirstElement ((Iterable <String>) aSet));
-    assertEquals ("s1", removeFirstElement (aList));
+    assertEquals ("s1", getFirstElement (aList)); //$NON-NLS-1$
+    assertEquals ("s1", getFirstElement (aSet)); //$NON-NLS-1$
+    assertEquals ("s1", getFirstElement ((Iterable <String>) aSet)); //$NON-NLS-1$
+    assertEquals ("s1", removeFirstElement (aList)); //$NON-NLS-1$
     assertNull (getFirstElement (new ArrayList <String> ()));
     assertNull (getFirstElement (new HashSet <String> ()));
     assertNull (getFirstElement ((Iterable <String>) new HashSet <String> ()));
@@ -2627,10 +2628,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNull (removeLastElement (new ArrayList <String> ()));
     assertNull (removeLastElement ((List <String>) null));
 
-    assertEquals ("s3", getLastElement (aList));
-    assertEquals ("s3", getLastElement (aSet));
-    assertEquals ("s3", getLastElement ((Iterable <String>) aSet));
-    assertEquals ("s3", removeLastElement (aList));
+    assertEquals ("s3", getLastElement (aList)); //$NON-NLS-1$
+    assertEquals ("s3", getLastElement (aSet)); //$NON-NLS-1$
+    assertEquals ("s3", getLastElement ((Iterable <String>) aSet)); //$NON-NLS-1$
+    assertEquals ("s3", removeLastElement (aList)); //$NON-NLS-1$
     assertNull (getLastElement (new ArrayList <String> ()));
     assertNull (getLastElement (new HashSet <String> ()));
     assertNull (getLastElement ((Iterable <String>) new HashSet <String> ()));
@@ -2642,9 +2643,9 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetFirstElement_Map ()
   {
-    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 });
+    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (getFirstElement (aMap));
-    assertEquals ("a", getFirstElement (aMap).getKey ());
+    assertEquals ("a", getFirstElement (aMap).getKey ()); //$NON-NLS-1$
     assertEquals (I1, getFirstElement (aMap).getValue ());
 
     assertNull (getFirstElement (newMap ()));
@@ -2654,9 +2655,9 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetFirstKey ()
   {
-    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 });
+    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (getFirstKey (aMap));
-    assertEquals ("a", getFirstKey (aMap));
+    assertEquals ("a", getFirstKey (aMap)); //$NON-NLS-1$
 
     assertNull (getFirstKey (newMap ()));
     assertNull (getFirstKey ((Map <?, ?>) null));
@@ -2665,7 +2666,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetFirstValue ()
   {
-    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 });
+    final Map <String, Integer> aMap = newOrderedMap (new String [] { "a", "b" }, new Integer [] { I1, I2 }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (getFirstValue (aMap));
     assertEquals (I1, getFirstValue (aMap));
 
@@ -2678,7 +2679,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertTrue (isEmpty ((Iterable <?>) null));
     assertTrue (isEmpty ((Iterable <String>) new ArrayList <String> ()));
-    assertFalse (isEmpty ((Iterable <String>) newList ("any")));
+    assertFalse (isEmpty ((Iterable <String>) newList ("any"))); //$NON-NLS-1$
   }
 
   @Test
@@ -2687,7 +2688,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (isEmpty ((Iterator <?>) null));
     assertTrue (isEmpty (new ArrayList <String> ().iterator ()));
     assertTrue (isEmpty (EmptyIterator.<String> getInstance ()));
-    assertFalse (isEmpty (newList ("any").iterator ()));
+    assertFalse (isEmpty (newList ("any").iterator ())); //$NON-NLS-1$
   }
 
   @Test
@@ -2696,7 +2697,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (isEmpty ((IIterableIterator <?>) null));
     assertTrue (isEmpty (IterableIterator.create (new ArrayList <String> ())));
     assertTrue (isEmpty (IterableIterator.<String> createEmpty ()));
-    assertFalse (isEmpty (IterableIterator.create (newList ("any"))));
+    assertFalse (isEmpty (IterableIterator.create (newList ("any")))); //$NON-NLS-1$
   }
 
   @Test
@@ -2705,7 +2706,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (isEmpty ((Enumeration <?>) null));
     assertTrue (isEmpty (getEnumeration (new ArrayList <String> ())));
     assertTrue (isEmpty (EmptyEnumeration.<String> getInstance ()));
-    assertFalse (isEmpty (getEnumeration (newList ("any"))));
+    assertFalse (isEmpty (getEnumeration (newList ("any")))); //$NON-NLS-1$
   }
 
   @Test
@@ -2713,7 +2714,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertTrue (isEmpty ((Collection <?>) null));
     assertTrue (isEmpty (new ArrayList <String> ()));
-    assertFalse (isEmpty (newList ("any")));
+    assertFalse (isEmpty (newList ("any"))); //$NON-NLS-1$
   }
 
   @Test
@@ -2721,7 +2722,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertTrue (isEmpty ((Map <?, ?>) null));
     assertTrue (isEmpty (new HashMap <String, Double> ()));
-    assertFalse (isEmpty (newMap ("any", "value")));
+    assertFalse (isEmpty (newMap ("any", "value"))); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -2729,7 +2730,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertEquals (0, getSize ((Collection <?>) null));
     assertEquals (0, getSize (new ArrayList <String> ()));
-    assertEquals (1, getSize (newList ("any")));
+    assertEquals (1, getSize (newList ("any"))); //$NON-NLS-1$
   }
 
   @Test
@@ -2737,7 +2738,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertEquals (0, getSize ((Map <?, ?>) null));
     assertEquals (0, getSize (new HashMap <BigDecimal, String> ()));
-    assertEquals (1, getSize (newMap ("key", "value")));
+    assertEquals (1, getSize (newMap ("key", "value"))); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -2745,7 +2746,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertEquals (0, getSize ((Iterable <?>) null));
     assertEquals (0, getSize ((Iterable <String>) new ArrayList <String> ()));
-    assertEquals (1, getSize ((Iterable <String>) newList ("any")));
+    assertEquals (1, getSize ((Iterable <String>) newList ("any"))); //$NON-NLS-1$
   }
 
   @Test
@@ -2753,7 +2754,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertEquals (0, getSize ((IIterableIterator <?>) null));
     assertEquals (0, getSize (IterableIterator.createEmpty ()));
-    assertEquals (1, getSize (IterableIterator.create (newList ("any"))));
+    assertEquals (1, getSize (IterableIterator.create (newList ("any")))); //$NON-NLS-1$
   }
 
   @Test
@@ -2761,102 +2762,102 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertEquals (0, getSize ((Iterator <?>) null));
     assertEquals (0, getSize (new ArrayList <String> ().iterator ()));
-    assertEquals (1, getSize (newList ("any").iterator ()));
+    assertEquals (1, getSize (newList ("any").iterator ())); //$NON-NLS-1$
   }
 
   @Test
   public void testGetConcatenatedList_CollectionCollection ()
   {
-    final List <String> a = newList ("a", "b");
-    final List <String> b = newList ("c", "d");
+    final List <String> a = newList ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final List <String> b = newList ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedList ((Collection <String>) null, (Collection <String>) null).isEmpty ());
     assertEquals (a, getConcatenatedList (a, (Collection <String>) null));
     assertEquals (b, getConcatenatedList ((Collection <String>) null, b));
-    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b));
+    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedList_CollectionArray ()
   {
-    final List <String> a = newList ("a", "b");
-    final String [] b = ArrayHelper.newArray ("c", "d");
+    final List <String> a = newList ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final String [] b = ArrayHelper.newArray ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedList ((Collection <String>) null, (String []) null).isEmpty ());
     assertEquals (a, getConcatenatedList (a, (String []) null));
     assertEquals (newList (b), getConcatenatedList ((Collection <String>) null, b));
-    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b));
+    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedList_ArrayCollection ()
   {
-    final String [] a = ArrayHelper.newArray ("a", "b");
-    final List <String> b = newList ("c", "d");
+    final String [] a = ArrayHelper.newArray ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final List <String> b = newList ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedList ((String []) null, (Collection <String>) null).isEmpty ());
     assertEquals (newList (a), getConcatenatedList (a, (Collection <String>) null));
     assertEquals (b, getConcatenatedList ((String []) null, b));
-    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b));
+    assertEquals (newList ("a", "b", "c", "d"), getConcatenatedList (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedSet_CollectionCollection ()
   {
-    final Set <String> a = newSet ("a", "b");
-    final Set <String> b = newSet ("c", "d");
+    final Set <String> a = newSet ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final Set <String> b = newSet ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedSet ((Collection <String>) null, (Collection <String>) null).isEmpty ());
     assertEquals (a, getConcatenatedSet (a, (Collection <String>) null));
     assertEquals (b, getConcatenatedSet ((Collection <String>) null, b));
-    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b));
+    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedSet_CollectionArray ()
   {
-    final Set <String> a = newSet ("a", "b");
-    final String [] b = ArrayHelper.newArray ("c", "d");
+    final Set <String> a = newSet ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final String [] b = ArrayHelper.newArray ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedSet ((Collection <String>) null, (String []) null).isEmpty ());
     assertEquals (a, getConcatenatedSet (a, (String []) null));
     assertEquals (newSet (b), getConcatenatedSet ((Collection <String>) null, b));
-    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b));
+    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedSet_ArrayCollection ()
   {
-    final String [] a = ArrayHelper.newArray ("a", "b");
-    final Set <String> b = newSet ("c", "d");
+    final String [] a = ArrayHelper.newArray ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
+    final Set <String> b = newSet ("c", "d"); //$NON-NLS-1$ //$NON-NLS-2$
     assertTrue (getConcatenatedSet ((String []) null, (Collection <String>) null).isEmpty ());
     assertEquals (newSet (a), getConcatenatedSet (a, (Collection <String>) null));
     assertEquals (b, getConcatenatedSet ((String []) null, b));
-    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b));
+    assertEquals (newSet ("a", "b", "c", "d"), getConcatenatedSet (a, b)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
   }
 
   @Test
   public void testGetConcatenatedInline ()
   {
     // Array version
-    List <String> aBaseList = newList ("1");
-    assertSame (aBaseList, getConcatenatedInline (aBaseList, "2", "3"));
+    List <String> aBaseList = newList ("1"); //$NON-NLS-1$
+    assertSame (aBaseList, getConcatenatedInline (aBaseList, "2", "3")); //$NON-NLS-1$ //$NON-NLS-2$
     assertEquals (3, aBaseList.size ());
-    assertEquals ("1", aBaseList.get (0));
-    assertEquals ("3", aBaseList.get (2));
+    assertEquals ("1", aBaseList.get (0)); //$NON-NLS-1$
+    assertEquals ("3", aBaseList.get (2)); //$NON-NLS-1$
     assertSame (aBaseList, getConcatenatedInline (aBaseList, (String []) null));
     assertEquals (3, aBaseList.size ());
 
     // Collection version
-    aBaseList = newList ("1");
-    assertSame (aBaseList, getConcatenatedInline (aBaseList, newList ("2", "3")));
+    aBaseList = newList ("1"); //$NON-NLS-1$
+    assertSame (aBaseList, getConcatenatedInline (aBaseList, newList ("2", "3"))); //$NON-NLS-1$ //$NON-NLS-2$
     assertEquals (3, aBaseList.size ());
-    assertEquals ("1", aBaseList.get (0));
-    assertEquals ("3", aBaseList.get (2));
+    assertEquals ("1", aBaseList.get (0)); //$NON-NLS-1$
+    assertEquals ("3", aBaseList.get (2)); //$NON-NLS-1$
     assertSame (aBaseList, getConcatenatedInline (aBaseList, (Collection <String>) null));
     assertEquals (3, aBaseList.size ());
 
     // Set test
-    final Set <String> aBaseSet = newSet ("1");
-    assertSame (aBaseSet, getConcatenatedInline (aBaseSet, "2", "3"));
+    final Set <String> aBaseSet = newSet ("1"); //$NON-NLS-1$
+    assertSame (aBaseSet, getConcatenatedInline (aBaseSet, "2", "3")); //$NON-NLS-1$ //$NON-NLS-2$
     assertEquals (3, aBaseSet.size ());
-    assertTrue (aBaseSet.contains ("1"));
-    assertTrue (aBaseSet.contains ("3"));
+    assertTrue (aBaseSet.contains ("1")); //$NON-NLS-1$
+    assertTrue (aBaseSet.contains ("3")); //$NON-NLS-1$
     assertSame (aBaseSet, getConcatenatedInline (aBaseSet, (String []) null));
     assertEquals (3, aBaseSet.size ());
 
@@ -2869,7 +2870,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     {}
     try
     {
-      getConcatenatedInline ((List <String>) null, newList ("a"));
+      getConcatenatedInline ((List <String>) null, newList ("a")); //$NON-NLS-1$
       fail ();
     }
     catch (final NullPointerException ex)
@@ -2879,8 +2880,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetCombinedMap ()
   {
-    final Map <String, Integer> m1 = newMap ("Hallo", I1);
-    final Map <String, Integer> m2 = newMap ("Welt", I2);
+    final Map <String, Integer> m1 = newMap ("Hallo", I1); //$NON-NLS-1$
+    final Map <String, Integer> m2 = newMap ("Welt", I2); //$NON-NLS-1$
     assertTrue (getCombinedMap (null, null).isEmpty ());
     assertEquals (m1, getCombinedMap (m1, null));
     assertEquals (m2, getCombinedMap (null, m2));
@@ -2888,14 +2889,14 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     final Map <String, Integer> m12 = getCombinedMap (m1, m2);
     assertNotNull (m12);
     assertEquals (2, m12.size ());
-    assertTrue (m12.containsKey ("Hallo"));
-    assertTrue (m12.containsKey ("Welt"));
+    assertTrue (m12.containsKey ("Hallo")); //$NON-NLS-1$
+    assertTrue (m12.containsKey ("Welt")); //$NON-NLS-1$
 
     final Map <String, Integer> m1212 = getCombinedMap (m12, m12);
     assertNotNull (m1212);
     assertEquals (2, m1212.size ());
-    assertTrue (m1212.containsKey ("Hallo"));
-    assertTrue (m1212.containsKey ("Welt"));
+    assertTrue (m1212.containsKey ("Hallo")); //$NON-NLS-1$
+    assertTrue (m1212.containsKey ("Welt")); //$NON-NLS-1$
   }
 
   @Test
@@ -2946,39 +2947,39 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
 
-    final List <String> aSource = newList ("a", "b", "c", "d");
+    final List <String> aSource = newList ("a", "b", "c", "d"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     List <String> aSubList = getSubList (aSource, 0, 2);
     assertNotNull (aSubList);
     assertEquals (2, aSubList.size ());
-    assertTrue (aSubList.contains ("a"));
-    assertTrue (aSubList.contains ("b"));
-    assertFalse (aSubList.contains ("c"));
-    assertFalse (aSubList.contains ("d"));
+    assertTrue (aSubList.contains ("a")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("b")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("c")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("d")); //$NON-NLS-1$
 
     aSubList = getSubList (aSource, 1, 2);
     assertNotNull (aSubList);
     assertEquals (2, aSubList.size ());
-    assertFalse (aSubList.contains ("a"));
-    assertTrue (aSubList.contains ("b"));
-    assertTrue (aSubList.contains ("c"));
-    assertFalse (aSubList.contains ("d"));
+    assertFalse (aSubList.contains ("a")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("b")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("c")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("d")); //$NON-NLS-1$
 
     aSubList = getSubList (aSource, 2, 2);
     assertNotNull (aSubList);
     assertEquals (2, aSubList.size ());
-    assertFalse (aSubList.contains ("a"));
-    assertFalse (aSubList.contains ("b"));
-    assertTrue (aSubList.contains ("c"));
-    assertTrue (aSubList.contains ("d"));
+    assertFalse (aSubList.contains ("a")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("b")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("c")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("d")); //$NON-NLS-1$
 
     aSubList = getSubList (aSource, 3, 2);
     assertNotNull (aSubList);
     assertEquals (1, aSubList.size ());
-    assertFalse (aSubList.contains ("a"));
-    assertFalse (aSubList.contains ("b"));
-    assertFalse (aSubList.contains ("c"));
-    assertTrue (aSubList.contains ("d"));
+    assertFalse (aSubList.contains ("a")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("b")); //$NON-NLS-1$
+    assertFalse (aSubList.contains ("c")); //$NON-NLS-1$
+    assertTrue (aSubList.contains ("d")); //$NON-NLS-1$
 
     aSubList = getSubList (aSource, 4, 2);
     assertNotNull (aSubList);
@@ -2988,7 +2989,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   public void testGetSubListInvalid ()
   {
     // start:50 end:30 with size:11 throws exception!
-    final List <String> aList = ContainerHelper.newList ("a", "b", "c");
+    final List <String> aList = ContainerHelper.newList ("a", "b", "c"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     final List <String> aSubList = ContainerHelper.getSubList (aList, 5, 2);
     assertNotNull (aSubList);
     assertEquals (aSubList.size (), 0);
@@ -2997,7 +2998,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetSwappedKeyValues ()
   {
-    final Map <String, Integer> aMap = newMap (new String [] { "a", "b", "c" }, new Integer [] { I0, I1, I2 });
+    final Map <String, Integer> aMap = newMap (new String [] { "a", "b", "c" }, new Integer [] { I0, I1, I2 }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     final Map <Integer, String> aMap2 = getSwappedKeyValues (aMap);
     assertEquals (aMap.size (), aMap2.size ());
     assertEquals (aMap, getSwappedKeyValues (aMap2));
@@ -3012,12 +3013,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNull (getReverseLookupSet (null));
 
     final IMultiMapListBased <String, Integer> aMap = new MultiHashMapArrayListBased <String, Integer> ();
-    aMap.putSingle ("a", I0);
-    aMap.putSingle ("a", I1);
-    aMap.putSingle ("a", I2);
-    aMap.putSingle ("b", I0);
-    aMap.putSingle ("b", I1);
-    aMap.putSingle ("b", I2);
+    aMap.putSingle ("a", I0); //$NON-NLS-1$
+    aMap.putSingle ("a", I1); //$NON-NLS-1$
+    aMap.putSingle ("a", I2); //$NON-NLS-1$
+    aMap.putSingle ("b", I0); //$NON-NLS-1$
+    aMap.putSingle ("b", I1); //$NON-NLS-1$
+    aMap.putSingle ("b", I2); //$NON-NLS-1$
     assertEquals (2, aMap.size ());
 
     final IMultiMapSetBased <Integer, String> aMap2 = getReverseLookupSet (aMap);
@@ -3033,12 +3034,12 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNull (getReverseLookup (null));
 
     final IMultiMapSetBased <String, Integer> aMap = new MultiHashMapHashSetBased <String, Integer> ();
-    aMap.putSingle ("a", I0);
-    aMap.putSingle ("a", I1);
-    aMap.putSingle ("a", I2);
-    aMap.putSingle ("b", I0);
-    aMap.putSingle ("b", I1);
-    aMap.putSingle ("b", I2);
+    aMap.putSingle ("a", I0); //$NON-NLS-1$
+    aMap.putSingle ("a", I1); //$NON-NLS-1$
+    aMap.putSingle ("a", I2); //$NON-NLS-1$
+    aMap.putSingle ("b", I0); //$NON-NLS-1$
+    aMap.putSingle ("b", I1); //$NON-NLS-1$
+    aMap.putSingle ("b", I2); //$NON-NLS-1$
     assertEquals (2, aMap.size ());
 
     final IMultiMapSetBased <Integer, String> aMap2 = getReverseLookup (aMap);
@@ -3054,14 +3055,14 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertNull (getSafe (null, -1));
     assertNull (getSafe (null, 1));
 
-    final List <String> aList = newList ("a", "b");
+    final List <String> aList = newList ("a", "b"); //$NON-NLS-1$ //$NON-NLS-2$
     assertNull (getSafe (aList, -1));
-    assertEquals ("a", getSafe (aList, 0));
+    assertEquals ("a", getSafe (aList, 0)); //$NON-NLS-1$
     assertNull (getSafe (aList, 2));
 
-    assertEquals ("x", getSafe (aList, -1, "x"));
-    assertEquals ("a", getSafe (aList, 0, "x"));
-    assertEquals ("x", getSafe (aList, 2, "x"));
+    assertEquals ("x", getSafe (aList, -1, "x")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals ("a", getSafe (aList, 0, "x")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals ("x", getSafe (aList, 2, "x")); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   @Test
@@ -3069,10 +3070,10 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     assertFalse (containsAnyNullElement ((List <String>) null));
     assertFalse (containsAnyNullElement (new ArrayList <String> ()));
-    assertFalse (containsAnyNullElement (newList ("a")));
-    assertFalse (containsAnyNullElement (newList ("a", "b", "c")));
-    assertTrue (containsAnyNullElement (newList (null, "a")));
-    assertTrue (containsAnyNullElement (newList ("a", null)));
+    assertFalse (containsAnyNullElement (newList ("a"))); //$NON-NLS-1$
+    assertFalse (containsAnyNullElement (newList ("a", "b", "c"))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    assertTrue (containsAnyNullElement (newList (null, "a"))); //$NON-NLS-1$
+    assertTrue (containsAnyNullElement (newList ("a", null))); //$NON-NLS-1$
     assertTrue (containsAnyNullElement (newList ((String) null)));
     assertTrue (containsAnyNullElement (newList (null, Integer.valueOf (5))));
   }

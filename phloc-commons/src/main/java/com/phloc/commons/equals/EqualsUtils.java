@@ -17,10 +17,16 @@
  */
 package com.phloc.commons.equals;
 
+import java.util.Collection;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.state.ETriState;
+import com.phloc.commons.state.ITriState;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -34,7 +40,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public final class EqualsUtils
 {
   @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
   private static final EqualsUtils s_aInstance = new EqualsUtils ();
 
   private EqualsUtils ()
@@ -113,5 +118,61 @@ public final class EqualsUtils
   public static boolean nullSafeEqualsIgnoreCase (@Nullable final String sObj1, @Nullable final String sObj2)
   {
     return sObj1 == null ? sObj2 == null : sObj1.equalsIgnoreCase (sObj2);
+  }
+
+  /**
+   * Performs the trivial equals checks returning <code>true</code> for
+   * identical objects and <code>false</code> for objects not having the same
+   * implementation class. All other cases will result in <code>undefined</code>
+   * and must be further compared in custom implementations
+   * 
+   * @param aThis
+   *        must not be <code>null</code>!
+   * @param aOther
+   *        may be <code>null</code>
+   * @return a ITriState representing the trivial equality, never
+   *         <code>null</code>!
+   */
+  @Nonnull
+  public static ITriState equalsTrivial (@Nonnull final Object aThis, @Nullable final Object aOther)
+  {
+    if (aThis == null)
+    {
+      throw new NullPointerException ("aThis"); //$NON-NLS-1$
+    }
+    if (aOther == aThis)
+    {
+      return ETriState.TRUE;
+    }
+    if (aOther == null || !aThis.getClass ().equals (aOther.getClass ()))
+    {
+      return ETriState.FALSE;
+    }
+    return ETriState.UNDEFINED;
+  }
+
+  /**
+   * Tells whether two passed collections are equal in terms of having the same
+   * content. This implementation treats a null collection same as an empty
+   * collection!
+   * 
+   * @param aColl1
+   * @param aColl2
+   * @return Whether or not the collections have equal content
+   */
+  public static boolean equals (@Nullable final Collection <?> aColl1, @Nullable final Collection <?> aColl2)
+  {
+    final boolean bEmpty1 = ContainerHelper.isEmpty (aColl1);
+    final boolean bEmpty2 = ContainerHelper.isEmpty (aColl2);
+    if (bEmpty1 != bEmpty2)
+    {
+      return false;
+    }
+    if (!bEmpty1)
+    {
+      return ContainerHelper.getDifference (aColl1, aColl2).isEmpty () &&
+             ContainerHelper.getDifference (aColl2, aColl1).isEmpty ();
+    }
+    return true;
   }
 }
