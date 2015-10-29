@@ -27,7 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-commons</artifactId>
-  <version>4.4.1-SNAPSHOT</version>
+  <version>4.4.1</version>
   <packaging>bundle</packaging>
   <name>phloc-commons</name>
   <description>phloc very basic stuff</description>
@@ -45,7 +45,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
     <url>http://github.com/phlocbg/phloc-commons</url>
-    <tag>HEAD</tag>
+    <tag>phloc-commons-4.4.1</tag>
   </scm>
 
   <organization>
