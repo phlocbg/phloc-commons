@@ -260,7 +260,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
                                     ContainerHelper.newList ("a", "b", "c").iterator ()));
     assertTrue (EqualsUtils.equals (ContainerHelper.getEnumeration ("a", "b", "c"),
                                     ContainerHelper.getEnumeration ("a", "b", "c")));
-    assertFalse (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
-                                     ContainerHelper.newList ("a", "b", "c")));
+    assertTrue (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
+                                    ContainerHelper.newList ("a", "b", "c")));
   }
 }
