@@ -1927,6 +1927,22 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testNewListFromArray ()
+  {
+    final List <String> aSource = newList ("Hallo", "Welt", "from", "Vienna"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+
+    final String [] aArray = ArrayHelper.newArray (aSource, String.class);
+
+    final List <String> aList = newList (aArray);
+    assertNotNull (aList);
+    assertEquals (4, aList.size ());
+    assertTrue (aList.contains ("Hallo")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Welt")); //$NON-NLS-1$
+    assertTrue (aList.contains ("from")); //$NON-NLS-1$
+    assertTrue (aList.contains ("Vienna")); //$NON-NLS-1$
+  }
+
+  @Test
   public void testNewUnmodifiableListEmpty ()
   {
     final List <String> aUnmodifiableList = newUnmodifiableList ();
