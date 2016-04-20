@@ -21,6 +21,12 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+  <release date="2016-04-20" version="4.4.5" />
+  <entry date="2016-04-20" category="feature" action="add">
+    <change>
+      <text locale="en">Added new method getNonEmpty in StringHelper</text>
+    </change>
+  </entry>
   <release date="2015-10-29" version="4.4.4" />
   <entry date="2015-10-29" category="feature" action="add">
     <change>

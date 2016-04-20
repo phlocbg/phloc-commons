@@ -1374,6 +1374,21 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testGetNonEmpty ()
+  {
+    assertEquals ("abc", StringHelper.getNonEmpty ("abc"));
+    assertNull (StringHelper.getNonEmpty (""));
+    assertNull (StringHelper.getNonEmpty (null));
+    assertEquals ("abc", StringHelper.getNonEmpty ("abc", "xy"));
+    assertEquals ("xy", StringHelper.getNonEmpty (null, "xy"));
+    assertEquals ("xy", StringHelper.getNonEmpty ("", "xy"));
+    assertEquals ("", StringHelper.getNonEmpty (null, ""));
+    assertEquals ("", StringHelper.getNonEmpty ("", ""));
+    assertNull (StringHelper.getNonEmpty ("", null));
+    assertNull (StringHelper.getNonEmpty (null, null));
+  }
+
+  @Test
   public void testGetNotNullCharSeq ()
   {
     assertEquals ("abc", StringHelper.getNotNull (new StringBuilder ("abc")).toString ());

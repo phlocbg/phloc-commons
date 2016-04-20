@@ -43,7 +43,6 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
@@ -92,9 +91,6 @@ public final class StringHelper
                                                    99999999999999999L,
                                                    999999999999999999L,
                                                    Long.MAX_VALUE };
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final StringHelper s_aInstance = new StringHelper ();
 
   private StringHelper ()
   {}
@@ -354,8 +350,8 @@ public final class StringHelper
   @Nonnull
   public static String getHexEncoded (@Nonnull final String sInput, @Nonnull final Charset aCharset)
   {
-    ValueEnforcer.notNull (sInput, "Input");
-    ValueEnforcer.notNull (aCharset, "Charset");
+    ValueEnforcer.notNull (sInput, "Input"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aCharset, "Charset"); //$NON-NLS-1$
 
     return getHexEncoded (CharsetManager.getAsBytes (sInput, aCharset));
   }
@@ -371,7 +367,7 @@ public final class StringHelper
   @Nonnull
   public static String getHexEncoded (@Nonnull final byte [] aInput)
   {
-    ValueEnforcer.notNull (aInput, "Input");
+    ValueEnforcer.notNull (aInput, "Input"); //$NON-NLS-1$
 
     return getHexEncoded (aInput, 0, aInput.length);
   }
@@ -436,7 +432,7 @@ public final class StringHelper
   @Nonnull
   public static byte [] getHexDecoded (@Nonnull final String sInput)
   {
-    ValueEnforcer.notNull (sInput, "Input");
+    ValueEnforcer.notNull (sInput, "Input"); //$NON-NLS-1$
 
     return getHexDecoded (sInput.toCharArray (), 0, sInput.length ());
   }
@@ -444,7 +440,7 @@ public final class StringHelper
   @Nonnull
   public static byte [] getHexDecoded (@Nonnull final char [] aInput)
   {
-    ValueEnforcer.notNull (aInput, "Input");
+    ValueEnforcer.notNull (aInput, "Input"); //$NON-NLS-1$
 
     return getHexDecoded (aInput, 0, aInput.length);
   }
@@ -456,7 +452,7 @@ public final class StringHelper
   {
     ValueEnforcer.isArrayOfsLen (aInput, nOfs, nLen);
     if ((nLen % 2) > 0)
-      throw new IllegalArgumentException ("Passed chars have no even length: " + nLen);
+      throw new IllegalArgumentException ("Passed chars have no even length: " + nLen); //$NON-NLS-1$
 
     final byte [] ret = new byte [nLen / 2];
     int nRetIdx = 0;
@@ -466,7 +462,7 @@ public final class StringHelper
       final char c1 = aInput[nOfs + i + 1];
       final int nHexByte = getHexByte (c0, c1);
       if (nHexByte == -1)
-        throw new IllegalArgumentException ("Failed to convert '" + c0 + "' or '" + c1 + "' to a hex value!");
+        throw new IllegalArgumentException ("Failed to convert '" + c0 + "' or '" + c1 + "' to a hex value!"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       ret[nRetIdx++] = (byte) nHexByte;
     }
     return ret;
@@ -502,7 +498,7 @@ public final class StringHelper
   public static String getHexStringLeadingZero (final int nValue, final int nDigits)
   {
     if (nValue < 0)
-      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1);
+      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1); //$NON-NLS-1$
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
@@ -516,7 +512,7 @@ public final class StringHelper
   public static String getHexStringLeadingZero (final long nValue, final int nDigits)
   {
     if (nValue < 0)
-      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1);
+      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1); //$NON-NLS-1$
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
@@ -657,7 +653,7 @@ public final class StringHelper
   @Nonnull
   public static String getImploded (@Nonnull final String sSep, @Nullable final Iterable <?> aElements)
   {
-    ValueEnforcer.notNull (sSep, "serparator");
+    ValueEnforcer.notNull (sSep, "serparator"); //$NON-NLS-1$
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -709,8 +705,8 @@ public final class StringHelper
                                     @Nonnull final String sSepInner,
                                     @Nullable final Map <?, ?> aElements)
   {
-    ValueEnforcer.notNull (sSepOuter, "SepOuter");
-    ValueEnforcer.notNull (sSepInner, "SepInner");
+    ValueEnforcer.notNull (sSepOuter, "SepOuter"); //$NON-NLS-1$
+    ValueEnforcer.notNull (sSepInner, "SepInner"); //$NON-NLS-1$
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -758,7 +754,7 @@ public final class StringHelper
   public static <ELEMENTTYPE> String getImploded (@Nullable final ELEMENTTYPE... aElements)
   {
     if (ArrayHelper.isEmpty (aElements))
-      return "";
+      return ""; //$NON-NLS-1$
     return getImploded (aElements, 0, aElements.length);
   }
 
@@ -806,10 +802,10 @@ public final class StringHelper
   @Nonnull
   public static <ELEMENTTYPE> String getImploded (@Nonnull final String sSep, @Nullable final ELEMENTTYPE... aElements)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
 
     if (ArrayHelper.isEmpty (aElements))
-      return "";
+      return ""; //$NON-NLS-1$
     return getImploded (sSep, aElements, 0, aElements.length);
   }
 
@@ -853,7 +849,7 @@ public final class StringHelper
                                                   @Nonnegative final int nOfs,
                                                   @Nonnegative final int nLen)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
     if (aElements != null)
       ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
@@ -912,7 +908,7 @@ public final class StringHelper
   @Nonnull
   public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final Iterable <String> aElements)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -963,10 +959,10 @@ public final class StringHelper
   @Nonnull
   public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final String... aElements)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
 
     if (ArrayHelper.isEmpty (aElements))
-      return "";
+      return ""; //$NON-NLS-1$
     return getImplodedNonEmpty (sSep, aElements, 0, aElements.length);
   }
 
@@ -1010,7 +1006,7 @@ public final class StringHelper
                                             @Nonnegative final int nOfs,
                                             @Nonnegative final int nLen)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
     if (aElements != null)
       ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
@@ -1110,7 +1106,7 @@ public final class StringHelper
     }
     ret[nItemsAdded++] = sElements.substring (nStartIndex);
     if (nItemsAdded != ret.length)
-      throw new IllegalStateException ("Added " + nItemsAdded + " but expected " + ret.length);
+      throw new IllegalStateException ("Added " + nItemsAdded + " but expected " + ret.length); //$NON-NLS-1$ //$NON-NLS-2$
     return ret;
   }
 
@@ -1156,7 +1152,7 @@ public final class StringHelper
                                                                              final int nMaxItems,
                                                                              @Nonnull final COLLTYPE aCollection)
   {
-    ValueEnforcer.notNull (aCollection, "Collection");
+    ValueEnforcer.notNull (aCollection, "Collection"); //$NON-NLS-1$
 
     if (nMaxItems == 1)
       aCollection.add (sElements);
@@ -1257,8 +1253,8 @@ public final class StringHelper
                                                                              final int nMaxItems,
                                                                              @Nonnull final COLLTYPE aCollection)
   {
-    ValueEnforcer.notNull (sSep, "Separator");
-    ValueEnforcer.notNull (aCollection, "Collection");
+    ValueEnforcer.notNull (sSep, "Separator"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aCollection, "Collection"); //$NON-NLS-1$
 
     if (nMaxItems == 1)
       aCollection.add (sElements);
@@ -1418,10 +1414,10 @@ public final class StringHelper
   @Nonnull
   public static String getRepeated (final char cElement, @Nonnegative final int nRepeats)
   {
-    ValueEnforcer.isGE0 (nRepeats, "Repeats");
+    ValueEnforcer.isGE0 (nRepeats, "Repeats"); //$NON-NLS-1$
 
     if (nRepeats == 0)
-      return "";
+      return ""; //$NON-NLS-1$
     if (nRepeats == 1)
       return Character.toString (cElement);
 
@@ -1444,17 +1440,17 @@ public final class StringHelper
   @Nonnull
   public static String getRepeated (@Nonnull final String sElement, @Nonnegative final int nRepeats)
   {
-    ValueEnforcer.notNull (sElement, "Element");
-    ValueEnforcer.isGE0 (nRepeats, "Repeats");
+    ValueEnforcer.notNull (sElement, "Element"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nRepeats, "Repeats"); //$NON-NLS-1$
 
     final int nElementLength = sElement.length ();
 
     // Check if result length would exceed int range
     if ((long) nElementLength * nRepeats > Integer.MAX_VALUE)
-      throw new IllegalArgumentException ("Resulting string exceeds the maximum integer length");
+      throw new IllegalArgumentException ("Resulting string exceeds the maximum integer length"); //$NON-NLS-1$
 
     if (nElementLength == 0 || nRepeats == 0)
-      return "";
+      return ""; //$NON-NLS-1$
     if (nRepeats == 1)
       return sElement;
 
@@ -1484,7 +1480,7 @@ public final class StringHelper
   public static String getConcatenatedOnDemand (@Nullable final String sFront, @Nullable final String sEnd)
   {
     if (sFront == null)
-      return sEnd == null ? "" : sEnd;
+      return sEnd == null ? "" : sEnd; //$NON-NLS-1$
     if (sEnd == null)
       return sFront;
     return sFront + sEnd;
@@ -2069,7 +2065,7 @@ public final class StringHelper
    */
   public static boolean containsAny (@Nullable final char [] aInput, @Nonnull final char [] aSearchChars)
   {
-    ValueEnforcer.notNull (aSearchChars, "SearchChars");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars"); //$NON-NLS-1$
 
     if (aInput != null)
       for (final char cIn : aInput)
@@ -2472,8 +2468,8 @@ public final class StringHelper
                                           @Nonnegative final int nMaxLength,
                                           @Nullable final String sNewSuffix)
   {
-    ValueEnforcer.notNull (sValue, "Value");
-    ValueEnforcer.isGE0 (nMaxLength, "MaxLength");
+    ValueEnforcer.notNull (sValue, "Value"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nMaxLength, "MaxLength"); //$NON-NLS-1$
 
     if (sValue.length () <= nMaxLength)
       return sValue;
@@ -2502,7 +2498,7 @@ public final class StringHelper
                                        @Nonnull final String sSearchText,
                                        @Nullable final CharSequence aReplacementText)
   {
-    return replaceAll (sInputString, sSearchText, getNotNull (aReplacementText, ""));
+    return replaceAll (sInputString, sSearchText, getNotNull (aReplacementText, "")); //$NON-NLS-1$
   }
 
   /**
@@ -2531,8 +2527,8 @@ public final class StringHelper
                                    @Nonnull final String sSearchText,
                                    @Nonnull final CharSequence aReplacementText)
   {
-    ValueEnforcer.notEmpty (sSearchText, "SearchText");
-    ValueEnforcer.notNull (aReplacementText, "ReplacementText");
+    ValueEnforcer.notEmpty (sSearchText, "SearchText"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aReplacementText, "ReplacementText"); //$NON-NLS-1$
 
     // Is input string empty?
     if (hasNoText (sInputString))
@@ -2646,10 +2642,10 @@ public final class StringHelper
                                              @Nonnull final String sSearchText,
                                              @Nonnull final String sReplacementText)
   {
-    ValueEnforcer.notEmpty (sSearchText, "SearchText");
-    ValueEnforcer.notNull (sReplacementText, "ReplacementText");
+    ValueEnforcer.notEmpty (sSearchText, "SearchText"); //$NON-NLS-1$
+    ValueEnforcer.notNull (sReplacementText, "ReplacementText"); //$NON-NLS-1$
     if (sReplacementText.contains (sSearchText))
-      throw new IllegalArgumentException ("Loop detection: replacementText must not contain searchText");
+      throw new IllegalArgumentException ("Loop detection: replacementText must not contain searchText"); //$NON-NLS-1$
 
     // Is input string empty?
     if (hasNoText (sInputString))
@@ -2749,10 +2745,10 @@ public final class StringHelper
                                          @Nonnull final char [] aSearchChars,
                                          @Nonnull final char [][] aReplacementStrings)
   {
-    ValueEnforcer.notNull (aSearchChars, "SearchChars");
-    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings"); //$NON-NLS-1$
     if (aSearchChars.length != aReplacementStrings.length)
-      throw new IllegalArgumentException ("array length mismatch");
+      throw new IllegalArgumentException ("array length mismatch"); //$NON-NLS-1$
 
     // Any input text?
     if (aInput == null || aInput.length == 0)
@@ -2857,11 +2853,11 @@ public final class StringHelper
                                        @Nonnull final char [][] aReplacementStrings,
                                        @Nonnull final Writer aTarget) throws IOException
   {
-    ValueEnforcer.notNull (aSearchChars, "SearchChars");
-    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings"); //$NON-NLS-1$
     if (aSearchChars.length != aReplacementStrings.length)
-      throw new IllegalArgumentException ("array length mismatch");
-    ValueEnforcer.notNull (aTarget, "Target");
+      throw new IllegalArgumentException ("array length mismatch"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aTarget, "Target"); //$NON-NLS-1$
 
     if (aInput == null || aInput.length == 0)
       return 0;
@@ -2918,7 +2914,7 @@ public final class StringHelper
                                          @Nonnull final char [] aSearchChars,
                                          final char cReplacementChar)
   {
-    ValueEnforcer.notNull (aSearchChars, "SearchChars");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars"); //$NON-NLS-1$
 
     // Any input text?
     if (hasNoText (sInputString))
@@ -3002,7 +2998,7 @@ public final class StringHelper
     final int nSearchTextLength = aSearchTexts == null ? 0 : aSearchTexts.length;
     final int nReplacementTextLength = aReplacementTexts == null ? 0 : aReplacementTexts.length;
     if (nSearchTextLength != nReplacementTextLength)
-      throw new IllegalArgumentException ("Array length mismatch!");
+      throw new IllegalArgumentException ("Array length mismatch!"); //$NON-NLS-1$
 
     // Nothing to replace?
     if (nSearchTextLength == 0)
@@ -3082,7 +3078,7 @@ public final class StringHelper
   @Nonnull
   public static String getNotNull (@Nullable final String s)
   {
-    return getNotNull (s, "");
+    return getNotNull (s, ""); //$NON-NLS-1$
   }
 
   /**
@@ -3105,6 +3101,40 @@ public final class StringHelper
   }
 
   /**
+   * Get the passed string if is not null or empty or fall back to
+   * <code>null</code>.
+   * 
+   * @param s
+   *        The parameter to be not <code>null</code> or empty.
+   * @return <code>null</code> if the passed parameter is <code>null</code> or
+   *         empty, the passed string otherwise.
+   */
+  @Nullable
+  public static String getNonEmpty (@Nullable final String s)
+  {
+    return getNonEmpty (s, null);
+  }
+
+  /**
+   * Get the passed string if is not null or empty, otherwise fall back to the
+   * second parameter.
+   * 
+   * @param s
+   *        The parameter to be not empty
+   * @param sDefaultIfEmpty
+   *        The value to be used of the first parameter is <code>null</code> or
+   *        empty. May be <code>null</code> but in this case the call to this
+   *        method is obsolete.
+   * @return The passed default value if the string is <code>null</code> or
+   *         empty, otherwise the input string.
+   */
+  @Nullable
+  public static String getNonEmpty (@Nullable final String s, final String sDefaultIfEmpty)
+  {
+    return hasNoText (s) ? sDefaultIfEmpty : s;
+  }
+
+  /**
    * Get the passed {@link CharSequence} but never return <code>null</code>. If
    * the passed parameter is <code>null</code> an empty string is returned.
    * 
@@ -3116,7 +3146,7 @@ public final class StringHelper
   @Nonnull
   public static CharSequence getNotNull (@Nullable final CharSequence s)
   {
-    return getNotNull (s, "");
+    return getNotNull (s, ""); //$NON-NLS-1$
   }
 
   /**
@@ -3151,7 +3181,7 @@ public final class StringHelper
   @Nonnull
   public static String getToString (@Nullable final Object aObject)
   {
-    return getToString (aObject, "");
+    return getToString (aObject, ""); //$NON-NLS-1$
   }
 
   /**
@@ -3201,11 +3231,11 @@ public final class StringHelper
   @Nonnull
   public static String getWithoutLeadingChars (@Nullable final String sStr, @Nonnegative final int nCount)
   {
-    ValueEnforcer.isGE0 (nCount, "Count");
+    ValueEnforcer.isGE0 (nCount, "Count"); //$NON-NLS-1$
 
     if (nCount == 0)
       return sStr;
-    return getLength (sStr) <= nCount ? "" : sStr.substring (nCount);
+    return getLength (sStr) <= nCount ? "" : sStr.substring (nCount); //$NON-NLS-1$
   }
 
   /**
@@ -3235,12 +3265,12 @@ public final class StringHelper
   @Nonnull
   public static String getWithoutTrailingChars (@Nullable final String sStr, @Nonnegative final int nCount)
   {
-    ValueEnforcer.isGE0 (nCount, "Count");
+    ValueEnforcer.isGE0 (nCount, "Count"); //$NON-NLS-1$
 
     if (nCount == 0)
       return sStr;
     final int nLength = getLength (sStr);
-    return nLength <= nCount ? "" : sStr.substring (0, nLength - nCount);
+    return nLength <= nCount ? "" : sStr.substring (0, nLength - nCount); //$NON-NLS-1$
   }
 
   /**
@@ -3256,7 +3286,7 @@ public final class StringHelper
   public static String getWithoutAnySpaces (@Nullable final String sStr)
   {
     if (sStr == null)
-      return "";
+      return ""; //$NON-NLS-1$
 
     // Trim first
     final char [] aChars = sStr.trim ().toCharArray ();
@@ -3314,7 +3344,7 @@ public final class StringHelper
                                         final boolean bIncludingSearchChar)
   {
     if (hasNoText (sSearch))
-      return "";
+      return ""; //$NON-NLS-1$
 
     final int nIndex = getIndexOf (sStr, sSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
@@ -3402,7 +3432,7 @@ public final class StringHelper
                                        final boolean bIncludingSearchChar)
   {
     if (hasNoText (sSearch))
-      return "";
+      return ""; //$NON-NLS-1$
 
     final int nIndex = getLastIndexOf (sStr, sSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
@@ -3717,11 +3747,11 @@ public final class StringHelper
   @Nonnull
   public static String removeMultiple (@Nullable final String sInputString, @Nonnull final char [] aRemoveChars)
   {
-    ValueEnforcer.notNull (aRemoveChars, "RemoveChars");
+    ValueEnforcer.notNull (aRemoveChars, "RemoveChars"); //$NON-NLS-1$
 
     // Any input text?
     if (hasNoText (sInputString))
-      return "";
+      return ""; //$NON-NLS-1$
 
     // Anything to remove?
     if (aRemoveChars.length == 0)
