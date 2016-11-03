@@ -2163,6 +2163,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
 
   private static final class MyStringCompi implements Comparator <String>, Serializable
   {
+    private static final long serialVersionUID = -4037349211859645997L;
+
     public MyStringCompi ()
     {}
 
@@ -3276,5 +3278,15 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableShortOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newShortSortedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableShortSortedSet (aValues).size ());
+  }
+
+  @Test
+  public void testContains ()
+  {
+    assertFalse (ContainerHelper.contains (null, "A"));
+    final Collection <String> aCont = new ArrayList <String> ();
+    assertFalse (ContainerHelper.contains (aCont, "A"));
+    aCont.add ("A");
+    assertTrue (ContainerHelper.contains (aCont, "A"));
   }
 }

@@ -3827,4 +3827,20 @@ public final class ContainerHelper
         return false;
     return true;
   }
+
+  /**
+   * Checks whether the passed collection contains the passed element in a
+   * null-safe way
+   * 
+   * @param aCont
+   *        The container
+   * @param aElem
+   *        The element to look for in the container
+   * @return <code>true</code> if the container is non-null and contains the
+   *         element, <code>false</code> otherwise
+   */
+  public static boolean contains (@Nullable final Collection <?> aCont, final Object aElem)
+  {
+    return aCont != null && aCont.contains (aElem);
+  }
 }
