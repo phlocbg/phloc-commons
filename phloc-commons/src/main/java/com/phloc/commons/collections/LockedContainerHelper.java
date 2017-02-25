@@ -310,6 +310,30 @@ public final class LockedContainerHelper
   }
 
   /**
+   * Returns a copy of the passed ordered container performed in a read locked
+   * context
+   * 
+   * @param aObjects
+   *        The container to copy
+   * @param aLock
+   *        The lock to use
+   * @return An copy of the container
+   */
+  @ReturnsMutableCopy
+  public static <T> Set <T> getOrderedSet (@Nonnull final Set <T> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
+  {
+    aLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newOrderedSet (aObjects);
+    }
+    finally
+    {
+      aLock.readLock ().unlock ();
+    }
+  }
+
+  /**
    * Returns a mutable copy of the passed stack performed in a read locked
    * context
    * 
