@@ -54,8 +54,8 @@ public final class Base64Test
 
     public TestSerializable (final int nValue, final String sValue)
     {
-      m_nValue = nValue;
-      m_sValue = sValue;
+      this.m_nValue = nValue;
+      this.m_sValue = sValue;
     }
 
     @Override
@@ -66,13 +66,13 @@ public final class Base64Test
       if (!(o instanceof TestSerializable))
         return false;
       final TestSerializable rhs = (TestSerializable) o;
-      return m_nValue == rhs.m_nValue && m_sValue.equals (rhs.m_sValue);
+      return this.m_nValue == rhs.m_nValue && this.m_sValue.equals (rhs.m_sValue);
     }
 
     @Override
     public int hashCode ()
     {
-      return 31 * m_nValue + m_sValue.hashCode ();
+      return 31 * this.m_nValue + this.m_sValue.hashCode ();
     }
   }
 
@@ -177,8 +177,8 @@ public final class Base64Test
   @Test
   public void testEncodeFileToFile () throws IOException
   {
-    final File f1 = new File ("base64.decoded");
-    final File f2 = new File ("base64.encoded");
+    final File f1 = new File ("base64.decoded1");
+    final File f2 = new File ("base64.encoded1");
     try
     {
       assertFalse (FileUtils.existsFile (f2));
@@ -198,7 +198,7 @@ public final class Base64Test
   @Test
   public void testEncodeToFile () throws IOException
   {
-    final File f2 = new File ("base64.encoded");
+    final File f2 = new File ("base64.encoded2");
     try
     {
       assertFalse (FileUtils.existsFile (f2));
@@ -217,8 +217,8 @@ public final class Base64Test
   @Test
   public void testDecodeFileToFile () throws IOException
   {
-    final File f1 = new File ("base64.encoded");
-    final File f2 = new File ("base64.decoded");
+    final File f1 = new File ("base64.encoded3");
+    final File f2 = new File ("base64.decoded3");
     try
     {
       assertFalse (FileUtils.existsFile (f2));
@@ -240,7 +240,7 @@ public final class Base64Test
   @Test
   public void testDecodeToFile () throws IOException
   {
-    final File f2 = new File ("base64.decoded");
+    final File f2 = new File ("base64.decoded4");
     try
     {
       assertFalse (FileUtils.existsFile (f2));

@@ -72,31 +72,32 @@ public final class SimpleFileIOTest
   }
 
   @Test
-  public void testReadFileAsString ()
+  public void testReadFileAsString () throws InterruptedException
   {
-    final File aFile = new File ("umlaut-tests.txt");
+    final File aFile1 = new File ("umlaut-tests1.txt");
+    final File aFile2 = new File ("umlaut-tests2.txt");
     final String s = "defäöüabc";
     assertEquals ("Source encoding of the Java file must be UTF-8!", 9, s.length ());
     assertNull (SimpleFileIO.readFileAsString (null, CCharset.CHARSET_ISO_8859_1_OBJ));
-    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_UTF_8_OBJ).isSuccess ());
+    assertTrue (SimpleFileIO.writeFile (aFile1, s, CCharset.CHARSET_UTF_8_OBJ).isSuccess ());
     try
     {
-      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_UTF_8_OBJ);
+      final String t = SimpleFileIO.readFileAsString (aFile1, CCharset.CHARSET_UTF_8_OBJ);
       assertEquals (s, t);
     }
     finally
     {
-      assertTrue (FileOperations.deleteFile (aFile).isSuccess ());
+      assertTrue (FileOperations.deleteFile (aFile1).isSuccess ());
     }
-    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_ISO_8859_1_OBJ).isSuccess ());
+    assertTrue (SimpleFileIO.writeFile (aFile2, s, CCharset.CHARSET_ISO_8859_1_OBJ).isSuccess ());
     try
     {
-      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_ISO_8859_1_OBJ);
+      final String t = SimpleFileIO.readFileAsString (aFile2, CCharset.CHARSET_ISO_8859_1_OBJ);
       assertEquals (s, t);
     }
     finally
     {
-      assertTrue (FileOperations.deleteFile (aFile).isSuccess ());
+      assertTrue (FileOperations.deleteFile (aFile2).isSuccess ());
     }
   }
 
