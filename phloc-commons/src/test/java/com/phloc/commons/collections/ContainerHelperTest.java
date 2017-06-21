@@ -143,7 +143,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     final List <String> l2 = newList ("Welt", "from"); //$NON-NLS-1$ //$NON-NLS-2$
 
     // Result should be "Hello" and "Vienna"
-    final Set <String> ret = getDifference (l1, l2);
+    final List <String> ret = getDifference (l1, l2);
     assertNotNull (ret);
     assertEquals (ret.size (), 2);
     assertTrue (ret.contains ("Hello")); //$NON-NLS-1$
