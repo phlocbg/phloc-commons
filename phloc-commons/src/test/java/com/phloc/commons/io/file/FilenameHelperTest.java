@@ -534,7 +534,14 @@ public final class FilenameHelperTest
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("./target/./file/.")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("./target/////./file/.////")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/sub/../file")));
-
+    if (EOperatingSystem.WINDOWS.isCurrentOS ())
+    {
+      FilenameHelper.getCleanPath (new File ("\\\\athene\\temp\\myFile.txt"));
+    }
+    else
+    {
+      assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("\\\\athene\\temp\\myFile.txt")));
+    }
     try
     {
       FilenameHelper.getCleanPath ((File) null);

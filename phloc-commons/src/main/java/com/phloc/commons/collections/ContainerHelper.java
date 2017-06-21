@@ -62,6 +62,8 @@ import com.phloc.commons.collections.multimap.MultiHashMapHashSetBased;
 import com.phloc.commons.compare.ComparatorComparableNullAware;
 import com.phloc.commons.compare.ComparatorUtils;
 import com.phloc.commons.compare.ESortOrder;
+import com.phloc.commons.id.IHasID;
+import com.phloc.commons.name.IHasName;
 import com.phloc.commons.state.EChange;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -224,6 +226,34 @@ public final class ContainerHelper
 
     final Set <ELEMENTTYPE> ret = newSet (aCollection1);
     ret.removeAll (aCollection2);
+    return ret;
+  }
+
+  /**
+   * Get all elements that are only contained in the first contained, and not in
+   * the second. This method implements <code>aCont1 - aCont2</code>.
+   * 
+   * @param aList1
+   *        The first container. May be <code>null</code> or empty.
+   * @param aList2
+   *        The second container. May be <code>null</code> or empty.
+   * @return The difference and never <code>null</code>. Returns an empty List,
+   *         if the first container is empty. Returns a copy of the first
+   *         container, if the second container is empty. Returns
+   *         <code>aCont1 - aCont2</code> if both containers are non-empty.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> List <ELEMENTTYPE> getDifference (@Nullable final List <? extends ELEMENTTYPE> aList1,
+                                                                @Nullable final List <? extends ELEMENTTYPE> aList2)
+  {
+    if (ContainerHelper.isEmpty (aList1))
+      return ContainerHelper.newList ();
+    if (ContainerHelper.isEmpty (aList2))
+      return ContainerHelper.newList (aList1);
+
+    final List <ELEMENTTYPE> ret = ContainerHelper.newList (aList1);
+    ret.removeAll (aList2);
     return ret;
   }
 
@@ -3842,5 +3872,59 @@ public final class ContainerHelper
   public static boolean contains (@Nullable final Collection <?> aCont, final Object aElem)
   {
     return aCont != null && aCont.contains (aElem);
+  }
+
+  /**
+   * Iterates all passed objects and collect their IDs
+   * 
+   * @param aElements
+   *        Objects for which to collect the IDs, must not be <code>null</code>
+   * @return All IDs (no duplicates)
+   */
+  @Nonnull
+  public static final Set <String> getIDs (@Nonnull final Collection <? extends IHasID <String>> aElements)
+  {
+    return LockedContainerHelper.getIDs (aElements, null);
+  }
+
+  /**
+   * Iterates all passed objects and collect their IDs
+   * 
+   * @param aElements
+   *        Objects for which to collect the IDs, must not be <code>null</code>
+   * @return All IDs in stable order (may contain duplicates)
+   */
+  @Nonnull
+  public static final List <String> getIDs (@Nonnull final List <? extends IHasID <String>> aElements)
+  {
+    return LockedContainerHelper.getIDs (aElements, null);
+  }
+
+  /**
+   * Iterates all passed objects and collect their names
+   * 
+   * @param aElements
+   *        Objects for which to collect the names, must not be
+   *        <code>null</code>
+   * @return All names (no duplicates)
+   */
+  @Nonnull
+  public static final Set <String> getNames (@Nonnull final Collection <? extends IHasName> aElements)
+  {
+    return LockedContainerHelper.getNames (aElements, null);
+  }
+
+  /**
+   * Iterates all passed objects and collect their names
+   * 
+   * @param aElements
+   *        Objects for which to collect the names, must not be
+   *        <code>null</code>
+   * @return All names in stable order (may contain duplicates)
+   */
+  @Nonnull
+  public static final List <String> getNames (@Nonnull final List <? extends IHasName> aElements)
+  {
+    return LockedContainerHelper.getNames (aElements, null);
   }
 }

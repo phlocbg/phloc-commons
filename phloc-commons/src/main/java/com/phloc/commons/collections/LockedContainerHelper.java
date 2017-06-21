@@ -31,6 +31,7 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.multimap.AbstractMultiHashMapSetBased;
 import com.phloc.commons.id.IHasID;
+import com.phloc.commons.name.IHasName;
 
 /**
  * This is a helper class for accessing containers with explicit locking
@@ -791,26 +792,123 @@ public final class LockedContainerHelper
    * @return All IDs (no duplicates)
    */
   @Nonnull
-  public static Set <String> getIDs (@Nonnull final Collection <? extends IHasID <String>> aElements,
-                                     @Nonnull final ReentrantReadWriteLock aLock)
+  public static final Set <String> getIDs (@Nonnull final Collection <? extends IHasID <String>> aSourceCollection,
+                                           @Nullable final ReentrantReadWriteLock aLock)
   {
-    if (aElements == null)
+    final Set <String> aNames = ContainerHelper.newSet ();
+    extractIDs (aSourceCollection, aNames, aLock);
+    return aNames;
+  }
+
+  /**
+   * Iterates all passed objects and collect their IDs
+   * 
+   * @param aElements
+   *        Objects for which to collect the IDs, must not be <code>null</code>
+   * @param aLock
+   *        The lock to use
+   * @return All IDs in stable order (may contain duplicates)
+   */
+  @Nonnull
+  public static final List <String> getIDs (@Nonnull final List <? extends IHasID <String>> aSourceList,
+                                            @Nullable final ReentrantReadWriteLock aLock)
+  {
+    final List <String> aNames = ContainerHelper.newList ();
+    extractIDs (aSourceList, aNames, aLock);
+    return aNames;
+  }
+
+  /**
+   * Iterates all passed objects and collect their names
+   * 
+   * @param aElements
+   *        Objects for which to collect the names, must not be
+   *        <code>null</code>
+   * @param aLock
+   *        The lock to use
+   * @return All names (no duplicates)
+   */
+  @Nonnull
+  public static final Set <String> getNames (@Nonnull final Collection <? extends IHasName> aSourceCollection,
+                                             @Nullable final ReentrantReadWriteLock aLock)
+  {
+    final Set <String> aNames = ContainerHelper.newSet ();
+    extractNames (aSourceCollection, aNames, aLock);
+    return aNames;
+  }
+
+  /**
+   * Iterates all passed objects and collect their names
+   * 
+   * @param aElements
+   *        Objects for which to collect the names, must not be
+   *        <code>null</code>
+   * @param aLock
+   *        The lock to use
+   * @return All names in stable order (may contain duplicates)
+   */
+  @Nonnull
+  public static final List <String> getNames (@Nonnull final List <? extends IHasName> aSourceList,
+                                              @Nullable final ReentrantReadWriteLock aLock)
+  {
+    final List <String> aNames = ContainerHelper.newList ();
+    extractNames (aSourceList, aNames, aLock);
+    return aNames;
+  }
+
+  private static final void extractNames (@Nonnull final Collection <? extends IHasName> aSource,
+                                          @Nonnull final Collection <String> aTarget,
+                                          @Nullable final ReentrantReadWriteLock aLock)
+  {
+    if (aSource == null)
     {
-      throw new NullPointerException ("aElements"); //$NON-NLS-1$
+      throw new NullPointerException ("aSource"); //$NON-NLS-1$
     }
-    final Set <String> aIDs = ContainerHelper.newSet ();
-    aLock.readLock ().lock ();
+    if (aLock != null)
+    {
+      aLock.readLock ().lock ();
+    }
     try
     {
-      for (final IHasID <String> aElement : aElements)
+      for (final IHasName aElement : aSource)
       {
-        aIDs.add (aElement.getID ());
+        aTarget.add (aElement.getName ());
       }
     }
     finally
     {
-      aLock.readLock ().unlock ();
+      if (aLock != null)
+      {
+        aLock.readLock ().unlock ();
+      }
     }
-    return aIDs;
+  }
+
+  private static final void extractIDs (@Nonnull final Collection <? extends IHasID <String>> aSource,
+                                        @Nonnull final Collection <String> aTarget,
+                                        @Nullable final ReentrantReadWriteLock aLock)
+  {
+    if (aSource == null)
+    {
+      throw new NullPointerException ("aSource"); //$NON-NLS-1$
+    }
+    if (aLock != null)
+    {
+      aLock.readLock ().lock ();
+    }
+    try
+    {
+      for (final IHasID <String> aElement : aSource)
+      {
+        aTarget.add (aElement.getID ());
+      }
+    }
+    finally
+    {
+      if (aLock != null)
+      {
+        aLock.readLock ().unlock ();
+      }
+    }
   }
 }

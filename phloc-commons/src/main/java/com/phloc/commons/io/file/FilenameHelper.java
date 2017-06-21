@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2006-2015 phloc systems
+ * Copyright (C) 2006-2017 phloc systems
  * http://www.phloc.com
  * office[at]phloc[dot]com
  *
@@ -33,16 +33,19 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.exceptions.InitializationException;
+import com.phloc.commons.mutable.MutableBoolean;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.system.EOperatingSystem;
 import com.phloc.commons.system.SystemHelper;
 
 /**
  * All kind of file name handling stuff. This class gives you platform
  * independent file name handling.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 @Immutable
@@ -55,10 +58,10 @@ public final class FilenameHelper
   public static final char ILLEGAL_FILENAME_CHAR_REPLACEMENT = '_';
 
   /** Special name of the current path */
-  public static final String PATH_CURRENT = ".";
+  public static final String PATH_CURRENT = "."; //$NON-NLS-1$
 
   /** Special name of the parent path */
-  public static final String PATH_PARENT = "..";
+  public static final String PATH_PARENT = ".."; //$NON-NLS-1$
 
   /** The Unix path separator character. */
   public static final char UNIX_SEPARATOR = '/';
@@ -69,8 +72,12 @@ public final class FilenameHelper
   /** The Windows separator character. */
   public static final char WINDOWS_SEPARATOR = '\\';
 
+  public static final String WINDOWS_UNC_PATH_PREFIX = "\\\\"; //$NON-NLS-1$
+
   /** The prefix used for Unix hidden files */
   public static final char HIDDEN_FILE_PREFIX = '.';
+
+  public static final MutableBoolean INTERPRET_UNC = new MutableBoolean (false);
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (FilenameHelper.class);
 
@@ -85,40 +92,36 @@ public final class FilenameHelper
    * see http://forum.java.sun.com/thread.jspa?threadID=544334&tstart=165<br>
    * see http://en.wikipedia.org/wiki/Filename
    */
-  private static final String [] ILLEGAL_PREFIXES = { "CLOCK$",
-                                                     "CON",
-                                                     "PRN",
-                                                     "AUX",
-                                                     "NUL",
-                                                     "COM2",
-                                                     "COM3",
-                                                     "COM4",
-                                                     "COM5",
-                                                     "COM6",
-                                                     "COM7",
-                                                     "COM8",
-                                                     "COM9",
-                                                     "LPT1",
-                                                     "LPT2",
-                                                     "LPT3",
-                                                     "LPT4",
-                                                     "LPT5",
-                                                     "LPT6",
-                                                     "LPT7",
-                                                     "LPT8",
-                                                     "LPT9" };
+  private static final String [] ILLEGAL_PREFIXES = { "CLOCK$", //$NON-NLS-1$
+                                                     "CON", //$NON-NLS-1$
+                                                     "PRN", //$NON-NLS-1$
+                                                     "AUX", //$NON-NLS-1$
+                                                     "NUL", //$NON-NLS-1$
+                                                     "COM2", //$NON-NLS-1$
+                                                     "COM3", //$NON-NLS-1$
+                                                     "COM4", //$NON-NLS-1$
+                                                     "COM5", //$NON-NLS-1$
+                                                     "COM6", //$NON-NLS-1$
+                                                     "COM7", //$NON-NLS-1$
+                                                     "COM8", //$NON-NLS-1$
+                                                     "COM9", //$NON-NLS-1$
+                                                     "LPT1", //$NON-NLS-1$
+                                                     "LPT2", //$NON-NLS-1$
+                                                     "LPT3", //$NON-NLS-1$
+                                                     "LPT4", //$NON-NLS-1$
+                                                     "LPT5", //$NON-NLS-1$
+                                                     "LPT6", //$NON-NLS-1$
+                                                     "LPT7", //$NON-NLS-1$
+                                                     "LPT8", //$NON-NLS-1$
+                                                     "LPT9" }; //$NON-NLS-1$
 
   private static final char [] ILLEGAL_SUFFIXES = new char [] { '.', ' ', '\t' };
 
   static
   {
     if (!isSecureFilenameCharacter (ILLEGAL_FILENAME_CHAR_REPLACEMENT))
-      throw new InitializationException ("The illegal filename replacement character must be a valid ASCII character!");
+      throw new InitializationException ("The illegal filename replacement character must be a valid ASCII character!"); //$NON-NLS-1$
   }
-
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final FilenameHelper s_aInstance = new FilenameHelper ();
 
   private FilenameHelper ()
   {}
@@ -196,7 +199,7 @@ public final class FilenameHelper
   @Nonnull
   public static String getExtension (@Nullable final File aFile)
   {
-    return aFile == null ? "" : getExtension (aFile.getName ());
+    return aFile == null ? "" : getExtension (aFile.getName ()); //$NON-NLS-1$
   }
 
   /**
@@ -214,7 +217,7 @@ public final class FilenameHelper
     final int nIndex = getIndexOfExtension (sFilename);
     if (nIndex == CGlobal.ILLEGAL_UINT)
     {
-      return "";
+      return ""; //$NON-NLS-1$
     }
     return sFilename.substring (nIndex + 1);
   }
@@ -234,7 +237,7 @@ public final class FilenameHelper
    */
   public static boolean hasExtension (@Nullable final File aFile, @Nonnull final String... aExtensions)
   {
-    ValueEnforcer.notNull (aExtensions, "Extensions");
+    ValueEnforcer.notNull (aExtensions, "Extensions"); //$NON-NLS-1$
 
     // determine current extension.
     final String sExt = getExtension (aFile);
@@ -259,7 +262,7 @@ public final class FilenameHelper
    */
   public static boolean hasExtension (@Nullable final String sFilename, @Nonnull final String... aExtensions)
   {
-    ValueEnforcer.notNull (aExtensions, "Extensions");
+    ValueEnforcer.notNull (aExtensions, "Extensions"); //$NON-NLS-1$
 
     // determine current extension.
     final String sExt = getExtension (sFilename);
@@ -349,7 +352,7 @@ public final class FilenameHelper
     if (sAbsoluteFilename == null)
       return null;
     final int nLastSepIndex = getIndexOfLastSeparator (sAbsoluteFilename);
-    return nLastSepIndex == CGlobal.ILLEGAL_UINT ? "" : sAbsoluteFilename.substring (0, nLastSepIndex + 1);
+    return nLastSepIndex == CGlobal.ILLEGAL_UINT ? "" : sAbsoluteFilename.substring (0, nLastSepIndex + 1); //$NON-NLS-1$
   }
 
   /**
@@ -489,7 +492,7 @@ public final class FilenameHelper
     // names
     final String sUCFilename = sFilename.toUpperCase (SystemHelper.getSystemLocale ());
     for (final String sIllegalPrefix : ILLEGAL_PREFIXES)
-      if (sUCFilename.startsWith (sIllegalPrefix + "."))
+      if (sUCFilename.startsWith (sIllegalPrefix + ".")) //$NON-NLS-1$
         return false;
 
     return true;
@@ -526,6 +529,32 @@ public final class FilenameHelper
       aFile = aParentFile;
     }
     return true;
+  }
+
+  /**
+   * Gets the passed file name as a secure local filename. This uses
+   * {@link #getAsSecureValidFilename(String)} and additionally makes sure the
+   * file name does not contain separator characters (not a path). Separator
+   * characters will be replaced with
+   * {@value #ILLEGAL_FILENAME_CHAR_REPLACEMENT}.
+   * 
+   * @param sName
+   * @return The clean local file name, can be <code>null</code>
+   */
+  @Nullable
+  @Nonempty
+  public static String getValidLocalFilename (final String sName)
+  {
+    final String sValid = getAsSecureValidFilename (sName);
+    if (sValid != null && FilenameHelper.containsPathSeparatorChar (sValid))
+    {
+      return StringHelper.replaceMultiple (sValid,
+                                           ContainerHelper.newMap (new String [] { UNIX_SEPARATOR_STR,
+                                                                                  String.valueOf (WINDOWS_SEPARATOR) },
+                                                                   new String [] { String.valueOf (ILLEGAL_FILENAME_CHAR_REPLACEMENT),
+                                                                                  String.valueOf (ILLEGAL_FILENAME_CHAR_REPLACEMENT) }));
+    }
+    return sValid;
   }
 
   /**
@@ -578,7 +607,7 @@ public final class FilenameHelper
       // ANSI names
       final String sUCFilename = ret.toUpperCase (SystemHelper.getSystemLocale ());
       for (final String sIllegalPrefix : ILLEGAL_PREFIXES)
-        if (sUCFilename.startsWith (sIllegalPrefix + "."))
+        if (sUCFilename.startsWith (sIllegalPrefix + ".")) //$NON-NLS-1$
         {
           ret = ILLEGAL_FILENAME_CHAR_REPLACEMENT + ret;
           break;
@@ -723,9 +752,14 @@ public final class FilenameHelper
     catch (final IOException ex)
     {
       // Use our method
-      s_aLogger.warn ("Using getCleanPath on an invalid file '" + aFile + "'", ex);
+      s_aLogger.warn ("Using getCleanPath on an invalid file '" + aFile + "'", ex); //$NON-NLS-1$ //$NON-NLS-2$
       return getCleanPath (aFile.getAbsolutePath ());
     }
+  }
+
+  private static boolean isInterpretUNCPaths ()
+  {
+    return INTERPRET_UNC.booleanValue () && EOperatingSystem.WINDOWS.isCurrentOS ();
   }
 
   /**
@@ -745,16 +779,23 @@ public final class FilenameHelper
     // Remove all relative paths and insecure characters
     String sPathToUse = getSecureFilename (sPath);
 
-    // Use only a single type of path separator namely "/"
-    sPathToUse = getPathUsingUnixSeparator (sPathToUse);
-
     // Strip prefix from path to analyze, to not treat it as part of the
     // first path element. This is necessary to correctly parse paths like
     // "file:core/../core/io/Resource.class", where the ".." should just
     // strip the first "core" directory while keeping the "file:" prefix.
     // The same applies to http:// addresses where the domain should be kept!
-    String sPrefix = "";
-    final int nProtoIdx = sPathToUse.indexOf ("://");
+    String sPrefix = ""; //$NON-NLS-1$
+
+    if (StringHelper.startsWith (sPathToUse, WINDOWS_UNC_PATH_PREFIX) && isInterpretUNCPaths ())
+    {
+      sPrefix = WINDOWS_UNC_PATH_PREFIX;
+      sPathToUse = sPathToUse.substring (WINDOWS_UNC_PATH_PREFIX.length ());
+    }
+
+    // Use only a single type of path separator namely "/"
+    sPathToUse = getPathUsingUnixSeparator (sPathToUse);
+
+    final int nProtoIdx = sPathToUse.indexOf ("://"); //$NON-NLS-1$
     if (nProtoIdx > -1)
     {
       // Keep server name
@@ -843,8 +884,8 @@ public final class FilenameHelper
   @Nonnull
   public static String getCleanConcatenatedUrlPath (@Nonnull final String sURL, @Nonnull final String sPath)
   {
-    ValueEnforcer.notNull (sURL, "URL");
-    ValueEnforcer.notNull (sPath, "Path");
+    ValueEnforcer.notNull (sURL, "URL"); //$NON-NLS-1$
+    ValueEnforcer.notNull (sPath, "Path"); //$NON-NLS-1$
 
     // If nothing is to be appended, just clean the base URL
     if (StringHelper.hasNoText (sPath))
@@ -930,7 +971,7 @@ public final class FilenameHelper
   @Nullable
   public static String getRelativeToParentDirectory (@Nonnull final File aFile, @Nullable final File aParentDirectory)
   {
-    ValueEnforcer.notNull (aFile, "File");
+    ValueEnforcer.notNull (aFile, "File"); //$NON-NLS-1$
 
     final String sCleanedFile = getCleanPath (aFile);
     if (aParentDirectory == null)
@@ -971,8 +1012,8 @@ public final class FilenameHelper
   public static String getAbsoluteWithEnsuredParentDirectory (@Nonnull final File aParentDirectory,
                                                               @Nonnull final String sFilePath)
   {
-    ValueEnforcer.notNull (aParentDirectory, "ParentDirectory");
-    ValueEnforcer.notNull (sFilePath, "FilePath");
+    ValueEnforcer.notNull (aParentDirectory, "ParentDirectory"); //$NON-NLS-1$
+    ValueEnforcer.notNull (sFilePath, "FilePath"); //$NON-NLS-1$
 
     final File aSubFile = new File (sFilePath);
     String sRelativeSubPath = sFilePath;
@@ -981,7 +1022,7 @@ public final class FilenameHelper
     {
       if (!aParentDirectory.isAbsolute ())
       {
-        s_aLogger.error ("Cannot express absolute child file relative to a relative parent file!");
+        s_aLogger.error ("Cannot express absolute child file relative to a relative parent file!"); //$NON-NLS-1$
         return null;
       }
       sRelativeSubPath = getRelativeToParentDirectory (aSubFile, aParentDirectory);

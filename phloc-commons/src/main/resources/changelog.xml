@@ -21,6 +21,32 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+<release date="2017-06-21" version="4.4.8" />
+  <entry date="2017-06-21" category="feature" action="add">
+    <change>
+      <text locale="en">Added new API getValidLocalFilename in FilenameHelper</text>
+    </change>
+  </entry>
+  <entry date="2017-06-21" category="feature" action="add">
+    <change>
+      <text locale="en">Added new API getNames for ordered and unordered containers in ContainerHelper</text>
+    </change>
+  </entry>
+  <entry date="2017-06-21" category="feature" action="add">
+    <change>
+      <text locale="en">Added new API getIDs for ordered and unordered containers in ContainerHelper</text>
+    </change>
+  </entry>
+  <entry date="2017-06-21" category="feature" action="add">
+    <change>
+      <text locale="en">Added new API getNames for ordered and unordered containers in LockedContainerHelper</text>
+    </change>
+  </entry>
+  <entry date="2017-06-21" category="feature" action="add">
+    <change>
+      <text locale="en">Added new API getIDs for ordered and unordered containers in LockedContainerHelper</text>
+    </change>
+  </entry>
 <release date="2017-02-25" version="4.4.7" />
   <entry date="2017-02-25" category="feature" action="add">
     <change>
