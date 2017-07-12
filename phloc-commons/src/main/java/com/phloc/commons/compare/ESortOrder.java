@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 /**
  * Defines possible sort orders. The default is {@link #ASCENDING} sorting.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public enum ESortOrder implements ISortOrderIndicator

@@ -31,12 +31,14 @@ import com.phloc.commons.string.ToStringGenerator;
  * An abstract implementation of a {@link java.util.Comparator} that uses
  * collations for ordering. This is only necessary when comparing strings.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        the type of object to be compared
  */
 public abstract class AbstractCollationComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = 7956997445009676905L;
   private final Collator m_aCollator;
 
   /**
@@ -228,7 +230,7 @@ public abstract class AbstractCollationComparator <DATATYPE> extends AbstractCom
   {
     final String s1 = _nullSafeGetAsString (aElement1);
     final String s2 = _nullSafeGetAsString (aElement2);
-    return CompareUtils.nullSafeCompare (s1, s2, m_aCollator);
+    return CompareUtils.nullSafeCompare (s1, s2, m_aCollator, isNullValuesComeFirst ());
   }
 
   @Override

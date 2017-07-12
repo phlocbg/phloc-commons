@@ -29,14 +29,17 @@ import com.phloc.commons.ValueEnforcer;
  * Abstract comparator class that supports a sort order. This comparator may
  * only be applied on non-<code>null</code> values.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared
  */
 public abstract class AbstractComparator <DATATYPE> implements Comparator <DATATYPE>, Serializable
 {
+  private static final long serialVersionUID = 4275761747174521536L;
   private ESortOrder m_eSortOrder;
   private Comparator <? super DATATYPE> m_aNestedComparator;
+  private boolean m_bNullValuesComeFirst = GlobalCompareSettings.getInstance ().isSortNullValuesFirst ();
 
   /**
    * Comparator with default sort order and no nested comparator.
@@ -119,6 +122,18 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
    *         argument is less than, equal to, or greater than the second.
    */
   protected abstract int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2);
+
+  public final boolean isNullValuesComeFirst ()
+  {
+    return m_bNullValuesComeFirst;
+  }
+
+  @Nonnull
+  public final AbstractComparator <DATATYPE> setNullValuesComeFirst (final boolean bNullValuesComeFirst)
+  {
+    m_bNullValuesComeFirst = bNullValuesComeFirst;
+    return this;
+  }
 
   public final int compare (final DATATYPE aElement1, final DATATYPE aElement2)
   {

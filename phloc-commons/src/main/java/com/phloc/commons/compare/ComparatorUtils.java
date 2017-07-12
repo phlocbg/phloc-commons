@@ -23,20 +23,15 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.PresentForCodeCoverage;
-
 /**
  * Helper class to easily create commonly used {@link Comparator} objects.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 @Immutable
 public final class ComparatorUtils
 {
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final ComparatorUtils s_aInstance = new ComparatorUtils ();
-
   private ComparatorUtils ()
   {}
 
@@ -51,6 +46,8 @@ public final class ComparatorUtils
   {
     return new AbstractComparator <Map.Entry <KEYTYPE, VALUETYPE>> (eSortOrder)
     {
+      private static final long serialVersionUID = -2954016437967754527L;
+
       @Override
       protected int mainCompare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1,
                                  final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
@@ -83,6 +80,11 @@ public final class ComparatorUtils
   {
     return new AbstractComparator <Map.Entry <KEYTYPE, VALUETYPE>> (eSortOrder)
     {
+      /**
+       * 
+       */
+      private static final long serialVersionUID = 2726636085832232038L;
+
       @Override
       protected int mainCompare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1,
                                  final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)

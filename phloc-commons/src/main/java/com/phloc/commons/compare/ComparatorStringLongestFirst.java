@@ -27,10 +27,13 @@ import javax.annotation.Nullable;
  * For all strings with an equal length, they are sorted in regular,
  * non-collated order.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public class ComparatorStringLongestFirst extends AbstractComparator <String>
 {
+  private static final long serialVersionUID = 542245909907407229L;
+
   /**
    * Comparator without a nested comparator.
    */

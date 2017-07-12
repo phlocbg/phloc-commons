@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.IsLocked;
 import com.phloc.commons.annotations.IsLocked.ELockType;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
@@ -42,6 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
  *
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 @ThreadSafe
@@ -114,10 +114,6 @@ public final class CollatorUtils
   }
 
   private static final CollatorCache s_aCache = new CollatorCache ();
-
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final CollatorUtils s_aInstance = new CollatorUtils ();
 
   private CollatorUtils ()
   {}

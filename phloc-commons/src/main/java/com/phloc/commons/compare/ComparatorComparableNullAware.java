@@ -23,19 +23,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This is another *lol* class: a {@link Comparator} for {@link Comparable}
- * objects. In comparison to {@link ComparatorComparable} this class can handle
- * <code>null</code> values.
+ * A {@link Comparator} for {@link Comparable} objects. In comparison to
+ * {@link ComparatorComparable} this class can handle <code>null</code> values.
  * 
+ * @deprecated Use {@link ComparatorComparable} instead as that is already
+ *             null-safe now
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
-public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                            AbstractComparator <DATATYPE>
+@Deprecated
+public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends AbstractComparator <DATATYPE>
 {
-  /** Default value wether <code>null</code> values come first or last */
-  public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = CompareUtils.DEFAULT_NULL_VALUES_COME_FIRST;
-
-  private boolean m_bNullValuesComeFirst = DEFAULT_NULL_VALUES_COME_FIRST;
+  private static final long serialVersionUID = -838619062439169963L;
 
   /**
    * Comparator with default sort order.
@@ -83,21 +82,9 @@ public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super
     super (eSortOrder, aNestedComparator);
   }
 
-  public final boolean isNullValuesComeFirst ()
-  {
-    return m_bNullValuesComeFirst;
-  }
-
-  @Nonnull
-  public final ComparatorComparableNullAware <DATATYPE> setNullValuesComeFirst (final boolean bNullValuesComeFirst)
-  {
-    m_bNullValuesComeFirst = bNullValuesComeFirst;
-    return this;
-  }
-
   @Override
   protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    return CompareUtils.nullSafeCompare (aElement1, aElement2, m_bNullValuesComeFirst);
+    return CompareUtils.nullSafeCompare (aElement1, aElement2, isNullValuesComeFirst ());
   }
 }

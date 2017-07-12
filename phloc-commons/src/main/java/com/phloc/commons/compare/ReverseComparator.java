@@ -28,10 +28,12 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A special comparator that reverses another comparator
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public class ReverseComparator <T> implements Comparator <T>, Serializable
 {
+  private static final long serialVersionUID = 2818334029541125294L;
   private final Comparator <T> m_aComparator;
 
   public ReverseComparator (@Nonnull final Comparator <T> aComparator)

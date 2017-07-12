@@ -30,10 +30,13 @@ import com.phloc.commons.string.StringHelper;
  * A simple collation aware comparator that compares objects by their "toString"
  * representation.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public class ComparatorAsString extends AbstractCollationComparator <Object>
 {
+  private static final long serialVersionUID = -3585906962640444530L;
+
   /**
    * Comparator with default locale {@link Collator} and default sort order.
    */

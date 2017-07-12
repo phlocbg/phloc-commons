@@ -28,6 +28,7 @@ import com.phloc.commons.ValueEnforcer;
  * This class is an {@link AbstractComparator} that extracts a certain data
  * element from the main object to compare.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type of elements to be compared.
@@ -36,6 +37,7 @@ import com.phloc.commons.ValueEnforcer;
  */
 public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = 7090822136332530650L;
   private Comparator <? super PARTTYPE> m_aPartComparator;
 
   /**
@@ -105,6 +107,6 @@ public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends Abstra
   {
     final PARTTYPE aPart1 = getPart (aElement1);
     final PARTTYPE aPart2 = getPart (aElement2);
-    return CompareUtils.nullSafeCompare (aPart1, aPart2, m_aPartComparator);
+    return CompareUtils.nullSafeCompare (aPart1, aPart2, m_aPartComparator, isNullValuesComeFirst ());
   }
 }

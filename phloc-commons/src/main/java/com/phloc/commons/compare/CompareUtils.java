@@ -25,8 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.PresentForCodeCoverage;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -34,18 +32,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * <code>null</code> safe. Also provides secure ways to compare double and float
  * values.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 @Immutable
 public final class CompareUtils
 {
-  /** By default <code>null</code> values come first */
-  public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = true;
-
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final CompareUtils s_aInstance = new CompareUtils ();
-
   private CompareUtils ()
   {}
 
@@ -191,8 +183,7 @@ public final class CompareUtils
   public static <DATATYPE extends Comparable <? super DATATYPE>> int nullSafeCompare (@Nullable final DATATYPE aObj1,
                                                                                       @Nullable final DATATYPE aObj2)
   {
-    // Legacy behaviour: null values come first
-    return nullSafeCompare (aObj1, aObj2, DEFAULT_NULL_VALUES_COME_FIRST);
+    return nullSafeCompare (aObj1, aObj2, GlobalCompareSettings.getInstance ().isSortNullValuesFirst ());
   }
 
   /**
@@ -215,9 +206,9 @@ public final class CompareUtils
                                                                                       @Nullable final DATATYPE aObj2,
                                                                                       final boolean bNullValuesComeFirst)
   {
-    return aObj1 == aObj2 ? 0 : aObj1 == null ? (bNullValuesComeFirst ? -1 : +1)
-                                             : aObj2 == null ? (bNullValuesComeFirst ? +1 : -1)
-                                                            : aObj1.compareTo (aObj2);
+    return aObj1 == aObj2 ? 0
+                          : aObj1 == null ? (bNullValuesComeFirst ? -1 : +1)
+                                          : aObj2 == null ? (bNullValuesComeFirst ? +1 : -1) : aObj1.compareTo (aObj2);
   }
 
   /**
@@ -241,8 +232,7 @@ public final class CompareUtils
                                                 @Nullable final DATATYPE aObj2,
                                                 @Nonnull final Comparator <DATATYPE> aComp)
   {
-    // Legacy behaviour: null values come first
-    return nullSafeCompare (aObj1, aObj2, aComp, DEFAULT_NULL_VALUES_COME_FIRST);
+    return nullSafeCompare (aObj1, aObj2, aComp, GlobalCompareSettings.getInstance ().isSortNullValuesFirst ());
   }
 
   /**
@@ -270,17 +260,17 @@ public final class CompareUtils
                                                 @Nonnull final Comparator <DATATYPE> aComp,
                                                 final boolean bNullValuesComeFirst)
   {
-    return aObj1 == aObj2 ? 0 : aObj1 == null ? (bNullValuesComeFirst ? -1 : +1)
-                                             : aObj2 == null ? (bNullValuesComeFirst ? +1 : -1) : aComp.compare (aObj1,
-                                                                                                                 aObj2);
+    return aObj1 == aObj2 ? 0
+                          : aObj1 == null ? (bNullValuesComeFirst ? -1 : +1)
+                                          : aObj2 == null ? (bNullValuesComeFirst ? +1 : -1)
+                                                          : aComp.compare (aObj1, aObj2);
   }
 
   public static int nullSafeCompare (@Nullable final String sStr1,
                                      @Nullable final String sStr2,
                                      @Nonnull final Locale aSortLocale)
   {
-    // Legacy behaviour: null values come first
-    return nullSafeCompare (sStr1, sStr2, aSortLocale, DEFAULT_NULL_VALUES_COME_FIRST);
+    return nullSafeCompare (sStr1, sStr2, aSortLocale, GlobalCompareSettings.getInstance ().isSortNullValuesFirst ());
   }
 
   public static int nullSafeCompare (@Nullable final String sStr1,
@@ -296,8 +286,7 @@ public final class CompareUtils
                                      @Nullable final String sStr2,
                                      @Nonnull final Collator aCollator)
   {
-    // Legacy behaviour: null values come first
-    return nullSafeCompare (sStr1, sStr2, aCollator, DEFAULT_NULL_VALUES_COME_FIRST);
+    return nullSafeCompare (sStr1, sStr2, aCollator, GlobalCompareSettings.getInstance ().isSortNullValuesFirst ());
   }
 
   @SuppressFBWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
@@ -306,8 +295,9 @@ public final class CompareUtils
                                      @Nonnull final Collator aCollator,
                                      final boolean bNullValuesComeFirst)
   {
-    return sStr1 == sStr2 ? 0 : sStr1 == null ? (bNullValuesComeFirst ? -1 : +1)
-                                             : sStr2 == null ? (bNullValuesComeFirst ? +1 : -1)
-                                                            : aCollator.compare (sStr1, sStr2);
+    return sStr1 == sStr2 ? 0
+                          : sStr1 == null ? (bNullValuesComeFirst ? -1 : +1)
+                                          : sStr2 == null ? (bNullValuesComeFirst ? +1 : -1)
+                                                          : aCollator.compare (sStr1, sStr2);
   }
 }

@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
  * Abstract comparator that handles values that can be represented as long
  * values.
  *
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared. Must somehow have a value that can be
@@ -33,6 +34,8 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = -2453340579608327937L;
+
   public AbstractIntegerComparator ()
   {
     super ();

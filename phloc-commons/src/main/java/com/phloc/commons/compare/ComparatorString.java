@@ -27,10 +27,13 @@ import javax.annotation.Nullable;
 /**
  * A simple collation aware comparator that compares String objects.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public class ComparatorString extends AbstractCollationComparator <String>
 {
+  private static final long serialVersionUID = 3505753262742101159L;
+
   /**
    * Comparator with default locale {@link Collator} and default sort order.
    */

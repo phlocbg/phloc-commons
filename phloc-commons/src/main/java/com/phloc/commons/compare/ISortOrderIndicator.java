@@ -20,6 +20,7 @@ package com.phloc.commons.compare;
 /**
  * Interface indicating a sort order.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public interface ISortOrderIndicator

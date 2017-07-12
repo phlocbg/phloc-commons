@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
  * Abstract comparator that handles values that can be represented as double
  * values.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared. Must somehow have a value that can be
@@ -33,6 +34,8 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractNumericComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = 455060853542833223L;
+
   public AbstractNumericComparator ()
   {
     super ();

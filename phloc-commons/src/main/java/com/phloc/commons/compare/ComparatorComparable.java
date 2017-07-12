@@ -23,14 +23,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * This is another *lol* class: a {@link Comparator} for {@link Comparable}
+ * A {@link Comparator} for {@link Comparable}
  * objects.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  */
 public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                    AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = -4871334266238185319L;
+
   /**
    * Comparator with default sort order and no nested comparator.
    */
@@ -78,8 +81,8 @@ public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE
   }
 
   @Override
-  protected final int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
+  protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    return aElement1.compareTo (aElement2);
+    return CompareUtils.nullSafeCompare (aElement1, aElement2, isNullValuesComeFirst ());
   }
 }

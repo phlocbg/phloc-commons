@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
  * This class is an {@link AbstractComparator} that extracts a certain data
  * element from the main object to compare.
  * 
+ * @author Boris Gregorcic
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared
@@ -35,6 +36,8 @@ import javax.annotation.Nullable;
 public abstract class AbstractPartComparatorComparable <DATATYPE, PARTTYPE extends Comparable <? super PARTTYPE>> extends
                                                                                                                   AbstractComparator <DATATYPE>
 {
+  private static final long serialVersionUID = -3903792792850716034L;
+
   /**
    * Comparator with default sort order.
    */
@@ -89,6 +92,6 @@ public abstract class AbstractPartComparatorComparable <DATATYPE, PARTTYPE exten
   {
     final PARTTYPE aPart1 = getPart (aElement1);
     final PARTTYPE aPart2 = getPart (aElement2);
-    return CompareUtils.nullSafeCompare (aPart1, aPart2);
+    return CompareUtils.nullSafeCompare (aPart1, aPart2, isNullValuesComeFirst ());
   }
 }
