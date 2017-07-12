@@ -37,8 +37,8 @@ public final class FileIntIDFactoryTest
   @Test
   public void testAll ()
   {
-    final File f = new File ("my-file-with.ids");
-    final File f2 = new File ("my-other-file-with.ids");
+    final File f = new File ("my-file-with-int.ids");
+    final File f2 = new File ("my-other-file-with-int.ids");
     try
     {
       final FileIntIDFactory x = new FileIntIDFactory (f);

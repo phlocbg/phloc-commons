@@ -37,8 +37,8 @@ public final class FileLongIDFactoryTest
   @Test
   public void testAll ()
   {
-    final File f = new File ("my-file-with.ids");
-    final File f2 = new File ("my-other-file-with.ids");
+    final File f = new File ("my-file-with-long.ids");
+    final File f2 = new File ("my-other-file-with-long.ids");
     try
     {
       final FileLongIDFactory x = new FileLongIDFactory (f);
@@ -50,7 +50,9 @@ public final class FileLongIDFactoryTest
                                                                                                  FileLongIDFactory.DEFAULT_RESERVE_COUNT * 2));
 
       for (int i = 0; i < x.getReserveCount () * 10; ++i)
+      {
         assertEquals (i, x.getNewID ());
+      }
     }
     finally
     {
