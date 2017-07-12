@@ -28,6 +28,8 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
@@ -39,9 +41,16 @@ import com.phloc.commons.charset.CharsetManager;
  */
 public final class FileOperationsTest
 {
+  private static final Logger LOG = LoggerFactory.getLogger (FileOperationsTest.class);
+
   private static void _expectedSuccess (@Nonnull final FileIOError ec)
   {
+    if (ec.getErrorCode () == EFileIOErrorCode.OPERATION_FAILED)
+    {
+      LOG.error ("Error: " + ec);
+    }
     assertEquals ("Expected no error but got " + ec.getErrorCode (), EFileIOErrorCode.NO_ERROR, ec.getErrorCode ());
+
   }
 
   private static void _expectedError (@Nonnull final FileIOError ec, @Nonnull final EFileIOErrorCode eCode)
@@ -52,7 +61,7 @@ public final class FileOperationsTest
   @Test
   public void testCreateDir ()
   {
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir1");
     assertFalse (FileUtils.existsDir (aDir1));
     _expectedSuccess (FileOperations.createDir (aDir1));
     try
@@ -84,7 +93,7 @@ public final class FileOperationsTest
   @Test
   public void testCreateDirIfNotExisting ()
   {
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir2");
     assertFalse (FileUtils.existsDir (aDir1));
     _expectedSuccess (FileOperations.createDirIfNotExisting (aDir1));
     try
@@ -116,7 +125,7 @@ public final class FileOperationsTest
   @Test
   public void testCreateDirRecursive ()
   {
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir3");
     final File aDir11 = new File (aDir1, "TestSubDir");
     assertFalse (FileUtils.existsDir (aDir1));
     assertFalse (FileUtils.existsDir (aDir11));
