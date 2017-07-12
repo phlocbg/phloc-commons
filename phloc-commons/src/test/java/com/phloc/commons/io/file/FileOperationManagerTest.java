@@ -60,7 +60,7 @@ public final class FileOperationManagerTest
   public void testCreateDir ()
   {
     final IFileOperationManager aFOM = new FileOperationManager (new DefaultFileOperationCallback ());
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir8");
     assertFalse (FileUtils.existsDir (aDir1));
     _expectedSuccess (aFOM.createDir (aDir1));
     assertEquals (EFileIOOperation.CREATE_DIR, aFOM.getLastOperation ());
@@ -84,7 +84,7 @@ public final class FileOperationManagerTest
   public void testCreateDirIfNotExisting ()
   {
     final IFileOperationManager aFOM = new FileOperationManager (new DefaultFileOperationCallback ());
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir9");
     assertFalse (FileUtils.existsDir (aDir1));
     _expectedSuccess (aFOM.createDirIfNotExisting (aDir1));
     assertEquals (EFileIOOperation.CREATE_DIR, aFOM.getLastOperation ());
@@ -108,7 +108,7 @@ public final class FileOperationManagerTest
   public void testCreateDirRecursive ()
   {
     final IFileOperationManager aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir10");
     final File aDir11 = new File (aDir1, "TestSubDir");
     try
     {
@@ -138,7 +138,7 @@ public final class FileOperationManagerTest
   public void testCreateDirRecursiveIfNotExisting ()
   {
     final IFileOperationManager aFOM = new FileOperationManager (new DefaultFileOperationCallback ());
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir7");
     final File aDir11 = new File (aDir1, "TestSubDir");
     try
     {

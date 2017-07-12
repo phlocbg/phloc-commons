@@ -163,7 +163,7 @@ public final class FileOperationsTest
   @Test
   public void testCreateDirRecursiveIfNotExisting ()
   {
-    final File aDir1 = new File ("TestDir");
+    final File aDir1 = new File ("TestDir4");
     final File aDir11 = new File (aDir1, "TestSubDir");
     assertFalse (FileUtils.existsDir (aDir1));
     assertFalse (FileUtils.existsDir (aDir11));
