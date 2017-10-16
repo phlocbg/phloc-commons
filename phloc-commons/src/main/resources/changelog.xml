@@ -24,7 +24,7 @@
 <release date="2017-10-16" version="4.4.12" />
   <entry date="2017-10-16" category="feature" action="add">
     <change>
-      <text locale="en">Adder simplified deadlock detection for easy integration.</text>
+      <text locale="en">Added simplified deadlock detection for easy integration.</text>
     </change>
   </entry>
   <entry date="2017-10-16" category="api" action="fix">
