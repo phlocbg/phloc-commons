@@ -31,8 +31,17 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents information about a single deadlocked thread.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
+ * @deprecated No replacement
+ *             <ul>
+ *             <li><b>reason: </b>refactored</li>
+ *             <li><b>criticality: </b>3</li>
+ *             <li><b>note: </b></li>
+ *             <li><b>deprecated since: </b>4.4.12</li>
+ *             <li><b>unavailable from: </b>4.5.0</li>
+ *             </ul>
  */
+@Deprecated
 @Immutable
 public final class ThreadDeadlockInfo
 {
@@ -44,9 +53,9 @@ public final class ThreadDeadlockInfo
                              @Nonnull final Thread aThread,
                              @Nullable final StackTraceElement [] aStackTrace)
   {
-    m_aThreadInfo = ValueEnforcer.notNull (aThreadInfo, "ThreadInfo");
-    m_aThread = ValueEnforcer.notNull (aThread, "Thread");
-    m_aStackTrace = ArrayHelper.getCopy (aStackTrace);
+    this.m_aThreadInfo = ValueEnforcer.notNull (aThreadInfo, "ThreadInfo");
+    this.m_aThread = ValueEnforcer.notNull (aThread, "Thread");
+    this.m_aStackTrace = ArrayHelper.getCopy (aStackTrace);
   }
 
   /**
@@ -55,7 +64,7 @@ public final class ThreadDeadlockInfo
   @Nonnull
   public ThreadInfo getThreadInfo ()
   {
-    return m_aThreadInfo;
+    return this.m_aThreadInfo;
   }
 
   /**
@@ -64,7 +73,7 @@ public final class ThreadDeadlockInfo
   @Nonnull
   public Thread getThread ()
   {
-    return m_aThread;
+    return this.m_aThread;
   }
 
   /**
@@ -73,7 +82,7 @@ public final class ThreadDeadlockInfo
    */
   public boolean hasStackTrace ()
   {
-    return m_aStackTrace != null;
+    return this.m_aStackTrace != null;
   }
 
   /**
@@ -86,15 +95,15 @@ public final class ThreadDeadlockInfo
   @ReturnsMutableCopy
   public StackTraceElement [] getStackTrace ()
   {
-    return ArrayHelper.getCopy (m_aStackTrace);
+    return ArrayHelper.getCopy (this.m_aStackTrace);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("threadInfo", m_aThreadInfo)
-                                       .append ("thread", m_aThread)
-                                       .appendIfNotNull ("stackTrace", m_aStackTrace)
+    return new ToStringGenerator (this).append ("threadInfo", this.m_aThreadInfo)
+                                       .append ("thread", this.m_aThread)
+                                       .appendIfNotNull ("stackTrace", this.m_aStackTrace)
                                        .toString ();
   }
 }

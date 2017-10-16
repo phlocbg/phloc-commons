@@ -39,8 +39,19 @@ import com.phloc.commons.state.EChange;
 /**
  * This is the main dead lock detector, based on JMX {@link ThreadMXBean}
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
+ * @deprecated Use
+ *             {@link com.phloc.commons.concurrent.deadlock.ThreadDeadlockDetector}
+ *             instead
+ *             <ul>
+ *             <li><b>reason: </b>refactored</li>
+ *             <li><b>criticality: </b>3</li>
+ *             <li><b>note: </b></li>
+ *             <li><b>deprecated since: </b>4.4.12</li>
+ *             <li><b>unavailable from: </b>4.5.0</li>
+ *             </ul>
  */
+@Deprecated
 @NotThreadSafe
 public final class ThreadDeadlockDetector
 {
@@ -54,8 +65,8 @@ public final class ThreadDeadlockDetector
     // IFJDK5
     // aThreadIDs = m_aMBean.findMonitorDeadlockedThreads ();
     // ELSE
-    aThreadIDs = m_aMBean.isSynchronizerUsageSupported () ? m_aMBean.findDeadlockedThreads ()
-                                                         : m_aMBean.findMonitorDeadlockedThreads ();
+    aThreadIDs = this.m_aMBean.isSynchronizerUsageSupported () ? this.m_aMBean.findDeadlockedThreads ()
+                                                               : this.m_aMBean.findMonitorDeadlockedThreads ();
     // ENDIF
     if (ArrayHelper.isNotEmpty (aThreadIDs))
     {
@@ -64,7 +75,7 @@ public final class ThreadDeadlockDetector
       for (int i = 0; i < aThreads.length; i++)
       {
         // ThreadInfo
-        final ThreadInfo aThreadInfo = m_aMBean.getThreadInfo (aThreadIDs[i]);
+        final ThreadInfo aThreadInfo = this.m_aMBean.getThreadInfo (aThreadIDs[i]);
 
         // Find matching thread and stack trace
         Thread aFoundThread = null;
@@ -84,10 +95,10 @@ public final class ThreadDeadlockDetector
       }
 
       // Invoke all listeners
-      for (final IThreadDeadlockListener aListener : m_aListeners)
+      for (final IThreadDeadlockListener aListener : this.m_aListeners)
         aListener.onDeadlockDetected (aThreads);
 
-      if (m_aListeners.isEmpty ())
+      if (this.m_aListeners.isEmpty ())
         s_aLogger.warn ("Found a deadlock of " + aThreads.length + " threads but no listeners are present!");
     }
   }
@@ -97,27 +108,27 @@ public final class ThreadDeadlockDetector
   {
     ValueEnforcer.notNull (aListener, "Listener");
 
-    return EChange.valueOf (m_aListeners.add (aListener));
+    return EChange.valueOf (this.m_aListeners.add (aListener));
   }
 
   @Nonnull
   public EChange removeListener (@Nullable final IThreadDeadlockListener aListener)
   {
-    return EChange.valueOf (m_aListeners.remove (aListener));
+    return EChange.valueOf (this.m_aListeners.remove (aListener));
   }
 
   @Nonnull
   public EChange removeAllListeners ()
   {
-    if (m_aListeners.isEmpty ())
+    if (this.m_aListeners.isEmpty ())
       return EChange.UNCHANGED;
-    m_aListeners.clear ();
+    this.m_aListeners.clear ();
     return EChange.CHANGED;
   }
 
   @Nonnegative
   public int getListenerCount ()
   {
-    return m_aListeners.size ();
+    return this.m_aListeners.size ();
   }
 }

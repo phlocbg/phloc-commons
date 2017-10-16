@@ -35,8 +35,19 @@ import com.phloc.commons.state.EChange;
  * A dead lock detection timer that checks for dead locks in a certain interval.
  * Uses {@link ThreadDeadlockDetector} internally.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
+ * @deprecated Use
+ *             {@link com.phloc.commons.concurrent.deadlock.ThreadDeadlockDetection}
+ *             instead
+ *             <ul>
+ *             <li><b>reason: </b>refactored</li>
+ *             <li><b>criticality: </b>3</li>
+ *             <li><b>note: </b></li>
+ *             <li><b>deprecated since: </b>4.4.12</li>
+ *             <li><b>unavailable from: </b>4.5.0</li>
+ *             </ul>
  */
+@Deprecated
 @NotThreadSafe
 public final class ThreadDeadlockDetectionTimer
 {
@@ -60,15 +71,15 @@ public final class ThreadDeadlockDetectionTimer
 
   public ThreadDeadlockDetectionTimer (@Nonnegative final long nDeadlockCheckPeriod)
   {
-    m_aTimerTask = new TimerTask ()
+    this.m_aTimerTask = new TimerTask ()
     {
       @Override
       public void run ()
       {
-        m_aTLD.run ();
+        ThreadDeadlockDetectionTimer.this.m_aTLD.run ();
       }
     };
-    m_aThreadCheck.schedule (m_aTimerTask, INITIAL_DELAY_MS, nDeadlockCheckPeriod);
+    this.m_aThreadCheck.schedule (this.m_aTimerTask, INITIAL_DELAY_MS, nDeadlockCheckPeriod);
     s_aLogger.info ("Deadlock detector started!");
   }
 
@@ -77,7 +88,7 @@ public final class ThreadDeadlockDetectionTimer
    */
   public void stop ()
   {
-    if (m_aTimerTask.cancel ())
+    if (this.m_aTimerTask.cancel ())
     {
       s_aLogger.info ("Deadlock detector stopped!");
     }
@@ -86,24 +97,24 @@ public final class ThreadDeadlockDetectionTimer
   @Nonnull
   public EChange addListener (@Nonnull final IThreadDeadlockListener aListener)
   {
-    return m_aTLD.addListener (aListener);
+    return this.m_aTLD.addListener (aListener);
   }
 
   @Nonnull
   public EChange removeListener (@Nullable final IThreadDeadlockListener aListener)
   {
-    return m_aTLD.removeListener (aListener);
+    return this.m_aTLD.removeListener (aListener);
   }
 
   @Nonnull
   public EChange removeAllListeners ()
   {
-    return m_aTLD.removeAllListeners ();
+    return this.m_aTLD.removeAllListeners ();
   }
 
   @Nonnegative
   public int getListenerCount ()
   {
-    return m_aTLD.getListenerCount ();
+    return this.m_aTLD.getListenerCount ();
   }
 }

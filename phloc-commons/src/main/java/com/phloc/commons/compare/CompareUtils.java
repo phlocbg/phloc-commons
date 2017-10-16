@@ -38,6 +38,21 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @Immutable
 public final class CompareUtils
 {
+  /**
+   * @deprecated Use {@link GlobalCompareSettings#isSortNullValuesFirst()} ()
+   *             instead
+   *             <ul>
+   *             <li><b>reason: </b>The default behaviour can now be overriden
+   *             </li>
+   *             <li><b>criticality: </b>4</li>
+   *             <li><b>note: </b></li>
+   *             <li><b>deprecated since: </b>4.4.11</li>
+   *             <li><b>unavailable from: </b></li>
+   *             </ul>
+   */
+  @Deprecated
+  public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = GlobalCompareSettings.DEFAULT_NULL_VALUES_COME_FIRST;
+
   private CompareUtils ()
   {}
 

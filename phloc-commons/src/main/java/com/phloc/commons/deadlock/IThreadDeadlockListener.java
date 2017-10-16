@@ -24,10 +24,22 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * This is called whenever a problem with threads is detected.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
+ * @deprecated Use
+ *             {@link com.phloc.commons.concurrent.deadlock.IThreadDeadlockListener}
+ *             instead
+ *             <ul>
+ *             <li><b>reason: </b>refactored</li>
+ *             <li><b>criticality: </b>3</li>
+ *             <li><b>note: </b></li>
+ *             <li><b>deprecated since: </b>4.4.12</li>
+ *             <li><b>unavailable from: </b>4.5.0</li>
+ *             </ul>
  */
+@Deprecated
 public interface IThreadDeadlockListener
 {
+
   /**
    * Callback to be invoked on a deadlock
    * 
