@@ -88,6 +88,28 @@ public interface IMicroElement extends IMicroNodeWithChildren
   <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable String sAttrName, @Nonnull Class <DSTTYPE> aDstClass);
 
   /**
+   * Get the attribute of the given name and try to parse it as integer.
+   * 
+   * @param sAttrName
+   *        The name of the attribute
+   * @return The corresponding integer value or <code>null</code> if there is no
+   *         value or it cannot be parsed
+   */
+  @Nullable
+  Integer getAttributeAsInteger (String sAttrName);
+
+  /**
+   * Get the attribute of the given name and try to parse it as a boolean.
+   * 
+   * @param sAttrName
+   *        The name of the attribute
+   * @return The corresponding boolean parsed from the value (if the attribute
+   *         has value), or <code>null</code> otherwise
+   */
+  @Nullable
+  Boolean getAttributeAsBoolean (String sAttrName);
+
+  /**
    * Get a map of all attribute names and values. Is ensured to be not
    * <code>null</code> if {@link #hasAttributes()} returns <code>true</code>.
    * 
@@ -468,6 +490,7 @@ public interface IMicroElement extends IMicroNodeWithChildren
   /**
    * {@inheritDoc}
    */
+  @Override
   @Nonnull
   IMicroElement getClone ();
 }

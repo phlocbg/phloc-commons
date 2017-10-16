@@ -22,6 +22,16 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
 <release date="2017-10-16" version="4.4.12" />
+  <entry date="2017-10-16" category="api" action="add">
+    <change>
+      <text locale="en">New method in IMicroElement: getAttributeAsInteger</text>
+    </change>
+  </entry>
+  <entry date="2017-10-16" category="api" action="add">
+    <change>
+      <text locale="en">New method in IMicroElement: getAttributeAsBoolean</text>
+    </change>
+  </entry>
   <entry date="2017-10-16" category="feature" action="add">
     <change>
       <text locale="en">Added simplified deadlock detection for easy integration.</text>

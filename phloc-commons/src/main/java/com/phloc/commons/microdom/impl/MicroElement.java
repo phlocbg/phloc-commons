@@ -43,6 +43,7 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.commons.xml.CXML;
@@ -51,10 +52,12 @@ import com.phloc.commons.xml.CXMLRegEx;
 /**
  * Default implementation of the {@link IMicroElement} interface.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  */
 public final class MicroElement extends AbstractMicroNodeWithChildren implements IMicroElement
 {
+  private static final long serialVersionUID = 1301312611126433950L;
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (MicroElement.class);
 
   private String m_sNamespaceURI;
@@ -78,84 +81,93 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
   public MicroElement (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
-    ValueEnforcer.notEmpty (sTagName, "TagName");
-    m_sNamespaceURI = sNamespaceURI;
+    ValueEnforcer.notEmpty (sTagName, "TagName"); //$NON-NLS-1$
+    this.m_sNamespaceURI = sNamespaceURI;
 
     // Store only the local name (cut the prefix) if a namespace is present
     final int nPrefixEnd = sNamespaceURI != null ? sTagName.indexOf (CXML.XML_PREFIX_NAMESPACE_SEP) : -1;
     if (nPrefixEnd == -1)
-      m_sTagName = sTagName;
+      this.m_sTagName = sTagName;
     else
     {
       // Cut the prefix
-      s_aLogger.warn ("Removing micro element namespace prefix '" +
+      s_aLogger.warn ("Removing micro element namespace prefix '" + //$NON-NLS-1$
                       sTagName.substring (0, nPrefixEnd) +
-                      "' from tag name '" +
+                      "' from tag name '" + //$NON-NLS-1$
                       sTagName +
-                      "'");
-      m_sTagName = sTagName.substring (nPrefixEnd + 1);
+                      "'"); //$NON-NLS-1$
+      this.m_sTagName = sTagName.substring (nPrefixEnd + 1);
     }
 
     // Only for the debug version, as this slows things down heavily
     if (GlobalDebug.isDebugMode ())
-      if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (m_sTagName).matches ())
-        if (!CXMLRegEx.PATTERN_NAME.matcher (m_sTagName).matches ())
-          throw new IllegalArgumentException ("The micro element tag name '" +
-                                              m_sTagName +
-                                              "' is not a valid element name!");
+      if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (this.m_sTagName).matches ())
+        if (!CXMLRegEx.PATTERN_NAME.matcher (this.m_sTagName).matches ())
+          throw new IllegalArgumentException ("The micro element tag name '" + //$NON-NLS-1$
+                                              this.m_sTagName +
+                                              "' is not a valid element name!"); //$NON-NLS-1$
   }
 
+  @Override
   @Nonnull
   public EMicroNodeType getType ()
   {
     return EMicroNodeType.ELEMENT;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getNodeName ()
   {
-    return m_sTagName;
+    return this.m_sTagName;
   }
 
+  @Override
   public boolean hasAttributes ()
   {
-    return m_aAttrs != null && !m_aAttrs.isEmpty ();
+    return this.m_aAttrs != null && !this.m_aAttrs.isEmpty ();
   }
 
+  @Override
   @Nonnegative
   public int getAttributeCount ()
   {
-    return m_aAttrs == null ? 0 : m_aAttrs.size ();
+    return this.m_aAttrs == null ? 0 : this.m_aAttrs.size ();
   }
 
+  @Override
   @Nullable
   @ReturnsMutableCopy
   public Map <String, String> getAllAttributes ()
   {
-    return hasAttributes () ? ContainerHelper.newOrderedMap (m_aAttrs) : null;
+    return hasAttributes () ? ContainerHelper.newOrderedMap (this.m_aAttrs) : null;
   }
 
+  @Override
   @Nullable
   @ReturnsMutableCopy
   public Set <String> getAllAttributeNames ()
   {
-    return hasAttributes () ? ContainerHelper.newOrderedSet (m_aAttrs.keySet ()) : null;
+    return hasAttributes () ? ContainerHelper.newOrderedSet (this.m_aAttrs.keySet ()) : null;
   }
 
+  @Override
   @Nullable
   @ReturnsMutableCopy
   public List <String> getAllAttributeValues ()
   {
-    return hasAttributes () ? ContainerHelper.newList (m_aAttrs.values ()) : null;
+    return hasAttributes () ? ContainerHelper.newList (this.m_aAttrs.values ()) : null;
   }
 
+  @Override
   @Nullable
   public String getAttribute (@Nullable final String sAttrName)
   {
-    return m_aAttrs == null ? null : m_aAttrs.get (sAttrName);
+    return this.m_aAttrs == null ? null : this.m_aAttrs.get (sAttrName);
   }
 
+  @Override
   @Nullable
   public <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable final String sAttrName,
                                                        @Nonnull final Class <DSTTYPE> aDstClass)
@@ -169,75 +181,101 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
-  public boolean hasAttribute (@Nullable final String sAttrName)
+  @Override
+  @Nullable
+  public Integer getAttributeAsInteger (final String sAttrName)
   {
-    return m_aAttrs != null && m_aAttrs.containsKey (sAttrName);
+    return StringParser.parseIntObj (getAttribute (sAttrName));
   }
 
+  @Override
+  @Nullable
+  public Boolean getAttributeAsBoolean (final String sAttrName)
+  {
+    final String sValue = getAttribute (sAttrName);
+    if (StringHelper.hasText (sValue))
+    {
+      return StringParser.parseBoolObj (sValue);
+    }
+    return null;
+  }
+
+  @Override
+  public boolean hasAttribute (@Nullable final String sAttrName)
+  {
+    return this.m_aAttrs != null && this.m_aAttrs.containsKey (sAttrName);
+  }
+
+  @Override
   @Nonnull
   public EChange removeAttribute (@Nullable final String sAttrName)
   {
-    return EChange.valueOf (m_aAttrs != null && m_aAttrs.remove (sAttrName) != null);
+    return EChange.valueOf (this.m_aAttrs != null && this.m_aAttrs.remove (sAttrName) != null);
   }
 
+  @Override
   @Nonnull
   public MicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
   {
-    ValueEnforcer.notEmpty (sAttrName, "AttrName");
+    ValueEnforcer.notEmpty (sAttrName, "AttrName"); //$NON-NLS-1$
 
     // Only for the dev version
     if (GlobalDebug.isDebugMode ())
     {
       if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (sAttrName).matches ())
         if (!CXMLRegEx.PATTERN_NAME.matcher (sAttrName).matches ())
-          throw new IllegalArgumentException ("The passed attribute name '" +
+          throw new IllegalArgumentException ("The passed attribute name '" + //$NON-NLS-1$
                                               sAttrName +
-                                              "' is not a valid attribute name!");
+                                              "' is not a valid attribute name!"); //$NON-NLS-1$
       if (false)
         if (!CXMLRegEx.PATTERN_ATTVALUE.matcher (sAttrValue).matches ())
-          throw new IllegalArgumentException ("The passed attribute value '" +
+          throw new IllegalArgumentException ("The passed attribute value '" + //$NON-NLS-1$
                                               sAttrValue +
-                                              "' is not a valid attribute value!");
+                                              "' is not a valid attribute value!"); //$NON-NLS-1$
       // multi line attributes are valid in XHTML 1.0 Transitional!
       if (false)
         if (sAttrValue != null && sAttrValue.indexOf ('\n') != -1)
-          throw new IllegalArgumentException ("The passed attribute value '" +
+          throw new IllegalArgumentException ("The passed attribute value '" + //$NON-NLS-1$
                                               sAttrValue +
-                                              "' contains new line characters!");
+                                              "' contains new line characters!"); //$NON-NLS-1$
     }
 
     if (sAttrValue != null)
     {
-      if (m_aAttrs == null)
-        m_aAttrs = new LinkedHashMap <String, String> ();
-      m_aAttrs.put (sAttrName, sAttrValue);
+      if (this.m_aAttrs == null)
+        this.m_aAttrs = new LinkedHashMap <String, String> ();
+      this.m_aAttrs.put (sAttrName, sAttrValue);
     }
     else
       removeAttribute (sAttrName);
     return this;
   }
 
+  @Override
   @Nonnull
   public MicroElement setAttribute (@Nonnull final String sAttrName,
                                     @Nonnull final IHasAttributeValue aAttrValueProvider)
   {
-    ValueEnforcer.notNull (aAttrValueProvider, "AttrValueProvider");
+    ValueEnforcer.notNull (aAttrValueProvider, "AttrValueProvider"); //$NON-NLS-1$
 
     return setAttribute (sAttrName, aAttrValueProvider.getAttrValue ());
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttribute (@Nonnull final String sAttrName, final int nAttrValue)
   {
     return setAttribute (sAttrName, Integer.toString (nAttrValue));
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttribute (@Nonnull final String sAttrName, final long nAttrValue)
   {
     return setAttribute (sAttrName, Long.toString (nAttrValue));
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttributeWithConversion (@Nonnull final String sAttrName, @Nullable final Object aAttrValue)
   {
@@ -245,57 +283,66 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return setAttribute (sAttrName, sValue);
   }
 
+  @Override
   @Nonnull
   public EChange removeAllAttributes ()
   {
-    if (ContainerHelper.isEmpty (m_aAttrs))
+    if (ContainerHelper.isEmpty (this.m_aAttrs))
       return EChange.UNCHANGED;
-    m_aAttrs.clear ();
+    this.m_aAttrs.clear ();
     return EChange.CHANGED;
   }
 
+  @Override
   @Nullable
   public String getNamespaceURI ()
   {
-    return m_sNamespaceURI;
+    return this.m_sNamespaceURI;
   }
 
+  @Override
   @Nonnull
   public EChange setNamespaceURI (@Nullable final String sNamespaceURI)
   {
-    if (EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI))
+    if (EqualsUtils.equals (this.m_sNamespaceURI, sNamespaceURI))
       return EChange.UNCHANGED;
-    m_sNamespaceURI = sNamespaceURI;
+    this.m_sNamespaceURI = sNamespaceURI;
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean hasNamespaceURI ()
   {
-    return StringHelper.hasText (m_sNamespaceURI);
+    return StringHelper.hasText (this.m_sNamespaceURI);
   }
 
+  @Override
   public boolean hasNoNamespaceURI ()
   {
-    return StringHelper.hasNoText (m_sNamespaceURI);
+    return StringHelper.hasNoText (this.m_sNamespaceURI);
   }
 
+  @Override
   public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
   {
-    return EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI);
+    return EqualsUtils.equals (this.m_sNamespaceURI, sNamespaceURI);
   }
 
+  @Override
   @Nullable
   public String getLocalName ()
   {
-    return m_sNamespaceURI == null ? null : m_sTagName;
+    return this.m_sNamespaceURI == null ? null : this.m_sTagName;
   }
 
+  @Override
   @Nonnull
   public String getTagName ()
   {
-    return m_sTagName;
+    return this.m_sTagName;
   }
 
+  @Override
   @Nonnegative
   public int getChildElementCount ()
   {
@@ -318,6 +365,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements ()
@@ -341,6 +389,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nullable final String sTagName)
@@ -369,6 +418,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nullable final String sNamespaceURI,
@@ -401,23 +451,26 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return getAllChildElements (aElementNameProvider.getElementName ());
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElements (@Nullable final String sNamespaceURI,
                                                    @Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return getAllChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElementsRecursive ()
@@ -445,6 +498,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   public boolean hasChildElements ()
   {
     if (hasChildren ())
@@ -463,6 +517,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   public boolean hasChildElements (@Nullable final String sTagName)
   {
     if (hasChildren ())
@@ -485,6 +540,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   public boolean hasChildElements (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
   {
     if (StringHelper.hasNoText (sNamespaceURI))
@@ -513,19 +569,22 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   public boolean hasChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return hasChildElements (aElementNameProvider.getElementName ());
   }
 
+  @Override
   public boolean hasChildElements (@Nullable final String sNamespaceURI,
                                    @Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return hasChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement ()
   {
@@ -543,6 +602,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nullable final String sTagName)
   {
@@ -568,6 +628,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
   {
@@ -597,29 +658,32 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return getFirstChildElement (aElementNameProvider.getElementName ());
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nullable final String sNamespaceURI,
                                              @Nonnull final IHasElementName aElementNameProvider)
   {
-    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider");
+    ValueEnforcer.notNull (aElementNameProvider, "ElementNameProvider"); //$NON-NLS-1$
     return getFirstChildElement (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
+  @Override
   @Nonnull
   public IMicroElement getClone ()
   {
-    final MicroElement ret = new MicroElement (m_sNamespaceURI, m_sTagName);
+    final MicroElement ret = new MicroElement (this.m_sNamespaceURI, this.m_sTagName);
 
     // Copy attributes
-    if (m_aAttrs != null)
-      ret.m_aAttrs = ContainerHelper.newOrderedMap (m_aAttrs);
+    if (this.m_aAttrs != null)
+      ret.m_aAttrs = ContainerHelper.newOrderedMap (this.m_aAttrs);
 
     // Deep clone all child nodes
     if (hasChildren ())
@@ -636,18 +700,18 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     if (!super.isEqualContent (o))
       return false;
     final MicroElement rhs = (MicroElement) o;
-    return EqualsUtils.equals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
-           m_sTagName.equals (rhs.m_sTagName) &&
-           EqualsUtils.equals (m_aAttrs, rhs.m_aAttrs);
+    return EqualsUtils.equals (this.m_sNamespaceURI, rhs.m_sNamespaceURI) &&
+           this.m_sTagName.equals (rhs.m_sTagName) &&
+           EqualsUtils.equals (this.m_aAttrs, rhs.m_aAttrs);
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("namespace", m_sNamespaceURI)
-                            .append ("tagname", m_sTagName)
-                            .appendIfNotNull ("attrs", m_aAttrs)
+                            .appendIfNotNull ("namespace", this.m_sNamespaceURI) //$NON-NLS-1$
+                            .append ("tagname", this.m_sTagName) //$NON-NLS-1$
+                            .appendIfNotNull ("attrs", this.m_aAttrs) //$NON-NLS-1$
                             .toString ();
   }
 }
