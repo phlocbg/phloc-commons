@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -57,12 +58,32 @@ public final class EmailAddressTest
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aMA, new EmailAddress ("ph@example.org"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aMA, new EmailAddress ("ph@example2.org"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aMA, new EmailAddress ("ph@example.org",
-                                                                                               "My name"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aMA,
+                                                                        new EmailAddress ("ph@example.org", "My name"));
     PhlocTestUtils.testDefaultSerialization (new EmailAddress ("ph@example.org", "My name"));
 
     aMA = new EmailAddress ("ph@example.org", "Philip");
     assertEquals ("ph@example.org", aMA.getAddress ());
     assertEquals ("Philip", aMA.getPersonal ());
   }
+
+  @Test
+  public void testValidate ()
+  {
+    Assert.assertTrue (EmailAddressUtils.isValid ("bg4711@phloc.com"));
+    Assert.assertFalse (EmailAddressUtils.isValid ("aÄbÖc@öüä.cöm"));
+    Assert.assertFalse (EmailAddressUtils.isValid ("aÄbÖc@öü@ä.cöm"));
+
+    Assert.assertTrue (EmailAddressUtils.isValid ("bg4711@phloc.com", true));
+    Assert.assertTrue (EmailAddressUtils.isValid ("aÄbÖc@öüä.cöm", true));
+    Assert.assertFalse (EmailAddressUtils.isValid ("aÄbÖc@öü@ä.cöm", true));
+
+    EmailAddressUtils.setDefaultAllowInternationalized (true);
+    Assert.assertTrue (EmailAddressUtils.isValid ("bg4711@phloc.com"));
+    Assert.assertTrue (EmailAddressUtils.isValid ("aÄbÖc@öüä.cöm"));
+    Assert.assertFalse (EmailAddressUtils.isValid ("aÄbÖc@öü@ä.cöm"));
+
+    EmailAddressUtils.setDefaultAllowInternationalized (false);
+  }
+
 }
