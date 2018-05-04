@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2006-2014 phloc systems
+    Copyright (C) 2006-2018 phloc systems
     http://www.phloc.com
     office[at]phloc[dot]com
 
@@ -19,18 +19,18 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>23.1</version>
+    <version>24.0</version>
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-jaxb22-plugin</artifactId>
   <version>2.2.7.6-SNAPSHOT</version>
   <name>phloc-jaxb22-plugin</name>
   <description>JAXB 2.2 plugin to improve created output</description>
-  <url>http://repo.phloc.com/apidocs/phloc-jaxb22-plugin/${project.version}</url>
+  <url>https://github.com/phlocbg/phloc-commons/tree/master/phloc-jaxb22-plugin</url>
   
   <licenses>
     <license>
@@ -41,9 +41,10 @@
   </licenses>
 
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-jaxb22-plugin</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-jaxb22-plugin</developerConnection>
+    <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
+    <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
+  <url>http://github.com/phlocbg/phloc-commons</url>
+    <tag>HEAD</tag>
   </scm>
 
   <organization>
@@ -53,9 +54,9 @@
 
   <developers>
     <developer>
-      <id>philip</id>
-      <name>Philip Helger</name>
-      <email>ph(at)phloc.com</email>
+      <id>boris</id>
+      <name>Boris Gregorcic</name>
+      <email>bg(at)phloc.com</email>
       <url>http://www.phloc.com</url>
       <organization>phloc systems</organization>
     </developer>

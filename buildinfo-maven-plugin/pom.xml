@@ -45,7 +45,7 @@
   <scm>
     <connection>scm:git:https://github.com/phlocbg/phloc-commons</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-commons</developerConnection>
-  <url>http://github.com/phlocbg/phloc-commons</url>
+    <url>http://github.com/phlocbg/phloc-commons</url>
     <tag>HEAD</tag>
   </scm>
   

@@ -265,7 +265,6 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (I5, aMap2.get ("Hallo"));
   }
 
-  @SuppressWarnings ("unchecked")
   @Test
   public void testNewMap_MapArray ()
   {
@@ -2146,6 +2145,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
 
   private static final class MyStringCompi implements Comparator <String>, Serializable
   {
+    private static final long serialVersionUID = -4037349211859645997L;
+
     public MyStringCompi ()
     {}
 
@@ -2439,7 +2440,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByKey (newMap (), null);
+      getSortedByKey (newMap (), (ESortOrder)null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -2473,7 +2474,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByValue (newMap (), null);
+      getSortedByValue (newMap (), (ESortOrder) null);
       fail ();
     }
     catch (final NullPointerException ex)

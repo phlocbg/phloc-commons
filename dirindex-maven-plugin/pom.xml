@@ -32,7 +32,7 @@
   <packaging>maven-plugin</packaging>
   <name>dirindex-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
-  <url>http://repo.phloc.com/apidocs/dirindex-maven-plugin/${project.version}</url>
+  <url>http://github.com/phlocbg/phloc-commons</url>
 
   <licenses>
     <license>
