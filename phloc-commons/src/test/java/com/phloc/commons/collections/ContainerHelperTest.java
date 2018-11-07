@@ -2459,7 +2459,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByKey (newMap (), null);
+      getSortedByKey (newMap (), (Comparator<?>)null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -2493,7 +2493,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByValue (newMap (), null);
+      getSortedByValue (newMap (), (Comparator<?>)null);
       fail ();
     }
     catch (final NullPointerException ex)
