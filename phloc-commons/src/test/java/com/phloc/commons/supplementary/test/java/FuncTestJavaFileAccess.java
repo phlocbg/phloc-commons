@@ -54,8 +54,8 @@ public final class FuncTestJavaFileAccess
     private ProcListener (final String sCmd, final InputStream aIS)
     {
       super ("ProcessListener " + sCmd);
-      m_sCmd = sCmd;
-      m_aIS = aIS;
+      this.m_sCmd = sCmd;
+      this.m_aIS = aIS;
     }
 
     @Override
@@ -63,11 +63,11 @@ public final class FuncTestJavaFileAccess
     {
       try
       {
-        final InputStreamReader aISR = new InputStreamReader (m_aIS);
+        final InputStreamReader aISR = new InputStreamReader (this.m_aIS);
         final BufferedReader aBR = new BufferedReader (aISR);
         String line;
         while ((line = aBR.readLine ()) != null)
-          _println (m_sCmd + "> " + line);
+          _println (this.m_sCmd + "> " + line);
       }
       catch (final Exception ex)
       {
@@ -131,7 +131,8 @@ public final class FuncTestJavaFileAccess
 
                       final File fFile = new File (fTempDir, sPrefix + sMod + ".dat");
                       if (SimpleFileIO.writeFile (fFile,
-                                                  CharsetManager.getAsBytes ("content", CCharset.CHARSET_ISO_8859_1_OBJ))
+                                                  CharsetManager.getAsBytes ("content",
+                                                                             CCharset.CHARSET_ISO_8859_1_OBJ))
                                       .isSuccess ())
                         _exec ("chmod", sMod, fFile.getAbsolutePath ());
 
@@ -175,9 +176,6 @@ public final class FuncTestJavaFileAccess
             _println ("Neither file not directory: " + f.getName () + "    " + sRights);
           }
       }
-
-      if (false)
-        _exec ("chmod", "--preserve-root", "-v", "-R", "777", fTempDir.getAbsolutePath ());
 
       aFOM.deleteDirRecursive (fTempDir);
       if (fTempDir.exists ())

@@ -212,11 +212,7 @@ public final class XMLTransformerFactoryTest
     final Element e3 = (Element) eRoot.appendChild (aDoc.createElement ("c"));
     e3.appendChild (aDoc.createCDATASection ("]]>"));
 
-    if (false)
-      e3.appendChild (aDoc.createComment ("<!--"));
     e3.appendChild (aDoc.createTextNode ("abc"));
-    if (false)
-      e3.appendChild (aDoc.createComment ("-->"));
 
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));

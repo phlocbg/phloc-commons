@@ -158,29 +158,35 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
 
   private static final class LevDist0StringHelper implements Runnable
   {
-    private final char [][] m_aStrings;
+    private final char [] [] m_aStrings;
     private final boolean m_bSimple;
 
+    @SuppressWarnings ("unused")
     public LevDist0StringHelper (final String [] aStrings)
     {
       // Convert String[] to char[][] ;-)
-      m_aStrings = new char [aStrings.length] [];
+      this.m_aStrings = new char [aStrings.length] [];
       for (int i = 0; i < aStrings.length; ++i)
-        m_aStrings[i] = aStrings[i].toCharArray ();
-      m_bSimple = (LV_COST_INSERT == 1 && LV_COST_DELETE == 1 && LV_COST_SUBSTITUTE == 1);
+        this.m_aStrings[i] = aStrings[i].toCharArray ();
+      this.m_bSimple = (LV_COST_INSERT == 1 && LV_COST_DELETE == 1 && LV_COST_SUBSTITUTE == 1);
     }
 
+    @Override
     public void run ()
     {
-      final int n = m_aStrings.length;
+      final int n = this.m_aStrings.length;
       for (int i = 0; i < n - 1; ++i)
       {
-        final char [] s1 = m_aStrings[i];
+        final char [] s1 = this.m_aStrings[i];
         for (int j = i + 1; j < n; j++)
-          if (m_bSimple)
-            LevenshteinDistance.getDistance (s1, m_aStrings[j]);
+          if (this.m_bSimple)
+            LevenshteinDistance.getDistance (s1, this.m_aStrings[j]);
           else
-            LevenshteinDistance.getDistance (s1, m_aStrings[j], LV_COST_INSERT, LV_COST_DELETE, LV_COST_SUBSTITUTE);
+            LevenshteinDistance.getDistance (s1,
+                                             this.m_aStrings[j],
+                                             LV_COST_INSERT,
+                                             LV_COST_DELETE,
+                                             LV_COST_SUBSTITUTE);
       }
     }
   }
@@ -191,21 +197,20 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
 
     public LevDistBase (final String [] aStrings)
     {
-      m_aStrings = aStrings;
+      this.m_aStrings = aStrings;
     }
 
     public abstract int levDist (String s1, String s2);
 
+    @Override
     public final void run ()
     {
-      if (false)
-        s_aLogger.info ("run " + getClass ());
-      final int n = m_aStrings.length;
+      final int n = this.m_aStrings.length;
       for (int i = 0; i < n - 1; ++i)
       {
-        final String s1 = m_aStrings[i];
+        final String s1 = this.m_aStrings[i];
         for (int j = i + 1; j < n; j++)
-          levDist (s1, m_aStrings[j]);
+          levDist (s1, this.m_aStrings[j]);
       }
     }
   }
@@ -336,7 +341,7 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
       if (nLen2 == 0)
         return nLen1;
 
-      final int [][] T = new int [nLen1 + 1] [nLen2 + 1];
+      final int [] [] T = new int [nLen1 + 1] [nLen2 + 1];
 
       T[0][0] = 0;
       for (int j = 0; j < nLen2; j++)
@@ -348,8 +353,8 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
         for (int j = 0; j < nLen2; j++)
         {
           final int cost = sStr1.charAt (i) == sStr2.charAt (j) ? 0 : LV_COST_SUBSTITUTE;
-          T[i + 1][j + 1] = Math.min (Math.min (T[i][j] + cost, T[i][j + 1] + LV_COST_DELETE), T[i + 1][j] +
-                                                                                               LV_COST_INSERT);
+          T[i + 1][j + 1] = Math.min (Math.min (T[i][j] + cost, T[i][j + 1] + LV_COST_DELETE),
+                                      T[i + 1][j] + LV_COST_INSERT);
         }
       }
 
@@ -378,7 +383,7 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
       final char [] chs1 = sStr1.toCharArray ();
       final char [] chs2 = sStr2.toCharArray ();
 
-      final int [][] T = new int [nLen1 + 1] [nLen2 + 1];
+      final int [] [] T = new int [nLen1 + 1] [nLen2 + 1];
 
       T[0][0] = 0;
       for (int j = 0; j < nLen2; j++)
@@ -391,8 +396,8 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
         for (int j = 0; j < nLen2; j++)
         {
           final int cost = ch1 == chs2[j] ? 0 : LV_COST_SUBSTITUTE;
-          T[i + 1][j + 1] = Math.min (Math.min (T[i][j] + cost, T[i][j + 1] + LV_COST_DELETE), T[i + 1][j] +
-                                                                                               LV_COST_INSERT);
+          T[i + 1][j + 1] = Math.min (Math.min (T[i][j] + cost, T[i][j + 1] + LV_COST_DELETE),
+                                      T[i + 1][j] + LV_COST_INSERT);
         }
       }
 

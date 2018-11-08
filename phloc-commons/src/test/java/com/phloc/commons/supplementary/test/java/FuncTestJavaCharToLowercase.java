@@ -33,10 +33,6 @@ public final class FuncTestJavaCharToLowercase extends AbstractPhlocTestCase
       final char cUp = Character.toString ((char) c).toUpperCase (L_DE).charAt (0);
       if (c == 'a')
         assertEquals ('A', cUp);
-
-      if (cUp != c)
-        if (false)
-          m_aLogger.info ("c(" + (char) c + ") ==> (" + cUp + ")");
     }
   }
 }

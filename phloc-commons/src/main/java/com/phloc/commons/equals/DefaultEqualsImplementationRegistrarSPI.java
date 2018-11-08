@@ -51,6 +51,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 {
   private static final class EqualsImplementationFile implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (@Nonnull final Object aObj1, @Nonnull final Object aObj2)
     {
       final File aFile1 = (File) aObj1;
@@ -62,6 +63,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationEnumeration implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Enumeration <?> aRealObj1 = (Enumeration <?>) aObj1;
@@ -90,6 +92,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationIterator implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Iterator <?> aRealObj1 = (Iterator <?>) aObj1;
@@ -118,6 +121,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationCollection implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Collection <?> aRealObj1 = (Collection <?>) aObj1;
@@ -136,6 +140,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationMap implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Map <?, ?> aRealObj1 = (Map <?, ?>) aObj1;
@@ -170,6 +175,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayShort implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((short []) aObj1, (short []) aObj2);
@@ -178,6 +184,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayLong implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((long []) aObj1, (long []) aObj2);
@@ -186,6 +193,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayInt implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((int []) aObj1, (int []) aObj2);
@@ -194,6 +202,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayFloat implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((float []) aObj1, (float []) aObj2);
@@ -202,6 +211,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayDouble implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((double []) aObj1, (double []) aObj2);
@@ -210,6 +220,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayChar implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((char []) aObj1, (char []) aObj2);
@@ -218,6 +229,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayByte implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((byte []) aObj1, (byte []) aObj2);
@@ -226,6 +238,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationArrayBoolean implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return Arrays.equals ((boolean []) aObj1, (boolean []) aObj2);
@@ -234,6 +247,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationAtomicLong implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final AtomicLong aRealObj1 = (AtomicLong) aObj1;
@@ -244,6 +258,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationAtomicInteger implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final AtomicInteger aRealObj1 = (AtomicInteger) aObj1;
@@ -254,6 +269,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationAtomicBoolean implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final AtomicBoolean aRealObj1 = (AtomicBoolean) aObj1;
@@ -264,6 +280,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationURL implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final URL aRealObj1 = (URL) aObj1;
@@ -274,6 +291,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationNode implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Node aRealObj1 = (Node) aObj1;
@@ -313,6 +331,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationStringBuilder implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return aObj1.toString ().equals (aObj2.toString ());
@@ -321,6 +340,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationStringBuffer implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       return aObj1.toString ().equals (aObj2.toString ());
@@ -329,6 +349,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationFloat implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Float aRealObj1 = (Float) aObj1;
@@ -339,6 +360,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationDouble implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Double aRealObj1 = (Double) aObj1;
@@ -349,21 +371,19 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
 
   private static final class EqualsImplementationBigDecimal implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final BigDecimal aRealObj1 = (BigDecimal) aObj1;
       final BigDecimal aRealObj2 = (BigDecimal) aObj2;
       // Compare is ~15% quicker than the setScale version
-      if (true)
-        return aRealObj1.compareTo (aRealObj2) == 0;
-
-      final int nMaxScale = Math.max (aRealObj1.scale (), aRealObj2.scale ());
-      return aRealObj1.setScale (nMaxScale).equals (aRealObj2.setScale (nMaxScale));
+      return aRealObj1.compareTo (aRealObj2) == 0;
     }
   }
 
   private static final class EqualsImplementationLocale implements IEqualsImplementation
   {
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Locale aRealObj1 = (Locale) aObj1;
@@ -372,6 +392,7 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
     }
   }
 
+  @Override
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
   {
     /**

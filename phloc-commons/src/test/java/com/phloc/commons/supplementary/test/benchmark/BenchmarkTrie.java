@@ -119,7 +119,7 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
 
     public StringMapBase (final String [] aStrings)
     {
-      m_aStrings = aStrings;
+      this.m_aStrings = aStrings;
     }
 
     public abstract int size ();
@@ -128,19 +128,18 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
 
     public abstract String get (String sKey);
 
+    @Override
     public final void run ()
     {
-      if (false)
-        s_aLogger.info ("run " + getClass ());
-      final int n = m_aStrings.length;
+      final int n = this.m_aStrings.length;
       for (int i = 0; i < n; ++i)
       {
-        final String s1 = m_aStrings[i];
+        final String s1 = this.m_aStrings[i];
         add (s1, s1);
       }
       for (int i = 0; i < n; ++i)
       {
-        final String s1 = m_aStrings[i];
+        final String s1 = this.m_aStrings[i];
         if (!s1.equals (get (s1)))
           throw new IllegalStateException ("Not found: " + s1);
       }
@@ -154,25 +153,25 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     public StringMapHashMap (final String [] aStrings)
     {
       super (aStrings);
-      m_aMap = new HashMap <String, String> ();
+      this.m_aMap = new HashMap <String, String> ();
     }
 
     @Override
     public int size ()
     {
-      return m_aMap.size ();
+      return this.m_aMap.size ();
     }
 
     @Override
     public void add (final String sKey, final String sValue)
     {
-      m_aMap.put (sKey, sValue);
+      this.m_aMap.put (sKey, sValue);
     }
 
     @Override
     public String get (final String sKey)
     {
-      return m_aMap.get (sKey);
+      return this.m_aMap.get (sKey);
     }
   }
 
@@ -183,25 +182,25 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     public StringMapTreeMap (final String [] aStrings)
     {
       super (aStrings);
-      m_aMap = new TreeMap <String, String> ();
+      this.m_aMap = new TreeMap <String, String> ();
     }
 
     @Override
     public int size ()
     {
-      return m_aMap.size ();
+      return this.m_aMap.size ();
     }
 
     @Override
     public void add (final String sKey, final String sValue)
     {
-      m_aMap.put (sKey, sValue);
+      this.m_aMap.put (sKey, sValue);
     }
 
     @Override
     public String get (final String sKey)
     {
-      return m_aMap.get (sKey);
+      return this.m_aMap.get (sKey);
     }
   }
 
@@ -212,25 +211,25 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     public StringMapTST (final String [] aStrings)
     {
       super (aStrings);
-      m_aMap = new TST <String> ();
+      this.m_aMap = new TST <String> ();
     }
 
     @Override
     public int size ()
     {
-      return m_aMap.size ();
+      return this.m_aMap.size ();
     }
 
     @Override
     public void add (final String sKey, final String sValue)
     {
-      m_aMap.put (sKey, sValue);
+      this.m_aMap.put (sKey, sValue);
     }
 
     @Override
     public String get (final String sKey)
     {
-      return m_aMap.get (sKey);
+      return this.m_aMap.get (sKey);
     }
   }
 }

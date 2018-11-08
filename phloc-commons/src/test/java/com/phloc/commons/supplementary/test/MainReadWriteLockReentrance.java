@@ -82,28 +82,6 @@ public class MainReadWriteLockReentrance
       aRWLock.writeLock ().unlock ();
     }
 
-    if (false)
-    {
-      // This is the only case that does not work
-      aRWLock.readLock ().lock ();
-      try
-      {
-        aRWLock.writeLock ().lock ();
-        try
-        {
-          System.out.println ("in readLock and writeLock");
-        }
-        finally
-        {
-          aRWLock.writeLock ().unlock ();
-        }
-      }
-      finally
-      {
-        aRWLock.readLock ().unlock ();
-      }
-    }
-
     aRWLock.writeLock ().lock ();
     try
     {

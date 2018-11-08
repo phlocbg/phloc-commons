@@ -35,26 +35,26 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 public final class FactorialHelper
 {
   private static final long [] PREDEFINED_FACTORIALS_LONG = { 1,
-                                                             1,
-                                                             2,
-                                                             6,
-                                                             24,
-                                                             120,
-                                                             720,
-                                                             5040,
-                                                             40320,
-                                                             362880,
-                                                             3628800,
-                                                             39916800,
-                                                             479001600,
-                                                             6227020800L,
-                                                             87178291200L,
-                                                             1307674368000L,
-                                                             20922789888000L,
-                                                             355687428096000L,
-                                                             6402373705728000L,
-                                                             121645100408832000L,
-                                                             2432902008176640000L };
+                                                              1,
+                                                              2,
+                                                              6,
+                                                              24,
+                                                              120,
+                                                              720,
+                                                              5040,
+                                                              40320,
+                                                              362880,
+                                                              3628800,
+                                                              39916800,
+                                                              479001600,
+                                                              6227020800L,
+                                                              87178291200L,
+                                                              1307674368000L,
+                                                              20922789888000L,
+                                                              355687428096000L,
+                                                              6402373705728000L,
+                                                              121645100408832000L,
+                                                              2432902008176640000L };
   /** The minimum value for which pre-computed factorial values are present */
   public static final int PREDEFINED_MIN_INDEX = 0;
   /** The maximum value for which pre-computed factorial values are present */
@@ -101,15 +101,15 @@ public final class FactorialHelper
       final int m = n / 2;
       if (m == 0)
       {
-        m_nCurrentN += 2;
-        return BigInteger.valueOf (m_nCurrentN);
+        this.m_nCurrentN += 2;
+        return BigInteger.valueOf (this.m_nCurrentN);
       }
       if (n == 2)
       {
-        m_nCurrentN += 2;
-        final long n1 = m_nCurrentN;
-        m_nCurrentN += 2;
-        final long n2 = m_nCurrentN;
+        this.m_nCurrentN += 2;
+        final long n1 = this.m_nCurrentN;
+        this.m_nCurrentN += 2;
+        final long n2 = this.m_nCurrentN;
         return BigInteger.valueOf (n1 * n2);
       }
       return _getProduct (n - m).multiply (_getProduct (m));
@@ -123,11 +123,11 @@ public final class FactorialHelper
         return BigInteger.ONE;
       BigInteger aP = BigInteger.ONE;
       BigInteger aR = BigInteger.ONE;
-      m_nCurrentN = 1;
+      this.m_nCurrentN = 1;
       int nH = 0;
       int nShift = 0;
       int nHigh = 1;
-      int nLog2n = true ? 31 - Integer.numberOfLeadingZeros (n) : (int) Math.floor (Math.log (n) / Math.log (2));
+      int nLog2n = 31 - Integer.numberOfLeadingZeros (n);
       while (nH != n)
       {
         nShift += nH;

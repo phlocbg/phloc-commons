@@ -28,7 +28,6 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 
-import com.phloc.commons.SystemProperties;
 import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
@@ -67,12 +66,6 @@ public final class XMLFactory
 
   static
   {
-    // Explicitly use Apache Xerces for XSD reading? No in case Xerces is not in
-    // the classpath.
-    if (false)
-      SystemProperties.setPropertyValue ("javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
-                                         "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
-
     // create DOM document builder
     s_aDefaultDocBuilderFactory = createDefaultDocumentBuilderFactory ();
     s_aDefaultDocBuilder = createDocumentBuilder (s_aDefaultDocBuilderFactory);

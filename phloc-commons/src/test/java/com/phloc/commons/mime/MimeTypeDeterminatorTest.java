@@ -63,14 +63,14 @@ public final class MimeTypeDeterminatorTest extends AbstractPhlocTestCase
                   MimeTypeDeterminator.getMimeTypeFromBytes (new byte [] { (byte) 0xff, (byte) 0xd8, 0 }));
     assertEquals (CMimeType.IMAGE_PNG,
                   MimeTypeDeterminator.getMimeTypeFromBytes (new byte [] { (byte) 0x89,
-                                                                          0x50,
-                                                                          0x4e,
-                                                                          0x47,
-                                                                          0x0d,
-                                                                          0x0a,
-                                                                          0x1a,
-                                                                          0x0a,
-                                                                          0 }));
+                                                                           0x50,
+                                                                           0x4e,
+                                                                           0x47,
+                                                                           0x0d,
+                                                                           0x0a,
+                                                                           0x1a,
+                                                                           0x0a,
+                                                                           0 }));
   }
 
   @Test
@@ -117,8 +117,6 @@ public final class MimeTypeDeterminatorTest extends AbstractPhlocTestCase
     assertTrue (aAllKnown.contains (CMimeType.APPLICATION_OCTET_STREAM.getAsString ()));
     assertTrue (aAllKnown.contains (CMimeType.APPLICATION_PDF.getAsString ()));
     assertTrue (aAllKnown.contains (CMimeType.APPLICATION_RSS_XML.getAsString ()));
-    if (false) // special!
-      assertTrue (aAllKnown.contains (CMimeType.APPLICATION_FORCE_DOWNLOAD.getAsString ()));
     assertTrue (aAllKnown.contains (CMimeType.APPLICATION_ZIP.getAsString ()));
 
     // audio

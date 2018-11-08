@@ -18,8 +18,6 @@
 package com.phloc.commons.xml.serialize;
 
 import javax.annotation.Nonnull;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
@@ -28,6 +26,7 @@ import com.phloc.commons.factory.IFactory;
 
 public final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
 {
+  @Override
   @Nonnull
   public org.xml.sax.XMLReader create ()
   {
@@ -40,18 +39,8 @@ public final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
     try
     {
       org.xml.sax.XMLReader ret;
-      if (true)
-        ret = XMLReaderFactoryPhloc.createXMLReader ();
-      else
-      {
-        // This fails with Xerces on the classpath
-        ret = SAXParserFactory.newInstance ().newSAXParser ().getXMLReader ();
-      }
+      ret = XMLReaderFactoryPhloc.createXMLReader ();
       return ret;
-    }
-    catch (final ParserConfigurationException ex)
-    {
-      throw new InitializationException ("Failed to instantiate XML reader!", ex);
     }
     catch (final SAXException ex)
     {

@@ -227,17 +227,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
           throw new IllegalArgumentException ("The passed attribute name '" + //$NON-NLS-1$
                                               sAttrName +
                                               "' is not a valid attribute name!"); //$NON-NLS-1$
-      if (false)
-        if (!CXMLRegEx.PATTERN_ATTVALUE.matcher (sAttrValue).matches ())
-          throw new IllegalArgumentException ("The passed attribute value '" + //$NON-NLS-1$
-                                              sAttrValue +
-                                              "' is not a valid attribute value!"); //$NON-NLS-1$
-      // multi line attributes are valid in XHTML 1.0 Transitional!
-      if (false)
-        if (sAttrValue != null && sAttrValue.indexOf ('\n') != -1)
-          throw new IllegalArgumentException ("The passed attribute value '" + //$NON-NLS-1$
-                                              sAttrValue +
-                                              "' contains new line characters!"); //$NON-NLS-1$
     }
 
     if (sAttrValue != null)

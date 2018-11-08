@@ -74,18 +74,6 @@ public final class SAXReaderDefaultSettings
   @GuardedBy ("s_aRWLock")
   private static boolean s_bDefaultRequiresNewXMLParserExplicitly = DEFAULT_REQUIRES_NEW_XML_PARSER_EXPLICITLY;
 
-  static
-  {
-    // By default enabled in XMLFactory
-    if (false)
-    {
-      s_aDefaultFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-      s_aDefaultFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-    }
-    if (false)
-      s_aDefaultFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
-  }
-
   @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final SAXReaderDefaultSettings s_aInstance = new SAXReaderDefaultSettings ();

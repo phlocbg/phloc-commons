@@ -97,18 +97,18 @@ public final class LevenshteinDistanceTest
   @Test
   public void testCostsCharArray ()
   {
-    final char [] _ = "".toCharArray ();
+    final char [] sEmpty = "".toCharArray ();
     final char [] abc = "abc".toCharArray ();
     final char [] abcd = "abcd".toCharArray ();
     final char [] acc = "acc".toCharArray ();
 
-    assertEquals (0, LevenshteinDistance.getDistance (_, _));
-    assertEquals (0, LevenshteinDistance.getDistance (null, _));
-    assertEquals (0, LevenshteinDistance.getDistance (_, _, 1, 1, 1));
-    assertEquals (0, LevenshteinDistance.getDistance (null, _, 1, 1, 1));
-    assertEquals (abc.length, LevenshteinDistance.getDistance (_, abc, 1, 1, 1));
+    assertEquals (0, LevenshteinDistance.getDistance (sEmpty, sEmpty));
+    assertEquals (0, LevenshteinDistance.getDistance (null, sEmpty));
+    assertEquals (0, LevenshteinDistance.getDistance (sEmpty, sEmpty, 1, 1, 1));
+    assertEquals (0, LevenshteinDistance.getDistance (null, sEmpty, 1, 1, 1));
+    assertEquals (abc.length, LevenshteinDistance.getDistance (sEmpty, abc, 1, 1, 1));
     assertEquals (abc.length, LevenshteinDistance.getDistance (null, abc, 1, 1, 1));
-    assertEquals (abc.length, LevenshteinDistance.getDistance (abc, _, 1, 1, 1));
+    assertEquals (abc.length, LevenshteinDistance.getDistance (abc, sEmpty, 1, 1, 1));
     assertEquals (abc.length, LevenshteinDistance.getDistance (abc, null, 1, 1, 1));
     assertEquals (abc.length * 2, LevenshteinDistance.getDistance (abc, null, 2, 1, 1));
     assertEquals (abc.length, LevenshteinDistance.getDistance (abc, null, 1, 2, 2));

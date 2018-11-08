@@ -333,6 +333,7 @@ public final class FileUtils
     return getInputStream (new File (sFilename));
   }
 
+  @SuppressWarnings ("unused")
   @Nullable
   public static InputStream getInputStream (@Nonnull final File aFile)
   {
@@ -502,7 +503,7 @@ public final class FileUtils
     }
     catch (final IllegalStateException ex)
     {
-      // Happens e.g. when the parent directory is "  "
+      // Happens e.g. when the parent directory is " "
       s_aLogger.warn ("Failed to create parent directory of '" + aFile + "'", ex);
       return EValidity.INVALID;
     }

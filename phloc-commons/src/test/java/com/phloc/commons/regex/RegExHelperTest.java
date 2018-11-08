@@ -354,8 +354,6 @@ public final class RegExHelperTest
     assertEquals ("_0ABC", RegExHelper.getAsIdentifier ("_0ABC"));
     assertEquals ("___", RegExHelper.getAsIdentifier (";;;"));
     assertEquals ("aaa", RegExHelper.getAsIdentifier (";;;", "a"));
-    if (false)
-      assertEquals ("$$$", RegExHelper.getAsIdentifier (";;;", "$"));
     assertEquals ("aaa", RegExHelper.getAsIdentifier (";;;", 'a'));
     assertEquals ("$$$", RegExHelper.getAsIdentifier (";;;", '$'));
     for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; ++c)

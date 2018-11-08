@@ -49,6 +49,7 @@ import com.phloc.commons.system.EOperatingSystem;
  * 
  * @author Nathan Sweet <misc@n4te.com>
  */
+@SuppressWarnings ("unused")
 public final class FuncTestKerning
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FuncTestJavaPrinterTrayFinder.class);
@@ -61,18 +62,18 @@ public final class FuncTestKerning
 
     public KerningKey (final int nFirstGlyphCode, final int nSecondGlyphCode)
     {
-      m_nFirstGlyphCode = nFirstGlyphCode;
-      m_nSecondGlyphCode = nSecondGlyphCode;
+      this.m_nFirstGlyphCode = nFirstGlyphCode;
+      this.m_nSecondGlyphCode = nSecondGlyphCode;
     }
 
     public int getFirstGlyphCode ()
     {
-      return m_nFirstGlyphCode;
+      return this.m_nFirstGlyphCode;
     }
 
     public int getSecondGlyphCode ()
     {
-      return m_nSecondGlyphCode;
+      return this.m_nSecondGlyphCode;
     }
 
     @Override
@@ -83,13 +84,15 @@ public final class FuncTestKerning
       if (!(o instanceof KerningKey))
         return false;
       final KerningKey rhs = (KerningKey) o;
-      return m_nFirstGlyphCode == rhs.m_nFirstGlyphCode && m_nSecondGlyphCode == rhs.m_nSecondGlyphCode;
+      return this.m_nFirstGlyphCode == rhs.m_nFirstGlyphCode && this.m_nSecondGlyphCode == rhs.m_nSecondGlyphCode;
     }
 
     @Override
     public int hashCode ()
     {
-      return new HashCodeGenerator (this).append (m_nFirstGlyphCode).append (m_nSecondGlyphCode).getHashCode ();
+      return new HashCodeGenerator (this).append (this.m_nFirstGlyphCode)
+                                         .append (this.m_nSecondGlyphCode)
+                                         .getHashCode ();
     }
   }
 
@@ -116,16 +119,16 @@ public final class FuncTestKerning
       try
       {
         _readTableDirectory (aDIS);
-        if (m_nHeadOffset == -1)
+        if (this.m_nHeadOffset == -1)
           throw new IOException ("HEAD table not found.");
-        if (m_nKernOffset == -1)
+        if (this.m_nKernOffset == -1)
         {
           s_aLogger.info ("No kerning information present!");
-          m_aKerning = ContainerHelper.newUnmodifiableMap ();
+          this.m_aKerning = ContainerHelper.newUnmodifiableMap ();
           return;
         }
-        m_aKerning = new HashMap <KerningKey, Integer> (2048);
-        if (m_nHeadOffset < m_nKernOffset)
+        this.m_aKerning = new HashMap <KerningKey, Integer> (2048);
+        if (this.m_nHeadOffset < this.m_nKernOffset)
         {
           _readHEAD (aDIS);
           _readKERN (aDIS);
@@ -149,10 +152,10 @@ public final class FuncTestKerning
      */
     public float getValue (final int nFirstGlyphCode, final int nSecondGlyphCode, final float fFontSize)
     {
-      final Integer aValue = m_aKerning.get (new KerningKey (nFirstGlyphCode, nSecondGlyphCode));
+      final Integer aValue = this.m_aKerning.get (new KerningKey (nFirstGlyphCode, nSecondGlyphCode));
       if (aValue == null)
         return 0f;
-      return aValue.intValue () * fFontSize / m_nUnitsPerEm;
+      return aValue.intValue () * fFontSize / this.m_nUnitsPerEm;
     }
 
     private void _readTableDirectory (final InputStream aIS) throws IOException
@@ -164,7 +167,7 @@ public final class FuncTestKerning
       final byte [] tagBytes = new byte [4];
       for (int i = 0; i < nTableCount; i++)
       {
-        m_nBytePosition += tagBytes.length;
+        this.m_nBytePosition += tagBytes.length;
         StreamUtils.readFully (aIS, tagBytes);
         final String tag = CharsetManager.getAsString (tagBytes, CCharset.CHARSET_ISO_8859_1_OBJ);
 
@@ -174,15 +177,15 @@ public final class FuncTestKerning
 
         if (tag.equals ("head"))
         {
-          m_nHeadOffset = nOffset;
-          if (m_nKernOffset != -1)
+          this.m_nHeadOffset = nOffset;
+          if (this.m_nKernOffset != -1)
             break;
         }
         else
           if (tag.equals ("kern"))
           {
-            m_nKernOffset = nOffset;
-            if (m_nHeadOffset != -1)
+            this.m_nKernOffset = nOffset;
+            if (this.m_nHeadOffset != -1)
               break;
           }
       }
@@ -190,17 +193,17 @@ public final class FuncTestKerning
 
     private void _readHEAD (final InputStream aIS) throws IOException
     {
-      _seek (aIS, m_nHeadOffset + 2 * 4 + 2 * 4 + 2);
-      m_nUnitsPerEm = _readUnsignedShort (aIS);
+      _seek (aIS, this.m_nHeadOffset + 2 * 4 + 2 * 4 + 2);
+      this.m_nUnitsPerEm = _readUnsignedShort (aIS);
       if (false)
-        s_aLogger.info ("Units per EM = " + m_nUnitsPerEm + " @ " + m_nBytePosition);
+        s_aLogger.info ("Units per EM = " + this.m_nUnitsPerEm + " @ " + this.m_nBytePosition);
     }
 
     private void _readKERN (final InputStream aIS) throws IOException
     {
       if (false)
         s_aLogger.info ("Going to KERN");
-      _seek (aIS, m_nKernOffset + 2);
+      _seek (aIS, this.m_nKernOffset + 2);
       for (int n = _readUnsignedShort (aIS); n > 0; n--)
       {
         _skip (aIS, 2 * 2);
@@ -219,14 +222,14 @@ public final class FuncTestKerning
           final int nSecondGlyphCode = _readUnsignedShort (aIS);
           final int nValue = _readShort (aIS);
           if (nValue != 0)
-            m_aKerning.put (new KerningKey (nFirstGlyphCode, nSecondGlyphCode), Integer.valueOf (nValue));
+            this.m_aKerning.put (new KerningKey (nFirstGlyphCode, nSecondGlyphCode), Integer.valueOf (nValue));
         }
       }
     }
 
     private int _readUnsignedByte (final InputStream aIS) throws IOException
     {
-      m_nBytePosition++;
+      this.m_nBytePosition++;
       final int b = aIS.read ();
       if (b == -1)
         throw new EOFException ("Unexpected end of file.");
@@ -251,15 +254,15 @@ public final class FuncTestKerning
     private void _skip (final InputStream aIS, final int bytes) throws IOException
     {
       StreamUtils.skipFully (aIS, bytes);
-      m_nBytePosition += bytes;
+      this.m_nBytePosition += bytes;
     }
 
     private void _seek (final InputStream aIS, final long position) throws IOException
     {
       if (false)
-        s_aLogger.info ("position=" + position + "; pos=" + m_nBytePosition);
-      StreamUtils.skipFully (aIS, position - m_nBytePosition);
-      m_nBytePosition = position;
+        s_aLogger.info ("position=" + position + "; pos=" + this.m_nBytePosition);
+      StreamUtils.skipFully (aIS, position - this.m_nBytePosition);
+      this.m_nBytePosition = position;
     }
   }
 

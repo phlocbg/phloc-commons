@@ -359,7 +359,8 @@ public final class FilenameHelperTest
                   FilenameHelper.getAsSecureValidASCIIFilename (CSpecialChars.AUML_LC_STR +
                                                                 CSpecialChars.OUML_LC +
                                                                 CSpecialChars.UUML_LC));
-    assertEquals ("h_user.txt", FilenameHelper.getAsSecureValidASCIIFilename ("h" + CSpecialChars.AUML_LC + "user.txt"));
+    assertEquals ("h_user.txt",
+                  FilenameHelper.getAsSecureValidASCIIFilename ("h" + CSpecialChars.AUML_LC + "user.txt"));
   }
 
   /**
@@ -540,7 +541,8 @@ public final class FilenameHelperTest
     }
     else
     {
-      assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("\\\\athene\\temp\\myFile.txt")));
+      assertEquals (sBasePath + "/target/file",
+                    FilenameHelper.getCleanPath (new File ("\\\\athene\\temp\\myFile.txt")));
     }
     try
     {
@@ -657,6 +659,7 @@ public final class FilenameHelperTest
     {}
   }
 
+  @SuppressWarnings ("unused")
   @Test
   public void testGetAbsoluteWithEnsuredParentDirectory ()
   {
@@ -702,7 +705,8 @@ public final class FilenameHelperTest
     final File aRelativeParentDir = new File ("");
     final File aAbsoluteParentDir = aRelativeParentDir.getAbsoluteFile ();
     final File aChildDir = new File (aAbsoluteParentDir.getAbsolutePath () + "/pom.xml");
-    assertNull (FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aRelativeParentDir, aChildDir.getAbsolutePath ()));
+    assertNull (FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aRelativeParentDir,
+                                                                      aChildDir.getAbsolutePath ()));
     assertEquals (FilenameHelper.getCleanPath (aChildDir.getAbsolutePath ()),
                   FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aAbsoluteParentDir,
                                                                         aChildDir.getAbsolutePath ()));
