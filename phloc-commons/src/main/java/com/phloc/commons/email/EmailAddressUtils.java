@@ -119,6 +119,7 @@ public final class EmailAddressUtils
    * <b>Default:</b> {@value #EMAIL_ADDRESS_PATTERN_INT}
    * 
    * @param sRegExp
+   *        The regular expression pattern to set
    */
   public static void setCustomPatternforInternationalized (@Nullable final String sRegExp)
   {
@@ -133,6 +134,8 @@ public final class EmailAddressUtils
    * (e.g. Java Mail 1.6) that can handle it.
    * 
    * @param bAllow
+   *        Whether or not internationalized mail addresses should be used by
+   *        default (default = false)
    */
   public static void setDefaultAllowInternationalized (final boolean bAllow)
   {

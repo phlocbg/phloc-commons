@@ -90,7 +90,9 @@ public class ThreadMonitor
    * JVM.
    * 
    * @param aServer
+   *        The server connection
    * @throws IOException
+   *         if parsing the bean info goes wrong
    */
   public ThreadMonitor (final MBeanServerConnection aServer) throws IOException
   {

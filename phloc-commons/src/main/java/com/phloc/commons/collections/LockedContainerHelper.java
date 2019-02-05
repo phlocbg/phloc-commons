@@ -445,7 +445,7 @@ public final class LockedContainerHelper
    *        The element to check
    * @param aLock
    *        The lock to use
-   * @return
+   * @return whether or not the element is contained
    */
   public static <T> boolean contains (@Nonnull final Collection <T> aCollection,
                                       @Nonnull final T aItem,
@@ -478,7 +478,7 @@ public final class LockedContainerHelper
    *        The elements to check
    * @param aLock
    *        The lock to use
-   * @return
+   * @return whether or not all elements are contained
    */
   public static <T> boolean containsAll (@Nullable final Collection <T> aCollection,
                                          @Nonnull final Collection <T> aItems,
@@ -673,6 +673,7 @@ public final class LockedContainerHelper
    *        A map containing the entries that should be put to the first map,
    *        may be <code>null</code>
    * @param aLock
+   *        The lock to use
    */
   public static <K, V> void putAll (@Nonnull final Map <K, V> aMap,
                                     @Nullable final Map <K, V> aEntries,

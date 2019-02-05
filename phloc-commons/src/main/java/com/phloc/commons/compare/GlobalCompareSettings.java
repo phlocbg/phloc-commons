@@ -61,11 +61,12 @@ public class GlobalCompareSettings
    * other values.
    * 
    * @param bNullValuesFirst
-   * @return
+   *        Whether or not null-values should go first
+   * @return The change state
    */
-  public EChange setSortNullValuesFirst (boolean bNullValuesFirst)
+  public EChange setSortNullValuesFirst (final boolean bNullValuesFirst)
   {
-    EChange eChange = EChange.valueOf (bNullValuesFirst != this.m_bSortNullValuesFirst);
+    final EChange eChange = EChange.valueOf (bNullValuesFirst != this.m_bSortNullValuesFirst);
     this.m_bSortNullValuesFirst = bNullValuesFirst;
     return eChange;
   }

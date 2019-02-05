@@ -238,6 +238,8 @@ public final class ValueEnforcer
   /**
    * Check that the passed Collection is neither <code>null</code> nor empty.
    * 
+   * @param <T>
+   *        The value type
    * @param aValue
    *        The String to check.
    * @param sName
@@ -256,6 +258,8 @@ public final class ValueEnforcer
   /**
    * Check that the passed Iterable is neither <code>null</code> nor empty.
    * 
+   * @param <T>
+   *        The value type
    * @param aValue
    *        The String to check.
    * @param sName
@@ -274,6 +278,8 @@ public final class ValueEnforcer
   /**
    * Check that the passed Collection is neither <code>null</code> nor empty.
    * 
+   * @param <T>
+   *        The value type
    * @param aValue
    *        The String to check.
    * @param sName
