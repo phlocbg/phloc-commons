@@ -21,13 +21,23 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+<release date="2019-02-05" version="4.4.14" />
+  <entry date="2019-02-05" category="api" action="add">
+    <change>
+      <text locale="en">Added simple new API in FilenameHelper to create a filename concatenated from a base name and an extension</text>
+    </change>
+  </entry>
+  <entry date="2019-02-05" category="api" action="add">
+    <change>
+      <text locale="en">Added new API getFirstChildElementValue in IMicroElement which returns the text content of the first direct child with a given tag name</text>
+    </change>
+  </entry>
 <release date="2018-01-28" version="4.4.13" />
   <entry date="2018-01-28" category="api" action="add">
     <change>
       <text locale="en">Email Validation can be set to allow internationalized addresses (according to RFC 6530/6531/6532). The current default pattern however only considers German Umlauts (äöüß). You can set a custom regExp using #setCustomPatternforInternationalized</text>
     </change>
   </entry>
-
 <release date="2017-10-16" version="4.4.12" />
   <entry date="2017-10-16" category="api" action="add">
     <change>

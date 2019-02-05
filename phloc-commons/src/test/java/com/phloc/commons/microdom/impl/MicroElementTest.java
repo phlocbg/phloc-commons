@@ -50,7 +50,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link MicroElement}.
- * 
+ *
  * @author Philip Helger
  */
 public final class MicroElementTest extends AbstractPhlocTestCase
@@ -163,8 +163,9 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xy")));
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns2", "xyz")));
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement (null, "xyz")));
-    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xyz").setAttribute ("name",
-                                                                                                                 "value")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns",
+                                                                                    "xyz").setAttribute ("name",
+                                                                                                         "value")));
 
     e = new MicroElement ("ns1:element");
     assertNull (e.getLocalName ());
@@ -757,4 +758,26 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertEquals (1, e1.getAllChildElementsRecursive ().size ());
     assertEquals (1, e2.getAllChildElementsRecursive ().size ());
   }
+
+  @Test
+  public void testGetFirstChildElementValue ()
+  {
+    final IMicroElement eRoot = new MicroElement ("root");
+    final IMicroElement b1 = eRoot.appendElement ("b");
+    b1.appendText ("ZOOT");
+    final IMicroElement a1 = eRoot.appendElement ("a");
+    a1.appendText ("OIDA");
+    eRoot.appendElement ("b");
+    eRoot.appendElement ("c");
+    final IMicroElement a2 = eRoot.appendElement ("a");
+    a2.appendText ("NARF");
+    eRoot.appendElement ("a");
+    eRoot.appendElement ("b");
+
+    assertEquals ("OIDA", eRoot.getFirstChildElementValue ("a"));
+    assertEquals ("ZOOT", eRoot.getFirstChildElementValue ("b"));
+    assertNull (null, eRoot.getFirstChildElementValue ("c"));
+    assertNull (null, eRoot.getFirstChildElementValue ("d"));
+  }
+
 }

@@ -51,7 +51,7 @@ import com.phloc.commons.xml.CXMLRegEx;
 
 /**
  * Default implementation of the {@link IMicroElement} interface.
- * 
+ *
  * @author Boris Gregorcic
  */
 public final class MicroElement extends AbstractMicroNodeWithChildren implements IMicroElement
@@ -614,6 +614,17 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
                   return aContChildElement;
               }
           }
+    return null;
+  }
+
+  @Override
+  public String getFirstChildElementValue (final String sTagName)
+  {
+    final IMicroElement eValue = getFirstChildElement (sTagName);
+    if (eValue != null)
+    {
+      return eValue.getTextContent ();
+    }
     return null;
   }
 
