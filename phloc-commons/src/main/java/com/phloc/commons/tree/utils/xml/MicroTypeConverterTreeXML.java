@@ -73,35 +73,41 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
                                     @Nonnull @Nonempty final String sElementName,
                                     @Nonnull final Class <? extends DATATYPE> aNativeClass)
   {
-    m_sNamespaceURI = sNamespaceURI;
-    m_sElementName = ValueEnforcer.notEmpty (sElementName, "ElementName");
-    m_aNativeClass = ValueEnforcer.notNull (aNativeClass, "NativeClass");
+    this.m_sNamespaceURI = sNamespaceURI;
+    this.m_sElementName = ValueEnforcer.notEmpty (sElementName, "ElementName");
+    this.m_aNativeClass = ValueEnforcer.notNull (aNativeClass, "NativeClass");
   }
 
+  @Override
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
   {
     // Append created element - or null if the passed object is null
-    final IMicroElement eElement = MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName);
+    final IMicroElement eElement = MicroTypeConverter.convertToMicroElement (aObject,
+                                                                             this.m_sNamespaceURI,
+                                                                             this.m_sElementName);
     eDataElement.appendChild (eElement);
   }
 
+  @Override
   @Nullable
   public DATATYPE getAsDataValue (@Nonnull final IMicroElement eDataElement)
   {
     final IMicroElement eChildElement = eDataElement.getFirstChildElement ();
     if (eChildElement != null)
     {
-      if (!EqualsUtils.equals (m_sNamespaceURI, eChildElement.getNamespaceURI ()))
-        throw new IllegalStateException ("Namespace mismatch! Expected: " + m_sNamespaceURI);
-      if (!m_sElementName.equals (eChildElement.getTagName ()))
-        throw new IllegalStateException ("Tag name mismatch! Expected: " + m_sElementName);
+      if (!EqualsUtils.equals (this.m_sNamespaceURI, eChildElement.getNamespaceURI ()))
+        throw new IllegalStateException ("Namespace mismatch! Expected: " + this.m_sNamespaceURI);
+      if (!this.m_sElementName.equals (eChildElement.getTagName ()))
+        throw new IllegalStateException ("Tag name mismatch! Expected: " + this.m_sElementName);
     }
-    return MicroTypeConverter.convertToNative (eChildElement, m_aNativeClass);
+    return MicroTypeConverter.convertToNative (eChildElement, this.m_aNativeClass);
   }
 
   /**
    * Factory method.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param sElementName
    *        The element name to use. May neither be <code>null</code> nor empty
    * @param aNativeClass
@@ -119,6 +125,8 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
   /**
    * Factory method
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param sNamespaceURI
    *        The namespace URI for the created element. May be <code>null</code>.
    * @param sElementName

@@ -102,7 +102,9 @@ public class ByteBufferOutputStream extends OutputStream
    * @param nLen
    *        Number of bytes to wrap. Must be &ge; 0.
    */
-  public ByteBufferOutputStream (@Nonnull final byte [] aArray, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  public ByteBufferOutputStream (@Nonnull final byte [] aArray,
+                                 @Nonnegative final int nOfs,
+                                 @Nonnegative final int nLen)
   {
     this (ByteBuffer.wrap (aArray, nOfs, nLen), false);
   }
@@ -118,8 +120,8 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public ByteBufferOutputStream (@Nonnull final ByteBuffer aBuffer, final boolean bCanGrow)
   {
-    m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
-    m_bCanGrow = bCanGrow;
+    this.m_aBuffer = ValueEnforcer.notNull (aBuffer, "Buffer");
+    this.m_bCanGrow = bCanGrow;
   }
 
   /**
@@ -128,7 +130,7 @@ public class ByteBufferOutputStream extends OutputStream
   @Nonnull
   public ByteBuffer getBuffer ()
   {
-    return m_aBuffer;
+    return this.m_aBuffer;
   }
 
   /**
@@ -137,7 +139,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public boolean canGrow ()
   {
-    return m_bCanGrow;
+    return this.m_bCanGrow;
   }
 
   @Override
@@ -149,7 +151,7 @@ public class ByteBufferOutputStream extends OutputStream
    */
   public void reset ()
   {
-    m_aBuffer.clear ();
+    this.m_aBuffer.clear ();
   }
 
   /**
@@ -158,7 +160,7 @@ public class ByteBufferOutputStream extends OutputStream
   @Nonnegative
   public int size ()
   {
-    return m_aBuffer.position ();
+    return this.m_aBuffer.position ();
   }
 
   /**
@@ -170,9 +172,9 @@ public class ByteBufferOutputStream extends OutputStream
   @ReturnsMutableCopy
   public byte [] getAsByteArray ()
   {
-    final byte [] aArray = m_aBuffer.array ();
-    final int nOfs = m_aBuffer.arrayOffset ();
-    final int nLength = m_aBuffer.position ();
+    final byte [] aArray = this.m_aBuffer.array ();
+    final int nOfs = this.m_aBuffer.arrayOffset ();
+    final int nLength = this.m_aBuffer.position ();
 
     return ArrayHelper.getCopy (aArray, nOfs, nLength);
   }
@@ -189,9 +191,9 @@ public class ByteBufferOutputStream extends OutputStream
   {
     ValueEnforcer.notNull (aDestBuffer, "DestBuffer");
 
-    m_aBuffer.flip ();
-    aDestBuffer.put (m_aBuffer);
-    m_aBuffer.compact ();
+    this.m_aBuffer.flip ();
+    aDestBuffer.put (this.m_aBuffer);
+    this.m_aBuffer.compact ();
   }
 
   /**
@@ -223,9 +225,9 @@ public class ByteBufferOutputStream extends OutputStream
   {
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
-    m_aBuffer.flip ();
-    m_aBuffer.get (aBuf, nOfs, nLen);
-    m_aBuffer.compact ();
+    this.m_aBuffer.flip ();
+    this.m_aBuffer.get (aBuf, nOfs, nLen);
+    this.m_aBuffer.compact ();
   }
 
   /**
@@ -234,13 +236,15 @@ public class ByteBufferOutputStream extends OutputStream
    * 
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>.
+   * @throws IOException
+   *         eventually
    */
   public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
   {
     ValueEnforcer.notNull (aOS, "OutputStream");
 
-    aOS.write (m_aBuffer.array (), m_aBuffer.arrayOffset (), m_aBuffer.position ());
-    m_aBuffer.clear ();
+    aOS.write (this.m_aBuffer.array (), this.m_aBuffer.arrayOffset (), this.m_aBuffer.position ());
+    this.m_aBuffer.clear ();
   }
 
   /**
@@ -253,35 +257,38 @@ public class ByteBufferOutputStream extends OutputStream
   @Nonnull
   public String getAsString (@Nonnull final Charset aCharset)
   {
-    return CharsetManager.getAsString (m_aBuffer.array (), m_aBuffer.arrayOffset (), m_aBuffer.position (), aCharset);
+    return CharsetManager.getAsString (this.m_aBuffer.array (),
+                                       this.m_aBuffer.arrayOffset (),
+                                       this.m_aBuffer.position (),
+                                       aCharset);
   }
 
   private void _growBy (@Nonnegative final int nBytesToGrow)
   {
-    final int nCurSize = m_aBuffer.capacity ();
+    final int nCurSize = this.m_aBuffer.capacity ();
     final int nNewSize = Math.max (nCurSize << 1, nCurSize + nBytesToGrow);
     final ByteBuffer aNewBuffer = ByteBuffer.allocate (nNewSize);
-    m_aBuffer.flip ();
-    aNewBuffer.put (m_aBuffer);
-    m_aBuffer = aNewBuffer;
+    this.m_aBuffer.flip ();
+    aNewBuffer.put (this.m_aBuffer);
+    this.m_aBuffer = aNewBuffer;
   }
 
   @Override
   public void write (final int b)
   {
-    if (m_bCanGrow && !m_aBuffer.hasRemaining ())
+    if (this.m_bCanGrow && !this.m_aBuffer.hasRemaining ())
       _growBy (1);
 
-    m_aBuffer.put ((byte) b);
+    this.m_aBuffer.put ((byte) b);
   }
 
   @Override
   public void write (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (m_bCanGrow && nLen > m_aBuffer.remaining ())
+    if (this.m_bCanGrow && nLen > this.m_aBuffer.remaining ())
       _growBy (nLen);
 
-    m_aBuffer.put (aBuf, nOfs, nLen);
+    this.m_aBuffer.put (aBuf, nOfs, nLen);
   }
 
   /**
@@ -294,9 +301,9 @@ public class ByteBufferOutputStream extends OutputStream
   {
     ValueEnforcer.notNull (aSrcBuffer, "SourceBuffer");
 
-    if (m_bCanGrow && aSrcBuffer.remaining () > m_aBuffer.remaining ())
+    if (this.m_bCanGrow && aSrcBuffer.remaining () > this.m_aBuffer.remaining ())
       _growBy (aSrcBuffer.remaining ());
 
-    m_aBuffer.put (aSrcBuffer);
+    this.m_aBuffer.put (aSrcBuffer);
   }
 }

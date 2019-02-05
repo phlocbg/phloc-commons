@@ -74,7 +74,7 @@ public interface IURLProtocol extends Serializable
 
   /**
    * @return <code>true</code> if this protocol can handle HTTP query parameters
-   *         (?x=y&z=1)
+   *         (?x=y&amp;z=1)
    */
   boolean allowsForQueryParameters ();
 }

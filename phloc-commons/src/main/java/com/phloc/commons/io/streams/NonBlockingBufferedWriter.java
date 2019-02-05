@@ -73,18 +73,18 @@ public class NonBlockingBufferedWriter extends Writer
    * @param nBufSize
    *        Output-buffer size, a positive integer
    * @exception IllegalArgumentException
-   *            If sz is <= 0
+   *            If size is &lt;= 0
    */
   public NonBlockingBufferedWriter (@Nonnull final Writer aWriter, @Nonnegative final int nBufSize)
   {
     super (aWriter);
     ValueEnforcer.isGT0 (nBufSize, "BufSize");
-    m_aWriter = aWriter;
-    m_aBuf = new char [nBufSize];
-    m_nChars = nBufSize;
-    m_nNextChar = 0;
+    this.m_aWriter = aWriter;
+    this.m_aBuf = new char [nBufSize];
+    this.m_nChars = nBufSize;
+    this.m_nNextChar = 0;
 
-    m_sLineSeparator = SystemProperties.getLineSeparator ();
+    this.m_sLineSeparator = SystemProperties.getLineSeparator ();
   }
 
   /**
@@ -95,7 +95,7 @@ public class NonBlockingBufferedWriter extends Writer
    */
   private void _ensureOpen () throws IOException
   {
-    if (m_aWriter == null)
+    if (this.m_aWriter == null)
       throw new IOException ("Stream closed");
   }
 
@@ -110,10 +110,10 @@ public class NonBlockingBufferedWriter extends Writer
   void flushBuffer () throws IOException
   {
     _ensureOpen ();
-    if (m_nNextChar != 0)
+    if (this.m_nNextChar != 0)
     {
-      m_aWriter.write (m_aBuf, 0, m_nNextChar);
-      m_nNextChar = 0;
+      this.m_aWriter.write (this.m_aBuf, 0, this.m_nNextChar);
+      this.m_nNextChar = 0;
     }
   }
 
@@ -127,9 +127,9 @@ public class NonBlockingBufferedWriter extends Writer
   public void write (final int c) throws IOException
   {
     _ensureOpen ();
-    if (m_nNextChar >= m_nChars)
+    if (this.m_nNextChar >= this.m_nChars)
       flushBuffer ();
-    m_aBuf[m_nNextChar++] = (char) c;
+    this.m_aBuf[this.m_nNextChar++] = (char) c;
   }
 
   /**
@@ -161,7 +161,7 @@ public class NonBlockingBufferedWriter extends Writer
     if (nLen == 0)
       return;
 
-    if (nLen >= m_nChars)
+    if (nLen >= this.m_nChars)
     {
       /*
        * If the request length exceeds the size of the output buffer, flush the
@@ -169,7 +169,7 @@ public class NonBlockingBufferedWriter extends Writer
        * will cascade harmlessly.
        */
       flushBuffer ();
-      m_aWriter.write (cbuf, nOfs, nLen);
+      this.m_aWriter.write (cbuf, nOfs, nLen);
     }
     else
     {
@@ -177,11 +177,11 @@ public class NonBlockingBufferedWriter extends Writer
       final int t = nOfs + nLen;
       while (b < t)
       {
-        final int d = Math.min (m_nChars - m_nNextChar, t - b);
-        System.arraycopy (cbuf, b, m_aBuf, m_nNextChar, d);
+        final int d = Math.min (this.m_nChars - this.m_nNextChar, t - b);
+        System.arraycopy (cbuf, b, this.m_aBuf, this.m_nNextChar, d);
         b += d;
-        m_nNextChar += d;
-        if (m_nNextChar >= m_nChars)
+        this.m_nNextChar += d;
+        if (this.m_nNextChar >= this.m_nChars)
           flushBuffer ();
       }
     }
@@ -214,11 +214,11 @@ public class NonBlockingBufferedWriter extends Writer
     final int t = off + len;
     while (b < t)
     {
-      final int d = Math.min (m_nChars - m_nNextChar, t - b);
-      s.getChars (b, b + d, m_aBuf, m_nNextChar);
+      final int d = Math.min (this.m_nChars - this.m_nNextChar, t - b);
+      s.getChars (b, b + d, this.m_aBuf, this.m_nNextChar);
       b += d;
-      m_nNextChar += d;
-      if (m_nNextChar >= m_nChars)
+      this.m_nNextChar += d;
+      if (this.m_nNextChar >= this.m_nChars)
         flushBuffer ();
     }
   }
@@ -233,7 +233,7 @@ public class NonBlockingBufferedWriter extends Writer
    */
   public void newLine () throws IOException
   {
-    write (m_sLineSeparator);
+    write (this.m_sLineSeparator);
   }
 
   /**
@@ -246,13 +246,13 @@ public class NonBlockingBufferedWriter extends Writer
   public void flush () throws IOException
   {
     flushBuffer ();
-    m_aWriter.flush ();
+    this.m_aWriter.flush ();
   }
 
   @Override
   public void close () throws IOException
   {
-    if (m_aWriter != null)
+    if (this.m_aWriter != null)
     {
       try
       {
@@ -260,9 +260,9 @@ public class NonBlockingBufferedWriter extends Writer
       }
       finally
       {
-        m_aWriter.close ();
-        m_aWriter = null;
-        m_aBuf = null;
+        this.m_aWriter.close ();
+        this.m_aWriter = null;
+        this.m_aBuf = null;
       }
     }
   }

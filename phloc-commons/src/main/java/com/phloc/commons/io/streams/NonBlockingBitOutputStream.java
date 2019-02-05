@@ -82,9 +82,9 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
     ValueEnforcer.notNull (aOS, "OutputStream");
     ValueEnforcer.notNull (aByteOrder, "ByteOrder");
 
-    m_aOS = aOS;
-    m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
-    m_nBufferedBitCount = 0;
+    this.m_aOS = aOS;
+    this.m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
+    this.m_nBufferedBitCount = 0;
   }
 
   /**
@@ -93,7 +93,7 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
   @Nonnull
   public ByteOrder getByteOrder ()
   {
-    return m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+    return this.m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
   }
 
   /**
@@ -107,25 +107,26 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    */
   public void writeBit (final int aBit) throws IOException
   {
-    if (m_aOS == null)
+    if (this.m_aOS == null)
       throw new IllegalStateException ("Already closed");
     if (aBit != CGlobal.BIT_NOT_SET && aBit != CGlobal.BIT_SET)
       throw new IllegalArgumentException (aBit + " is not a bit");
 
     if (aBit == CGlobal.BIT_SET)
-      if (m_bHighOrderBitFirst)
-        m_nBuffer |= (aBit << (7 - m_nBufferedBitCount));
+      if (this.m_bHighOrderBitFirst)
+        this.m_nBuffer |= (aBit << (7 - this.m_nBufferedBitCount));
       else
-        m_nBuffer |= (aBit << m_nBufferedBitCount);
+        this.m_nBuffer |= (aBit << this.m_nBufferedBitCount);
 
-    if (++m_nBufferedBitCount == CGlobal.BITS_PER_BYTE)
+    if (++this.m_nBufferedBitCount == CGlobal.BITS_PER_BYTE)
       flush ();
   }
 
   /**
    * Write the specified number of bits from the int value to the stream.
    * Corresponding to the InputStream, the bits are written starting at the
-   * highest bit ( >> aNumberOfBits ), going down to the lowest bit ( >> 0 ).
+   * highest bit ( &gt;&gt; aNumberOfBits ), going down to the lowest bit (
+   * &gt;&gt; 0 ).
    * 
    * @param aValue
    *        the int containing the bits that should be written to the stream.
@@ -148,36 +149,38 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    * @throws IOException
    *         In case writing to the output stream failed
    */
+  @Override
   public void flush () throws IOException
   {
-    if (m_nBufferedBitCount > 0)
+    if (this.m_nBufferedBitCount > 0)
     {
-      if (m_nBufferedBitCount != CGlobal.BITS_PER_BYTE)
+      if (this.m_nBufferedBitCount != CGlobal.BITS_PER_BYTE)
         if (s_aLogger.isDebugEnabled ())
-          s_aLogger.debug ("Flushing BitOutputStream with only " + m_nBufferedBitCount + " bits");
-      m_aOS.write ((byte) m_nBuffer);
-      m_nBufferedBitCount = 0;
-      m_nBuffer = 0;
+          s_aLogger.debug ("Flushing BitOutputStream with only " + this.m_nBufferedBitCount + " bits");
+      this.m_aOS.write ((byte) this.m_nBuffer);
+      this.m_nBufferedBitCount = 0;
+      this.m_nBuffer = 0;
     }
   }
 
   /**
    * Flush the data and close the underlying output stream.
    */
+  @Override
   public void close ()
   {
     StreamUtils.flush (this);
-    StreamUtils.close (m_aOS);
-    m_aOS = null;
+    StreamUtils.close (this.m_aOS);
+    this.m_aOS = null;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("OS", m_aOS)
-                                       .append ("highOrderBitFirst", m_bHighOrderBitFirst)
-                                       .append ("buffer", m_nBuffer)
-                                       .append ("bitCount", m_nBufferedBitCount)
+    return new ToStringGenerator (this).append ("OS", this.m_aOS)
+                                       .append ("highOrderBitFirst", this.m_bHighOrderBitFirst)
+                                       .append ("buffer", this.m_nBuffer)
+                                       .append ("bitCount", this.m_nBufferedBitCount)
                                        .toString ();
   }
 }

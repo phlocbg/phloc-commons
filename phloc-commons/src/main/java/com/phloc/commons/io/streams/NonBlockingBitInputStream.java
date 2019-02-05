@@ -75,9 +75,9 @@ public class NonBlockingBitInputStream implements Closeable
     ValueEnforcer.notNull (aIS, "InputStream");
     ValueEnforcer.notNull (aByteOrder, "ByteOrder");
 
-    m_aIS = StreamUtils.getBuffered (aIS);
-    m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
-    m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
+    this.m_aIS = StreamUtils.getBuffered (aIS);
+    this.m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
+    this.m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
   }
 
   /**
@@ -86,14 +86,14 @@ public class NonBlockingBitInputStream implements Closeable
   @Nonnull
   public ByteOrder getByteOrder ()
   {
-    return m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+    return this.m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
   }
 
   /**
    * Read a specified number of bits and return them combined as an integer
-   * value. The bits are written to the integer starting at the highest bit ( <<
-   * aNumberOfBits ), going down to the lowest bit ( << 0 ), so thge returned
-   * ByteOrder is always LITTLE_ENDIAN!
+   * value. The bits are written to the integer starting at the highest bit (
+   * &lt;&lt; aNumberOfBits ), going down to the lowest bit ( &lt;&lt; 0 ), so
+   * thge returned ByteOrder is always LITTLE_ENDIAN!
    * 
    * @param aNumberOfBits
    *        defines how many bits to read from the stream.
@@ -120,22 +120,22 @@ public class NonBlockingBitInputStream implements Closeable
    */
   public int readBit () throws IOException
   {
-    if (m_aIS == null)
+    if (this.m_aIS == null)
       throw new IOException ("Already closed");
 
-    if (m_nNextBitIndex == CGlobal.BITS_PER_BYTE)
+    if (this.m_nNextBitIndex == CGlobal.BITS_PER_BYTE)
     {
-      m_nBuffer = m_aIS.read ();
-      if (m_nBuffer == -1)
+      this.m_nBuffer = this.m_aIS.read ();
+      if (this.m_nBuffer == -1)
         throw new EOFException ();
 
-      m_nNextBitIndex = 0;
+      this.m_nNextBitIndex = 0;
     }
 
-    final int nSelectorBit = m_bHighOrderBitFirst ? (1 << (CGlobal.BITS_PER_BYTE - 1 - m_nNextBitIndex))
-                                                 : (1 << m_nNextBitIndex);
-    final int nBitValue = m_nBuffer & nSelectorBit;
-    m_nNextBitIndex++;
+    final int nSelectorBit = this.m_bHighOrderBitFirst ? (1 << (CGlobal.BITS_PER_BYTE - 1 - this.m_nNextBitIndex))
+                                                       : (1 << this.m_nNextBitIndex);
+    final int nBitValue = this.m_nBuffer & nSelectorBit;
+    this.m_nNextBitIndex++;
 
     return nBitValue == 0 ? CGlobal.BIT_NOT_SET : CGlobal.BIT_SET;
   }
@@ -143,19 +143,20 @@ public class NonBlockingBitInputStream implements Closeable
   /**
    * Close the underlying input stream.
    */
+  @Override
   public void close ()
   {
-    StreamUtils.close (m_aIS);
-    m_aIS = null;
+    StreamUtils.close (this.m_aIS);
+    this.m_aIS = null;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("IS", m_aIS)
-                                       .append ("highOrderBitFirst", m_bHighOrderBitFirst)
-                                       .append ("nextBitIndex", m_nNextBitIndex)
-                                       .append ("buffer", m_nBuffer)
+    return new ToStringGenerator (this).append ("IS", this.m_aIS)
+                                       .append ("highOrderBitFirst", this.m_bHighOrderBitFirst)
+                                       .append ("nextBitIndex", this.m_nNextBitIndex)
+                                       .append ("buffer", this.m_nBuffer)
                                        .toString ();
   }
 }

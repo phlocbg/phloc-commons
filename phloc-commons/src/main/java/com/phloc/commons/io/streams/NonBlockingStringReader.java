@@ -64,8 +64,8 @@ public class NonBlockingStringReader extends Reader
    */
   public NonBlockingStringReader (@Nonnull final String sStr)
   {
-    m_sStr = ValueEnforcer.notNull (sStr, "String");
-    m_nLength = sStr.length ();
+    this.m_sStr = ValueEnforcer.notNull (sStr, "String");
+    this.m_nLength = sStr.length ();
   }
 
   /**
@@ -76,7 +76,7 @@ public class NonBlockingStringReader extends Reader
    */
   private void _ensureOpen () throws IOException
   {
-    if (m_sStr == null)
+    if (this.m_sStr == null)
       throw new IOException ("Stream closed");
   }
 
@@ -92,9 +92,9 @@ public class NonBlockingStringReader extends Reader
   public int read () throws IOException
   {
     _ensureOpen ();
-    if (m_nNext >= m_nLength)
+    if (this.m_nNext >= this.m_nLength)
       return -1;
-    return m_sStr.charAt (m_nNext++);
+    return this.m_sStr.charAt (this.m_nNext++);
   }
 
   /**
@@ -113,18 +113,20 @@ public class NonBlockingStringReader extends Reader
    */
   @Override
   @CheckForSigned
-  public int read (@Nonnull final char [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen) throws IOException
+  public int read (@Nonnull final char [] aBuf,
+                   @Nonnegative final int nOfs,
+                   @Nonnegative final int nLen) throws IOException
   {
     _ensureOpen ();
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     if (nLen == 0)
       return 0;
-    if (m_nNext >= m_nLength)
+    if (this.m_nNext >= this.m_nLength)
       return -1;
-    final int nChars = Math.min (m_nLength - m_nNext, nLen);
-    m_sStr.getChars (m_nNext, m_nNext + nChars, aBuf, nOfs);
-    m_nNext += nChars;
+    final int nChars = Math.min (this.m_nLength - this.m_nNext, nLen);
+    this.m_sStr.getChars (this.m_nNext, this.m_nNext + nChars, aBuf, nOfs);
+    this.m_nNext += nChars;
     return nChars;
   }
 
@@ -148,12 +150,12 @@ public class NonBlockingStringReader extends Reader
   public long skip (final long nCharsToSkip) throws IOException
   {
     _ensureOpen ();
-    if (m_nNext >= m_nLength)
+    if (this.m_nNext >= this.m_nLength)
       return 0;
     // Bound skip by beginning and end of the source
-    long n = Math.min (m_nLength - m_nNext, nCharsToSkip);
-    n = Math.max (-m_nNext, n);
-    m_nNext += n;
+    long n = Math.min (this.m_nLength - this.m_nNext, nCharsToSkip);
+    n = Math.max (-this.m_nNext, n);
+    this.m_nNext += n;
     return n;
   }
 
@@ -193,7 +195,7 @@ public class NonBlockingStringReader extends Reader
    *        there is no actual limit, so this argument must not be negative, but
    *        is otherwise ignored.
    * @exception IllegalArgumentException
-   *            If readAheadLimit is < 0
+   *            If readAheadLimit is &lt; 0
    * @exception IOException
    *            If an I/O error occurs
    */
@@ -203,7 +205,7 @@ public class NonBlockingStringReader extends Reader
     ValueEnforcer.isGE0 (nReadAheadLimit, "ReadAheadLimit");
 
     _ensureOpen ();
-    m_nMark = m_nNext;
+    this.m_nMark = this.m_nNext;
   }
 
   /**
@@ -217,7 +219,7 @@ public class NonBlockingStringReader extends Reader
   public void reset () throws IOException
   {
     _ensureOpen ();
-    m_nNext = m_nMark;
+    this.m_nNext = this.m_nMark;
   }
 
   /**
@@ -229,6 +231,6 @@ public class NonBlockingStringReader extends Reader
   @Override
   public void close ()
   {
-    m_sStr = null;
+    this.m_sStr = null;
   }
 }

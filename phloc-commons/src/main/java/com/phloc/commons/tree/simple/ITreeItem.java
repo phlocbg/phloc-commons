@@ -34,8 +34,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public interface ITreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> extends
-                                                                                       IBasicTreeItem <DATATYPE, ITEMTYPE>
+public interface ITreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> extends IBasicTreeItem <DATATYPE, ITEMTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
@@ -68,7 +67,7 @@ public interface ITreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
    * Remove the passed node as a child node from this node.
    * 
    * @param aChild
-   *        The child to be removed. May not be <code>null</code.
+   *        The child to be removed. May not be <code>null</code>.
    * @return {@link EChange#CHANGED} if the removal succeeded,
    *         {@link EChange#UNCHANGED} otherwise
    */

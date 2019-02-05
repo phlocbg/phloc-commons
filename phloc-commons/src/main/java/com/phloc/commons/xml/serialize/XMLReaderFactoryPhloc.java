@@ -32,10 +32,10 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperty;
 
 /**
- * Factory for creating an XML reader. <blockquote>
- * <em>This module, both source code and documentation, is in the
- * Public Domain, and comes with <strong>NO WARRANTY</strong>.</em> See <a
- * href='http://www.saxproject.org'>http://www.saxproject.org</a> for further
+ * Factory for creating an XML reader. <blockquote> <em>This module, both source
+ * code and documentation, is in the Public Domain, and comes with <strong>NO
+ * WARRANTY</strong>.</em> See
+ * <a href='http://www.saxproject.org'>http://www.saxproject.org</a> for further
  * information. </blockquote>
  * <p>
  * This class contains static methods for creating an XML reader from an
@@ -83,6 +83,7 @@ public final class XMLReaderFactoryPhloc
     {
       return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
       {
+        @Override
         public ClassLoader run ()
         {
           ClassLoader cl = Thread.currentThread ().getContextClassLoader ();
@@ -102,6 +103,7 @@ public final class XMLReaderFactoryPhloc
     {
       return AccessController.doPrivileged (new PrivilegedAction <InputStream> ()
       {
+        @Override
         public InputStream run ()
         {
           InputStream ris;
@@ -116,11 +118,11 @@ public final class XMLReaderFactoryPhloc
   }
 
   /**
-   * Create a new instance of a class by name. <blockquote>
-   * <em>This module, both source code and documentation, is in the
-   * Public Domain, and comes with <strong>NO WARRANTY</strong>.</em> See <a
-   * href='http://www.saxproject.org'>http://www.saxproject.org</a> for further
-   * information. </blockquote>
+   * Create a new instance of a class by name. <blockquote> <em>This module,
+   * both source code and documentation, is in the Public Domain, and comes with
+   * <strong>NO WARRANTY</strong>.</em> See
+   * <a href='http://www.saxproject.org'>http://www.saxproject.org</a> for
+   * further information. </blockquote>
    * <p>
    * This class contains a static method for creating an instance of a class
    * from an explicit class name. It tries to use the thread's context
@@ -143,8 +145,8 @@ public final class XMLReaderFactoryPhloc
      * this code is not exposed at the API level.
      */
     static Object newInstance (final ClassLoader classLoader, final String className) throws ClassNotFoundException,
-                                                                                     IllegalAccessException,
-                                                                                     InstantiationException
+                                                                                      IllegalAccessException,
+                                                                                      InstantiationException
     {
       // make sure we have access to restricted packages
       boolean internal = false;
@@ -179,7 +181,7 @@ public final class XMLReaderFactoryPhloc
   /**
    * Attempt to create an XMLReader from system defaults. In environments which
    * can support it, the name of the XMLReader class is determined by trying
-   * each these options in order, and using the first one which succeeds:</p>
+   * each these options in order, and using the first one which succeeds:<br>
    * <ul>
    * <li>If the system property <code>org.xml.sax.driver</code> has a value,
    * that is used as an XMLReader class name.</li>
@@ -308,6 +310,8 @@ public final class XMLReaderFactoryPhloc
    * (perhaps an applet) is not permitted to load classes dynamically.
    * </p>
    * 
+   * @param className
+   *        class name
    * @return A new XML reader.
    * @exception org.xml.sax.SAXException
    *            If the class cannot be loaded, instantiated, and cast to
@@ -339,7 +343,8 @@ public final class XMLReaderFactoryPhloc
     {
       throw new SAXException ("SAX2 driver class " +
                               className +
-                              " loaded but cannot be instantiated (no empty public constructor?)", e3);
+                              " loaded but cannot be instantiated (no empty public constructor?)",
+                              e3);
     }
     catch (final ClassCastException e4)
     {

@@ -52,6 +52,7 @@ public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * @return The data ID of this item. May be <code>null</code> depending on the
    *         validator.
    */
+  @Override
   KEYTYPE getID ();
 
   /**
@@ -137,7 +138,7 @@ public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * Remove the passed node as a direct child node from this node.
    * 
    * @param aDataID
-   *        The ID of the element to be removed. May not be <code>null</code.
+   *        The ID of the element to be removed. May not be <code>null</code>.
    * @return {@link EChange}
    */
   @Nonnull

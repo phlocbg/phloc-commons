@@ -157,7 +157,9 @@ public final class EqualsUtils
    * collection!
    * 
    * @param aColl1
+   *        first collection
    * @param aColl2
+   *        second collection
    * @return Whether or not the collections have equal content
    */
   public static boolean equals (@Nullable final Collection <?> aColl1, @Nullable final Collection <?> aColl2)

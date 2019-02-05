@@ -73,7 +73,7 @@ public interface IXMLIterationHandler
    * On entity reference.
    * 
    * @param sEntityRef
-   *        The reference (without '&' and ';' !!)
+   *        The reference (without '&amp;' and ';' !!)
    */
   void onEntityReference (@Nonnull String sEntityRef);
 

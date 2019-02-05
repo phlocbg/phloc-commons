@@ -51,11 +51,11 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * The XML file needs to look as follows:
  * 
  * <pre>
- * &lt;list>
- *   &lt;item value="..."/>
- *   &lt;item value="..."/>
+ * &lt;list&gt;
+ *   &lt;item value="..."/&gt;
+ *   &lt;item value="..."/&gt;
  *   ...
- * &lt;/list>
+ * &lt;/list&gt;
  * </pre>
  * 
  * @author Philip Helger

@@ -61,6 +61,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @return A list of all currently available plugins
@@ -76,6 +78,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aClassLoader
@@ -95,6 +99,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aLogger
@@ -113,6 +119,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aClassLoader
@@ -180,6 +188,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class and return only the first instance.
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @return A collection of all currently available plugins. Never
@@ -195,6 +205,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class and return only the first instance.
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aClassLoader
@@ -214,6 +226,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class and return only the first instance.
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aLogger
@@ -231,6 +245,8 @@ public final class ServiceLoaderUtils
    * Uses the {@link ServiceLoader} to load all SPI implementations of the
    * passed class and return only the first instance.
    * 
+   * @param <T>
+   *        type
    * @param aSPIClass
    *        The SPI interface class. May not be <code>null</code>.
    * @param aClassLoader

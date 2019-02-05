@@ -119,7 +119,7 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   @Nonnull
   private InputStream _getInIfOpen () throws IOException
   {
-    final InputStream ret = in;
+    final InputStream ret = this.in;
     if (ret == null)
       throw new IOException ("Stream closed");
     return ret;
@@ -132,7 +132,7 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   @Nonnull
   private byte [] _getBufIfOpen () throws IOException
   {
-    final byte [] ret = m_aBuf;
+    final byte [] ret = this.m_aBuf;
     if (ret == null)
       throw new IOException ("Stream closed");
     return ret;
@@ -162,13 +162,13 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
    * @param nSize
    *        the buffer size.
    * @exception IllegalArgumentException
-   *            if size <= 0.
+   *            if size &lt;= 0.
    */
   public NonBlockingBufferedInputStream (@Nonnull final InputStream aIS, @Nonnegative final int nSize)
   {
     super (aIS);
     ValueEnforcer.isGT0 (nSize, "Size");
-    m_aBuf = new byte [nSize];
+    this.m_aBuf = new byte [nSize];
   }
 
   /**
@@ -180,34 +180,34 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   private void _fill () throws IOException
   {
     byte [] buffer = _getBufIfOpen ();
-    if (m_nMarkPos < 0)
-      m_nPos = 0; /* no mark: throw away the buffer */
+    if (this.m_nMarkPos < 0)
+      this.m_nPos = 0; /* no mark: throw away the buffer */
     else
-      if (m_nPos >= buffer.length) /* no room left in buffer */
-        if (m_nMarkPos > 0)
+      if (this.m_nPos >= buffer.length) /* no room left in buffer */
+        if (this.m_nMarkPos > 0)
         {
           /* can throw away early part of the buffer */
-          final int sz = m_nPos - m_nMarkPos;
-          System.arraycopy (buffer, m_nMarkPos, buffer, 0, sz);
-          m_nPos = sz;
-          m_nMarkPos = 0;
+          final int sz = this.m_nPos - this.m_nMarkPos;
+          System.arraycopy (buffer, this.m_nMarkPos, buffer, 0, sz);
+          this.m_nPos = sz;
+          this.m_nMarkPos = 0;
         }
         else
-          if (buffer.length >= m_nMarkLimit)
+          if (buffer.length >= this.m_nMarkLimit)
           {
             /* buffer got too big, invalidate mark */
-            m_nMarkPos = -1;
+            this.m_nMarkPos = -1;
             /* drop buffer contents */
-            m_nPos = 0;
+            this.m_nPos = 0;
           }
           else
           {
             /* grow buffer */
-            int nsz = m_nPos * 2;
-            if (nsz > m_nMarkLimit)
-              nsz = m_nMarkLimit;
+            int nsz = this.m_nPos * 2;
+            if (nsz > this.m_nMarkLimit)
+              nsz = this.m_nMarkLimit;
             final byte nbuf[] = new byte [nsz];
-            System.arraycopy (buffer, 0, nbuf, 0, m_nPos);
+            System.arraycopy (buffer, 0, nbuf, 0, this.m_nPos);
             if (!s_aBufUpdater.compareAndSet (this, buffer, nbuf))
             {
               // Can't replace buf if there was an async close.
@@ -219,10 +219,10 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
             }
             buffer = nbuf;
           }
-    m_nCount = m_nPos;
-    final int n = _getInIfOpen ().read (buffer, m_nPos, buffer.length - m_nPos);
+    this.m_nCount = this.m_nPos;
+    final int n = _getInIfOpen ().read (buffer, this.m_nPos, buffer.length - this.m_nPos);
     if (n > 0)
-      m_nCount = n + m_nPos;
+      this.m_nCount = n + this.m_nPos;
   }
 
   /**
@@ -238,22 +238,24 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   @Override
   public int read () throws IOException
   {
-    if (m_nPos >= m_nCount)
+    if (this.m_nPos >= this.m_nCount)
     {
       _fill ();
-      if (m_nPos >= m_nCount)
+      if (this.m_nPos >= this.m_nCount)
         return -1;
     }
-    return _getBufIfOpen ()[m_nPos++] & 0xff;
+    return _getBufIfOpen ()[this.m_nPos++] & 0xff;
   }
 
   /**
    * Read characters into a portion of an array, reading from the underlying
    * stream at most once if necessary.
    */
-  private int _read1 (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen) throws IOException
+  private int _read1 (@Nonnull final byte [] aBuf,
+                      @Nonnegative final int nOfs,
+                      @Nonnegative final int nLen) throws IOException
   {
-    int nAvail = m_nCount - m_nPos;
+    int nAvail = this.m_nCount - this.m_nPos;
     if (nAvail <= 0)
     {
       /*
@@ -261,17 +263,17 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
        * there is no mark/reset activity, do not bother to copy the bytes into
        * the local buffer. In this way buffered streams will cascade harmlessly.
        */
-      if (nLen >= _getBufIfOpen ().length && m_nMarkPos < 0)
+      if (nLen >= _getBufIfOpen ().length && this.m_nMarkPos < 0)
         return _getInIfOpen ().read (aBuf, nOfs, nLen);
 
       _fill ();
-      nAvail = m_nCount - m_nPos;
+      nAvail = this.m_nCount - this.m_nPos;
       if (nAvail <= 0)
         return -1;
     }
     final int nCnt = nAvail < nLen ? nAvail : nLen;
-    System.arraycopy (_getBufIfOpen (), m_nPos, aBuf, nOfs, nCnt);
-    m_nPos += nCnt;
+    System.arraycopy (_getBufIfOpen (), this.m_nPos, aBuf, nOfs, nCnt);
+    this.m_nPos += nCnt;
     return nCnt;
   }
 
@@ -333,7 +335,7 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
       if (nTotal >= nLen)
         return nTotal;
       // if not closed but no bytes available, return
-      final InputStream aIS = in;
+      final InputStream aIS = this.in;
       if (aIS != null && aIS.available () <= 0)
         return nTotal;
     }
@@ -355,22 +357,22 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
     if (nBytesToSkip <= 0)
       return 0;
 
-    long nAvail = m_nCount - m_nPos;
+    long nAvail = this.m_nCount - this.m_nPos;
     if (nAvail <= 0)
     {
       // If no mark position set then don't keep in buffer
-      if (m_nMarkPos < 0)
+      if (this.m_nMarkPos < 0)
         return _getInIfOpen ().skip (nBytesToSkip);
 
       // Fill in buffer to save bytes for reset
       _fill ();
-      nAvail = m_nCount - m_nPos;
+      nAvail = this.m_nCount - this.m_nPos;
       if (nAvail <= 0)
         return 0;
     }
 
     final long nSkipped = nAvail < nBytesToSkip ? nAvail : nBytesToSkip;
-    m_nPos += nSkipped;
+    this.m_nPos += nSkipped;
     return nSkipped;
   }
 
@@ -394,7 +396,7 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   @Override
   public int available () throws IOException
   {
-    return _getInIfOpen ().available () + (m_nCount - m_nPos);
+    return _getInIfOpen ().available () + (this.m_nCount - this.m_nPos);
   }
 
   /**
@@ -410,8 +412,8 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   @Override
   public void mark (final int nReadlimit)
   {
-    m_nMarkLimit = nReadlimit;
-    m_nMarkPos = m_nPos;
+    this.m_nMarkLimit = nReadlimit;
+    this.m_nMarkPos = this.m_nPos;
   }
 
   /**
@@ -433,9 +435,9 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   public void reset () throws IOException
   {
     _getBufIfOpen (); // Cause exception if closed
-    if (m_nMarkPos < 0)
+    if (this.m_nMarkPos < 0)
       throw new IOException ("Resetting to invalid mark");
-    m_nPos = m_nMarkPos;
+    this.m_nPos = this.m_nMarkPos;
   }
 
   /**
@@ -467,12 +469,12 @@ public class NonBlockingBufferedInputStream extends FilterInputStream
   public void close () throws IOException
   {
     byte [] aBuffer;
-    while ((aBuffer = m_aBuf) != null)
+    while ((aBuffer = this.m_aBuf) != null)
     {
       if (s_aBufUpdater.compareAndSet (this, aBuffer, null))
       {
-        final InputStream aIS = in;
-        in = null;
+        final InputStream aIS = this.in;
+        this.in = null;
         if (aIS != null)
           aIS.close ();
         return;

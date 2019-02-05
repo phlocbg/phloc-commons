@@ -39,8 +39,7 @@ import com.phloc.commons.combine.ICombinator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class DefaultFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends
-                                                                                           BasicFolderTree <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>>
+public class DefaultFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends BasicFolderTree <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>>
 {
   /**
    * Constructor that creates a {@link DefaultFolderTreeItemFactory} using the
@@ -68,6 +67,10 @@ public class DefaultFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <
   /**
    * Create a new {@link DefaultFolderTree} using a set as the container.
    * 
+   * @param <K>
+   *        Key type
+   * @param <V>
+   *        Value type
    * @param aKeyCombinator
    *        The key combinator to be used
    * @return The created default folder tree

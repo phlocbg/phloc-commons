@@ -34,6 +34,7 @@ public interface ICodepointIterator extends Iterator <Codepoint>
   /**
    * @return <code>true</code> if there are codepoints remaining
    */
+  @Override
   boolean hasNext ();
 
   /**
@@ -63,6 +64,7 @@ public interface ICodepointIterator extends Iterator <Codepoint>
   /**
    * @return the next codepoint
    */
+  @Override
   @Nullable
   Codepoint next ();
 
@@ -73,13 +75,16 @@ public interface ICodepointIterator extends Iterator <Codepoint>
   Codepoint peek ();
 
   /**
+   * @param index
+   *        The desired index
    * @return Peek the specified codepoint
    */
   @Nullable
   Codepoint peek (@Nonnegative int index);
 
   /**
-   * Set the iterator position
+   * @param n
+   *        The new iterator position Set the iterator position
    */
   void position (@Nonnegative int n);
 
@@ -102,12 +107,16 @@ public interface ICodepointIterator extends Iterator <Codepoint>
   int remaining ();
 
   /**
+   * @param index
+   *        The index in question
    * @return <code>true</code> if the char at the specified index is a high
    *         surrogate
    */
   boolean isHigh (@Nonnegative int index);
 
   /**
+   * @param index
+   *        The index in question
    * @return <code>true</code> if the char at the specified index is a low
    *         surrogate
    */

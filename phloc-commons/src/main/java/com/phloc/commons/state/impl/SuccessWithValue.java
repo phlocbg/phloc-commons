@@ -66,29 +66,33 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
     ValueEnforcer.notNull (aSuccessIndicator, "SuccessIndicator");
 
     // Wrap in ESuccess so that equals works for sure
-    m_eSuccess = ESuccess.valueOf (aSuccessIndicator);
-    m_aObj = aObj;
+    this.m_eSuccess = ESuccess.valueOf (aSuccessIndicator);
+    this.m_aObj = aObj;
   }
 
+  @Override
   public boolean isSuccess ()
   {
-    return m_eSuccess.isSuccess ();
+    return this.m_eSuccess.isSuccess ();
   }
 
+  @Override
   public boolean isFailure ()
   {
-    return m_eSuccess.isFailure ();
+    return this.m_eSuccess.isFailure ();
   }
 
+  @Override
   @Nullable
   public DATATYPE get ()
   {
-    return m_aObj;
+    return this.m_aObj;
   }
 
+  @Override
   public boolean isSet ()
   {
-    return m_aObj != null;
+    return this.m_aObj != null;
   }
 
   /**
@@ -103,7 +107,7 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
   @Nullable
   public DATATYPE getIfSuccess (@Nullable final DATATYPE aFailureValue)
   {
-    return m_eSuccess.isSuccess () ? m_aObj : aFailureValue;
+    return this.m_eSuccess.isSuccess () ? this.m_aObj : aFailureValue;
   }
 
   /**
@@ -130,7 +134,7 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
   @Nullable
   public DATATYPE getIfFailure (@Nullable final DATATYPE aSuccessValue)
   {
-    return m_eSuccess.isFailure () ? m_aObj : aSuccessValue;
+    return this.m_eSuccess.isFailure () ? this.m_aObj : aSuccessValue;
   }
 
   /**
@@ -153,24 +157,26 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final SuccessWithValue <?> rhs = (SuccessWithValue <?>) o;
-    return m_eSuccess.equals (rhs.m_eSuccess) && EqualsUtils.equals (m_aObj, rhs.m_aObj);
+    return this.m_eSuccess.equals (rhs.m_eSuccess) && EqualsUtils.equals (this.m_aObj, rhs.m_aObj);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eSuccess).append (m_aObj).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_eSuccess).append (this.m_aObj).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("success", m_eSuccess).append ("obj", m_aObj).toString ();
+    return new ToStringGenerator (this).append ("success", this.m_eSuccess).append ("obj", this.m_aObj).toString ();
   }
 
   /**
    * Create a new object with the given value.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aSuccessIndicator
    *        The success indicator. May not be <code>null</code>.
    * @param aValue
@@ -187,6 +193,8 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
   /**
    * Create a new success object with the given value.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aValue
    *        The value to be used. May be <code>null</code>.
    * @return Never <code>null</code>.
@@ -200,6 +208,8 @@ public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonly
   /**
    * Create a new failure object with the given value.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aValue
    *        The value to be used. May be <code>null</code>.
    * @return Never <code>null</code>.

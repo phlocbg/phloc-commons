@@ -36,6 +36,7 @@ public final class IdentityEncoder <DATATYPE> implements IEncoder <DATATYPE>
   private IdentityEncoder ()
   {}
 
+  @Override
   @Nullable
   public DATATYPE encode (@Nullable final DATATYPE aInput)
   {
@@ -45,6 +46,8 @@ public final class IdentityEncoder <DATATYPE> implements IEncoder <DATATYPE>
   /**
    * Factory method for this class
    * 
+   * @param <DATATYPE>
+   *        The internal data type
    * @return Never <code>null</code>.
    */
   @Nonnull

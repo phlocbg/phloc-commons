@@ -78,6 +78,8 @@ public final class MicroWalker
    * Iterate the passed node and invoke the callback for all child nodes. The
    * callback is not invoked for the passed node itself!
    * 
+   * @param <T>
+   *        node type
    * @param aNode
    *        The node to iterate. May not be <code>null</code>.
    * @param aChildrenResolver

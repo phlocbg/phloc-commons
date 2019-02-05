@@ -279,6 +279,8 @@ public final class MicroUtils
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
    * destination type.
    * 
+   * @param <DSTTYPE>
+   *        destination type
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sChildElementName
@@ -350,6 +352,8 @@ public final class MicroUtils
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
    * destination type.
    * 
+   * @param <DSTTYPE>
+   *        destination type
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sNamespaceURI

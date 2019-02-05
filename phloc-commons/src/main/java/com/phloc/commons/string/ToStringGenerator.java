@@ -32,18 +32,30 @@ import javax.annotation.concurrent.NotThreadSafe;
  * formats.
  * <p>
  * A real world example for a final class derived from {@link Object} or a base
- * class looks like this: <code><pre>@Override
- * public String toString () {
+ * class looks like this:
+ * 
+ * <pre>
+ * &#64;Override
+ * public String toString ()
+ * {
  *   return new ToStringGenerator (this).append ("member1", member1).append ("member2", member2).toString ();
- * }</pre></code>
- * </p>
- * <p>
+ * }
+ * </pre>
+ * 
+ * <br>
  * For a derived class, the typical code looks like this, assuming that the base
- * class also used the {@link ToStringGenerator}: <code><pre>@Override
- * public String toString () {
- *   return ToStringGenerator.getDerived (super.toString ()).append ("member3", member3).append ("member4", member4).toString ();
- * }</pre></code>
- * </p>
+ * class also used the {@link ToStringGenerator}:
+ * 
+ * <pre>
+ * &#64;Override
+ * public String toString ()
+ * {
+ *   return ToStringGenerator.getDerived (super.toString ())
+ *                           .append ("member3", member3)
+ *                           .append ("member4", member4)
+ *                           .toString ();
+ * }
+ * </pre>
  * 
  * @author Philip Helger
  */
@@ -69,32 +81,32 @@ public final class ToStringGenerator
     {
       final String sClassName = aSrc.getClass ().getName ();
       final int nIndex = sClassName.lastIndexOf ('.');
-      m_aSB.append (nIndex == -1 ? sClassName : sClassName.substring (nIndex + 1))
-           .append ("@0x")
-           .append (StringHelper.getHexStringLeadingZero (System.identityHashCode (aSrc), 8));
+      this.m_aSB.append (nIndex == -1 ? sClassName : sClassName.substring (nIndex + 1))
+                .append ("@0x")
+                .append (StringHelper.getHexStringLeadingZero (System.identityHashCode (aSrc), 8));
     }
-    m_aSrc = aSrc;
+    this.m_aSrc = aSrc;
   }
 
   private void _beforeAddField ()
   {
-    if ((m_nIndex & FIRST_FIELD) == 0)
+    if ((this.m_nIndex & FIRST_FIELD) == 0)
     {
-      m_nIndex |= FIRST_FIELD;
+      this.m_nIndex |= FIRST_FIELD;
 
       // Only if a valid source object was provided
-      if (m_aSB.length () > 1)
-        m_aSB.append (": ");
+      if (this.m_aSB.length () > 1)
+        this.m_aSB.append (": ");
     }
     else
-      m_aSB.append ("; ");
+      this.m_aSB.append ("; ");
   }
 
   @Nonnull
   private ToStringGenerator _appendSuper (final String sSuper)
   {
     _beforeAddField ();
-    m_aSB.append (sSuper);
+    this.m_aSB.append (sSuper);
     return this;
   }
 
@@ -102,7 +114,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final boolean aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -110,7 +122,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final boolean [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -118,7 +130,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final byte aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -126,7 +138,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final byte [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -134,7 +146,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final char aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -142,7 +154,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final char [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -150,7 +162,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final double aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -158,7 +170,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final double [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -166,7 +178,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final float aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -174,7 +186,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final float [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -182,7 +194,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final int aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -190,7 +202,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final int [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -198,7 +210,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final long aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -206,7 +218,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final long [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -214,7 +226,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, final short aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    this.m_aSB.append (sField).append ('=').append (aValue);
     return this;
   }
 
@@ -222,7 +234,7 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final short [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    this.m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
     return this;
   }
 
@@ -241,7 +253,7 @@ public final class ToStringGenerator
   @Nonnull
   private String _getObjectValue (@Nullable final Object aValue)
   {
-    return aValue == null ? CONSTANT_NULL : aValue == m_aSrc ? CONSTANT_THIS : aValue.toString ();
+    return aValue == null ? CONSTANT_NULL : aValue == this.m_aSrc ? CONSTANT_THIS : aValue.toString ();
   }
 
   @Nonnull
@@ -271,7 +283,7 @@ public final class ToStringGenerator
     }
     _beforeAddField ();
     // Avoid endless loop with base object
-    m_aSB.append (sField).append ('=').append (_getObjectValue (aValue));
+    this.m_aSB.append (sField).append ('=').append (_getObjectValue (aValue));
     return this;
   }
 
@@ -279,26 +291,26 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final Object [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=');
+    this.m_aSB.append (sField).append ('=');
     if (aValue == null)
-      m_aSB.append (CONSTANT_NULL);
+      this.m_aSB.append (CONSTANT_NULL);
     else
     {
       final int nMax = aValue.length - 1;
       if (nMax == -1)
-        m_aSB.append ("[]");
+        this.m_aSB.append ("[]");
       else
       {
-        m_aSB.append ('[');
+        this.m_aSB.append ('[');
         for (int i = 0;; i++)
         {
           // Avoid endless loop with base object
-          m_aSB.append (_getObjectValue (aValue[i]));
+          this.m_aSB.append (_getObjectValue (aValue[i]));
           if (i == nMax)
             break;
-          m_aSB.append (", ");
+          this.m_aSB.append (", ");
         }
-        m_aSB.append (']');
+        this.m_aSB.append (']');
       }
     }
 
@@ -435,12 +447,12 @@ public final class ToStringGenerator
   @Nonnull
   public String toString ()
   {
-    if ((m_nIndex & APPENDED_CLOSING_BRACKET) == 0)
+    if ((this.m_nIndex & APPENDED_CLOSING_BRACKET) == 0)
     {
-      m_nIndex |= APPENDED_CLOSING_BRACKET;
-      m_aSB.append (']');
+      this.m_nIndex |= APPENDED_CLOSING_BRACKET;
+      this.m_aSB.append (']');
     }
-    return m_aSB.toString ();
+    return this.m_aSB.toString ();
   }
 
   /**

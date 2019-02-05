@@ -71,15 +71,15 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
     ValueEnforcer.notEmpty (aElements, "Elements");
     ValueEnforcer.isBetweenInclusive (nSlotCount, "SlotCount", 0, aElements.size ());
 
-    m_aElements = aElements.toArray ();
-    m_aIndexResult = new int [nSlotCount];
-    final BigInteger aElementFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.length);
+    this.m_aElements = aElements.toArray ();
+    this.m_aIndexResult = new int [nSlotCount];
+    final BigInteger aElementFactorial = FactorialHelper.getAnyFactorialLinear (this.m_aElements.length);
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
-    final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.length - nSlotCount);
-    m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
+    final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (this.m_aElements.length - nSlotCount);
+    this.m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
     // Can we use the fallback to long? Is much faster than using BigInteger
-    m_bUseLong = m_aTotalCombinations.compareTo (CGlobal.BIGINT_MAX_LONG) < 0;
-    m_nTotalCombinations = m_bUseLong ? m_aTotalCombinations.longValue () : CGlobal.ILLEGAL_ULONG;
+    this.m_bUseLong = this.m_aTotalCombinations.compareTo (CGlobal.BIGINT_MAX_LONG) < 0;
+    this.m_nTotalCombinations = this.m_bUseLong ? this.m_aTotalCombinations.longValue () : CGlobal.ILLEGAL_ULONG;
     reset ();
   }
 
@@ -88,10 +88,10 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    */
   public void reset ()
   {
-    for (int i = 0; i < m_aIndexResult.length; i++)
-      m_aIndexResult[i] = i;
-    m_aCombinationsLeft = m_aTotalCombinations;
-    m_nCombinationsLeft = m_nTotalCombinations;
+    for (int i = 0; i < this.m_aIndexResult.length; i++)
+      this.m_aIndexResult[i] = i;
+    this.m_aCombinationsLeft = this.m_aTotalCombinations;
+    this.m_nCombinationsLeft = this.m_nTotalCombinations;
   }
 
   /**
@@ -100,15 +100,16 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   @Nonnull
   public BigInteger getCombinationsLeft ()
   {
-    return m_bUseLong ? BigInteger.valueOf (m_nCombinationsLeft) : m_aCombinationsLeft;
+    return this.m_bUseLong ? BigInteger.valueOf (this.m_nCombinationsLeft) : this.m_aCombinationsLeft;
   }
 
   /**
    * @return whether or not there are more combinations left
    */
+  @Override
   public boolean hasNext ()
   {
-    return m_bUseLong ? m_nCombinationsLeft > 0 : m_aCombinationsLeft.compareTo (BigInteger.ZERO) > 0;
+    return this.m_bUseLong ? this.m_nCombinationsLeft > 0 : this.m_aCombinationsLeft.compareTo (BigInteger.ZERO) > 0;
   }
 
   /**
@@ -117,7 +118,7 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   @Nonnull
   public BigInteger getTotalCombinations ()
   {
-    return m_aTotalCombinations;
+    return this.m_aTotalCombinations;
   }
 
   /**
@@ -126,49 +127,52 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    * @return the next combination as List of the size specified for slots filled
    *         with elements from the original list
    */
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <DATATYPE> next ()
   {
     // Not for the very first item, as the first item is the original order
-    final boolean bFirstItem = m_bUseLong ? m_nCombinationsLeft == m_nTotalCombinations
-                                         : m_aCombinationsLeft.equals (m_aTotalCombinations);
+    final boolean bFirstItem = this.m_bUseLong ? this.m_nCombinationsLeft == this.m_nTotalCombinations
+                                               : this.m_aCombinationsLeft.equals (this.m_aTotalCombinations);
     if (!bFirstItem)
     {
-      final int nElementCount = m_aElements.length;
-      final int nSlotCount = m_aIndexResult.length;
+      final int nElementCount = this.m_aElements.length;
+      final int nSlotCount = this.m_aIndexResult.length;
 
       int i = nSlotCount - 1;
-      while (m_aIndexResult[i] == (nElementCount - nSlotCount + i))
+      while (this.m_aIndexResult[i] == (nElementCount - nSlotCount + i))
       {
         i--;
       }
-      m_aIndexResult[i]++;
+      this.m_aIndexResult[i]++;
       for (int j = i + 1; j < nSlotCount; j++)
       {
-        m_aIndexResult[j] = m_aIndexResult[i] + j - i;
+        this.m_aIndexResult[j] = this.m_aIndexResult[i] + j - i;
       }
     }
 
     // One combination less
-    if (m_bUseLong)
-      m_nCombinationsLeft--;
+    if (this.m_bUseLong)
+      this.m_nCombinationsLeft--;
     else
-      m_aCombinationsLeft = m_aCombinationsLeft.subtract (BigInteger.ONE);
+      this.m_aCombinationsLeft = this.m_aCombinationsLeft.subtract (BigInteger.ONE);
 
     // Build result list
-    final List <DATATYPE> aResult = new ArrayList <DATATYPE> (m_aIndexResult.length);
-    for (final int nIndex : m_aIndexResult)
-      aResult.add (GenericReflection.<Object, DATATYPE> uncheckedCast (m_aElements[nIndex]));
+    final List <DATATYPE> aResult = new ArrayList <DATATYPE> (this.m_aIndexResult.length);
+    for (final int nIndex : this.m_aIndexResult)
+      aResult.add (GenericReflection.<Object, DATATYPE> uncheckedCast (this.m_aElements[nIndex]));
     return aResult;
   }
 
+  @Override
   @UnsupportedOperation
   public void remove ()
   {
     throw new UnsupportedOperationException ();
   }
 
+  @Override
   @Nonnull
   public Iterator <List <DATATYPE>> iterator ()
   {
@@ -178,6 +182,8 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   /**
    * Get a list of all permutations of the input elements.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aInput
    *        Input list.
    * @param nSlotCount
@@ -198,6 +204,8 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   /**
    * Fill a list with all permutations of the input elements.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aInput
    *        Input list.
    * @param nSlotCount

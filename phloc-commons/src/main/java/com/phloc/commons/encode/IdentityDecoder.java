@@ -36,6 +36,7 @@ public final class IdentityDecoder <DATATYPE> implements IDecoder <DATATYPE>
   private IdentityDecoder ()
   {}
 
+  @Override
   @Nullable
   public DATATYPE decode (@Nullable final DATATYPE aInput)
   {
@@ -45,6 +46,8 @@ public final class IdentityDecoder <DATATYPE> implements IDecoder <DATATYPE>
   /**
    * Factory method for this class
    * 
+   * @param <DATATYPE>
+   *        The internal data type
    * @return Never <code>null</code>.
    */
   @Nonnull

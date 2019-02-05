@@ -172,13 +172,13 @@ public final class LocaleUtils
    * passed locale has no language, always an empty list is returned.<br>
    * Examples:
    * <ul>
-   * <li>"de_AT" => ["de_AT", "de"]</li>
-   * <li>"en_US" => ["en_US", "en"]</li>
-   * <li>"de" => ["de"]</li>
-   * <li>"de_DE_Variant" => ["de_DE_Variant", "de_DE", "de"]</li>
-   * <li>"" => []</li>
-   * <li>"_AT" => []</li>
-   * <li>"_AT_Variant" => []</li>
+   * <li>"de_AT" =&gt; ["de_AT", "de"]</li>
+   * <li>"en_US" =&gt; ["en_US", "en"]</li>
+   * <li>"de" =&gt; ["de"]</li>
+   * <li>"de_DE_Variant" =&gt; ["de_DE_Variant", "de_DE", "de"]</li>
+   * <li>"" =&gt; []</li>
+   * <li>"_AT" =&gt; []</li>
+   * <li>"_AT_Variant" =&gt; []</li>
    * </ul>
    * 
    * @param aLocale

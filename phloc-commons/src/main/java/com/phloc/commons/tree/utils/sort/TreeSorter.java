@@ -69,6 +69,10 @@ public final class TreeSorter
   /**
    * Sort each level of the passed tree with the specified comparator.
    * 
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    * @param aValueComparator
@@ -86,6 +90,10 @@ public final class TreeSorter
    * method assumes that the values in the tree item implement the
    * {@link Comparable} interface.
    * 
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    */

@@ -75,7 +75,9 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * converted via the {@link com.phloc.commons.typeconvert.TypeConverter} to
    * the desired destination class. If no such attribute is present,
    * <code>null</code> is returned.
-   *
+   * 
+   * @param <DSTTYPE>
+   *        destination type
    * @param sAttrName
    *        The attribute name to retrieve the value of.
    * @param aDstClass

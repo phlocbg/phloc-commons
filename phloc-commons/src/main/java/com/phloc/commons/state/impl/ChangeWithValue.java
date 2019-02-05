@@ -55,29 +55,33 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
     ValueEnforcer.notNull (aChangeIndicator, "ChangeIndicator");
 
     // Wrap in EChange so that equals works for sure
-    m_eChange = EChange.valueOf (aChangeIndicator);
-    m_aObj = aObj;
+    this.m_eChange = EChange.valueOf (aChangeIndicator);
+    this.m_aObj = aObj;
   }
 
+  @Override
   public boolean isChanged ()
   {
-    return m_eChange.isChanged ();
+    return this.m_eChange.isChanged ();
   }
 
+  @Override
   public boolean isUnchanged ()
   {
-    return m_eChange.isUnchanged ();
+    return this.m_eChange.isUnchanged ();
   }
 
+  @Override
   @Nullable
   public DATATYPE get ()
   {
-    return m_aObj;
+    return this.m_aObj;
   }
 
+  @Override
   public boolean isSet ()
   {
-    return m_aObj != null;
+    return this.m_aObj != null;
   }
 
   /**
@@ -92,7 +96,7 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
   @Nullable
   public DATATYPE getIfChanged (@Nullable final DATATYPE aUnchangedValue)
   {
-    return m_eChange.isChanged () ? m_aObj : aUnchangedValue;
+    return this.m_eChange.isChanged () ? this.m_aObj : aUnchangedValue;
   }
 
   /**
@@ -119,7 +123,7 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
   @Nullable
   public DATATYPE getIfUnchanged (@Nullable final DATATYPE aChangedValue)
   {
-    return m_eChange.isUnchanged () ? m_aObj : aChangedValue;
+    return this.m_eChange.isUnchanged () ? this.m_aObj : aChangedValue;
   }
 
   /**
@@ -142,24 +146,26 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ChangeWithValue <?> rhs = (ChangeWithValue <?>) o;
-    return m_eChange.equals (rhs.m_eChange) && EqualsUtils.equals (m_aObj, rhs.m_aObj);
+    return this.m_eChange.equals (rhs.m_eChange) && EqualsUtils.equals (this.m_aObj, rhs.m_aObj);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eChange).append (m_aObj).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_eChange).append (this.m_aObj).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("change", m_eChange).append ("obj", m_aObj).toString ();
+    return new ToStringGenerator (this).append ("change", this.m_eChange).append ("obj", this.m_aObj).toString ();
   }
 
   /**
    * Create a new changed object with the given value.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aValue
    *        The value to be used. May be <code>null</code>.
    * @return Never <code>null</code>.
@@ -173,6 +179,8 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
   /**
    * Create a new unchanged object with the given value.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aValue
    *        The value to be used. May be <code>null</code>.
    * @return Never <code>null</code>.

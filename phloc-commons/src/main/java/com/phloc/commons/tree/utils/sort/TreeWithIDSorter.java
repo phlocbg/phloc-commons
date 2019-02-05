@@ -70,6 +70,12 @@ public final class TreeWithIDSorter
   /**
    * Sort each level of the passed tree on the ID with the specified comparator.
    * 
+   * @param <KEYTYPE>
+   *        key type
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    * @param aKeyComparator
@@ -88,6 +94,12 @@ public final class TreeWithIDSorter
    * This method assumes that the IDs in the tree item implement the
    * {@link Comparable} interface.
    * 
+   * @param <KEYTYPE>
+   *        key type
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    */
@@ -101,6 +113,12 @@ public final class TreeWithIDSorter
    * Sort each level of the passed tree on the value with the specified
    * comparator.
    * 
+   * @param <KEYTYPE>
+   *        key type
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    * @param aValueComparator
@@ -119,6 +137,12 @@ public final class TreeWithIDSorter
    * comparator. This method assumes that the values in the tree item implement
    * the {@link Comparable} interface.
    * 
+   * @param <KEYTYPE>
+   *        key type
+   * @param <DATATYPE>
+   *        data type
+   * @param <ITEMTYPE>
+   *        item type
    * @param aTree
    *        The tree to be sorted.
    */

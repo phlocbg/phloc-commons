@@ -154,6 +154,8 @@ public final class PhlocTestUtils
    * Test the toString implementation of the passed object. It may not be empty,
    * and consistent.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aObject
    *        The object to be tested.
    */
@@ -187,6 +189,8 @@ public final class PhlocTestUtils
    * Check if two different objects (who may not be the same) are equal to each
    * other. Checks toString, equals and hashCode.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aObject1
    *        First object. May not be <code>null</code>.
    * @param aObject2
@@ -204,6 +208,8 @@ public final class PhlocTestUtils
    * Check if two different objects are different to each other. Checks
    * toString, equals and hashCode.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aObject1
    *        First object. May not be <code>null</code>.
    * @param aObject2
@@ -354,6 +360,7 @@ public final class PhlocTestUtils
     {
       aES.submit (new Runnable ()
       {
+        @Override
         public void run ()
         {
           try

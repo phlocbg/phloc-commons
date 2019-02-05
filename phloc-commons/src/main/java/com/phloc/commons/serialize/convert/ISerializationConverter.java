@@ -38,6 +38,7 @@ public interface ISerializationConverter
    * @param aOOS
    *        The output stream to write to. Never <code>null</code>.
    * @throws IOException
+   *         eventually
    */
   void writeConvertedObject (@Nonnull Object aSourceObject, @Nonnull ObjectOutputStream aOOS) throws IOException;
 

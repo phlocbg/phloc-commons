@@ -43,7 +43,7 @@ import com.phloc.commons.xml.XMLHelper;
 
 /**
  * org.w3c.dom.Node serializer that correctly handles HTML empty elements
- * (&lt;span>&lt;/span> vs. &lt;span />).
+ * (&lt;span&gt;&lt;/span&gt; vs. &lt;span /&gt;).
  * 
  * @author Philip Helger
  */
@@ -107,7 +107,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Document aDocument)
   {
-    if (m_aSettings.getFormat ().isXML ())
+    if (this.m_aSettings.getFormat ().isXML ())
     {
       String sXMLVersion = null;
       boolean bIsDocumentStandalone = false;
@@ -121,9 +121,10 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         // Happens e.g. in dom4j 1.6.1:
         // AbstractMethodError: getXmlVersion and getXmlStandalone
       }
-      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_aSettings.getXMLVersion ());
+      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion,
+                                                                           this.m_aSettings.getXMLVersion ());
       aXMLWriter.onDocumentStart (eXMLVersion,
-                                  m_aSettings.getCharset (),
+                                  this.m_aSettings.getCharset (),
                                   bIsDocumentStandalone || aDocument.getDoctype () == null);
     }
 
@@ -132,7 +133,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocumentType (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final DocumentType aDocType)
   {
-    if (m_aSettings.getSerializeDocType ().isEmit ())
+    if (this.m_aSettings.getSerializeDocType ().isEmit ())
       aXMLWriter.onDocumentType (aDocType.getName (), aDocType.getPublicId (), aDocType.getSystemId ());
   }
 
@@ -150,7 +151,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Comment aComment)
   {
-    if (m_aSettings.getSerializeComments ().isEmit ())
+    if (this.m_aSettings.getSerializeComments ().isEmit ())
     {
       aXMLWriter.onComment (aComment.getData ());
     }
@@ -177,7 +178,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
     // May be null!
     final Document aDoc = aElement.getOwnerDocument ();
-    final boolean bEmitNamespaces = m_aSettings.isEmitNamespaces ();
+    final boolean bEmitNamespaces = this.m_aSettings.isEmitNamespaces ();
     final NodeList aChildNodeList = aElement.getChildNodes ();
     final boolean bHasChildren = aChildNodeList.getLength () > 0;
 
@@ -196,7 +197,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       aAttrMap.put (aAttr.getName (), aAttr.getValue ());
     }
 
-    m_aNSStack.push (bEmitNamespaces ? aAttrMap : null);
+    this.m_aNSStack.push (bEmitNamespaces ? aAttrMap : null);
 
     handlePutNamespaceContextPrefixInRoot (aAttrMap);
 
@@ -207,30 +208,30 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       if (bEmitNamespaces)
       {
         final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
-        final String sDefaultNamespaceURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
+        final String sDefaultNamespaceURI = StringHelper.getNotNull (this.m_aNSStack.getDefaultNamespaceURI ());
         final boolean bIsDefaultNamespace = sElementNamespaceURI.equals (sDefaultNamespaceURI);
         if (!bIsDefaultNamespace)
-          sNSPrefix = m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
+          sNSPrefix = this.m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
 
         // Do we need to create a prefix?
         if (sNSPrefix == null && !bIsDefaultNamespace && (!bIsRootElement || sElementNamespaceURI.length () > 0))
         {
           // Ensure to use the correct prefix (namespace context)
-          sNSPrefix = m_aNSStack.getMappedPrefix (sElementNamespaceURI);
+          sNSPrefix = this.m_aNSStack.getMappedPrefix (sElementNamespaceURI);
 
           // Do not create a prefix for the root element
           if (sNSPrefix == null && !bIsRootElement)
-            sNSPrefix = m_aNSStack.createUniquePrefix ();
+            sNSPrefix = this.m_aNSStack.createUniquePrefix ();
 
           // Add and remember the attribute
           aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sElementNamespaceURI);
-          m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
+          this.m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
         }
       }
 
       // indent only if predecessor was an element
-      if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
-        aXMLWriter.onContentElementWhitespace (m_aIndent);
+      if (this.m_aSettings.getIndent ().isIndent () && bIndentPrev && this.m_aIndent.length () > 0)
+        aXMLWriter.onContentElementWhitespace (this.m_aIndent);
 
       aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
 
@@ -238,32 +239,32 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       if (bHasChildren)
       {
         // do we have enclosing elements?
-        if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aXMLWriter.onContentElementWhitespace (m_aSettings.getNewlineString ());
+        if (this.m_aSettings.getIndent ().isAlign () && bHasChildElement)
+          aXMLWriter.onContentElementWhitespace (this.m_aSettings.getNewlineString ());
 
         // increment indent
-        final String sIndent = m_aSettings.getIndentationString ();
-        m_aIndent.append (sIndent);
+        final String sIndent = this.m_aSettings.getIndentationString ();
+        this.m_aIndent.append (sIndent);
 
         // recursively process child nodes
         _writeNodeList (aXMLWriter, aChildNodeList);
 
         // decrement indent
-        m_aIndent.delete (m_aIndent.length () - sIndent.length (), m_aIndent.length ());
+        this.m_aIndent.delete (this.m_aIndent.length () - sIndent.length (), this.m_aIndent.length ());
 
         // add closing tag
-        if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
-          aXMLWriter.onContentElementWhitespace (m_aIndent);
+        if (this.m_aSettings.getIndent ().isIndent () && bHasChildElement && this.m_aIndent.length () > 0)
+          aXMLWriter.onContentElementWhitespace (this.m_aIndent);
       }
 
       aXMLWriter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
-      if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aXMLWriter.onContentElementWhitespace (m_aSettings.getNewlineString ());
+      if (this.m_aSettings.getIndent ().isAlign () && bIndentNext)
+        aXMLWriter.onContentElementWhitespace (this.m_aSettings.getNewlineString ());
     }
     finally
     {
-      m_aNSStack.pop ();
+      this.m_aNSStack.pop ();
     }
   }
 }

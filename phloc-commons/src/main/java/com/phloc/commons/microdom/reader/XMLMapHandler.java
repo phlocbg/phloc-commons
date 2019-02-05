@@ -51,11 +51,11 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * The XML file needs to look as follows:
  * 
  * <pre>
- * &lt;mapping>
- *   &lt;map key="..." value="..."/>
- *   &lt;map key="..." value="..."/>
+ * &lt;mapping&gt;
+ *   &lt;map key="..." value="..."/&gt;
+ *   &lt;map key="..." value="..."/&gt;
  *   ...
- * &lt;/mapping>
+ * &lt;/mapping&gt;
  * </pre>
  * 
  * @author Philip

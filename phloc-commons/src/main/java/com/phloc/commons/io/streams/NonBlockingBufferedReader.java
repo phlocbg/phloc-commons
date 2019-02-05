@@ -76,14 +76,14 @@ public class NonBlockingBufferedReader extends Reader
    * @param nSize
    *        Input-buffer size
    * @exception IllegalArgumentException
-   *            If sz is <= 0
+   *            If size is &lt;= 0
    */
   public NonBlockingBufferedReader (@Nonnull final Reader aReader, @Nonnegative final int nSize)
   {
     super (aReader);
     ValueEnforcer.isGT0 (nSize, "Size");
-    m_aReader = aReader;
-    m_aBuf = new char [nSize];
+    this.m_aReader = aReader;
+    this.m_aBuf = new char [nSize];
   }
 
   /**
@@ -94,7 +94,7 @@ public class NonBlockingBufferedReader extends Reader
    */
   private void _ensureOpen () throws IOException
   {
-    if (m_aReader == null)
+    if (this.m_aReader == null)
       throw new IOException ("Stream closed");
   }
 
@@ -107,48 +107,48 @@ public class NonBlockingBufferedReader extends Reader
   private void _fill () throws IOException
   {
     int nDstOfs = 0;
-    if (m_nMarkedChar > UNMARKED)
+    if (this.m_nMarkedChar > UNMARKED)
     {
       // Marked
-      final int nDelta = m_nNextCharIndex - m_nMarkedChar;
-      if (nDelta >= m_nReadAheadLimit)
+      final int nDelta = this.m_nNextCharIndex - this.m_nMarkedChar;
+      if (nDelta >= this.m_nReadAheadLimit)
       {
         // Gone past read-ahead limit: Invalidate mark
-        m_nMarkedChar = INVALIDATED;
-        m_nReadAheadLimit = 0;
+        this.m_nMarkedChar = INVALIDATED;
+        this.m_nReadAheadLimit = 0;
       }
       else
       {
-        if (m_nReadAheadLimit <= m_aBuf.length)
+        if (this.m_nReadAheadLimit <= this.m_aBuf.length)
         {
           // Shuffle in the current buffer
-          System.arraycopy (m_aBuf, m_nMarkedChar, m_aBuf, 0, nDelta);
-          m_nMarkedChar = 0;
+          System.arraycopy (this.m_aBuf, this.m_nMarkedChar, this.m_aBuf, 0, nDelta);
+          this.m_nMarkedChar = 0;
           nDstOfs = nDelta;
         }
         else
         {
           // Reallocate buffer to accommodate read-ahead limit
-          final char [] aNewBuf = new char [m_nReadAheadLimit];
-          System.arraycopy (m_aBuf, m_nMarkedChar, aNewBuf, 0, nDelta);
-          m_aBuf = aNewBuf;
-          m_nMarkedChar = 0;
+          final char [] aNewBuf = new char [this.m_nReadAheadLimit];
+          System.arraycopy (this.m_aBuf, this.m_nMarkedChar, aNewBuf, 0, nDelta);
+          this.m_aBuf = aNewBuf;
+          this.m_nMarkedChar = 0;
           nDstOfs = nDelta;
         }
-        m_nNextCharIndex = nDelta;
-        m_nChars = nDelta;
+        this.m_nNextCharIndex = nDelta;
+        this.m_nChars = nDelta;
       }
     }
 
     int nBytesRead;
     do
     {
-      nBytesRead = m_aReader.read (m_aBuf, nDstOfs, m_aBuf.length - nDstOfs);
+      nBytesRead = this.m_aReader.read (this.m_aBuf, nDstOfs, this.m_aBuf.length - nDstOfs);
     } while (nBytesRead == 0);
     if (nBytesRead > 0)
     {
-      m_nChars = nDstOfs + nBytesRead;
-      m_nNextCharIndex = nDstOfs;
+      this.m_nChars = nDstOfs + nBytesRead;
+      this.m_nNextCharIndex = nDstOfs;
     }
   }
 
@@ -167,22 +167,22 @@ public class NonBlockingBufferedReader extends Reader
     _ensureOpen ();
     while (true)
     {
-      if (m_nNextCharIndex >= m_nChars)
+      if (this.m_nNextCharIndex >= this.m_nChars)
       {
         _fill ();
-        if (m_nNextCharIndex >= m_nChars)
+        if (this.m_nNextCharIndex >= this.m_nChars)
           return -1;
       }
-      if (m_bSkipLF)
+      if (this.m_bSkipLF)
       {
-        m_bSkipLF = false;
-        if (m_aBuf[m_nNextCharIndex] == '\n')
+        this.m_bSkipLF = false;
+        if (this.m_aBuf[this.m_nNextCharIndex] == '\n')
         {
-          m_nNextCharIndex++;
+          this.m_nNextCharIndex++;
           continue;
         }
       }
-      return m_aBuf[m_nNextCharIndex++];
+      return this.m_aBuf[this.m_nNextCharIndex++];
     }
   }
 
@@ -202,7 +202,7 @@ public class NonBlockingBufferedReader extends Reader
    */
   private int _internalRead (final char [] aBuf, final int nOfs, final int nLen) throws IOException
   {
-    if (m_nNextCharIndex >= m_nChars)
+    if (this.m_nNextCharIndex >= this.m_nChars)
     {
       /*
        * If the requested length is at least as large as the buffer, and if
@@ -210,27 +210,27 @@ public class NonBlockingBufferedReader extends Reader
        * skipped, do not bother to copy the characters into the local buffer. In
        * this way buffered streams will cascade harmlessly.
        */
-      if (nLen >= m_aBuf.length && m_nMarkedChar <= UNMARKED && !m_bSkipLF)
-        return m_aReader.read (aBuf, nOfs, nLen);
+      if (nLen >= this.m_aBuf.length && this.m_nMarkedChar <= UNMARKED && !this.m_bSkipLF)
+        return this.m_aReader.read (aBuf, nOfs, nLen);
       _fill ();
     }
-    if (m_nNextCharIndex >= m_nChars)
+    if (this.m_nNextCharIndex >= this.m_nChars)
       return -1;
-    if (m_bSkipLF)
+    if (this.m_bSkipLF)
     {
-      m_bSkipLF = false;
-      if (m_aBuf[m_nNextCharIndex] == '\n')
+      this.m_bSkipLF = false;
+      if (this.m_aBuf[this.m_nNextCharIndex] == '\n')
       {
-        m_nNextCharIndex++;
-        if (m_nNextCharIndex >= m_nChars)
+        this.m_nNextCharIndex++;
+        if (this.m_nNextCharIndex >= this.m_nChars)
           _fill ();
-        if (m_nNextCharIndex >= m_nChars)
+        if (this.m_nNextCharIndex >= this.m_nChars)
           return -1;
       }
     }
-    final int nBytesRead = Math.min (nLen, m_nChars - m_nNextCharIndex);
-    System.arraycopy (m_aBuf, m_nNextCharIndex, aBuf, nOfs, nBytesRead);
-    m_nNextCharIndex += nBytesRead;
+    final int nBytesRead = Math.min (nLen, this.m_nChars - this.m_nNextCharIndex);
+    System.arraycopy (this.m_aBuf, this.m_nNextCharIndex, aBuf, nOfs, nBytesRead);
+    this.m_nNextCharIndex += nBytesRead;
     return nBytesRead;
   }
 
@@ -289,7 +289,7 @@ public class NonBlockingBufferedReader extends Reader
     int n = _internalRead (cbuf, nOfs, nLen);
     if (n <= 0)
       return n;
-    while (n < nLen && m_aReader.ready ())
+    while (n < nLen && this.m_aReader.ready ())
     {
       final int n1 = _internalRead (cbuf, nOfs + n, nLen - n);
       if (n1 <= 0)
@@ -317,13 +317,13 @@ public class NonBlockingBufferedReader extends Reader
     int nStartChar;
 
     _ensureOpen ();
-    boolean bOmitLF = m_bSkipLF;
+    boolean bOmitLF = this.m_bSkipLF;
 
     while (true)
     {
-      if (m_nNextCharIndex >= m_nChars)
+      if (this.m_nNextCharIndex >= this.m_nChars)
         _fill ();
-      if (m_nNextCharIndex >= m_nChars)
+      if (this.m_nNextCharIndex >= this.m_nChars)
       {
         /* EOF */
         if (aSB != null && aSB.length () > 0)
@@ -335,14 +335,14 @@ public class NonBlockingBufferedReader extends Reader
       int nIndex;
 
       /* Skip a leftover '\n', if necessary */
-      if (bOmitLF && m_aBuf[m_nNextCharIndex] == '\n')
-        m_nNextCharIndex++;
-      m_bSkipLF = false;
+      if (bOmitLF && this.m_aBuf[this.m_nNextCharIndex] == '\n')
+        this.m_nNextCharIndex++;
+      this.m_bSkipLF = false;
       bOmitLF = false;
 
-      for (nIndex = m_nNextCharIndex; nIndex < m_nChars; nIndex++)
+      for (nIndex = this.m_nNextCharIndex; nIndex < this.m_nChars; nIndex++)
       {
-        cLast = m_aBuf[nIndex];
+        cLast = this.m_aBuf[nIndex];
         if (cLast == '\n' || cLast == '\r')
         {
           bEOL = true;
@@ -350,28 +350,28 @@ public class NonBlockingBufferedReader extends Reader
         }
       }
 
-      nStartChar = m_nNextCharIndex;
-      m_nNextCharIndex = nIndex;
+      nStartChar = this.m_nNextCharIndex;
+      this.m_nNextCharIndex = nIndex;
 
       if (bEOL)
       {
         String sStr;
         if (aSB == null)
-          sStr = new String (m_aBuf, nStartChar, nIndex - nStartChar);
+          sStr = new String (this.m_aBuf, nStartChar, nIndex - nStartChar);
         else
         {
-          aSB.append (m_aBuf, nStartChar, nIndex - nStartChar);
+          aSB.append (this.m_aBuf, nStartChar, nIndex - nStartChar);
           sStr = aSB.toString ();
         }
-        m_nNextCharIndex++;
+        this.m_nNextCharIndex++;
         if (cLast == '\r')
-          m_bSkipLF = true;
+          this.m_bSkipLF = true;
         return sStr;
       }
 
       if (aSB == null)
         aSB = new StringBuilder (DEFAULT_EXPECTED_LINE_LENGTH);
-      aSB.append (m_aBuf, nStartChar, nIndex - nStartChar);
+      aSB.append (this.m_aBuf, nStartChar, nIndex - nStartChar);
     }
   }
 
@@ -395,28 +395,28 @@ public class NonBlockingBufferedReader extends Reader
     long nRest = nBytes;
     while (nRest > 0)
     {
-      if (m_nNextCharIndex >= m_nChars)
+      if (this.m_nNextCharIndex >= this.m_nChars)
         _fill ();
-      if (m_nNextCharIndex >= m_nChars)
+      if (this.m_nNextCharIndex >= this.m_nChars)
       {
         // EOF
         break;
       }
-      if (m_bSkipLF)
+      if (this.m_bSkipLF)
       {
-        m_bSkipLF = false;
-        if (m_aBuf[m_nNextCharIndex] == '\n')
-          m_nNextCharIndex++;
+        this.m_bSkipLF = false;
+        if (this.m_aBuf[this.m_nNextCharIndex] == '\n')
+          this.m_nNextCharIndex++;
       }
-      final int d = m_nChars - m_nNextCharIndex;
+      final int d = this.m_nChars - this.m_nNextCharIndex;
       if (nRest <= d)
       {
-        m_nNextCharIndex += nRest;
+        this.m_nNextCharIndex += nRest;
         nRest = 0;
         break;
       }
       nRest -= d;
-      m_nNextCharIndex = m_nChars;
+      this.m_nNextCharIndex = this.m_nChars;
     }
     return nBytes - nRest;
   }
@@ -439,22 +439,22 @@ public class NonBlockingBufferedReader extends Reader
      * If newline needs to be skipped and the next char to be read is a newline
      * character, then just skip it right away.
      */
-    if (m_bSkipLF)
+    if (this.m_bSkipLF)
     {
       /*
        * Note that in.ready() will return true if and only if the next read on
        * the stream will not block.
        */
-      if (m_nNextCharIndex >= m_nChars && m_aReader.ready ())
+      if (this.m_nNextCharIndex >= this.m_nChars && this.m_aReader.ready ())
         _fill ();
-      if (m_nNextCharIndex < m_nChars)
+      if (this.m_nNextCharIndex < this.m_nChars)
       {
-        if (m_aBuf[m_nNextCharIndex] == '\n')
-          m_nNextCharIndex++;
-        m_bSkipLF = false;
+        if (this.m_aBuf[this.m_nNextCharIndex] == '\n')
+          this.m_nNextCharIndex++;
+        this.m_bSkipLF = false;
       }
     }
-    return m_nNextCharIndex < m_nChars || m_aReader.ready ();
+    return this.m_nNextCharIndex < this.m_nChars || this.m_aReader.ready ();
   }
 
   /**
@@ -480,7 +480,7 @@ public class NonBlockingBufferedReader extends Reader
    *        allocated whose size is no smaller than limit. Therefore large
    *        values should be used with care.
    * @exception IllegalArgumentException
-   *            If readAheadLimit is < 0
+   *            If readAheadLimit is &lt; 0
    * @exception IOException
    *            If an I/O error occurs
    */
@@ -489,9 +489,9 @@ public class NonBlockingBufferedReader extends Reader
   {
     ValueEnforcer.isGE0 (nReadAheadLimit, "ReadAheadLimit");
     _ensureOpen ();
-    m_nReadAheadLimit = nReadAheadLimit;
-    m_nMarkedChar = m_nNextCharIndex;
-    m_bMarkedSkipLF = m_bSkipLF;
+    this.m_nReadAheadLimit = nReadAheadLimit;
+    this.m_nMarkedChar = this.m_nNextCharIndex;
+    this.m_bMarkedSkipLF = this.m_bSkipLF;
   }
 
   /**
@@ -505,20 +505,20 @@ public class NonBlockingBufferedReader extends Reader
   public void reset () throws IOException
   {
     _ensureOpen ();
-    if (m_nMarkedChar < 0)
-      throw new IOException (m_nMarkedChar == INVALIDATED ? "Mark invalid" : "Stream not marked");
-    m_nNextCharIndex = m_nMarkedChar;
-    m_bSkipLF = m_bMarkedSkipLF;
+    if (this.m_nMarkedChar < 0)
+      throw new IOException (this.m_nMarkedChar == INVALIDATED ? "Mark invalid" : "Stream not marked");
+    this.m_nNextCharIndex = this.m_nMarkedChar;
+    this.m_bSkipLF = this.m_bMarkedSkipLF;
   }
 
   @Override
   public void close () throws IOException
   {
-    if (m_aReader != null)
+    if (this.m_aReader != null)
     {
-      m_aReader.close ();
-      m_aReader = null;
-      m_aBuf = null;
+      this.m_aReader.close ();
+      this.m_aReader = null;
+      this.m_aBuf = null;
     }
   }
 }

@@ -86,7 +86,8 @@ public final class CloneHelper
     {
       s_aLogger.error ("Failed to clone object of type '" +
                        aObject.getClass ().getName () +
-                       "' because it has neither a (visible) clone method nor a copy constructor.", ex);
+                       "' because it has neither a (visible) clone method nor a copy constructor.",
+                       ex);
     }
     return null;
   }
@@ -104,6 +105,8 @@ public final class CloneHelper
    * </ol>
    * If all tries fail, <code>null</code> is returned.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aObject
    *        The object to be copied.
    * @return <code>null</code> if the passed value is <code>null</code> or if no
@@ -132,6 +135,8 @@ public final class CloneHelper
    * Get a clone (= deep copy) of the passed value for all objects implementing
    * {@link ICloneable}.
    * 
+   * @param <DATATYPE>
+   *        data type
    * @param aObject
    *        The object to be copied. May be <code>null</code>.
    * @return <code>null</code> if the passed value is <code>null</code> or a

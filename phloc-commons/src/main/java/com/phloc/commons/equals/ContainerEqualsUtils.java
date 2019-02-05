@@ -49,23 +49,23 @@ public final class ContainerEqualsUtils
    */
   public static enum EContainerType
   {
-    /**
-     * The collection type applies to all Collection objects that are not Sets,
-     * and will be compared in their regular order.
-     */
-    COLLECTION,
-    /** Sets represent unordered container */
-    SET,
-    /** Maps are key-value-containers */
-    MAP,
-    /** Arrays */
-    ARRAY,
-    /** Iterator */
-    ITERATOR,
-    /** Iterable */
-    ITERABLE,
-    /** Enumeration */
-    ENUMERATION
+   /**
+    * The collection type applies to all Collection objects that are not Sets,
+    * and will be compared in their regular order.
+    */
+   COLLECTION,
+   /** Sets represent unordered container */
+   SET,
+   /** Maps are key-value-containers */
+   MAP,
+   /** Arrays */
+   ARRAY,
+   /** Iterator */
+   ITERATOR,
+   /** Iterable */
+   ITERABLE,
+   /** Enumeration */
+   ENUMERATION
   }
 
   private ContainerEqualsUtils ()
@@ -302,9 +302,9 @@ public final class ContainerEqualsUtils
 
   /**
    * Get the passed object as a {@link List} object. This is helpful in case you
-   * want to compare the String array ["a", "b"] with the List&lt;String> ("a",
-   * "b") If the passed object is not a recognized. container type, than a new
-   * list with one element is created!
+   * want to compare the String array ["a", "b"] with the List&lt;String&gt;
+   * ("a", "b") If the passed object is not a recognized. container type, than a
+   * new list with one element is created!
    * 
    * @param aObj
    *        The object to be converted. May not be <code>null</code>.

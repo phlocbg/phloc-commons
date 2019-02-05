@@ -68,15 +68,15 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * Construct a version range object from a string.<br>
    * Examples:<br>
    * <ul>
-   * <li>[1.2.3, 4.5.6) -- 1.2.3 <= x < 4.5.6</li>
-   * <li>[1.2.3, 4.5.6] -- 1.2.3 <= x <= 4.5.6</li>
-   * <li>(1.2.3, 4.5.6) -- 1.2.3 < x < 4.5.6</li>
-   * <li>(1.2.3, 4.5.6] -- 1.2.3 < x <= 4.5.6</li>
-   * <li>1.2.3 -- 1.2.3 <= x</li>
-   * <li>[1.2.3 -- 1.2.3 <= x</li>
-   * <li>(1.2.3 -- 1.2.3 < x</li>
-   * <li><i>null</i> -- 0.0.0 <= x</li>
-   * <li>1, 4 -- 1 <= x <= 4</li>
+   * <li>[1.2.3, 4.5.6) -- 1.2.3 &lt;= x &lt; 4.5.6</li>
+   * <li>[1.2.3, 4.5.6] -- 1.2.3 &lt;= x &lt;= 4.5.6</li>
+   * <li>(1.2.3, 4.5.6) -- 1.2.3 &lt; x &lt; 4.5.6</li>
+   * <li>(1.2.3, 4.5.6] -- 1.2.3 &lt; x &lt;= 4.5.6</li>
+   * <li>1.2.3 -- 1.2.3 &lt;= x</li>
+   * <li>[1.2.3 -- 1.2.3 &lt;= x</li>
+   * <li>(1.2.3 -- 1.2.3 &lt; x</li>
+   * <li><i>null</i> -- 0.0.0 &lt;= x</li>
+   * <li>1, 4 -- 1 &lt;= x &lt;= 4</li>
    * </ul>
    * 
    * @param sVersionString
@@ -91,10 +91,10 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
     if (s.length () == 0)
     {
       // empty string == range [0.0, infinity)
-      m_bIncludeFloor = true;
-      m_aFloorVersion = new Version (Version.DEFAULT_VERSION_STRING);
-      m_bIncludeCeil = false;
-      m_aCeilVersion = null;
+      this.m_bIncludeFloor = true;
+      this.m_aFloorVersion = new Version (Version.DEFAULT_VERSION_STRING);
+      this.m_bIncludeCeil = false;
+      this.m_aCeilVersion = null;
     }
     else
     {
@@ -102,41 +102,41 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       // parse initial token
       if (s.charAt (i) == '[')
       {
-        m_bIncludeFloor = true;
+        this.m_bIncludeFloor = true;
         i++;
       }
       else
         if (s.charAt (i) == '(')
         {
-          m_bIncludeFloor = false;
+          this.m_bIncludeFloor = false;
           i++;
         }
         else
-          m_bIncludeFloor = true;
+          this.m_bIncludeFloor = true;
 
       // check last token
       int j = 0;
       if (StringHelper.endsWith (s, ']'))
       {
-        m_bIncludeCeil = true;
+        this.m_bIncludeCeil = true;
         j++;
       }
       else
         if (StringHelper.endsWith (s, ')'))
         {
-          m_bIncludeCeil = false;
+          this.m_bIncludeCeil = false;
           j++;
         }
         else
-          m_bIncludeCeil = false;
+          this.m_bIncludeCeil = false;
 
       // get length of version stuff
       final int nRestLen = s.length () - i - j;
       if (nRestLen == 0)
       {
         // only delimiter braces present?
-        m_aFloorVersion = new Version (Version.DEFAULT_VERSION_STRING);
-        m_aCeilVersion = null;
+        this.m_aFloorVersion = new Version (Version.DEFAULT_VERSION_STRING);
+        this.m_aCeilVersion = null;
       }
       else
       {
@@ -145,17 +145,17 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
         final String sCeiling = parts.length > 1 ? parts[1].trim () : null;
 
         // get floor version
-        m_aFloorVersion = new Version (sFloor);
+        this.m_aFloorVersion = new Version (sFloor);
 
         if (StringHelper.hasNoText (sCeiling))
-          m_aCeilVersion = null;
+          this.m_aCeilVersion = null;
         else
-          m_aCeilVersion = new Version (sCeiling);
+          this.m_aCeilVersion = new Version (sCeiling);
       }
     }
 
     // check if floor <= ceil
-    if (m_aCeilVersion != null && m_aFloorVersion.compareTo (m_aCeilVersion) > 0)
+    if (this.m_aCeilVersion != null && this.m_aFloorVersion.compareTo (this.m_aCeilVersion) > 0)
       throw new IllegalArgumentException ("Floor version may not be greater than the ceiling version!");
   }
 
@@ -202,51 +202,51 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
     ValueEnforcer.notNull (aFloorVersion, "FloorVersion");
 
     // set values
-    m_aFloorVersion = aFloorVersion;
-    m_bIncludeFloor = bIncludeFloorVersion;
-    m_aCeilVersion = aCeilingVersion;
-    m_bIncludeCeil = bIncludeCeilingVersion;
+    this.m_aFloorVersion = aFloorVersion;
+    this.m_bIncludeFloor = bIncludeFloorVersion;
+    this.m_aCeilVersion = aCeilingVersion;
+    this.m_bIncludeCeil = bIncludeCeilingVersion;
 
     // check if floor <= ceil
-    if (m_aCeilVersion != null && m_aFloorVersion.compareTo (m_aCeilVersion) > 0)
+    if (this.m_aCeilVersion != null && this.m_aFloorVersion.compareTo (this.m_aCeilVersion) > 0)
       throw new IllegalArgumentException ("Floor version may not be greater than the ceiling version!");
   }
 
   public boolean isIncludingFloor ()
   {
-    return m_bIncludeFloor;
+    return this.m_bIncludeFloor;
   }
 
   @Nullable
   public Version getFloorVersion ()
   {
-    return m_aFloorVersion;
+    return this.m_aFloorVersion;
   }
 
   public boolean isIncludingCeil ()
   {
-    return m_bIncludeCeil;
+    return this.m_bIncludeCeil;
   }
 
   @Nullable
   public Version getCeilVersion ()
   {
-    return m_aCeilVersion;
+    return this.m_aCeilVersion;
   }
 
   public boolean versionMatches (@Nonnull final Version rhs)
   {
     // returns -1 if floor < rhs
     // -> error
-    int i = m_aFloorVersion.compareTo (rhs);
-    if (m_bIncludeFloor ? i > 0 : i >= 0)
+    int i = this.m_aFloorVersion.compareTo (rhs);
+    if (this.m_bIncludeFloor ? i > 0 : i >= 0)
       return false;
 
     // check ceiling version
-    if (m_aCeilVersion != null)
+    if (this.m_aCeilVersion != null)
     {
-      i = m_aCeilVersion.compareTo (rhs);
-      if (m_bIncludeCeil ? i < 0 : i <= 0)
+      i = this.m_aCeilVersion.compareTo (rhs);
+      if (this.m_bIncludeCeil ? i < 0 : i <= 0)
         return false;
     }
 
@@ -269,18 +269,19 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    *         +1 if the floor versions are equal but the ceiling version of this
    *         has a higher upper bound than the passed version range<br>
    */
+  @Override
   public int compareTo (@Nonnull final VersionRange rhs)
   {
-    int i = m_aFloorVersion.compareTo (rhs.m_aFloorVersion);
+    int i = this.m_aFloorVersion.compareTo (rhs.m_aFloorVersion);
     if (i == 0)
     {
-      if (m_bIncludeFloor && !rhs.m_bIncludeFloor)
+      if (this.m_bIncludeFloor && !rhs.m_bIncludeFloor)
       {
         // this < rhs
         i = -1;
       }
       else
-        if (!m_bIncludeFloor && rhs.m_bIncludeFloor)
+        if (!this.m_bIncludeFloor && rhs.m_bIncludeFloor)
         {
           // this > rhs
           i = +1;
@@ -289,22 +290,22 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       if (i == 0)
       {
         // compare ceiling
-        if (m_aCeilVersion != null && rhs.m_aCeilVersion == null)
+        if (this.m_aCeilVersion != null && rhs.m_aCeilVersion == null)
           i = -1;
         else
-          if (m_aCeilVersion == null && rhs.m_aCeilVersion != null)
+          if (this.m_aCeilVersion == null && rhs.m_aCeilVersion != null)
             i = +1;
           else
-            if (m_aCeilVersion != null && rhs.m_aCeilVersion != null)
-              i = m_aCeilVersion.compareTo (rhs.m_aCeilVersion);
+            if (this.m_aCeilVersion != null && rhs.m_aCeilVersion != null)
+              i = this.m_aCeilVersion.compareTo (rhs.m_aCeilVersion);
         // else i stays 0 if both are null
 
         if (i == 0)
         {
-          if (m_bIncludeCeil && !rhs.m_bIncludeCeil)
+          if (this.m_bIncludeCeil && !rhs.m_bIncludeCeil)
             i = +1;
           else
-            if (!m_bIncludeCeil && rhs.m_bIncludeCeil)
+            if (!this.m_bIncludeCeil && rhs.m_bIncludeCeil)
               i = -1;
         }
       }
@@ -321,6 +322,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * 
    * @return The version range in a parseable string format.
    */
+  @Override
   @Nonnull
   public String getAsString ()
   {
@@ -343,13 +345,13 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
   public String getAsString (final boolean bPrintZeroElements)
   {
     // special handling if no ceiling version is present
-    final StringBuilder aSB = new StringBuilder (m_bIncludeFloor ? "[" : "(");
-    aSB.append (m_aFloorVersion.getAsString (bPrintZeroElements));
-    if (m_aCeilVersion != null)
+    final StringBuilder aSB = new StringBuilder (this.m_bIncludeFloor ? "[" : "(");
+    aSB.append (this.m_aFloorVersion.getAsString (bPrintZeroElements));
+    if (this.m_aCeilVersion != null)
     {
-      aSB.append (',').append (m_aCeilVersion.getAsString (bPrintZeroElements));
+      aSB.append (',').append (this.m_aCeilVersion.getAsString (bPrintZeroElements));
     }
-    return aSB.append (m_bIncludeCeil ? ']' : ')').toString ();
+    return aSB.append (this.m_bIncludeCeil ? ']' : ')').toString ();
   }
 
   @Override
@@ -361,29 +363,29 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       return false;
 
     final VersionRange rhs = (VersionRange) o;
-    return m_bIncludeFloor == rhs.m_bIncludeFloor &&
-           m_aFloorVersion.equals (rhs.m_aFloorVersion) &&
-           m_bIncludeCeil == rhs.m_bIncludeCeil &&
-           EqualsUtils.equals (m_aCeilVersion, rhs.m_aCeilVersion);
+    return this.m_bIncludeFloor == rhs.m_bIncludeFloor &&
+           this.m_aFloorVersion.equals (rhs.m_aFloorVersion) &&
+           this.m_bIncludeCeil == rhs.m_bIncludeCeil &&
+           EqualsUtils.equals (this.m_aCeilVersion, rhs.m_aCeilVersion);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aFloorVersion)
-                                       .append (m_bIncludeFloor)
-                                       .append (m_aCeilVersion)
-                                       .append (m_bIncludeCeil)
+    return new HashCodeGenerator (this).append (this.m_aFloorVersion)
+                                       .append (this.m_bIncludeFloor)
+                                       .append (this.m_aCeilVersion)
+                                       .append (this.m_bIncludeCeil)
                                        .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("floorVersion", m_aFloorVersion)
-                                       .append ("inclFloor", m_bIncludeFloor)
-                                       .append ("ceilVersion", m_aCeilVersion)
-                                       .append ("inclCeil", m_bIncludeCeil)
+    return new ToStringGenerator (this).append ("floorVersion", this.m_aFloorVersion)
+                                       .append ("inclFloor", this.m_bIncludeFloor)
+                                       .append ("ceilVersion", this.m_aCeilVersion)
+                                       .append ("inclCeil", this.m_bIncludeCeil)
                                        .toString ();
   }
 }

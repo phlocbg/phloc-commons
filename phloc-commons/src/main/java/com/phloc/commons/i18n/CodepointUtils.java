@@ -42,7 +42,13 @@ public final class CodepointUtils
   {}
 
   /**
-   * True if all the characters in chars are within the set [low,high]
+   * @return True if all the characters in chars are within the set [low,high]
+   * @param chars
+   *        characters to check
+   * @param low
+   *        set start
+   * @param high
+   *        set end
    */
   public static boolean inRange (final char [] chars, final char low, final char high)
   {
@@ -53,16 +59,22 @@ public final class CodepointUtils
   }
 
   /**
-   * True if all the characters in chars are within the set [low,high]
+   * @return True if all the characters in chars are within the set [low,high]
+   * @param chars
+   *        characters to check
+   * @param low
+   *        set start
+   * @param high
+   *        set end
    */
   public static boolean inRange (final char [] chars, final int low, final int high)
   {
     for (int i = 0; i < chars.length; i++)
     {
       final char n = chars[i];
-      final int c = Character.isHighSurrogate (n) && i + 1 < chars.length && Character.isLowSurrogate (chars[i + 1]) ? Character.toCodePoint (n,
-                                                                                                                                              chars[i++])
-                                                                                                                    : (int) n;
+      final int c = Character.isHighSurrogate (n) &&
+                    i + 1 < chars.length &&
+                    Character.isLowSurrogate (chars[i + 1]) ? Character.toCodePoint (n, chars[i++]) : (int) n;
       if (c < low || c > high)
         return false;
     }
@@ -70,7 +82,13 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is within the set [low,high]
+   * @return True if the codepoint is within the set [low,high]
+   * @param codepoint
+   *        the codepoint to check
+   * @param low
+   *        set start
+   * @param high
+   *        set end
    */
   public static boolean inRange (final int codepoint, final int low, final int high)
   {
@@ -78,16 +96,22 @@ public final class CodepointUtils
   }
 
   /**
-   * Get the high surrogate for a particular unicode codepoint
+   * @return Get the high surrogate for a particular unicode codepoint
+   * @param c
+   *        unicode point to check
    */
   public static char getHighSurrogate (final int c)
   {
-    return Character.isSupplementaryCodePoint (c) ? (char) ((Character.MIN_HIGH_SURROGATE - (Character.MIN_SUPPLEMENTARY_CODE_POINT >> 10)) + (c >> 10))
-                                                 : 0;
+    return Character.isSupplementaryCodePoint (c) ? (char) ((Character.MIN_HIGH_SURROGATE -
+                                                             (Character.MIN_SUPPLEMENTARY_CODE_POINT >> 10)) +
+                                                            (c >> 10))
+                                                  : 0;
   }
 
   /**
-   * Get the low surrogate for a particular unicode codepoint
+   * @return Get the low surrogate for a particular unicode codepoint
+   * @param c
+   *        unicode point to check
    */
   public static char getLowSurrogate (final int c)
   {
@@ -95,8 +119,12 @@ public final class CodepointUtils
   }
 
   /**
-   * Return the codepoint at the given location, automatically dealing with
-   * surrogate pairs
+   * @param s
+   *        input
+   * @param i
+   *        index
+   * @return the codepoint at the given location, automatically dealing with
+   *         surrogate pairs
    */
   @Nonnull
   public static Codepoint codepointAt (@Nonnull final CharSequence s, final int i)
@@ -129,6 +157,13 @@ public final class CodepointUtils
   /**
    * Insert a codepoint into the buffer, automatically dealing with surrogate
    * pairs
+   * 
+   * @param s
+   *        input
+   * @param i
+   *        index
+   * @param c
+   *        codepoint to insert at index
    */
   public static void insert (final CharSequence s, final int i, @Nonnull final Codepoint c)
   {
@@ -138,6 +173,13 @@ public final class CodepointUtils
   /**
    * Insert a codepoint into the buffer, automatically dealing with surrogate
    * pairs
+   * 
+   * @param s
+   *        input
+   * @param i
+   *        index
+   * @param c
+   *        codepoint to insert at index
    */
   public static void insert (@Nonnull final CharSequence s, final int i, final int c)
   {
@@ -167,6 +209,13 @@ public final class CodepointUtils
   /**
    * Set the character at a given location, automatically dealing with surrogate
    * pairs
+   * 
+   * @param s
+   *        input
+   * @param i
+   *        index
+   * @param c
+   *        character to set at index
    */
   public static void setChar (@Nonnull final CharSequence s, final int i, @Nonnull final Codepoint c)
   {
@@ -176,6 +225,13 @@ public final class CodepointUtils
   /**
    * Set the character at a given location, automatically dealing with surrogate
    * pairs
+   * 
+   * @param s
+   *        input
+   * @param i
+   *        index
+   * @param c
+   *        character to set at index
    */
   public static void setChar (@Nonnull final CharSequence s, final int i, final int c)
   {
@@ -211,8 +267,10 @@ public final class CodepointUtils
   }
 
   /**
-   * Return the total number of codepoints in the buffer. Each surrogate pair
-   * counts as a single codepoint
+   * @param c
+   *        input
+   * @return the total number of codepoints in the buffer. Each surrogate pair
+   *         counts as a single codepoint
    */
   public static int length (@Nonnull final CharSequence c)
   {
@@ -220,8 +278,10 @@ public final class CodepointUtils
   }
 
   /**
-   * Return the total number of codepoints in the buffer. Each surrogate pair
-   * counts as a single codepoint
+   * @param c
+   *        input
+   * @return the total number of codepoints in the buffer. Each surrogate pair
+   *         counts as a single codepoint
    */
   public static int length (@Nonnull final char [] c)
   {
@@ -240,8 +300,10 @@ public final class CodepointUtils
   }
 
   /**
-   * Return the char[] representation of the codepoint, automatically dealing
-   * with surrogate pairs
+   * @param c
+   *        codepoint
+   * @return the char[] representation of the codepoint, automatically dealing
+   *         with surrogate pairs
    */
   @Nonnull
   @Nonempty
@@ -251,8 +313,10 @@ public final class CodepointUtils
   }
 
   /**
-   * Return the String representation of the codepoint, automatically dealing
-   * with surrogate pairs
+   * @param c
+   *        codepoint
+   * @return the String representation of the codepoint, automatically dealing
+   *         with surrogate pairs
    */
   @Nonnull
   @Nonempty
@@ -278,6 +342,10 @@ public final class CodepointUtils
 
   /**
    * Removes leading and trailing bidi controls from the string
+   * 
+   * @param s
+   *        input
+   * @return The resulting string
    */
   @Nullable
   public static String stripBidi (@Nullable final String s)
@@ -295,6 +363,10 @@ public final class CodepointUtils
 
   /**
    * Removes bidi controls from within a string
+   * 
+   * @param s
+   *        input
+   * @return The resulting string
    */
   @Nonnull
   public static String stripBidiInternal (@Nonnull final String s)
@@ -318,6 +390,12 @@ public final class CodepointUtils
 
   /**
    * Wrap the string with the specified bidi control
+   * 
+   * @param s
+   *        input
+   * @param c
+   *        bidi control
+   * @return The resulting string
    */
   public static String wrapBidi (@Nonnull final String s, final char c)
   {
@@ -341,7 +419,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is a digit
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is a digit
    */
   public static boolean isDigit (@Nonnull final Codepoint codepoint)
   {
@@ -349,7 +429,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is a digit
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is a digit
    */
   public static boolean isDigit (final int codepoint)
   {
@@ -357,7 +439,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is part of the ASCII alphabet (a-z, A-Z)
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is part of the ASCII alphabet (a-z, A-Z)
    */
   public static boolean isAlpha (@Nonnull final Codepoint codepoint)
   {
@@ -365,7 +449,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is part of the ASCII alphabet (a-z, A-Z)
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is part of the ASCII alphabet (a-z, A-Z)
    */
   public static boolean isAlpha (final int codepoint)
   {
@@ -373,7 +459,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if isAlpha and isDigit both return true
+   * @param codepoint
+   *        The code point to check
+   * @return True if isAlpha and isDigit both return true
    */
   public static boolean isAlphaDigit (@Nonnull final Codepoint codepoint)
   {
@@ -381,7 +469,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if isAlpha and isDigit both return true
+   * @param codepoint
+   *        The code point to check
+   * @return True if isAlpha and isDigit both return true
    */
   public static boolean isAlphaDigit (final int codepoint)
   {
@@ -394,7 +484,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is a bidi control character
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is a bidi control character
    */
   public static boolean isBidi (@Nonnull final Codepoint codepoint)
   {
@@ -402,7 +494,9 @@ public final class CodepointUtils
   }
 
   /**
-   * True if the codepoint is a bidi control character
+   * @param codepoint
+   *        The code point to check
+   * @return True if the codepoint is a bidi control character
    */
   public static boolean isBidi (final int codepoint)
   {
@@ -435,9 +529,15 @@ public final class CodepointUtils
   }
 
   /**
-   * Treats the specified int array as an Inversion Set and returns true if the
-   * value is located within the set. This will only work correctly if the
-   * values in the int array are monotonically increasing
+   * Treats the specified int array as an Inversion Set
+   * 
+   * @param aCodepointSet
+   *        The code point set to check
+   * @param value
+   *        The value to check
+   * @return true if the value is located within the set. This will only work
+   *         correctly if the values in the int array are monotonically
+   *         increasing
    */
   public static boolean inverseSetContains (@Nonnull final int [] aCodepointSet, final int value)
   {
@@ -708,6 +808,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified filter
+   * 
+   * @param ci
+   *        input code points
+   * @param filter
+   *        filter
    */
   public static void verify (final AbstractCodepointIterator ci, final ICodepointFilter filter)
   {
@@ -718,6 +823,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified filter
+   * 
+   * @param ci
+   *        input code points
+   * @param profile
+   *        profile
    */
   public static void verify (final AbstractCodepointIterator ci, @Nonnull final ECodepointProfile profile)
   {
@@ -726,6 +836,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified profile
+   * 
+   * @param s
+   *        input code points
+   * @param profile
+   *        profile
    */
   public static void verify (@Nullable final char [] s, @Nonnull final ECodepointProfile profile)
   {
@@ -735,6 +850,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified profile
+   * 
+   * @param s
+   *        input code points
+   * @param profile
+   *        profile
    */
   public static void verify (@Nullable final String s, @Nonnull final ECodepointProfile profile)
   {
@@ -744,6 +864,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified filter
+   * 
+   * @param ci
+   *        input code points
+   * @param filter
+   *        filter
    */
   public static void verifyNot (final ICodepointIterator ci, final ICodepointFilter filter)
   {
@@ -754,6 +879,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified profile
+   * 
+   * @param ci
+   *        input code points
+   * @param profile
+   *        profile
    */
   public static void verifyNot (final ICodepointIterator ci, @Nonnull final ECodepointProfile profile)
   {
@@ -764,6 +894,11 @@ public final class CodepointUtils
 
   /**
    * Verifies a sequence of codepoints using the specified profile
+   * 
+   * @param array
+   *        input code points
+   * @param profile
+   *        profile
    */
   public static void verifyNot (final char [] array, @Nonnull final ECodepointProfile profile)
   {

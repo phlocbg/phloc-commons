@@ -59,6 +59,7 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
    * @see #getAsString(EMimeQuoting)
    * @see #getAsStringWithoutParameters()
    */
+  @Override
   @Nonnull
   String getAsString ();
 
@@ -67,6 +68,8 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
    * specified quoting algorithm is used to quote parameter values (if
    * necessary).
    * 
+   * @param eQuotingAlgorithm
+   *        quoting algorithm
    * @return The combined string to be used as text representation:
    *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
    * @see #getAsStringWithoutParameters()
@@ -91,6 +94,8 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
    * content and sub type. The specified quoting algorithm is used to quote
    * parameter values.
    * 
+   * @param eQuotingAlgorithm
+   *        quoting algorithm
    * @return The combined string to be used as text representation:
    *         <code>(';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
    *         . If no parameters are present, an empty String is returned!

@@ -73,7 +73,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   public NonBlockingByteArrayOutputStream (@Nonnegative final int nSize)
   {
     ValueEnforcer.isGE0 (nSize, "Size");
-    m_aBuf = new byte [nSize];
+    this.m_aBuf = new byte [nSize];
   }
 
   @Nonnull
@@ -93,11 +93,11 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Override
   public void write (final int b)
   {
-    final int nNewCount = m_nCount + 1;
-    if (nNewCount > m_aBuf.length)
-      m_aBuf = _enlarge (m_aBuf, Math.max (m_aBuf.length << 1, nNewCount));
-    m_aBuf[m_nCount] = (byte) b;
-    m_nCount = nNewCount;
+    final int nNewCount = this.m_nCount + 1;
+    if (nNewCount > this.m_aBuf.length)
+      this.m_aBuf = _enlarge (this.m_aBuf, Math.max (this.m_aBuf.length << 1, nNewCount));
+    this.m_aBuf[this.m_nCount] = (byte) b;
+    this.m_nCount = nNewCount;
   }
 
   /*
@@ -127,11 +127,11 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
     if (nLen > 0)
     {
-      final int nNewCount = m_nCount + nLen;
-      if (nNewCount > m_aBuf.length)
-        m_aBuf = _enlarge (m_aBuf, Math.max (m_aBuf.length << 1, nNewCount));
-      System.arraycopy (aBuf, nOfs, m_aBuf, m_nCount, nLen);
-      m_nCount = nNewCount;
+      final int nNewCount = this.m_nCount + nLen;
+      if (nNewCount > this.m_aBuf.length)
+        this.m_aBuf = _enlarge (this.m_aBuf, Math.max (this.m_aBuf.length << 1, nNewCount));
+      System.arraycopy (aBuf, nOfs, this.m_aBuf, this.m_nCount, nLen);
+      this.m_nCount = nNewCount;
     }
   }
 
@@ -149,7 +149,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
   {
-    aOS.write (m_aBuf, 0, m_nCount);
+    aOS.write (this.m_aBuf, 0, this.m_nCount);
   }
 
   /**
@@ -185,7 +185,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public void reset ()
   {
-    m_nCount = 0;
+    this.m_nCount = 0;
   }
 
   /**
@@ -199,7 +199,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @ReturnsMutableCopy
   public byte [] toByteArray ()
   {
-    return ArrayHelper.getCopy (m_aBuf, m_nCount);
+    return ArrayHelper.getCopy (this.m_aBuf, this.m_nCount);
   }
 
   /**
@@ -211,8 +211,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public byte getByteAt (@Nonnegative final int nIndex)
   {
-    ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, m_nCount - 1);
-    return m_aBuf[nIndex];
+    ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, this.m_nCount - 1);
+    return this.m_aBuf[nIndex];
   }
 
   /**
@@ -221,10 +221,11 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * @return the value of the <code>count</code> field, which is the number of
    *         valid bytes in this output stream.
    */
+  @Override
   @Nonnegative
   public int size ()
   {
-    return m_nCount;
+    return this.m_nCount;
   }
 
   /**
@@ -233,17 +234,18 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Nonnegative
   public int getBufferSize ()
   {
-    return m_aBuf.length;
+    return this.m_aBuf.length;
   }
 
+  @Override
   public boolean isEmpty ()
   {
-    return m_nCount == 0;
+    return this.m_nCount == 0;
   }
 
   public boolean isNotEmpty ()
   {
-    return m_nCount > 0;
+    return this.m_nCount > 0;
   }
 
   public boolean startsWith (@Nonnull final byte [] aBytes)
@@ -253,10 +255,10 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
 
   public boolean startsWith (@Nonnull final byte [] aBytes, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (m_nCount < nLen)
+    if (this.m_nCount < nLen)
       return false;
     for (int i = 0; i < nLen; ++i)
-      if (m_aBuf[i] != aBytes[nOfs + i])
+      if (this.m_aBuf[i] != aBytes[nOfs + i])
         return false;
     return true;
   }
@@ -274,14 +276,14 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * 
    * @param sCharset
    *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
+   *        <code>charset</code>}
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
   @Deprecated
   public String getAsString (@Nonnull final String sCharset)
   {
-    return CharsetManager.getAsString (m_aBuf, 0, m_nCount, sCharset);
+    return CharsetManager.getAsString (this.m_aBuf, 0, this.m_nCount, sCharset);
   }
 
   /**
@@ -299,15 +301,15 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    *        The number of bytes to be converted to a String. Must be &ge; 0.
    * @param sCharset
    *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
+   *        <code>charset</code>}
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
   @Deprecated
   public String getAsString (@Nonnegative final int nLength, @Nonnull final String sCharset)
   {
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, 0, nLength, sCharset);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, this.m_nCount);
+    return CharsetManager.getAsString (this.m_aBuf, 0, nLength, sCharset);
   }
 
   /**
@@ -327,7 +329,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    *        The number of bytes to be converted to a String. Must be &ge; 0.
    * @param sCharset
    *        the name of a supported {@linkplain java.nio.charset.Charset
-   *        </code>charset<code>}
+   *        <code>charset</code>}
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
@@ -337,8 +339,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
                              @Nonnull final String sCharset)
   {
     ValueEnforcer.isGE0 (nIndex, "Index");
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, nIndex, nLength, sCharset);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, this.m_nCount);
+    return CharsetManager.getAsString (this.m_aBuf, nIndex, nLength, sCharset);
   }
 
   /**
@@ -359,7 +361,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Nonnull
   public String getAsString (@Nonnull final Charset aCharset)
   {
-    return CharsetManager.getAsString (m_aBuf, 0, m_nCount, aCharset);
+    return CharsetManager.getAsString (this.m_aBuf, 0, this.m_nCount, aCharset);
   }
 
   /**
@@ -382,8 +384,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Nonnull
   public String getAsString (@Nonnegative final int nLength, @Nonnull final Charset aCharset)
   {
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, 0, nLength, aCharset);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, this.m_nCount);
+    return CharsetManager.getAsString (this.m_aBuf, 0, nLength, aCharset);
   }
 
   /**
@@ -411,25 +413,26 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
                              @Nonnull final Charset aCharset)
   {
     ValueEnforcer.isGE0 (nIndex, "Index");
-    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
-    return CharsetManager.getAsString (m_aBuf, nIndex, nLength, aCharset);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, this.m_nCount);
+    return CharsetManager.getAsString (this.m_aBuf, nIndex, nLength, aCharset);
   }
 
   /**
    * Closing a <tt>ByteArrayOutputStream</tt> has no effect. The methods in this
    * class can be called after the stream has been closed without generating an
    * <tt>IOException</tt>.
-   * <p>
    */
   @Override
   public void close ()
-  {}
+  {
+    // no effect
+  }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("buf#", ArrayHelper.getSize (m_aBuf))
-                                       .append ("size", m_nCount)
+    return new ToStringGenerator (this).append ("buf#", ArrayHelper.getSize (this.m_aBuf))
+                                       .append ("size", this.m_nCount)
                                        .toString ();
   }
 }

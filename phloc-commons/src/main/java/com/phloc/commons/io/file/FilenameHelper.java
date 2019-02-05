@@ -558,6 +558,7 @@ public final class FilenameHelper
    * {@value #ILLEGAL_FILENAME_CHAR_REPLACEMENT}.
    *
    * @param sName
+   *        file name
    * @return The clean local file name, can be <code>null</code>
    */
   @Nullable

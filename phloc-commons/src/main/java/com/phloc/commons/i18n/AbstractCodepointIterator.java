@@ -40,25 +40,29 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
 
   protected AbstractCodepointIterator (final int nPosition, final int nLimit)
   {
-    m_nPosition = nPosition;
-    m_nLimit = nLimit;
+    this.m_nPosition = nPosition;
+    this.m_nLimit = nLimit;
   }
 
   /**
-   * Get the next char
+   * @return the next char
    */
   protected abstract char get ();
 
   /**
-   * Get the specified char
+   * @param index
+   *        The desired index
+   * @return The char at the specified index
    */
   protected abstract char get (int index);
 
+  @Override
   public boolean hasNext ()
   {
     return remaining () > 0;
   }
 
+  @Override
   @CheckForSigned
   public int lastPosition ()
   {
@@ -66,6 +70,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
     return nPos >= 0 ? nPos >= limit () ? nPos : nPos - 1 : -1;
   }
 
+  @Override
   @Nullable
   public char [] nextChars ()
   {
@@ -95,6 +100,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
     return null;
   }
 
+  @Override
   @Nullable
   public char [] peekChars ()
   {
@@ -133,18 +139,21 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
     return new char [] { c1 };
   }
 
+  @Override
   @Nullable
   public Codepoint next ()
   {
     return _toCodepoint (nextChars ());
   }
 
+  @Override
   @Nullable
   public Codepoint peek ()
   {
     return _toCodepoint (peekChars ());
   }
 
+  @Override
   @Nullable
   public Codepoint peek (final int index)
   {
@@ -165,28 +174,32 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
       throw new ArrayIndexOutOfBoundsException (n);
   }
 
+  @Override
   public void position (@Nonnegative final int n)
   {
     _checkLimit (n);
-    m_nPosition = n;
+    this.m_nPosition = n;
   }
 
+  @Override
   @Nonnegative
   public int position ()
   {
-    return m_nPosition;
+    return this.m_nPosition;
   }
 
+  @Override
   @Nonnegative
   public int limit ()
   {
-    return m_nLimit;
+    return this.m_nLimit;
   }
 
+  @Override
   @Nonnegative
   public int remaining ()
   {
-    return m_nLimit - position ();
+    return this.m_nLimit - position ();
   }
 
   private boolean _isNextSurrogate ()
@@ -200,6 +213,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   /**
    * Returns true if the char at the specified index is a high surrogate
    */
+  @Override
   public boolean isHigh (@Nonnegative final int index)
   {
     _checkLimit (index);
@@ -209,30 +223,35 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   /**
    * Returns true if the char at the specified index is a low surrogate
    */
+  @Override
   public boolean isLow (@Nonnegative final int index)
   {
     _checkLimit (index);
     return Character.isLowSurrogate (get (index));
   }
 
+  @Override
   @UnsupportedOperation
   public void remove ()
   {
     throw new UnsupportedOperationException ();
   }
 
+  @Override
   @Nonnull
   public CodepointIteratorRestricted restrict (@Nonnull final ICodepointFilter aFilter)
   {
     return new CodepointIteratorRestricted (this, aFilter, false);
   }
 
+  @Override
   @Nonnull
   public CodepointIteratorRestricted restrict (@Nonnull final ICodepointFilter aFilter, final boolean bScanning)
   {
     return new CodepointIteratorRestricted (this, aFilter, bScanning);
   }
 
+  @Override
   @Nonnull
   public CodepointIteratorRestricted restrict (@Nonnull final ICodepointFilter aFilter,
                                                final boolean bScanning,

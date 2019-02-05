@@ -27,9 +27,9 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
  * A small helper class, that constructs {@link DateFormatSymbols} objects in
- * the best suitable way. For Java < 1.6 it is to use
- * "new DateFormatSymbols (Locale)". For Java >= 1.6
- * "DateFormatSymbols.getInstance (Locale)" is more suitable!
+ * the best suitable way. For Java &lt; 1.6 it is to use "new DateFormatSymbols
+ * (Locale)". For Java &gt;= 1.6 "DateFormatSymbols.getInstance (Locale)" is
+ * more suitable!
  * 
  * @author Philip Helger
  */

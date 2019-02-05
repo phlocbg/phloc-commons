@@ -45,7 +45,7 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
   private BigDecimal m_aValue;
 
   /**
-   * Initialize with default value {@value #DEFAULT_VALUE}
+   * Initialize with default value 0
    */
   public MutableBigDecimal ()
   {
@@ -54,19 +54,19 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
 
   public MutableBigDecimal (@Nonnull final BigDecimal aValue)
   {
-    m_aValue = ValueEnforcer.notNull (aValue, "Value");
+    this.m_aValue = ValueEnforcer.notNull (aValue, "Value");
   }
 
   @Nonnull
   public BigDecimal getAsBigDecimal ()
   {
-    return m_aValue;
+    return this.m_aValue;
   }
 
   @Override
   public double doubleValue ()
   {
-    return m_aValue.doubleValue ();
+    return this.m_aValue.doubleValue ();
   }
 
   @Nonnull
@@ -78,19 +78,19 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
   @Override
   public float floatValue ()
   {
-    return m_aValue.floatValue ();
+    return this.m_aValue.floatValue ();
   }
 
   @Override
   public int intValue ()
   {
-    return m_aValue.intValue ();
+    return this.m_aValue.intValue ();
   }
 
   @Override
   public long longValue ()
   {
-    return m_aValue.longValue ();
+    return this.m_aValue.longValue ();
   }
 
   /**
@@ -107,8 +107,8 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
   @Nonnull
   public BigDecimal inc (@Nonnull final BigDecimal aDelta)
   {
-    m_aValue = m_aValue.add (aDelta);
-    return m_aValue;
+    this.m_aValue = this.m_aValue.add (aDelta);
+    return this.m_aValue;
   }
 
   @Nonnull
@@ -126,51 +126,59 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
   @Nonnull
   public EChange set (@Nonnull final BigDecimal aValue)
   {
-    if (EqualsUtils.equals (aValue, m_aValue))
+    if (EqualsUtils.equals (aValue, this.m_aValue))
       return EChange.UNCHANGED;
-    m_aValue = aValue;
+    this.m_aValue = aValue;
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean is0 ()
   {
-    return MathHelper.isEqualToZero (m_aValue);
+    return MathHelper.isEqualToZero (this.m_aValue);
   }
 
+  @Override
   public boolean isNot0 ()
   {
-    return MathHelper.isNotEqualToZero (m_aValue);
+    return MathHelper.isNotEqualToZero (this.m_aValue);
   }
 
+  @Override
   public boolean isSmaller0 ()
   {
-    return MathHelper.isLowerThanZero (m_aValue);
+    return MathHelper.isLowerThanZero (this.m_aValue);
   }
 
+  @Override
   public boolean isSmallerOrEqual0 ()
   {
-    return MathHelper.isLowerOrEqualThanZero (m_aValue);
+    return MathHelper.isLowerOrEqualThanZero (this.m_aValue);
   }
 
+  @Override
   public boolean isGreater0 ()
   {
-    return MathHelper.isGreaterThanZero (m_aValue);
+    return MathHelper.isGreaterThanZero (this.m_aValue);
   }
 
+  @Override
   public boolean isGreaterOrEqual0 ()
   {
-    return MathHelper.isGreaterOrEqualThanZero (m_aValue);
+    return MathHelper.isGreaterOrEqualThanZero (this.m_aValue);
   }
 
+  @Override
   public int compareTo (@Nonnull final MutableBigDecimal rhs)
   {
-    return m_aValue.compareTo (rhs.m_aValue);
+    return this.m_aValue.compareTo (rhs.m_aValue);
   }
 
+  @Override
   @Nonnull
   public MutableBigDecimal getClone ()
   {
-    return new MutableBigDecimal (m_aValue);
+    return new MutableBigDecimal (this.m_aValue);
   }
 
   @Override
@@ -181,18 +189,18 @@ public final class MutableBigDecimal extends Number implements IMutableNumeric <
     if (!(o instanceof MutableBigDecimal))
       return false;
     final MutableBigDecimal rhs = (MutableBigDecimal) o;
-    return EqualsUtils.equals (m_aValue, rhs.m_aValue);
+    return EqualsUtils.equals (this.m_aValue, rhs.m_aValue);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aValue).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_aValue).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_aValue).toString ();
+    return new ToStringGenerator (this).append ("value", this.m_aValue).toString ();
   }
 }

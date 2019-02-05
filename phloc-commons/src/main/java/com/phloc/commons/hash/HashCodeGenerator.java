@@ -35,20 +35,29 @@ import com.phloc.commons.ValueEnforcer;
  * After calling {@link #append(Object)} for all objects use
  * {@link #getHashCode()} to retrieve the calculated hash code. Once the hash
  * code was calculated no modifications are allowed.<br>
- * <p>
+ * <br>
  * A real world example for a final class derived from {@link Object} or a base
- * class looks like this: <code><pre>@Override
- * public int hashCode () {
+ * class looks like this:
+ * 
+ * <pre>
+ * &#64;Override
+ * public int hashCode ()
+ * {
  *   return new HashCodeGenerator (this).append (member1).append (member2).getHashCode ();
- * }</pre></code>
- * </p>
- * <p>
+ * }
+ * </pre>
+ * 
+ * <br>
  * For a derived class, the typical code looks like this, assuming the base
- * class also uses {@link HashCodeGenerator}: <code><pre>@Override
- * public int hashCode () {
+ * class also uses {@link HashCodeGenerator}:
+ * 
+ * <pre>
+ * &#64;Override
+ * public int hashCode ()
+ * {
  *   return HashCodeGenerator.getDerived (super.hashCode ()).append (member3).append (member4).getHashCode ();
- * }</pre></code>
- * </p>
+ * }
+ * </pre>
  * 
  * @author Philip Helger
  */
@@ -105,12 +114,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
 
   private HashCodeGenerator (final int nSuperHashCode)
   {
-    m_nHC = nSuperHashCode;
+    this.m_nHC = nSuperHashCode;
   }
 
   private void _checkClosed ()
   {
-    if (m_bClosed)
+    if (this.m_bClosed)
       throw new IllegalStateException ("Hash code cannot be changed anymore!");
   }
 
@@ -121,11 +130,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final boolean x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -136,11 +146,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final byte x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -151,11 +162,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final char x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -166,11 +178,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final double x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -181,11 +194,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final float x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -196,11 +210,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final int x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -211,11 +226,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final long x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -226,11 +242,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (final short x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -241,11 +258,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Object x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -256,11 +274,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Enum <?> x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -271,11 +290,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final boolean [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -286,11 +306,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final byte [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -301,11 +322,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final char [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -316,11 +338,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final double [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -331,11 +354,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final float [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -346,11 +370,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final int [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -361,11 +386,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final long [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -376,11 +402,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final short [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -391,11 +418,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Object [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -406,11 +434,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        Array to add
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Enum <?> [] x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -426,7 +455,7 @@ public final class HashCodeGenerator implements IHashCodeGenerator
   public HashCodeGenerator append (@Nullable final StringBuffer x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -442,7 +471,7 @@ public final class HashCodeGenerator implements IHashCodeGenerator
   public HashCodeGenerator append (@Nullable final StringBuilder x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -451,11 +480,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        to be included in the hash code generation.
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Iterable <?> x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -464,11 +494,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        to be included in the hash code generation.
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Map <?, ?> x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -477,11 +508,12 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *        to be included in the hash code generation.
    * @return this
    */
+  @Override
   @Nonnull
   public HashCodeGenerator append (@Nullable final Node x)
   {
     _checkClosed ();
-    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    this.m_nHC = HashCodeCalculator.append (this.m_nHC, x);
     return this;
   }
 
@@ -493,15 +525,16 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    *         {@link #ILLEGAL_HASHCODE}. If the calculated hash code would be
    *         {@link #ILLEGAL_HASHCODE} it is changed to -1 instead.
    */
+  @Override
   public int getHashCode ()
   {
-    m_bClosed = true;
+    this.m_bClosed = true;
 
     // This is for the very rare case, that the calculated hash code results in
     // an illegal value.
-    if (m_nHC == ILLEGAL_HASHCODE)
-      m_nHC = -1;
-    return m_nHC;
+    if (this.m_nHC == ILLEGAL_HASHCODE)
+      this.m_nHC = -1;
+    return this.m_nHC;
   }
 
   /**

@@ -57,7 +57,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   public SimpleLSResourceResolver (@Nullable final LSResourceResolver aWrappedResourceResolver)
   {
-    m_aWrappedResourceResolver = aWrappedResourceResolver;
+    this.m_aWrappedResourceResolver = aWrappedResourceResolver;
   }
 
   /**
@@ -105,9 +105,8 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
       // Create relative path!
       final File aBaseParent = new File (sBasePath).getParentFile ();
-      final String sPath = FilenameHelper.getCleanPath (aBaseParent == null ? sSystemId : aBaseParent.getPath () +
-                                                                                          '/' +
-                                                                                          sSystemId);
+      final String sPath = FilenameHelper.getCleanPath (aBaseParent == null ? sSystemId
+                                                                            : aBaseParent.getPath () + '/' + sSystemId);
 
       // Build result (must contain forward slashes!)
       return new ClassPathResource (sPath);
@@ -119,7 +118,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       final String sRealBaseURI = ClassPathResource.getWithoutClassPathPrefix (sBaseURI);
       final File aBaseFile = new File (sRealBaseURI).getParentFile ();
       return new ClassPathResource (FilenameHelper.getCleanConcatenatedUrlPath (aBaseFile == null ? "/"
-                                                                                                 : aBaseFile.getPath (),
+                                                                                                  : aBaseFile.getPath (),
                                                                                 sSystemId));
     }
 
@@ -160,19 +159,19 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   /**
    * @param sType
-   *        The type of the resource being resolved. For XML [<a
-   *        href='http://www.w3.org/TR/2004/REC-xml-20040204'>XML 1.0</a>]
+   *        The type of the resource being resolved. For XML
+   *        [<a href='http://www.w3.org/TR/2004/REC-xml-20040204'>XML 1.0</a>]
    *        resources (i.e. entities), applications must use the value
-   *        <code>"http://www.w3.org/TR/REC-xml"</code>. For XML Schema [<a
-   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        <code>"http://www.w3.org/TR/REC-xml"</code>. For XML Schema
+   *        [<a href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
    *        Schema Part 1</a>] , applications must use the value
    *        <code>"http://www.w3.org/2001/XMLSchema"</code>. Other types of
    *        resources are outside the scope of this specification and therefore
    *        should recommend an absolute URI in order to use this method.
    * @param sNamespaceURI
    *        The namespace of the resource being resolved, e.g. the target
-   *        namespace of the XML Schema [<a
-   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        namespace of the XML Schema
+   *        [<a href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
    *        Schema Part 1</a>] when resolving XML Schema resources.
    * @param sPublicId
    *        The public identifier of the external entity being referenced, or
@@ -180,14 +179,16 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *        resource is not an entity.
    * @param sSystemId
    *        the path of the resource to find - may be relative to the including
-   *        resource. The system identifier, a URI reference [<a
-   *        href='http://www.ietf.org/rfc/rfc2396.txt'>IETF RFC 2396</a>], of
-   *        the external resource being referenced, or <code>null</code> if no
-   *        system identifier was supplied.
+   *        resource. The system identifier, a URI reference
+   *        [<a href='http://www.ietf.org/rfc/rfc2396.txt'>IETF RFC 2396</a>],
+   *        of the external resource being referenced, or <code>null</code> if
+   *        no system identifier was supplied.
    * @param sBaseURI
    *        The systemId of the including resource.The absolute base URI of the
    *        resource being parsed, or <code>null</code> if there is no base URI.
    * @return <code>null</code> if the resource could not be resolved.
+   * @throws Exception
+   *         eventually
    */
   @OverrideOnDemand
   @Nullable
@@ -202,19 +203,19 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   /**
    * @param sType
-   *        The type of the resource being resolved. For XML [<a
-   *        href='http://www.w3.org/TR/2004/REC-xml-20040204'>XML 1.0</a>]
+   *        The type of the resource being resolved. For XML
+   *        [<a href='http://www.w3.org/TR/2004/REC-xml-20040204'>XML 1.0</a>]
    *        resources (i.e. entities), applications must use the value
-   *        <code>"http://www.w3.org/TR/REC-xml"</code>. For XML Schema [<a
-   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        <code>"http://www.w3.org/TR/REC-xml"</code>. For XML Schema
+   *        [<a href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
    *        Schema Part 1</a>] , applications must use the value
    *        <code>"http://www.w3.org/2001/XMLSchema"</code>. Other types of
    *        resources are outside the scope of this specification and therefore
    *        should recommend an absolute URI in order to use this method.
    * @param sNamespaceURI
    *        The namespace of the resource being resolved, e.g. the target
-   *        namespace of the XML Schema [<a
-   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        namespace of the XML Schema
+   *        [<a href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
    *        Schema Part 1</a>] when resolving XML Schema resources.
    * @param sPublicId
    *        The public identifier of the external entity being referenced, or
@@ -222,15 +223,16 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *        resource is not an entity.
    * @param sSystemId
    *        the path of the resource to find - may be relative to the including
-   *        resource. The system identifier, a URI reference [<a
-   *        href='http://www.ietf.org/rfc/rfc2396.txt'>IETF RFC 2396</a>], of
-   *        the external resource being referenced, or <code>null</code> if no
-   *        system identifier was supplied.
+   *        resource. The system identifier, a URI reference
+   *        [<a href='http://www.ietf.org/rfc/rfc2396.txt'>IETF RFC 2396</a>],
+   *        of the external resource being referenced, or <code>null</code> if
+   *        no system identifier was supplied.
    * @param sBaseURI
    *        The systemId of the including resource.The absolute base URI of the
    *        resource being parsed, or <code>null</code> if there is no base URI.
    * @return <code>null</code> if the resource could not be resolved.
    */
+  @Override
   @Nullable
   public final LSInput resolveResource (@Nonnull @Nonempty final String sType,
                                         @Nullable final String sNamespaceURI,
@@ -261,14 +263,16 @@ public class SimpleLSResourceResolver implements LSResourceResolver
                                        sSystemId +
                                        "', '" +
                                        sBaseURI +
-                                       "'", ex);
+                                       "'",
+                                       ex);
     }
 
     // Pass to parent (if available)
-    return m_aWrappedResourceResolver == null ? null : m_aWrappedResourceResolver.resolveResource (sType,
-                                                                                                   sNamespaceURI,
-                                                                                                   sPublicId,
-                                                                                                   sSystemId,
-                                                                                                   sBaseURI);
+    return this.m_aWrappedResourceResolver == null ? null
+                                                   : this.m_aWrappedResourceResolver.resolveResource (sType,
+                                                                                                      sNamespaceURI,
+                                                                                                      sPublicId,
+                                                                                                      sSystemId,
+                                                                                                      sBaseURI);
   }
 }
