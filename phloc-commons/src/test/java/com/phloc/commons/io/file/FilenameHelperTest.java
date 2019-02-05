@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FilenameHelper}.
- * 
+ *
  * @author Philip Helger
  */
 public final class FilenameHelperTest
@@ -712,5 +712,41 @@ public final class FilenameHelperTest
                                                                         aChildDir.getAbsolutePath ()));
     assertNull (FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aAbsoluteParentDir,
                                                                       aAbsoluteParentDir.getParent ()));
+  }
+
+  @Test
+  @SuppressFBWarnings
+  public void testCreateFilename ()
+  {
+    try
+    {
+      FilenameHelper.createFilename ("base", null);
+      fail ();
+    }
+    catch (final NullPointerException aEx)
+    {}
+    try
+    {
+      FilenameHelper.createFilename ("base", "");
+      fail ();
+    }
+    catch (final IllegalArgumentException aEx)
+    {}
+    try
+    {
+      FilenameHelper.createFilename (null, "ext");
+      fail ();
+    }
+    catch (final NullPointerException aEx)
+    {}
+    try
+    {
+      FilenameHelper.createFilename ("", "ext");
+      fail ();
+    }
+    catch (final IllegalArgumentException aEx)
+    {}
+    assertEquals ("base.ext", FilenameHelper.createFilename ("base", "ext"));
+    assertEquals ("base.ext.ext", FilenameHelper.createFilename ("base.ext", "ext"));
   }
 }
