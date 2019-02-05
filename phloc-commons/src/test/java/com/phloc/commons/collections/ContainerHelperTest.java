@@ -617,7 +617,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
 
-    SortedMap <Integer, String> aSortedMap = newSortedMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
+    SortedMap <Integer, String> aSortedMap = newSortedMap (new Integer [] { I2, I4 },
+                                                           new String [] { "Hallo", "Welt" }); //$NON-NLS-1$ //$NON-NLS-2$
     assertNotNull (aSortedMap);
     assertEquals (2, aSortedMap.size ());
     assertNotNull (aSortedMap.get (I2));
@@ -1515,7 +1516,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIIterableIterator ()
   {
-    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", //$NON-NLS-1$
+                                                                                                      "Welt"))); //$NON-NLS-1$
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo")); //$NON-NLS-1$
@@ -1725,7 +1727,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableOrderedSetIIterableIterator ()
   {
-    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (IterableIterator.create (newList ("Hallo", "Welt"))); //$NON-NLS-1$ //$NON-NLS-2$
+    Set <String> aUnmodifiableOrderedSet = newUnmodifiableOrderedSet (IterableIterator.create (newList ("Hallo", //$NON-NLS-1$
+                                                                                                        "Welt"))); //$NON-NLS-1$
     assertNotNull (aUnmodifiableOrderedSet);
     assertEquals (2, aUnmodifiableOrderedSet.size ());
     assertTrue (aUnmodifiableOrderedSet.contains ("Hallo")); //$NON-NLS-1$
@@ -2459,7 +2462,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByKey (newMap (), (Comparator<?>)null);
+      final Map <String, Object> aMap = newMap ();
+      getSortedByKey (aMap, (Comparator <String>) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -2493,7 +2497,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     try
     {
       // null Comparator
-      getSortedByValue (newMap (), (Comparator<?>)null);
+      final Map <String, String> aMap = newMap ();
+      getSortedByValue (aMap, (Comparator <String>) null);
       fail ();
     }
     catch (final NullPointerException ex)
