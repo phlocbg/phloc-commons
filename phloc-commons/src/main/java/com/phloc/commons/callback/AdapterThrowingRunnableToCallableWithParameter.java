@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A helper class that converts a {@link IThrowingRunnable} into an
  * {@link IThrowingCallable}.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  * @param <DATATYPE>
  *        The callable result type.
  * @param <PARAMTYPE>
@@ -48,21 +48,24 @@ public class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE
   public AdapterThrowingRunnableToCallableWithParameter (@Nonnull final IThrowingRunnableWithParameter <PARAMTYPE> aRunnable,
                                                          @Nullable final DATATYPE aResult)
   {
-    m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
-    m_aResult = aResult;
+    this.m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
+    this.m_aResult = aResult;
   }
 
+  @Override
   @Nullable
   public DATATYPE call (final PARAMTYPE aParam) throws Exception
   {
-    m_aRunnable.run (aParam);
-    return m_aResult;
+    this.m_aRunnable.run (aParam);
+    return this.m_aResult;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("runnable", m_aRunnable).append ("result", m_aResult).toString ();
+    return new ToStringGenerator (this).append ("runnable", this.m_aRunnable)
+                                       .append ("result", this.m_aResult)
+                                       .toString ();
   }
 
   /**
@@ -72,6 +75,8 @@ public class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE
    *        The runnable to be executed.
    * @return The created {@link AdapterThrowingRunnableToCallableWithParameter}
    *         object.
+   * @param <PARAMTYPE>
+   *        The parameter data type
    */
   @Nonnull
   public static <PARAMTYPE> AdapterThrowingRunnableToCallableWithParameter <Object, PARAMTYPE> createAdapter (@Nonnull final IThrowingRunnableWithParameter <PARAMTYPE> aRunnable)
@@ -89,6 +94,10 @@ public class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE
    *        May be <code>null</code>.
    * @return The created {@link AdapterThrowingRunnableToCallableWithParameter}
    *         object.
+   * @param <DATATYPE>
+   *        The result data type
+   * @param <PARAMTYPE>
+   *        The parameter data type
    */
   @Nonnull
   public static <DATATYPE, PARAMTYPE> AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> createAdapter (@Nonnull final IThrowingRunnableWithParameter <PARAMTYPE> aRunnable,

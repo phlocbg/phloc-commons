@@ -51,15 +51,13 @@ public final class StringDecoder
   {
     ValueEnforcer.notNull (aCharset, "Charset");
 
-    m_aDecoder = aCharset.newDecoder ();
-    // This matches the default behaviour for String(byte[], "UTF-8");
-    // TODO: Support throwing exceptions on invalid input?
-    m_aDecoder.onMalformedInput (CodingErrorAction.REPLACE);
+    this.m_aDecoder = aCharset.newDecoder ();
+    this.m_aDecoder.onMalformedInput (CodingErrorAction.REPLACE);
   }
 
   /**
-   * Reserve space for the next string that will be <= expectedLength characters
-   * long. Must only be called when the buffer is empty.
+   * Reserve space for the next string that will be &lt;= expectedLength
+   * characters long. Must only be called when the buffer is empty.
    * 
    * @param nExpectedLength
    *        The number of chars to reserve. Must be &ge; 0.
@@ -67,10 +65,10 @@ public final class StringDecoder
   public void reserve (@Nonnegative final int nExpectedLength)
   {
     ValueEnforcer.isGE0 (nExpectedLength, "ExpectedLength");
-    if (m_aBuffer.position () != 0)
+    if (this.m_aBuffer.position () != 0)
       throw new IllegalStateException ("cannot be called except after finish()");
 
-    if (nExpectedLength > m_aBuffer.capacity ())
+    if (nExpectedLength > this.m_aBuffer.capacity ())
     {
       // Allocate a temporary buffer large enough for this string rounded up
       int nDesiredLength = nExpectedLength;
@@ -81,10 +79,10 @@ public final class StringDecoder
       }
       assert nDesiredLength % SIZE_ALIGNMENT == 0;
 
-      m_aBuffer = CharBuffer.allocate (nDesiredLength);
+      this.m_aBuffer = CharBuffer.allocate (nDesiredLength);
     }
-    assert m_aBuffer.position () == 0;
-    assert nExpectedLength <= m_aBuffer.capacity ();
+    assert this.m_aBuffer.position () == 0;
+    assert nExpectedLength <= this.m_aBuffer.capacity ();
   }
 
   private void _decode (@Nonnull final ByteBuffer aByteBuffer, final boolean bEndOfInput)
@@ -92,18 +90,18 @@ public final class StringDecoder
     // Call decode at least once to pass the endOfInput signal through
     do
     {
-      final CoderResult aResult = m_aDecoder.decode (aByteBuffer, m_aBuffer, bEndOfInput);
+      final CoderResult aResult = this.m_aDecoder.decode (aByteBuffer, this.m_aBuffer, bEndOfInput);
       if (aResult != CoderResult.UNDERFLOW)
       {
         // Error handling
         if (aResult == CoderResult.OVERFLOW)
         {
           // double the buffer size and retry
-          final CharBuffer aNewBuffer = CharBuffer.allocate (m_aBuffer.capacity () * 2);
-          System.arraycopy (m_aBuffer.array (), 0, aNewBuffer.array (), 0, m_aBuffer.position ());
-          aNewBuffer.position (m_aBuffer.position ());
-          assert aNewBuffer.remaining () >= m_aBuffer.capacity ();
-          m_aBuffer = aNewBuffer;
+          final CharBuffer aNewBuffer = CharBuffer.allocate (this.m_aBuffer.capacity () * 2);
+          System.arraycopy (this.m_aBuffer.array (), 0, aNewBuffer.array (), 0, this.m_aBuffer.position ());
+          aNewBuffer.position (this.m_aBuffer.position ());
+          assert aNewBuffer.remaining () >= this.m_aBuffer.capacity ();
+          this.m_aBuffer = aNewBuffer;
         }
         else
         {
@@ -151,18 +149,18 @@ public final class StringDecoder
 
     _decode (aByteBuffer, true);
 
-    final CoderResult aResult = m_aDecoder.flush (m_aBuffer);
+    final CoderResult aResult = this.m_aDecoder.flush (this.m_aBuffer);
     if (aResult == CoderResult.OVERFLOW)
       throw new IllegalStateException ("TODO: Handle overflow?");
     if (aResult != CoderResult.UNDERFLOW)
       throw new IllegalStateException ("TODO: Handle errors?");
 
     // Copy out the string
-    final String sRet = new String (m_aBuffer.array (), 0, m_aBuffer.position ());
+    final String sRet = new String (this.m_aBuffer.array (), 0, this.m_aBuffer.position ());
 
     // Reset for the next string
-    m_aBuffer.clear ();
-    m_aDecoder.reset ();
+    this.m_aBuffer.clear ();
+    this.m_aDecoder.reset ();
 
     return sRet;
   }

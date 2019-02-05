@@ -207,6 +207,8 @@ public final class ArrayHelper
   }
 
   /**
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array who's size is to be queried. May be <code>null</code>.
    * @return 0 if the passed array is <code>null</code> - it's length otherwise.
@@ -306,6 +308,8 @@ public final class ArrayHelper
   }
 
   /**
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array to be queried if it is empty. May be <code>null</code>.
    * @return <code>true</code> if the passed array is <code>null</code> or
@@ -405,6 +409,8 @@ public final class ArrayHelper
   }
 
   /**
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array to be queried if it is empty. May be <code>null</code>.
    * @return <code>false</code> if the passed array is <code>null</code> or
@@ -418,6 +424,8 @@ public final class ArrayHelper
   /**
    * Get the index of the passed search value in the passed value array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aValues
    *        The value array to be searched. May be <code>null</code>.
    * @param aSearchValue
@@ -599,6 +607,8 @@ public final class ArrayHelper
   /**
    * Get the index of the passed search value in the passed value array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aValues
    *        The value array to be searched. May be <code>null</code>.
    * @param aSearchValue
@@ -780,6 +790,8 @@ public final class ArrayHelper
   /**
    * Check if the passed search value is contained in the passed value array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aValues
    *        The value array to be searched. May be <code>null</code>.
    * @param aSearchValue
@@ -1053,6 +1065,8 @@ public final class ArrayHelper
    * Get the first element of the array or <code>null</code> if the passed array
    * is empty.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array who's first element is to be retrieved. May be
    *        <code>null</code> or empty.
@@ -1069,6 +1083,8 @@ public final class ArrayHelper
    * Get the first element of the array or the passed default if the passed
    * array is empty.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array who's first element is to be retrieved. May be
    *        <code>null</code> or empty.
@@ -1232,6 +1248,8 @@ public final class ArrayHelper
    * Get the last element of the array or <code>null</code> if the passed array
    * is empty.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array who's last element is to be retrieved. May be
    *        <code>null</code> or empty.
@@ -1248,6 +1266,8 @@ public final class ArrayHelper
    * Get the last element of the array or the passed default if the passed array
    * is empty.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array who's last element is to be retrieved. May be
    *        <code>null</code> or empty.
@@ -1811,6 +1831,8 @@ public final class ArrayHelper
    * Get a 1:1 copy of the passed array. Nested elements are not deep-copied -
    * the references are re-used!
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array to be copied.
    * @return <code>null</code> if the passed array is <code>null</code> - a non-
@@ -1827,6 +1849,8 @@ public final class ArrayHelper
    * Get a 1:1 copy of the passed array using the passed number of array
    * elements. Nested elements are not deep-copied - the references are re-used!
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array to be copied.
    * @param nLength
@@ -1850,6 +1874,8 @@ public final class ArrayHelper
    * elements starting at the specified index. Nested elements are not
    * deep-copied - the references are re-used!
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The array to be copied.
    * @param nStartIndex
@@ -1878,6 +1904,8 @@ public final class ArrayHelper
   /**
    * Get a new array that combines the passed two arrays, maintaining the order.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aHeadArray
    *        The first array. May be <code>null</code>.
    * @param aTailArray
@@ -1908,6 +1936,8 @@ public final class ArrayHelper
    * Get a new array that combines the passed head and the array. The head
    * element will be the first element of the created array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aHead
    *        The first element of the result array. If this element is
    *        <code>null</code> it will be inserted as such into the array!
@@ -1941,6 +1971,8 @@ public final class ArrayHelper
    * Get a new array that combines the passed array and the tail element. The
    * tail element will be the last element of the created array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aHeadArray
    *        The head array. May be <code>null</code>.
    * @param aTail
@@ -2164,7 +2196,8 @@ public final class ArrayHelper
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static char [][] getConcatenated (@Nullable final char [][] aHeadArray, @Nullable final char []... aTailArray)
+  public static char [] [] getConcatenated (@Nullable final char [] [] aHeadArray,
+                                            @Nullable final char []... aTailArray)
   {
     // If first array is invalid, simply
     if (isEmpty (aHeadArray))
@@ -2173,7 +2206,7 @@ public final class ArrayHelper
       return getCopy (aHeadArray);
 
     // Start concatenating
-    final char [][] ret = new char [aHeadArray.length + aTailArray.length] [];
+    final char [] [] ret = new char [aHeadArray.length + aTailArray.length] [];
     System.arraycopy (aHeadArray, 0, ret, 0, aHeadArray.length);
     System.arraycopy (aTailArray, 0, ret, aHeadArray.length, aTailArray.length);
     return ret;
@@ -2686,6 +2719,8 @@ public final class ArrayHelper
   /**
    * Get an array that contains all elements, except for the first element.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @return <code>null</code> if the passed array is <code>null</code> or has
@@ -2703,6 +2738,8 @@ public final class ArrayHelper
    * Get an array that contains all elements, except for the first <em>n</em>
    * elements.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @param nElementsToSkip
@@ -2728,6 +2765,8 @@ public final class ArrayHelper
   /**
    * Get an array that contains all elements, except for the passed elements.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @param aElementsToRemove
@@ -3301,6 +3340,8 @@ public final class ArrayHelper
   /**
    * Get an array that contains all elements, except for the last element.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @return <code>null</code> if the passed array is <code>null</code> or has
@@ -3318,6 +3359,8 @@ public final class ArrayHelper
    * Get an array that contains all elements, except for the last <em>n</em>
    * elements.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @param nElementsToSkip
@@ -3804,6 +3847,8 @@ public final class ArrayHelper
   /**
    * Create a new empty array with the same type as the passed array.
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aArray
    *        Source array. May not be <code>null</code>.
    * @param nSize
@@ -3820,6 +3865,8 @@ public final class ArrayHelper
   /**
    * Create a new array with the elements in the passed collection..
    * 
+   * @param <ELEMENTTYPE>
+   *        The value type
    * @param aCollection
    *        The collection to be converted to an array. May be <code>null</code>
    *        .
@@ -4012,6 +4059,8 @@ public final class ArrayHelper
   /**
    * Check if the passed array contains at least one <code>null</code> element.
    * 
+   * @param <T>
+   *        The value type
    * @param aArray
    *        The array to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed array is neither
@@ -4030,6 +4079,8 @@ public final class ArrayHelper
   /**
    * Check if the passed array contains only <code>null</code> element.
    * 
+   * @param <T>
+   *        The value type
    * @param aArray
    *        The array to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed array is neither

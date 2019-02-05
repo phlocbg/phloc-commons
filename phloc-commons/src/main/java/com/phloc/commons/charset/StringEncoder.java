@@ -63,35 +63,35 @@ public final class StringEncoder
   {
     ValueEnforcer.notNull (aCharset, "Charset");
 
-    m_aEncoder = aCharset.newEncoder ();
+    this.m_aEncoder = aCharset.newEncoder ();
     // set the buffer to "filled" so it gets filled by encode()
-    m_aInChar.position (m_aInChar.limit ());
+    this.m_aInChar.position (this.m_aInChar.limit ());
     // Needed for U+D800 - U+DBFF = High Surrogate; U+DC00 - U+DFFF = Low
     // Surrogates
     // Maybe others in the future? This is what the JDK does for
     // String.getBytes().
-    m_aEncoder.onMalformedInput (CodingErrorAction.REPLACE);
+    this.m_aEncoder.onMalformedInput (CodingErrorAction.REPLACE);
     // Not actually needed for UTF-8, but can't hurt
-    m_aEncoder.onUnmappableCharacter (CodingErrorAction.REPLACE);
+    this.m_aEncoder.onUnmappableCharacter (CodingErrorAction.REPLACE);
   }
 
   private void _readInputChunk (@Nonnull final String sSource)
   {
-    assert m_aInChar.remaining () <= 1;
-    assert m_nReadOffset < sSource.length ();
+    assert this.m_aInChar.remaining () <= 1;
+    assert this.m_nReadOffset < sSource.length ();
 
-    final char [] aInChars = m_aInChar.array ();
+    final char [] aInChars = this.m_aInChar.array ();
 
     // We need to get a chunk from the string: Compute the chunk length
-    int nReadLength = sSource.length () - m_nReadOffset;
+    int nReadLength = sSource.length () - this.m_nReadOffset;
     if (nReadLength > aInChars.length)
       nReadLength = aInChars.length;
 
     // Copy the chunk from the string into our temporary buffer
-    sSource.getChars (m_nReadOffset, m_nReadOffset + nReadLength, aInChars, 0);
-    m_aInChar.position (0);
-    m_aInChar.limit (nReadLength);
-    m_nReadOffset += nReadLength;
+    sSource.getChars (this.m_nReadOffset, this.m_nReadOffset + nReadLength, aInChars, 0);
+    this.m_aInChar.position (0);
+    this.m_aInChar.limit (nReadLength);
+    this.m_nReadOffset += nReadLength;
   }
 
   /**
@@ -103,6 +103,8 @@ public final class StringEncoder
    * to be written, but there is only 1 or 2 bytes of space, this will leave the
    * last couple bytes unused.
    * 
+   * @param sSource
+   *        The source string which shall be encoded
    * @param aDestBuffer
    *        a ByteBuffer that will be filled with data.
    * @return {@link EFinish}
@@ -118,23 +120,23 @@ public final class StringEncoder
       return EFinish.FINISHED;
 
     // read data in, if needed
-    if (!m_aInChar.hasRemaining () && m_nReadOffset < sSource.length ())
+    if (!this.m_aInChar.hasRemaining () && this.m_nReadOffset < sSource.length ())
       _readInputChunk (sSource);
 
     // if flush() overflows the destination, skip the encode loop and re-try the
     // flush()
-    if (m_aInChar.hasRemaining ())
+    if (this.m_aInChar.hasRemaining ())
     {
       while (true)
       {
-        assert m_aInChar.hasRemaining ();
-        final boolean bEndOfInput = m_nReadOffset == sSource.length ();
-        final CoderResult aResult = m_aEncoder.encode (m_aInChar, aDestBuffer, bEndOfInput);
+        assert this.m_aInChar.hasRemaining ();
+        final boolean bEndOfInput = this.m_nReadOffset == sSource.length ();
+        final CoderResult aResult = this.m_aEncoder.encode (this.m_aInChar, aDestBuffer, bEndOfInput);
         if (aResult == CoderResult.OVERFLOW)
         {
           // NOTE: destination could space remaining, in case of a multi-byte
           // sequence
-          assert aDestBuffer.remaining () < m_aEncoder.maxBytesPerChar ();
+          assert aDestBuffer.remaining () < this.m_aEncoder.maxBytesPerChar ();
           return EFinish.UNFINISHED;
         }
         assert aResult == CoderResult.UNDERFLOW;
@@ -142,20 +144,20 @@ public final class StringEncoder
         // If we split a surrogate char (inBuffer.remaining() == 1), back up and
         // re-copy
         // from the source. avoid a branch by always subtracting
-        assert m_aInChar.remaining () <= 1;
-        m_nReadOffset -= m_aInChar.remaining ();
-        assert m_nReadOffset > 0;
+        assert this.m_aInChar.remaining () <= 1;
+        this.m_nReadOffset -= this.m_aInChar.remaining ();
+        assert this.m_nReadOffset > 0;
 
         // If we are done, break. Otherwise, read the next chunk
-        if (m_nReadOffset == sSource.length ())
+        if (this.m_nReadOffset == sSource.length ())
           break;
         _readInputChunk (sSource);
       }
     }
-    assert !m_aInChar.hasRemaining ();
-    assert m_nReadOffset == sSource.length ();
+    assert !this.m_aInChar.hasRemaining ();
+    assert this.m_nReadOffset == sSource.length ();
 
-    final CoderResult aResult = m_aEncoder.flush (aDestBuffer);
+    final CoderResult aResult = this.m_aEncoder.flush (aDestBuffer);
     if (aResult == CoderResult.OVERFLOW)
     {
       // I don't think this can happen. If it does, assert so we can figure it
@@ -174,8 +176,8 @@ public final class StringEncoder
   @Nonnegative
   private int _getCharsConverted ()
   {
-    final int nCharsConverted = m_nReadOffset - m_aInChar.remaining ();
-    assert 0 <= nCharsConverted && nCharsConverted <= m_nReadOffset;
+    final int nCharsConverted = this.m_nReadOffset - this.m_aInChar.remaining ();
+    assert 0 <= nCharsConverted && nCharsConverted <= this.m_nReadOffset;
     return nCharsConverted;
   }
 
@@ -184,6 +186,8 @@ public final class StringEncoder
    * of the ByteBuffer will be 0, the limit is the length of the string. The
    * capacity of the ByteBuffer may be larger than the string.
    * 
+   * @param sSource
+   *        The source string which shall be encoded
    * @return The new byte buffer
    */
   @Nonnull
@@ -206,7 +210,7 @@ public final class StringEncoder
       {
         // charsConverted can be 0 if the initial buffer is smaller than one
         // character
-        dBytesPerChar = m_aEncoder.averageBytesPerChar ();
+        dBytesPerChar = this.m_aEncoder.averageBytesPerChar ();
       }
 
       final int nCharsRemaining = sSource.length () - nCharsConverted;
@@ -229,18 +233,22 @@ public final class StringEncoder
   /**
    * Returns a new byte array containing the UTF-8 version of source. The array
    * will be exactly the correct size for the string.
+   * 
+   * @param sSource
+   *        The source string which shall be encoded
+   * @return the new byte array
    */
   @Nonnull
   public byte [] getAsNewArray (@Nonnull final String sSource)
   {
     // Optimized for short strings
-    assert m_aArrayBuffer.remaining () == m_aArrayBuffer.capacity ();
-    if (encode (sSource, m_aArrayBuffer).isFinished ())
+    assert this.m_aArrayBuffer.remaining () == this.m_aArrayBuffer.capacity ();
+    if (encode (sSource, this.m_aArrayBuffer).isFinished ())
     {
       // copy the exact correct bytes out
-      final byte [] ret = new byte [m_aArrayBuffer.position ()];
-      System.arraycopy (m_aArrayBuffer.array (), 0, ret, 0, m_aArrayBuffer.position ());
-      m_aArrayBuffer.clear ();
+      final byte [] ret = new byte [this.m_aArrayBuffer.position ()];
+      System.arraycopy (this.m_aArrayBuffer.array (), 0, ret, 0, this.m_aArrayBuffer.position ());
+      this.m_aArrayBuffer.clear ();
       // ~ good += 1;
       return ret;
     }
@@ -252,20 +260,20 @@ public final class StringEncoder
     assert eDone.isFinished ();
 
     // Combine everything and return it
-    final byte [] ret = new byte [m_aArrayBuffer.position () + aRestBuffer.position ()];
-    System.arraycopy (m_aArrayBuffer.array (), 0, ret, 0, m_aArrayBuffer.position ());
-    System.arraycopy (aRestBuffer.array (), 0, ret, m_aArrayBuffer.position (), aRestBuffer.position ());
-    m_aArrayBuffer.clear ();
+    final byte [] ret = new byte [this.m_aArrayBuffer.position () + aRestBuffer.position ()];
+    System.arraycopy (this.m_aArrayBuffer.array (), 0, ret, 0, this.m_aArrayBuffer.position ());
+    System.arraycopy (aRestBuffer.array (), 0, ret, this.m_aArrayBuffer.position (), aRestBuffer.position ());
+    this.m_aArrayBuffer.clear ();
     // ~ worst += 1;
     return ret;
   }
 
   public void reset ()
   {
-    m_nReadOffset = 0;
+    this.m_nReadOffset = 0;
     // reset inBuffer in case we are in the middle of an operation
-    m_aInChar.position (0);
-    m_aInChar.limit (0);
-    m_aEncoder.reset ();
+    this.m_aInChar.position (0);
+    this.m_aInChar.limit (0);
+    this.m_aEncoder.reset ();
   }
 }

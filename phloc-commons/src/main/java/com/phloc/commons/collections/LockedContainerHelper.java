@@ -49,6 +49,10 @@ public final class LockedContainerHelper
    * Looks for the map entry with the passed key and return the corresponding
    * object
    * 
+   * @param <K>
+   *        map key type
+   * @param <T>
+   *        map value type
    * @param aKey
    *        The key of the object (e.g. ID or name)
    * @param aObjectsByKey
@@ -78,6 +82,12 @@ public final class LockedContainerHelper
    * {@link #getByKey(Object, Map, ReentrantReadWriteLock)} returning the result
    * casted according to the requested type
    * 
+   * @param <K>
+   *        map key type
+   * @param <T>
+   *        map value type
+   * @param <R>
+   *        desired return type
    * @param aKey
    *        The key of the object (e.g. ID or name)
    * @param aObjectsByKey
@@ -97,6 +107,8 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the passed container performed in a read locked context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        The container to copy
    * @param aLock
@@ -122,6 +134,8 @@ public final class LockedContainerHelper
    * Returns a copy of the passed container as a list performed in a read locked
    * context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        The container to copy
    * @param aLock
@@ -146,6 +160,10 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the passed map in a read locked context
    * 
+   * @param <K>
+   *        map key type
+   * @param <V>
+   *        map value type
    * @param aObjects
    *        The map to copy
    * @param aLock
@@ -171,9 +189,12 @@ public final class LockedContainerHelper
    * Returns the element with the specified index from the passed list in a read
    * locked context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        The list to access
    * @param nIndex
+   *        The index of the element to retrieve
    * @param aLock
    *        The lock to use
    * @return The element with the specified index or null
@@ -204,6 +225,10 @@ public final class LockedContainerHelper
    * Returns a copy of the values in the passed map performed in a read locked
    * context
    * 
+   * @param <K>
+   *        map key type
+   * @param <V>
+   *        map value type
    * @param aObjects
    *        The map containing the values to retrieve
    * @param aLock
@@ -229,6 +254,10 @@ public final class LockedContainerHelper
    * Returns a copy of the keys in the passed map performed in a read locked
    * context
    * 
+   * @param <K>
+   *        map key type
+   * @param <V>
+   *        map value type
    * @param aObjects
    *        The map containing the values to retrieve
    * @param aLock
@@ -258,6 +287,10 @@ public final class LockedContainerHelper
    * Returns a copy of the entry in the passed multi-map corresponding to the
    * passed key, performing the access in a read locked context
    * 
+   * @param <K>
+   *        map key type
+   * @param <T>
+   *        map value type
    * @param aMap
    *        The container to copy
    * @param aKey
@@ -290,6 +323,8 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the passed container performed in a read locked context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        The container to copy
    * @param aLock
@@ -314,6 +349,8 @@ public final class LockedContainerHelper
    * Returns a copy of the passed ordered container performed in a read locked
    * context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        The container to copy
    * @param aLock
@@ -338,6 +375,8 @@ public final class LockedContainerHelper
    * Returns a mutable copy of the passed stack performed in a read locked
    * context
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
    *        the stack to copy
    * @param aLock
@@ -365,9 +404,14 @@ public final class LockedContainerHelper
    * Performs a simple remove operation of the passed collection using the
    * passed object, locking the operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The container from which to remove
    * @param aObject
+   *        The element to remove
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the remove operation
    */
   public static <T> boolean remove (@Nonnull final Collection <T> aObjects,
@@ -393,9 +437,14 @@ public final class LockedContainerHelper
    * Checks if the passed item is contained in the passed collection in a thread
    * safe manner
    * 
+   * @param <T>
+   *        value type
    * @param aCollection
+   *        The container to check
    * @param aItem
+   *        The element to check
    * @param aLock
+   *        The lock to use
    * @return
    */
   public static <T> boolean contains (@Nonnull final Collection <T> aCollection,
@@ -421,9 +470,14 @@ public final class LockedContainerHelper
    * Checks if all the passed items is contained in the passed collection in a
    * thread safe manner
    * 
+   * @param <T>
+   *        value type
    * @param aCollection
+   *        The container to check
    * @param aItems
+   *        The elements to check
    * @param aLock
+   *        The lock to use
    * @return
    */
   public static <T> boolean containsAll (@Nullable final Collection <T> aCollection,
@@ -449,8 +503,12 @@ public final class LockedContainerHelper
    * Performs a simple clear operation on the passed collection, locking the
    * operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The container to clear
    * @param aLock
+   *        The lock to use
    */
   public static <T> void clear (@Nonnull final Collection <T> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
   {
@@ -469,9 +527,14 @@ public final class LockedContainerHelper
    * Performs a simple add operation of the passed collection using the passed
    * object, locking the operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The container to which to add
    * @param aObject
+   *        The element to add
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the add operation
    */
   public static <T> boolean add (@Nonnull final Collection <T> aObjects,
@@ -497,9 +560,14 @@ public final class LockedContainerHelper
    * Performs a simple addAll operation of the passed collection using the
    * passed objects, locking the operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The container to which to add
    * @param aObjectsToAdd
+   *        The element to add
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the add operation
    */
   public static <T> boolean addAll (@Nonnull final Collection <T> aObjects,
@@ -525,9 +593,14 @@ public final class LockedContainerHelper
    * Performs a simple removeAll operation of the passed collection using the
    * passed objects, locking the operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The container from which to remove
    * @param aObjectsToRemove
+   *        The elements to remove
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the remove operation
    */
   public static <T> boolean removeAll (@Nonnull final Collection <T> aObjects,
@@ -553,10 +626,18 @@ public final class LockedContainerHelper
    * Performs a simple put action on a map, locking the operation using the
    * passed lock
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aMap
+   *        The map in which to put
    * @param aKey
+   *        The key
    * @param aValue
+   *        The value to put
    * @param aLock
+   *        The lock to use
    * @return the usual return value of the underlying map
    */
   public static <K, V> V put (@Nonnull final Map <K, V> aMap,
@@ -582,6 +663,10 @@ public final class LockedContainerHelper
   /**
    * Tries to put all entries in the seconds map into the first map
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aMap
    *        The main map that should be modified
    * @param aEntries
@@ -611,9 +696,16 @@ public final class LockedContainerHelper
    * Performs a simple remove action on a map, locking the operation using the
    * passed lock
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aMap
+   *        The map from which to remove
    * @param aKey
+   *        The key
    * @param aLock
+   *        The lock to use
    * @return the usual return value of the underlying map
    */
   public static <K, V> V remove (@Nonnull final Map <K, V> aMap,
@@ -639,8 +731,14 @@ public final class LockedContainerHelper
    * Performs a simple clear operation on the passed map, locking the operation
    * using the passed lock
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aObjects
+   *        The map to clear
    * @param aLock
+   *        The lock to use
    */
   public static <K, V> void clear (@Nonnull final Map <K, V> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
   {
@@ -659,11 +757,16 @@ public final class LockedContainerHelper
    * Performs a simple check on the passed collection to see if it is empty,
    * locking the operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The map to check
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the add operation
    */
-  public static <T> boolean isEmpty (@Nonnull final Collection <T> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
+  public static <T> boolean isEmpty (@Nonnull final Collection <T> aObjects,
+                                     @Nonnull final ReentrantReadWriteLock aLock)
   {
     aLock.readLock ().lock ();
     try
@@ -680,8 +783,14 @@ public final class LockedContainerHelper
    * Performs a simple check on the passed map to see if it is empty, locking
    * the operation using the passed lock
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aObjects
+   *        The map to check
    * @param aLock
+   *        The lock to use
    * @return the boolean result value of the add operation
    */
   public static <K, V> boolean isEmpty (@Nonnull final Map <K, V> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
@@ -701,8 +810,14 @@ public final class LockedContainerHelper
    * returns the size of the passed map, locking the operation using the passed
    * lock
    * 
+   * @param <K>
+   *        key type
+   * @param <V>
+   *        value type
    * @param aObjects
+   *        The Map to check
    * @param aLock
+   *        The lock to use
    * @return the size of the passed map
    */
   public static <K, V> int getSize (@Nonnull final Map <K, V> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
@@ -722,8 +837,12 @@ public final class LockedContainerHelper
    * returns the size of the passed collection, locking the operation using the
    * passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The collection to check
    * @param aLock
+   *        The lock to use
    * @return the size of the passed map
    */
   public static <T> int getSize (@Nonnull final Collection <T> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
@@ -743,8 +862,12 @@ public final class LockedContainerHelper
    * returns the first element of the passed collection, locking the operation
    * using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The collection
    * @param aLock
+   *        The lock to use
    * @return the first element of the passed collection, or <code>null</code> if
    *         empty
    */
@@ -765,8 +888,12 @@ public final class LockedContainerHelper
    * returns the value of the first entry in the passed map, locking the
    * operation using the passed lock
    * 
+   * @param <T>
+   *        value type
    * @param aObjects
+   *        The map
    * @param aLock
+   *        The lock to use
    * @return the first value of the passed map, or <code>null</code> if empty
    */
   public static <T> T getFirstValue (@Nonnull final Map <?, T> aObjects, @Nonnull final ReentrantReadWriteLock aLock)
@@ -785,7 +912,7 @@ public final class LockedContainerHelper
   /**
    * Iterates all passed objects and collect their IDs
    * 
-   * @param aElements
+   * @param aSourceCollection
    *        Objects for which to collect the IDs, must not be <code>null</code>
    * @param aLock
    *        The lock to use
@@ -803,7 +930,7 @@ public final class LockedContainerHelper
   /**
    * Iterates all passed objects and collect their IDs
    * 
-   * @param aElements
+   * @param aSourceList
    *        Objects for which to collect the IDs, must not be <code>null</code>
    * @param aLock
    *        The lock to use
@@ -821,7 +948,7 @@ public final class LockedContainerHelper
   /**
    * Iterates all passed objects and collect their names
    * 
-   * @param aElements
+   * @param aSourceCollection
    *        Objects for which to collect the names, must not be
    *        <code>null</code>
    * @param aLock
@@ -840,7 +967,7 @@ public final class LockedContainerHelper
   /**
    * Iterates all passed objects and collect their names
    * 
-   * @param aElements
+   * @param aSourceList
    *        Objects for which to collect the names, must not be
    *        <code>null</code>
    * @param aLock

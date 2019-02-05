@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * type itself is not immutable). This is especially useful for returned
  * containers that are not modifiable.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.METHOD })

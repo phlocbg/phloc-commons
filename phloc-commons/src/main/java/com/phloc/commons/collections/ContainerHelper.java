@@ -160,7 +160,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Collection <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final Collection <? extends ELEMENTTYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableList ()
-                              : Collections.unmodifiableCollection (aCollection);
+                               : Collections.unmodifiableCollection (aCollection);
   }
 
   @Nonnull
@@ -182,7 +182,7 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     return aMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newUnmodifiableMap ()
-                       : Collections.unmodifiableMap (aMap);
+                        : Collections.unmodifiableMap (aMap);
   }
 
   @Nonnull
@@ -190,7 +190,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final SortedSet <ELEMENTTYPE> aSortedSet)
   {
     return aSortedSet == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSortedSet ()
-                             : Collections.unmodifiableSortedSet (aSortedSet);
+                              : Collections.unmodifiableSortedSet (aSortedSet);
   }
 
   @Nonnull
@@ -198,13 +198,15 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aSortedMap)
   {
     return Collections.unmodifiableSortedMap (aSortedMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
-                                                                : aSortedMap);
+                                                                 : aSortedMap);
   }
 
   /**
    * Get all elements that are only contained in the first contained, and not in
    * the second. This method implements <code>aCont1 - aCont2</code>.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aCollection1
    *        The first container. May be <code>null</code> or empty.
    * @param aCollection2
@@ -233,6 +235,8 @@ public final class ContainerHelper
    * Get all elements that are only contained in the first contained, and not in
    * the second. This method implements <code>aCont1 - aCont2</code>.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aList1
    *        The first container. May be <code>null</code> or empty.
    * @param aList2
@@ -261,6 +265,8 @@ public final class ContainerHelper
    * Get all elements that are contained in the first AND in the second
    * container.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aCollection1
    *        The first container. May be <code>null</code> or empty.
    * @param aCollection2
@@ -2726,7 +2732,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> getIterator (@Nullable final ELEMENTTYPE... aArray)
   {
     return ArrayHelper.isEmpty (aArray) ? EmptyIterator.<ELEMENTTYPE> getInstance ()
-                                       : getIterator (newList (aArray).iterator ());
+                                        : getIterator (newList (aArray).iterator ());
   }
 
   @Nonnull
@@ -2919,6 +2925,8 @@ public final class ContainerHelper
   /**
    * Get the first element of the passed list.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aList
    *        The list. May be <code>null</code>.
    * @return <code>null</code> if the list is <code>null</code> or empty, the
@@ -2933,6 +2941,8 @@ public final class ContainerHelper
   /**
    * Get the first element of the passed sorted set.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aSortedSet
    *        The sorted set. May be <code>null</code>.
    * @return <code>null</code> if the list is <code>null</code> or empty, the
@@ -2947,6 +2957,8 @@ public final class ContainerHelper
   /**
    * Get the first element of the passed collection.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aCollection
    *        The collection. May be <code>null</code>.
    * @return <code>null</code> if the collection is <code>null</code> or empty,
@@ -2961,6 +2973,8 @@ public final class ContainerHelper
   /**
    * Get the first element of the passed iterable.
    * 
+   * @param <ELEMENTTYPE>
+   *        The element type
    * @param aIterable
    *        The iterable. May be <code>null</code>.
    * @return <code>null</code> if the iterable is <code>null</code> or empty,
@@ -2978,6 +2992,10 @@ public final class ContainerHelper
   /**
    * Get the first element of the passed map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aMap
    *        The map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -2992,6 +3010,10 @@ public final class ContainerHelper
   /**
    * Get the first key of the passed map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aMap
    *        The map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -3006,6 +3028,10 @@ public final class ContainerHelper
   /**
    * Get the first key of the passed sorted map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aSortedMap
    *        The sorted map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -3020,6 +3046,10 @@ public final class ContainerHelper
   /**
    * Get the first value of the passed map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aMap
    *        The map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -3034,6 +3064,10 @@ public final class ContainerHelper
   /**
    * Get the first value of the passed map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aSortedMap
    *        The map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -3117,6 +3151,8 @@ public final class ContainerHelper
    * if the list is not <code>null</code> and the index is &ge; 0 and &lt;
    * <code>list.size()</code>
    * 
+   * @param <ELEMENTTYPE>
+   *        element type
    * @param aList
    *        The list to remove an element from. May be <code>null</code>.
    * @param nIndex
@@ -3138,6 +3174,10 @@ public final class ContainerHelper
   /**
    * Get the last key of the passed sorted map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aSortedMap
    *        The sorted map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the
@@ -3152,6 +3192,10 @@ public final class ContainerHelper
   /**
    * Get the last value of the passed map.
    * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
    * @param aSortedMap
    *        The map. May be <code>null</code>.
    * @return <code>null</code> if the map is <code>null</code> or empty, the

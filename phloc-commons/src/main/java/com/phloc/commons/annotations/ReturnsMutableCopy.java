@@ -25,11 +25,11 @@ import java.lang.annotation.Target;
 
 /**
  * Indicates that a method returns a mutable object but containing a copy of the
- * internal state. The different to {@link ReturnsMutableObject} is, that this
+ * internal state. The difference to {@link ReturnsMutableObject} is, that this
  * annotation indicates a copy is used, whereas {@link ReturnsMutableObject}
  * means that the internal contained is returned <b>and</b> is mutable!
  * 
- * @author Philip Helger
+ * @author Boris
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.METHOD })

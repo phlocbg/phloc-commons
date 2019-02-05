@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A helper class that converts a {@link Runnable} into an
  * {@link INonThrowingCallable}.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  * @param <DATATYPE>
  *        The callable result type.
  */
@@ -45,21 +45,24 @@ public class AdapterRunnableToCallable <DATATYPE> implements INonThrowingCallabl
 
   public AdapterRunnableToCallable (@Nonnull final Runnable aRunnable, @Nullable final DATATYPE aResult)
   {
-    m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
-    m_aResult = aResult;
+    this.m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
+    this.m_aResult = aResult;
   }
 
+  @Override
   @Nullable
   public DATATYPE call ()
   {
-    m_aRunnable.run ();
-    return m_aResult;
+    this.m_aRunnable.run ();
+    return this.m_aResult;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("runnable", m_aRunnable).append ("result", m_aResult).toString ();
+    return new ToStringGenerator (this).append ("runnable", this.m_aRunnable)
+                                       .append ("result", this.m_aResult)
+                                       .toString ();
   }
 
   /**
@@ -84,6 +87,8 @@ public class AdapterRunnableToCallable <DATATYPE> implements INonThrowingCallabl
    *        The expected result from calling {@link INonThrowingCallable#call()}
    *        . May be <code>null</code>.
    * @return The created {@link AdapterRunnableToCallable} object.
+   * @param <DATATYPE>
+   *        The result data type
    */
   @Nonnull
   public static <DATATYPE> AdapterRunnableToCallable <DATATYPE> createAdapter (@Nonnull final Runnable aRunnable,

@@ -48,21 +48,24 @@ public class AdapterRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implem
   public AdapterRunnableToCallableWithParameter (@Nonnull final INonThrowingRunnableWithParameter <PARAMTYPE> aRunnable,
                                                  @Nullable final DATATYPE aResult)
   {
-    m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
-    m_aResult = aResult;
+    this.m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
+    this.m_aResult = aResult;
   }
 
+  @Override
   @Nullable
   public DATATYPE call (final PARAMTYPE aParam)
   {
-    m_aRunnable.run (aParam);
-    return m_aResult;
+    this.m_aRunnable.run (aParam);
+    return this.m_aResult;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("runnable", m_aRunnable).append ("result", m_aResult).toString ();
+    return new ToStringGenerator (this).append ("runnable", this.m_aRunnable)
+                                       .append ("result", this.m_aResult)
+                                       .toString ();
   }
 
   /**
@@ -71,6 +74,8 @@ public class AdapterRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implem
    * @param aRunnable
    *        The runnable to be executed.
    * @return The created {@link AdapterRunnableToCallableWithParameter} object.
+   * @param <PARAMTYPE>
+   *        The parameter data type
    */
   @Nonnull
   public static <PARAMTYPE> AdapterRunnableToCallableWithParameter <Object, PARAMTYPE> createAdapter (@Nonnull final INonThrowingRunnableWithParameter <PARAMTYPE> aRunnable)
@@ -87,6 +92,10 @@ public class AdapterRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implem
    *        The expected result from calling {@link INonThrowingCallable#call()}
    *        . May be <code>null</code>.
    * @return The created {@link AdapterRunnableToCallableWithParameter} object.
+   * @param <DATATYPE>
+   *        The result data type
+   * @param <PARAMTYPE>
+   *        The parameter data type
    */
   @Nonnull
   public static <DATATYPE, PARAMTYPE> AdapterRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> createAdapter (@Nonnull final INonThrowingRunnableWithParameter <PARAMTYPE> aRunnable,

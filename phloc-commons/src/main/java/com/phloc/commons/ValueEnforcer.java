@@ -40,6 +40,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T> T notNull (final T aValue, final String sName)
@@ -57,6 +59,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T extends CharSequence> T notEmpty (final T aValue, final String sName)
@@ -75,6 +79,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T> T [] notEmpty (final T [] aValue, final String sName)
@@ -292,6 +298,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T> T [] notEmptyNoNullValue (final T [] aValue, final String sName)
@@ -316,6 +324,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T extends Iterable <?>> T notEmptyNoNullValue (final T aValue, final String sName)
@@ -340,6 +350,8 @@ public final class ValueEnforcer
    * @param sName
    *        The name of the value (e.g. the parameter name)
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T extends Collection <?>> T notEmptyNoNullValue (final T aValue, final String sName)
@@ -366,6 +378,8 @@ public final class ValueEnforcer
    *        The value that may not be equal to aValue. May not be
    *        <code>null</code>.
    * @return The passed value and never <code>null</code>.
+   * @param <T>
+   *        The value type
    */
   @Nonnull
   public static <T> T notNullNotEquals (@Nonnull final T aValue, final String sName, @Nonnull final T aUnexpectedValue)
@@ -591,7 +605,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -622,7 +636,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -653,7 +667,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -684,7 +698,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param fValue
    *        Value
@@ -715,7 +729,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param dValue
    *        Value
@@ -746,7 +760,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param aValue
    *        Value
@@ -780,7 +794,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &ge; nLowerBoundInclusive && nValue &le; nUpperBoundInclusive</code>
+   * <code>nValue &ge; nLowerBoundInclusive &amp;&amp; nValue &le; nUpperBoundInclusive</code>
    * 
    * @param aValue
    *        Value
@@ -814,7 +828,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -845,7 +859,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -876,7 +890,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param nValue
    *        Value
@@ -907,7 +921,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param fValue
    *        Value
@@ -938,7 +952,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param dValue
    *        Value
@@ -969,7 +983,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param aValue
    *        Value
@@ -1003,7 +1017,7 @@ public final class ValueEnforcer
 
   /**
    * Check if
-   * <code>nValue &gt; nLowerBoundInclusive && nValue &lt; nUpperBoundInclusive</code>
+   * <code>nValue &gt; nLowerBoundInclusive &amp;&amp; nValue &lt; nUpperBoundInclusive</code>
    * 
    * @param aValue
    *        Value
