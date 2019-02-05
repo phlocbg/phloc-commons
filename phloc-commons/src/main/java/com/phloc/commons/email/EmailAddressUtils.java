@@ -34,13 +34,13 @@ import com.phloc.commons.string.StringHelper;
 @Immutable
 public final class EmailAddressUtils
 {
-  /** This is the email RegEx :) */
+  // This is the email RegEx :)
 
   // RFC 6530/6531/6532
   public static final String EMAIL_ADDRESS_PATTERN_INT = "[a-z0-9äöüß!#\\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9äöüß!#\\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9äöüß](?:[a-z0-9äöüß-]*[a-z0-9äöüß])?\\.)+[a-z0-9äöüß](?:[a-z0-9äöüß-]*[a-z0-9äöüß])?"; //$NON-NLS-1$
   public static final String EMAIL_ADDRESS_PATTERN = "[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"; //$NON-NLS-1$
 
-  /** Compile this little pattern only once */
+  // Compile this little pattern only once
   private static final Pattern s_aPatternInt = RegExPool.getPattern (EMAIL_ADDRESS_PATTERN_INT);
   private static Pattern s_aCustomPatternInt = null;
   private static final Pattern s_aPattern = RegExPool.getPattern (EMAIL_ADDRESS_PATTERN);
