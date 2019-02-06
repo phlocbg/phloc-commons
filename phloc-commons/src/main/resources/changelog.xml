@@ -21,7 +21,12 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
-<release date="2019-02-05" version="4.5.1" />
+<release date="2019-02-05" version="4.6.0" />
+  <entry date="2019-02-05" category="tech" action="fix">
+    <change>
+      <text locale="en">fixed a ton of JavaDocs</text>
+    </change>
+  </entry>
   <entry date="2019-02-05" category="api" action="add">
     <change>
       <text locale="en">Added new annotations WriteLocked, ReadLocked, PublicAPI, CustomizingAPI, ReturnsImmutableCopy</text>
