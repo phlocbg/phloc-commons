@@ -35,7 +35,7 @@ import com.phloc.commons.name.IHasName;
 
 /**
  * This is a helper class for accessing containers with explicit locking
- * 
+ *
  * @author Boris Gregorcic
  */
 public final class LockedContainerHelper
@@ -48,7 +48,7 @@ public final class LockedContainerHelper
   /**
    * Looks for the map entry with the passed key and return the corresponding
    * object
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <T>
@@ -81,7 +81,7 @@ public final class LockedContainerHelper
    * Performs a lookup using
    * {@link #getByKey(Object, Map, ReentrantReadWriteLock)} returning the result
    * casted according to the requested type
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <T>
@@ -106,7 +106,7 @@ public final class LockedContainerHelper
 
   /**
    * Returns a copy of the passed container performed in a read locked context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -133,7 +133,7 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the passed container as a list performed in a read locked
    * context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -159,7 +159,7 @@ public final class LockedContainerHelper
 
   /**
    * Returns a copy of the passed map in a read locked context
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <V>
@@ -188,7 +188,7 @@ public final class LockedContainerHelper
   /**
    * Returns the element with the specified index from the passed list in a read
    * locked context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -224,7 +224,7 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the values in the passed map performed in a read locked
    * context
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <V>
@@ -253,7 +253,7 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the keys in the passed map performed in a read locked
    * context
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <V>
@@ -286,7 +286,7 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the entry in the passed multi-map corresponding to the
    * passed key, performing the access in a read locked context
-   * 
+   *
    * @param <K>
    *        map key type
    * @param <T>
@@ -322,7 +322,7 @@ public final class LockedContainerHelper
 
   /**
    * Returns a copy of the passed container performed in a read locked context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -348,7 +348,7 @@ public final class LockedContainerHelper
   /**
    * Returns a copy of the passed ordered container performed in a read locked
    * context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -374,7 +374,7 @@ public final class LockedContainerHelper
   /**
    * Returns a mutable copy of the passed stack performed in a read locked
    * context
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -403,7 +403,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple remove operation of the passed collection using the
    * passed object, locking the operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -436,7 +436,7 @@ public final class LockedContainerHelper
   /**
    * Checks if the passed item is contained in the passed collection in a thread
    * safe manner
-   * 
+   *
    * @param <T>
    *        value type
    * @param aCollection
@@ -451,7 +451,7 @@ public final class LockedContainerHelper
                                       @Nonnull final T aItem,
                                       @Nonnull final ReentrantReadWriteLock aLock)
   {
-    aLock.writeLock ().lock ();
+    aLock.readLock ().lock ();
     try
     {
       if (aItem != null)
@@ -462,14 +462,14 @@ public final class LockedContainerHelper
     }
     finally
     {
-      aLock.writeLock ().unlock ();
+      aLock.readLock ().unlock ();
     }
   }
 
   /**
    * Checks if all the passed items is contained in the passed collection in a
    * thread safe manner
-   * 
+   *
    * @param <T>
    *        value type
    * @param aCollection
@@ -484,7 +484,7 @@ public final class LockedContainerHelper
                                          @Nonnull final Collection <T> aItems,
                                          @Nonnull final ReentrantReadWriteLock aLock)
   {
-    aLock.writeLock ().lock ();
+    aLock.readLock ().lock ();
     try
     {
       if (aCollection != null)
@@ -495,14 +495,14 @@ public final class LockedContainerHelper
     }
     finally
     {
-      aLock.writeLock ().unlock ();
+      aLock.readLock ().unlock ();
     }
   }
 
   /**
    * Performs a simple clear operation on the passed collection, locking the
    * operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -526,7 +526,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple add operation of the passed collection using the passed
    * object, locking the operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -559,7 +559,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple addAll operation of the passed collection using the
    * passed objects, locking the operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -592,7 +592,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple removeAll operation of the passed collection using the
    * passed objects, locking the operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -625,7 +625,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple put action on a map, locking the operation using the
    * passed lock
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -662,7 +662,7 @@ public final class LockedContainerHelper
 
   /**
    * Tries to put all entries in the seconds map into the first map
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -696,7 +696,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple remove action on a map, locking the operation using the
    * passed lock
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -731,7 +731,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple clear operation on the passed map, locking the operation
    * using the passed lock
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -757,7 +757,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple check on the passed collection to see if it is empty,
    * locking the operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -783,7 +783,7 @@ public final class LockedContainerHelper
   /**
    * Performs a simple check on the passed map to see if it is empty, locking
    * the operation using the passed lock
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -810,7 +810,7 @@ public final class LockedContainerHelper
   /**
    * returns the size of the passed map, locking the operation using the passed
    * lock
-   * 
+   *
    * @param <K>
    *        key type
    * @param <V>
@@ -837,7 +837,7 @@ public final class LockedContainerHelper
   /**
    * returns the size of the passed collection, locking the operation using the
    * passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -862,7 +862,7 @@ public final class LockedContainerHelper
   /**
    * returns the first element of the passed collection, locking the operation
    * using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -888,7 +888,7 @@ public final class LockedContainerHelper
   /**
    * returns the value of the first entry in the passed map, locking the
    * operation using the passed lock
-   * 
+   *
    * @param <T>
    *        value type
    * @param aObjects
@@ -912,7 +912,7 @@ public final class LockedContainerHelper
 
   /**
    * Iterates all passed objects and collect their IDs
-   * 
+   *
    * @param aSourceCollection
    *        Objects for which to collect the IDs, must not be <code>null</code>
    * @param aLock
@@ -930,7 +930,7 @@ public final class LockedContainerHelper
 
   /**
    * Iterates all passed objects and collect their IDs
-   * 
+   *
    * @param aSourceList
    *        Objects for which to collect the IDs, must not be <code>null</code>
    * @param aLock
@@ -948,7 +948,7 @@ public final class LockedContainerHelper
 
   /**
    * Iterates all passed objects and collect their names
-   * 
+   *
    * @param aSourceCollection
    *        Objects for which to collect the names, must not be
    *        <code>null</code>
@@ -967,7 +967,7 @@ public final class LockedContainerHelper
 
   /**
    * Iterates all passed objects and collect their names
-   * 
+   *
    * @param aSourceList
    *        Objects for which to collect the names, must not be
    *        <code>null</code>

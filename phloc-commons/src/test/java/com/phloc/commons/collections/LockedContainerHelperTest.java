@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test for {@link LockedContainerHelper}
- * 
+ *
  * @author Boris Gregorcic
  */
 @SuppressWarnings ("static-method")
@@ -245,6 +245,24 @@ public class LockedContainerHelperTest extends AbstractPhlocTestCase
     Assert.assertFalse (aObjects.isEmpty ());
     LockedContainerHelper.clear (aObjects, LOCK);
     Assert.assertTrue (aObjects.isEmpty ());
+  }
+
+  @Test
+  public void testContains ()
+  {
+    final Set <String> aElements = ContainerHelper.newSet ("foo", "bar");
+    Assert.assertFalse (LockedContainerHelper.contains (aElements, "narf", LOCK));
+    Assert.assertTrue (LockedContainerHelper.contains (aElements, "foo", LOCK));
+  }
+
+  @Test
+  public void testContainsAll ()
+  {
+    final Set <String> aElements = ContainerHelper.newSet ("foo", "bar", "narf");
+    Assert.assertTrue (LockedContainerHelper.containsAll (aElements, ContainerHelper.newSet (), LOCK));
+    Assert.assertFalse (LockedContainerHelper.containsAll (aElements, ContainerHelper.newSet ("a", "b"), LOCK));
+    Assert.assertFalse (LockedContainerHelper.containsAll (aElements, ContainerHelper.newSet ("a", "foo"), LOCK));
+    Assert.assertTrue (LockedContainerHelper.containsAll (aElements, ContainerHelper.newSet ("foo", "narf"), LOCK));
   }
 
   /**
