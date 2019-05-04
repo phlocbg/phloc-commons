@@ -54,8 +54,6 @@ public final class VendorInfo
   public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
   /** Boris */
   public static final String VENDOR_PERSON_BORIS = "Boris Gregorcic";
-  /** Philip */
-  public static final String VENDOR_PERSON_PHILIP = "Philip Helger";
   /** Vendor email suffix starting from '@' */
   public static final String DEFAULT_VENDOR_EMAIL_SUFFIX = "@phloc.com";
   /** Default vendor email */

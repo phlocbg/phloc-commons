@@ -66,11 +66,30 @@ public class ThreadDeadlockDetector
 
   private long [] findDeadlockedThreads ()
   {
+    long [] aThreads = null;
     if (this.m_aMBean.isSynchronizerUsageSupported ())
     {
-      return this.m_aMBean.findDeadlockedThreads ();
+      try
+      {
+        aThreads = this.m_aMBean.findDeadlockedThreads ();
+      }
+      catch (final SecurityException aEx)
+      {
+        // ignore
+      }
     }
-    return this.m_aMBean.findMonitorDeadlockedThreads ();
+    if (aThreads != null && aThreads.length > 0)
+    {
+      return aThreads;
+    }
+    try
+    {
+      return this.m_aMBean.findMonitorDeadlockedThreads ();
+    }
+    catch (final SecurityException aEx)
+    {
+      return null;
+    }
   }
 
   private void fireDeadlockDetected (final Thread [] threads)
