@@ -21,6 +21,11 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+  <entry date="2019-07-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new API StackTraceHelper.getStackAsString letting you pass a customizer for modifying messages on stack trace elements</text>
+    </change>
+  </entry>
   <entry date="2019-05-04" category="tech" action="update">
     <change>
       <text locale="en">Removed outdated vendor info entry</text>

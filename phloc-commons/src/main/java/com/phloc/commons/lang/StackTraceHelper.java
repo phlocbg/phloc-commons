@@ -99,7 +99,7 @@ public final class StackTraceHelper
       // -> would lead to very long stack traces
       // -> also try to filter stack trace elements that are already contained
       // in a parent stack trace
-      if ((bOmitCommonStackTraceElements && _stopStackTraceListing (sStackTraceElement)) ||
+      if (bOmitCommonStackTraceElements && _stopStackTraceListing (sStackTraceElement) ||
           _matchesParentStackTrace (aStackTraceElement, aParentStackTraceElements))
       {
         // write number of omitted elements
@@ -159,13 +159,14 @@ public final class StackTraceHelper
                                                                   @Nullable final Throwable aParentThrowable,
                                                                   @Nullable final StringBuilder aInitialSB,
                                                                   @Nonnegative final int nLevel,
-                                                                  final boolean bOmitCommonStackTraceElements)
+                                                                  final boolean bOmitCommonStackTraceElements,
+                                                                  @Nullable final IStackTraceCustomizer aCustomizer)
   {
     // init string buffer with estimated size (very rough guess)
     final StringBuilder aSB = aInitialSB == null ? new StringBuilder () : aInitialSB;
 
     // add exception name (+ exception message)
-    aSB.append (aThrowable.toString ()).append (STACKELEMENT_LINESEP);
+    aSB.append (getToString (aThrowable, aCustomizer)).append (STACKELEMENT_LINESEP);
 
     // add main call stack
     _appendSingleStackTraceToString (aSB,
@@ -181,9 +182,19 @@ public final class StackTraceHelper
                                          aThrowable,
                                          aSB,
                                          nLevel + 1,
-                                         bOmitCommonStackTraceElements);
+                                         bOmitCommonStackTraceElements,
+                                         aCustomizer);
     }
     return aSB;
+  }
+
+  private static String getToString (@Nonnull final Throwable aThrowable,
+                                     @Nullable final IStackTraceCustomizer aCustomizer)
+  {
+    final String sName = aThrowable.getClass ().getName ();
+    final String aMessage = aCustomizer == null ? aThrowable.getLocalizedMessage ()
+                                                : aCustomizer.customizeMessage (aThrowable.getLocalizedMessage ());
+    return aMessage == null ? sName : sName + ": " + aMessage;
   }
 
   /**
@@ -215,11 +226,39 @@ public final class StackTraceHelper
   @Nonnull
   public static String getStackAsString (@Nullable final Throwable t, final boolean bOmitCommonStackTraceElements)
   {
+    return getStackAsString (t, bOmitCommonStackTraceElements, null);
+  }
+
+  /**
+   * Get the stack trace of a throwable as string.
+   *
+   * @param t
+   *        The throwable to be converted. May be <code>null</code>.
+   * @param bOmitCommonStackTraceElements
+   *        If <code>true</code> the stack trace is cut after certain class
+   *        names occurring. If <code>false</code> the complete stack trace is
+   *        returned.
+   * @param aCustomizer
+   *        An optional stack trace customizer for performing modifications in
+   *        the string generation
+   * @return the stack trace as newline separated string. If the passed
+   *         Throwable is <code>null</code> an empty string is returned.
+   */
+  @Nonnull
+  public static String getStackAsString (@Nullable final Throwable t,
+                                         final boolean bOmitCommonStackTraceElements,
+                                         @Nullable final IStackTraceCustomizer aCustomizer)
+  {
     if (t == null)
       return "";
 
     // convert call stack to string
-    final StringBuilder aCallStack = _getRecursiveStackAsStringBuilder (t, null, null, 1, bOmitCommonStackTraceElements);
+    final StringBuilder aCallStack = _getRecursiveStackAsStringBuilder (t,
+                                                                        null,
+                                                                        null,
+                                                                        1,
+                                                                        bOmitCommonStackTraceElements,
+                                                                        aCustomizer);
 
     // avoid having a separator at the end -> remove the last char
     if (StringHelper.getLastChar (aCallStack) == STACKELEMENT_LINESEP)

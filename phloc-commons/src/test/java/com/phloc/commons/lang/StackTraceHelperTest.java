@@ -23,13 +23,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import javax.annotation.Nullable;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.exceptions.InitializationException;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Test class for class {@link StackTraceHelper}.
- * 
+ *
  * @author Philip Helger
  */
 public final class StackTraceHelperTest
@@ -96,6 +101,7 @@ public final class StackTraceHelperTest
     assertTrue (StackTraceHelper.containsUnitTestElement (new Exception ().getStackTrace ()));
     new Thread (new Runnable ()
     {
+      @Override
       public void run ()
       {
         assertNotNull (StackTraceHelper.getCurrentThreadStackAsString ());
@@ -106,5 +112,34 @@ public final class StackTraceHelperTest
     StackTraceHelper.appendStackToString (aSB, new Exception ().getStackTrace ());
     assertTrue (aSB.length () > 0);
     assertNotNull (StackTraceHelper.getCurrentThreadStackAsString ());
+  }
+
+  @Test
+  public void testCustomizer ()
+  {
+    final StringBuilder aBigMessage = new StringBuilder ();
+    for (int i = 0; i < 10000; i++)
+    {
+      aBigMessage.append ("abcdefghijklmnopqrstuvwxyz\n"); //$NON-NLS-1$
+    }
+    final Exception aInnerEx = new IllegalStateException ("Something is wrong \n in the sate of Denmark: \n\n" + //$NON-NLS-1$
+                                                          aBigMessage.toString ());
+    final Exception aOuterEx = new InitializationException ("Huston, we \n got \n a problem!\n\n" + //$NON-NLS-1$
+                                                            aBigMessage.toString (),
+                                                            aInnerEx);
+    final String sStackTrace = StackTraceHelper.getStackAsString (aOuterEx, false, new IStackTraceCustomizer ()
+    {
+      @Override
+      public String customizeMessage (@Nullable final String sMessage)
+      {
+        return StringHelper.getUntilFirstExcl (sMessage, '\n');
+      }
+    });
+    Assert.assertEquals ("com.phloc.commons.exceptions.InitializationException: Huston, we \n",
+                         StringHelper.getUntilFirstExcl (sStackTrace, "1.:"));
+    Assert.assertEquals ("Something is wrong \n",
+                         StringHelper.getUntilFirstExcl (StringHelper.getFromFirstExcl (sStackTrace,
+                                                                                        "==> [1] caused by java.lang.IllegalStateException: "),
+                                                         "1.:"));
   }
 }
