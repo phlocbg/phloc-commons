@@ -982,8 +982,8 @@ public final class MathHelper
    * @param aBase
    *        The base of which to get the fraction
    * @param nDigits
-   *        Number of fraction digits you want to get. If passing a value <= 0,
-   *        the entire fraction will be returned. For values > 0, only the
+   *        Number of fraction digits you want to get. If passing a value &lt;=
+   *        0, the entire fraction will be returned. For values &gt; 0, only the
    *        specified number of fraction digits are returned, rounded using
    *        {@link RoundingMode#HALF_UP}
    * @return The fraction (part, rounded) as a non-fraction

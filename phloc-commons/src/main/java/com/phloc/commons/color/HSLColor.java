@@ -288,7 +288,7 @@ public class HSLColor
    *        Saturation is specified as a percentage in the range 1 - 100.
    * @param l
    *        Lightness is specified as a percentage in the range 1 - 100.
-   * @returns the RGB Color object
+   * @return the RGB Color object
    */
   public static Color toRGB (final float h, final float s, final float l)
   {
@@ -306,7 +306,7 @@ public class HSLColor
    *        Lightness is specified as a percentage in the range 1 - 100.
    * @param alpha
    *        the alpha value between 0 - 1
-   * @returns the RGB Color object
+   * @return the RGB Color object
    */
   public static Color toRGB (float h, float s, float l, final float alpha)
   {
