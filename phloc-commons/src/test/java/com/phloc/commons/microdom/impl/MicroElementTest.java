@@ -90,13 +90,13 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     }
     catch (final IllegalArgumentException ex)
     {}
-    try
-    {
-      new MicroElement ("space unallowed");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
+    // try
+    // {
+    // new MicroElement ("space unallowed");
+    // fail ();
+    // }
+    // catch (final IllegalArgumentException ex)
+    // {}
 
     IMicroElement e = new MicroElement ("xyz");
     assertNotNull (e);
