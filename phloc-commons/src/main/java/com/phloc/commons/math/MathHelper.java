@@ -919,6 +919,25 @@ public final class MathHelper
   }
 
   /**
+   * Get the percentage of the first (actual) compared to the second
+   * (reference), including rounding.
+   * 
+   * @param aActual
+   *        Current value. May not be <code>null</code>.
+   * @param aReference
+   *        Reference value. May not be <code>null</code>.
+   * @return The percentage of base compared to reference
+   *         (<code>=100 - (100 * aActual / aReference)</code>). Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static BigDecimal getPercent (@Nonnull final BigDecimal aActual, @Nonnull final BigDecimal aReference)
+  {
+    return CGlobal.BIGDEC_100.subtract (CGlobal.BIGDEC_100.multiply (aActual)
+                                                          .divide (aReference, 2, RoundingMode.HALF_UP));
+  }
+
+  /**
    * Get x% from base
    * 
    * @param aBase
@@ -955,6 +974,28 @@ public final class MathHelper
                                             @Nonnull final RoundingMode eRoundingMode)
   {
     return aBase.multiply (aPercentage).divide (CGlobal.BIGDEC_100, nScale, eRoundingMode);
+  }
+
+  /**
+   * Gets only the fraction (or a rounded part of it) of the passed base.
+   * 
+   * @param aBase
+   *        The base of which to get the fraction
+   * @param nDigits
+   *        Number of fraction digits you want to get. If passing a value <= 0,
+   *        the entire fraction will be returned. For values > 0, only the
+   *        specified number of fraction digits are returned, rounded using
+   *        {@link RoundingMode#HALF_UP}
+   * @return The fraction (part, rounded) as a non-fraction
+   */
+  public static BigInteger getFractionRounded (final BigDecimal aBase, final int nDigits)
+  {
+    final BigDecimal aFraction = aBase.remainder (BigDecimal.ONE);
+    if (nDigits > 0)
+    {
+      return aFraction.movePointRight (nDigits).setScale (0, RoundingMode.HALF_UP).abs ().toBigInteger ();
+    }
+    return aFraction.movePointRight (aBase.scale ()).abs ().toBigInteger ();
   }
 
   /**

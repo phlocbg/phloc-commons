@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import org.junit.Test;
 
@@ -312,6 +313,21 @@ public final class MathHelperTest
     assertEquals (new BigDecimal ("0"), MathHelper.getPercentValue (CGlobal.BIGDEC_100, BigDecimal.valueOf (0)));
     assertEquals (new BigDecimal ("5"), MathHelper.getPercentValue (CGlobal.BIGDEC_100, BigDecimal.valueOf (5)));
     assertEquals (new BigDecimal ("100"), MathHelper.getPercentValue (CGlobal.BIGDEC_100, BigDecimal.valueOf (100)));
+  }
+
+  @Test
+  public void testGetFractionRounded ()
+  {
+    assertEquals (new BigInteger ("120235"), MathHelper.getFractionRounded (new BigDecimal ("1047.1202349"), 6));
+    assertEquals (new BigInteger ("12"), MathHelper.getFractionRounded (new BigDecimal ("1047.1202349"), 2));
+    assertEquals (new BigInteger ("1202349"), MathHelper.getFractionRounded (new BigDecimal ("1047.1202349"), 0));
+    assertEquals (new BigInteger ("1202349"), MathHelper.getFractionRounded (new BigDecimal ("1047.1202349"), -1));
+    assertEquals (new BigInteger ("920350"), MathHelper.getFractionRounded (new BigDecimal ("-1047.920349547256"), 6));
+    assertEquals (new BigInteger ("92"), MathHelper.getFractionRounded (new BigDecimal ("-1047.920349547256"), 2));
+    assertEquals (new BigInteger ("920349547256"),
+                  MathHelper.getFractionRounded (new BigDecimal ("-1047.920349547256"), 0));
+    assertEquals (new BigInteger ("920349547256"),
+                  MathHelper.getFractionRounded (new BigDecimal ("-1047.920349547256"), -1));
   }
 
 }

@@ -931,6 +931,31 @@ public final class LockedContainerHelper
   /**
    * Iterates all passed objects and collect their IDs
    *
+   * @param aSourceCollection
+   *        Objects for which to collect the IDs, must not be <code>null</code>
+   * @param aLock
+   *        The lock to use
+   * @return All IDs (no duplicates)
+   */
+  @Nonnull
+  public static final Collection <String> getOrderedIDs (@Nonnull final Collection <? extends IHasID <String>> aSourceCollection,
+                                                         @Nullable final ReentrantReadWriteLock aLock)
+  {
+    final List <String> aNames = ContainerHelper.newList ();
+    extractIDs (aSourceCollection, aNames, aLock);
+    return aNames;
+  }
+
+  @Nonnull
+  public static final Collection <String> getOrderedIDs (@Nonnull final Map <?, ? extends IHasID <String>> aSourceMap,
+                                                         @Nullable final ReentrantReadWriteLock aLock)
+  {
+    return getOrderedIDs (aSourceMap == null ? null : aSourceMap.values (), aLock);
+  }
+
+  /**
+   * Iterates all passed objects and collect their IDs
+   *
    * @param aSourceList
    *        Objects for which to collect the IDs, must not be <code>null</code>
    * @param aLock

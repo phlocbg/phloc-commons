@@ -35,8 +35,9 @@ public interface IHasChildrenSorted <CHILDTYPE> extends IHasChildren <CHILDTYPE>
    * @return A ordered list of child elements. May be <code>null</code> if no
    *         children are present.
    */
+  @Override
   @Nullable
-  List <? extends CHILDTYPE> getChildren ();
+  List <CHILDTYPE> getChildren ();
 
   /**
    * Get the child node at the specified index

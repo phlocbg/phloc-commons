@@ -100,12 +100,16 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     }
 
     // Only for the debug version, as this slows things down heavily
-    if (GlobalDebug.isDebugMode ())
-      if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (this.m_sTagName).matches ())
-        if (!CXMLRegEx.PATTERN_NAME.matcher (this.m_sTagName).matches ())
-          throw new IllegalArgumentException ("The micro element tag name '" + //$NON-NLS-1$
-                                              this.m_sTagName +
-                                              "' is not a valid element name!"); //$NON-NLS-1$
+    // BG 30.07.2019: deactivated this check all together. Was anyway only in
+    // debug mode and showed false positives (XML standard allows umlauts and
+    // this did not accept tags called 'blüte'
+    // if (GlobalDebug.isDebugMode ())
+    // if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (this.m_sTagName).matches ())
+    // if (!CXMLRegEx.PATTERN_NAME.matcher (this.m_sTagName).matches ())
+    // throw new IllegalArgumentException ("The micro element tag name '" +
+    // //$NON-NLS-1$
+    // this.m_sTagName +
+    // "' is not a valid element name!"); //$NON-NLS-1$
   }
 
   @Override

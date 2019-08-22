@@ -46,17 +46,21 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.math.MathHelper;
+import com.phloc.commons.regex.RegExHelper;
 
 /**
  * Generic string transformation and helper methods. If you need to modify a
  * string, start looking in this class.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  */
 @Immutable
 public final class StringHelper
 {
+  public static final String SIMPLE_ID_REGEX = "[a-zA-Z0-9]+";
+
   /**
    * The constant to be returned if an String.indexOf call did not find a match!
    */
@@ -3789,4 +3793,27 @@ public final class StringHelper
     }
     return aSB.toString ();
   }
+
+  public static boolean isValidSimpleID (final String sID)
+  {
+    return hasText (sID) && RegExHelper.stringMatchesPattern (SIMPLE_ID_REGEX, sID);
+  }
+
+  public static List <String> getPortions (final String sIn, final int nPortionSize)
+  {
+    final List <String> aPortions = ContainerHelper.newList ();
+    if (hasNoText (sIn) || nPortionSize <= 0)
+    {
+      return aPortions;
+    }
+    int nStart = 0;
+    while (nStart < sIn.length ())
+    {
+      final int nEnd = Math.min (nStart + nPortionSize, sIn.length ());
+      aPortions.add (sIn.substring (nStart, nEnd));
+      nStart = nEnd;
+    }
+    return aPortions;
+  }
+
 }

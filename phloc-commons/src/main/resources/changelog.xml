@@ -18,9 +18,36 @@
     limitations under the License.
 
 -->
+<release date="2019-04-30" version="4.6.1" />
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+<release date="2019-08-22" version="4.6.3" />
+  <entry date="2019-08-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new LockedContainerHelperHelper APIs for getting the ordered IDs of collection elements or map values</text>
+    </change>
+  </entry>
+  <entry date="2019-08-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new class HSLColor for doing fancy color calculations</text>
+    </change>
+  </entry>
+  <entry date="2019-08-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new MathHelper APIs for getting percentage and fraction of BigDecimal</text>
+    </change>
+  </entry>
+  <entry date="2019-08-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new RoundHelper APIs for rounding of BigDecimal</text>
+    </change>
+  </entry>
+  <entry date="2019-08-22" category="api" action="add">
+    <change>
+      <text locale="en">Added new StringHelper APIs isValidSimpleID and getPortions</text>
+    </change>
+  </entry>
   <entry date="2019-07-22" category="api" action="add">
     <change>
       <text locale="en">Added new API StackTraceHelper.getStackAsString letting you pass a customizer for modifying messages on stack trace elements</text>

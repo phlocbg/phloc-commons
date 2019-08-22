@@ -1542,11 +1542,17 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertArrayEquals ("bb".toCharArray (),
                        StringHelper.replaceMultiple ("a", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }));
     assertArrayEquals ("bbbb".toCharArray (),
-                       StringHelper.replaceMultiple ("aa", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }));
+                       StringHelper.replaceMultiple ("aa",
+                                                     new char [] { 'a' },
+                                                     new char [] [] { "bb".toCharArray () }));
     assertArrayEquals ("cdc".toCharArray (),
-                       StringHelper.replaceMultiple ("cdc", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }));
+                       StringHelper.replaceMultiple ("cdc",
+                                                     new char [] { 'a' },
+                                                     new char [] [] { "bb".toCharArray () }));
     assertArrayEquals ("cbbc".toCharArray (),
-                       StringHelper.replaceMultiple ("cac", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }));
+                       StringHelper.replaceMultiple ("cac",
+                                                     new char [] { 'a' },
+                                                     new char [] [] { "bb".toCharArray () }));
     assertArrayEquals ("ddbbdd".toCharArray (),
                        StringHelper.replaceMultiple ("cac",
                                                      new char [] { 'a', 'c' },
@@ -1555,10 +1561,10 @@ public final class StringHelperTest extends AbstractPhlocTestCase
                        StringHelper.replaceMultiple ("<cac>",
                                                      new char [] { 'a', 'c' },
                                                      new char [] [] { "bb".toCharArray (), "dd".toCharArray () }));
-    assertArrayEquals (new char [0], StringHelper.replaceMultiple ("",
-                                                                   new char [] { 'a', 'c' },
-                                                                   new char [] [] { "bb".toCharArray (),
-                                                                                   "dd".toCharArray () }));
+    assertArrayEquals (new char [0],
+                       StringHelper.replaceMultiple ("",
+                                                     new char [] { 'a', 'c' },
+                                                     new char [] [] { "bb".toCharArray (), "dd".toCharArray () }));
     assertArrayEquals ("any".toCharArray (), StringHelper.replaceMultiple ("any", new char [0], new char [0] []));
     try
     {
@@ -2049,5 +2055,20 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("ba", StringHelper.getReverse ("ab"));
     assertEquals (" ba", StringHelper.getReverse ("ab "));
     assertEquals ("cba", StringHelper.getReverse ("abc"));
+  }
+
+  @Test
+  public void testGetPortions ()
+  {
+    assertEquals (ContainerHelper.newList ("ab", "cd", "ef", "gh"), StringHelper.getPortions ("abcdefgh", 2));
+    assertEquals (ContainerHelper.newList ("ab", "cd", "ef", "g"), StringHelper.getPortions ("abcdefg", 2));
+    assertEquals (ContainerHelper.newList ("abcde", "fgh"), StringHelper.getPortions ("abcdefgh", 5));
+    assertEquals (ContainerHelper.newList ("abcdefgh"), StringHelper.getPortions ("abcdefgh", 20));
+    assertEquals (ContainerHelper.newList ("a", "b", "c", "d", "e", "f", "g", "h"),
+                  StringHelper.getPortions ("abcdefgh", 1));
+    assertEquals (ContainerHelper.newList (), StringHelper.getPortions (null, 2));
+    assertEquals (ContainerHelper.newList (), StringHelper.getPortions ("", 2));
+    assertEquals (ContainerHelper.newList (), StringHelper.getPortions ("foobar", 0));
+    assertEquals (ContainerHelper.newList (), StringHelper.getPortions ("foobar", -1));
   }
 }

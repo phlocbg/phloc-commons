@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Locale;
 
@@ -173,4 +175,14 @@ public final class RoundHelperTest
     assertEquals ("1.50E0", RoundHelper.getFormattedExp2 (1.4999, Locale.US));
     assertEquals ("1.50E0", RoundHelper.getFormattedExp2 (1.5, Locale.US));
   }
+
+  @Test
+  public void testGetFloor ()
+  {
+    assertEquals (new BigInteger ("1047"), RoundHelper.getRounded (new BigDecimal ("1047.1202349")));
+    assertEquals (new BigInteger ("-1"), RoundHelper.getRounded (new BigDecimal ("-1.00234")));
+    assertEquals (new BigInteger ("0"), RoundHelper.getRounded (new BigDecimal ("0.00234")));
+    assertEquals (new BigInteger ("-0"), RoundHelper.getRounded (new BigDecimal ("-0.00234")));
+  }
+
 }

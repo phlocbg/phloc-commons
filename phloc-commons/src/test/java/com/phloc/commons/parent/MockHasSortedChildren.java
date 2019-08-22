@@ -33,44 +33,51 @@ public final class MockHasSortedChildren implements IHasChildrenSorted <MockHasS
 
   public MockHasSortedChildren (@Nonnull final String sID, @Nullable final MockHasSortedChildren... aList)
   {
-    m_sID = sID;
-    m_aList = ContainerHelper.getSorted (aList, new ComparatorHasIDString <IHasID <String>> ());
+    this.m_sID = sID;
+    this.m_aList = ContainerHelper.getSorted (aList, new ComparatorHasIDString <IHasID <String>> ());
   }
 
+  @Override
   public String getID ()
   {
-    return m_sID;
+    return this.m_sID;
   }
 
+  @Override
   public boolean hasChildren ()
   {
-    return !m_aList.isEmpty ();
+    return !this.m_aList.isEmpty ();
   }
 
+  @Override
   public int getChildCount ()
   {
-    return m_aList.size ();
+    return this.m_aList.size ();
   }
 
-  public List <? extends MockHasSortedChildren> getChildren ()
+  @Override
+  public List <MockHasSortedChildren> getChildren ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aList);
+    return ContainerHelper.makeUnmodifiable (this.m_aList);
   }
 
+  @Override
   public MockHasSortedChildren getChildAtIndex (final int nIndex)
   {
-    return m_aList.get (nIndex);
+    return this.m_aList.get (nIndex);
   }
 
+  @Override
   @Nullable
   public MockHasSortedChildren getFirstChild ()
   {
-    return ContainerHelper.getFirstElement (m_aList);
+    return ContainerHelper.getFirstElement (this.m_aList);
   }
 
+  @Override
   @Nullable
   public MockHasSortedChildren getLastChild ()
   {
-    return ContainerHelper.getLastElement (m_aList);
+    return ContainerHelper.getLastElement (this.m_aList);
   }
 }

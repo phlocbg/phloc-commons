@@ -131,10 +131,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     public String getNamespaceURIOfPrefix (@Nullable final String sPrefix)
     {
       if (StringHelper.hasNoText (sPrefix))
-        return m_sDefaultNamespaceURI;
+        return this.m_sDefaultNamespaceURI;
 
-      if (m_aURL2PrefixMap != null)
-        for (final Map.Entry <String, String> aEntry : m_aURL2PrefixMap.entrySet ())
+      if (this.m_aURL2PrefixMap != null)
+        for (final Map.Entry <String, String> aEntry : this.m_aURL2PrefixMap.entrySet ())
           if (aEntry.getValue ().equals (sPrefix))
             return aEntry.getKey ();
       return null;
@@ -158,55 +158,57 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
       if (StringHelper.hasNoText (sPrefix))
       {
-        if (m_sDefaultNamespaceURI != null)
+        if (this.m_sDefaultNamespaceURI != null)
           s_aLogger.warn ("Overwriting default namespace '" +
-                          m_sDefaultNamespaceURI +
+                          this.m_sDefaultNamespaceURI +
                           "' with namespace '" +
                           sNamespaceURI +
                           "'");
-        m_sDefaultNamespaceURI = sNamespaceURI;
+        this.m_sDefaultNamespaceURI = sNamespaceURI;
       }
       else
       {
-        if (m_aURL2PrefixMap == null)
-          m_aURL2PrefixMap = new HashMap <String, String> ();
-        m_aURL2PrefixMap.put (sNamespaceURI, sPrefix);
+        if (this.m_aURL2PrefixMap == null)
+          this.m_aURL2PrefixMap = new HashMap <String, String> ();
+        this.m_aURL2PrefixMap.put (sNamespaceURI, sPrefix);
       }
     }
 
     @Nullable
     public String getDefaultNamespaceURI ()
     {
-      return m_sDefaultNamespaceURI;
+      return this.m_sDefaultNamespaceURI;
     }
 
     @Nullable
     public String getPrefixOfNamespaceURI (@Nonnull final String sNamespaceURI)
     {
       // is it the default?
-      if (sNamespaceURI.equals (m_sDefaultNamespaceURI))
+      if (sNamespaceURI.equals (this.m_sDefaultNamespaceURI))
         return null;
 
       // Check in the map
-      return m_aURL2PrefixMap == null ? null : m_aURL2PrefixMap.get (sNamespaceURI);
+      return this.m_aURL2PrefixMap == null ? null : this.m_aURL2PrefixMap.get (sNamespaceURI);
     }
 
     @Nonnegative
     int getNamespaceCount ()
     {
-      return (m_sDefaultNamespaceURI == null ? 0 : 1) + (m_aURL2PrefixMap == null ? 0 : m_aURL2PrefixMap.size ());
+      return (this.m_sDefaultNamespaceURI == null ? 0 : 1) +
+             (this.m_aURL2PrefixMap == null ? 0 : this.m_aURL2PrefixMap.size ());
     }
 
     boolean hasAnyNamespace ()
     {
-      return m_sDefaultNamespaceURI != null || (m_aURL2PrefixMap != null && !m_aURL2PrefixMap.isEmpty ());
+      return this.m_sDefaultNamespaceURI != null ||
+             (this.m_aURL2PrefixMap != null && !this.m_aURL2PrefixMap.isEmpty ());
     }
 
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("defaultNSURI", m_sDefaultNamespaceURI)
-                                         .append ("url2prefix", m_aURL2PrefixMap)
+      return new ToStringGenerator (this).append ("defaultNSURI", this.m_sDefaultNamespaceURI)
+                                         .append ("url2prefix", this.m_aURL2PrefixMap)
                                          .toString ();
     }
   }
@@ -224,7 +226,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     public NamespaceStack (@Nullable final NamespaceContext aNamespaceCtx)
     {
-      m_aNamespaceCtx = aNamespaceCtx;
+      this.m_aNamespaceCtx = aNamespaceCtx;
     }
 
     /**
@@ -238,25 +240,25 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       final NamespaceLevel aNSL = new NamespaceLevel (aAttrs);
       // add at front
-      m_aStack.add (0, aNSL);
+      this.m_aStack.add (0, aNSL);
     }
 
     public void addNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
     {
       // Add the namespace to the current level
-      m_aStack.get (0).addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
+      this.m_aStack.get (0).addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
     }
 
     public void pop ()
     {
       // remove at front
-      m_aStack.remove (0);
+      this.m_aStack.remove (0);
     }
 
     @Nonnegative
     public int size ()
     {
-      return m_aStack.size ();
+      return this.m_aStack.size ();
     }
 
     /**
@@ -267,7 +269,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     public String getDefaultNamespaceURI ()
     {
       // iterate from front to end
-      for (final NamespaceLevel aNSLevel : m_aStack)
+      for (final NamespaceLevel aNSLevel : this.m_aStack)
       {
         final String sDefaultNamespaceURI = aNSLevel.getDefaultNamespaceURI ();
         if (StringHelper.hasText (sDefaultNamespaceURI))
@@ -292,7 +294,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       ValueEnforcer.notNull (sNamespaceURI, "NamespaceURI");
 
       // find existing prefix (iterate current to root)
-      for (final NamespaceLevel aNSLevel : m_aStack)
+      for (final NamespaceLevel aNSLevel : this.m_aStack)
       {
         final String sPrefix = aNSLevel.getPrefixOfNamespaceURI (sNamespaceURI);
         if (sPrefix != null)
@@ -305,7 +307,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     private boolean _containsNoNamespace ()
     {
-      for (final NamespaceLevel aNSLevel : m_aStack)
+      for (final NamespaceLevel aNSLevel : this.m_aStack)
         if (aNSLevel.hasAnyNamespace ())
           return false;
       return true;
@@ -322,7 +324,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     private boolean _containsNoPrefix (@Nonnull final String sPrefix)
     {
       // find existing prefix (iterate current to root)
-      for (final NamespaceLevel aNSLevel : m_aStack)
+      for (final NamespaceLevel aNSLevel : this.m_aStack)
         if (aNSLevel.getNamespaceURIOfPrefix (sPrefix) != null)
           return false;
       return true;
@@ -342,10 +344,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
       // If a mapping is defined, it always takes precedence over the default
       // namespace
-      if (m_aNamespaceCtx != null)
+      if (this.m_aNamespaceCtx != null)
       {
         // Is a mapping defined?
-        final String sPrefix = m_aNamespaceCtx.getPrefix (sNamespaceURI);
+        final String sPrefix = this.m_aNamespaceCtx.getPrefix (sNamespaceURI);
         if (sPrefix != null)
           return sPrefix;
       }
@@ -397,25 +399,25 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   public AbstractSerializerPhloc (@Nonnull final IXMLWriterSettings aSettings)
   {
-    m_aSettings = ValueEnforcer.notNull (aSettings, "Settings");
-    m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
+    this.m_aSettings = ValueEnforcer.notNull (aSettings, "Settings");
+    this.m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
   }
 
   @Nonnull
   public final IXMLWriterSettings getSettings ()
   {
-    return m_aSettings;
+    return this.m_aSettings;
   }
 
   protected final void handlePutNamespaceContextPrefixInRoot (@Nonnull final Map <String, String> aAttrMap)
   {
-    if (m_aNSStack.size () == 1 &&
-        m_aSettings.isPutNamespaceContextPrefixesInRoot () &&
-        m_aSettings.isEmitNamespaces ())
+    if (this.m_aNSStack.size () == 1 &&
+        this.m_aSettings.isPutNamespaceContextPrefixesInRoot () &&
+        this.m_aSettings.isEmitNamespaces ())
     {
       // The only place where the namespace context prefixes are added to the
       // root element
-      final NamespaceContext aNC = m_aSettings.getNamespaceContext ();
+      final NamespaceContext aNC = this.m_aSettings.getNamespaceContext ();
       if (aNC != null)
       {
         if (aNC instanceof IIterableNamespaceContext)
@@ -426,7 +428,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
             final String sNSPrefix = aEntry.getKey ();
             final String sNamespaceURI = aEntry.getValue ();
             aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sNamespaceURI);
-            m_aNSStack.addNamespaceMapping (sNSPrefix, sNamespaceURI);
+            this.m_aNSStack.addNamespaceMapping (sNSPrefix, sNamespaceURI);
           }
         }
         else
@@ -448,9 +450,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     return new XMLEmitterPhloc (aWriter, aSettings);
   }
 
+  @Override
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final Writer aWriter)
   {
-    final XMLEmitterPhloc aXMLWriter = createXMLEmitter (aWriter, m_aSettings);
+    final XMLEmitterPhloc aXMLWriter = createXMLEmitter (aWriter, this.m_aSettings);
     // No previous and no next sibling
     emitNode (aXMLWriter, null, aNode, null);
     // Flush is important for Writer!
@@ -463,6 +466,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     emitNode (aXMLEmitter, null, aNode, null);
   }
 
+  @Override
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     ValueEnforcer.notNull (aNode, "Node");
@@ -470,7 +474,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     // Create a writer for the passed output stream
     final NonBlockingBufferedWriter aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS,
-                                                                                                       m_aSettings.getCharsetObj ()));
+                                                                                                       this.m_aSettings.getCharsetObj ()));
     // Inside the other write method, the writer must be flushed!
     write (aNode, aWriter);
     // Do not close the writer!
@@ -479,9 +483,9 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("settings", m_aSettings)
-                                       .append ("sIndent", m_aIndent.toString ())
-                                       .append ("namespaceStack", m_aNSStack)
+    return new ToStringGenerator (this).append ("settings", this.m_aSettings)
+                                       .append ("sIndent", this.m_aIndent.toString ())
+                                       .append ("namespaceStack", this.m_aNSStack)
                                        .toString ();
   }
 }

@@ -59,7 +59,7 @@ import com.phloc.commons.collections.iterate.ReverseListIterator;
 import com.phloc.commons.collections.multimap.IMultiMap;
 import com.phloc.commons.collections.multimap.IMultiMapSetBased;
 import com.phloc.commons.collections.multimap.MultiHashMapHashSetBased;
-import com.phloc.commons.compare.ComparatorComparableNullAware;
+import com.phloc.commons.compare.ComparatorComparable;
 import com.phloc.commons.compare.ComparatorUtils;
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.id.IHasID;
@@ -646,7 +646,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap ()
   {
-    return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
   }
 
   @Nonnull
@@ -654,7 +654,7 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final KEYTYPE aKey,
                                                                                                                      @Nullable final VALUETYPE aValue)
   {
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     ret.put (aKey, aValue);
     return ret;
   }
@@ -664,12 +664,12 @@ public final class ContainerHelper
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeMap <ELEMENTTYPE, ELEMENTTYPE> newSortedMap (@Nullable final ELEMENTTYPE... aValues)
   {
     if (ArrayHelper.isEmpty (aValues))
-      return new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+      return new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
 
     if ((aValues.length % 2) != 0)
       throw new IllegalArgumentException ("The passed array needs an even number of elements!"); //$NON-NLS-1$
 
-    final TreeMap <ELEMENTTYPE, ELEMENTTYPE> ret = new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeMap <ELEMENTTYPE, ELEMENTTYPE> ret = new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     for (int i = 0; i < aValues.length; i += 2)
       ret.put (aValues[i], aValues[i + 1]);
     return ret;
@@ -682,13 +682,13 @@ public final class ContainerHelper
   {
     // Are both empty?
     if (ArrayHelper.isEmpty (aKeys) && ArrayHelper.isEmpty (aValues))
-      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
       throw new IllegalArgumentException ("The passed arrays have different length!"); //$NON-NLS-1$
 
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     for (int i = 0; i < aKeys.length; ++i)
       ret.put (aKeys[i], aValues[i]);
     return ret;
@@ -701,13 +701,13 @@ public final class ContainerHelper
   {
     // Are both empty?
     if (isEmpty (aKeys) && isEmpty (aValues))
-      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
       throw new IllegalArgumentException ("Number of keys is different from number of values"); //$NON-NLS-1$
 
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
     final Iterator <? extends VALUETYPE> itv = aValues.iterator ();
     while (itk.hasNext ())
@@ -720,9 +720,9 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
-      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
 
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     ret.putAll (aMap);
     return ret;
   }
@@ -732,9 +732,9 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> [] aMaps)
   {
     if (aMaps == null || aMaps.length == 0)
-      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
 
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     for (final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap : aMaps)
       ret.putAll (aMap);
     return ret;
@@ -745,9 +745,9 @@ public final class ContainerHelper
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
-      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
 
-    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparable <KEYTYPE> ());
     for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aCollection)
       ret.put (aEntry.getKey (), aEntry.getValue ());
     return ret;
@@ -1128,7 +1128,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet ()
   {
-    return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    return new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
   }
 
   @Nonnull
@@ -1137,7 +1137,7 @@ public final class ContainerHelper
                        justification = "When using the constructor with the Comparator it works with null values!")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     ret.add (aValue);
     return ret;
   }
@@ -1146,7 +1146,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     if (ArrayHelper.isNotEmpty (aValues))
       Collections.addAll (ret, aValues);
     return ret;
@@ -1156,7 +1156,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     if (aCont != null)
       for (final ELEMENTTYPE aValue : aCont)
         ret.add (aValue);
@@ -1167,7 +1167,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     if (isNotEmpty (aCont))
       ret.addAll (aCont);
     return ret;
@@ -1177,7 +1177,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     if (aIter != null)
       while (aIter.hasNext ())
         ret.add (aIter.next ());
@@ -1189,7 +1189,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
-      return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+      return new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     return newSortedSet (aIter.iterator ());
   }
 
@@ -1197,7 +1197,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
   {
-    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
     if (aEnum != null)
       while (aEnum.hasMoreElements ())
         ret.add (aEnum.nextElement ());
@@ -1208,7 +1208,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Boolean> newBooleanSortedSet (@Nullable final boolean... aValues)
   {
-    final TreeSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparableNullAware <Boolean> ());
+    final TreeSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparable <Boolean> ());
     if (aValues != null)
       for (final boolean aValue : aValues)
         ret.add (Boolean.valueOf (aValue));
@@ -1219,7 +1219,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Byte> newByteSortedSet (@Nullable final byte... aValues)
   {
-    final TreeSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparableNullAware <Byte> ());
+    final TreeSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparable <Byte> ());
     if (aValues != null)
       for (final byte aValue : aValues)
         ret.add (Byte.valueOf (aValue));
@@ -1230,7 +1230,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Character> newCharSortedSet (@Nullable final char... aValues)
   {
-    final TreeSet <Character> ret = new TreeSet <Character> (new ComparatorComparableNullAware <Character> ());
+    final TreeSet <Character> ret = new TreeSet <Character> (new ComparatorComparable <Character> ());
     if (aValues != null)
       for (final char aValue : aValues)
         ret.add (Character.valueOf (aValue));
@@ -1241,7 +1241,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Double> newDoubleSortedSet (@Nullable final double... aValues)
   {
-    final TreeSet <Double> ret = new TreeSet <Double> (new ComparatorComparableNullAware <Double> ());
+    final TreeSet <Double> ret = new TreeSet <Double> (new ComparatorComparable <Double> ());
     if (aValues != null)
       for (final double aValue : aValues)
         ret.add (Double.valueOf (aValue));
@@ -1252,7 +1252,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Float> newFloatSortedSet (@Nullable final float... aValues)
   {
-    final TreeSet <Float> ret = new TreeSet <Float> (new ComparatorComparableNullAware <Float> ());
+    final TreeSet <Float> ret = new TreeSet <Float> (new ComparatorComparable <Float> ());
     if (aValues != null)
       for (final float aValue : aValues)
         ret.add (Float.valueOf (aValue));
@@ -1263,7 +1263,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Integer> newIntSortedSet (@Nullable final int... aValues)
   {
-    final TreeSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparableNullAware <Integer> ());
+    final TreeSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparable <Integer> ());
     if (aValues != null)
       for (final int aValue : aValues)
         ret.add (Integer.valueOf (aValue));
@@ -1274,7 +1274,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Long> newLongSortedSet (@Nullable final long... aValues)
   {
-    final TreeSet <Long> ret = new TreeSet <Long> (new ComparatorComparableNullAware <Long> ());
+    final TreeSet <Long> ret = new TreeSet <Long> (new ComparatorComparable <Long> ());
     if (aValues != null)
       for (final long aValue : aValues)
         ret.add (Long.valueOf (aValue));
@@ -1285,7 +1285,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static TreeSet <Short> newShortSortedSet (@Nullable final short... aValues)
   {
-    final TreeSet <Short> ret = new TreeSet <Short> (new ComparatorComparableNullAware <Short> ());
+    final TreeSet <Short> ret = new TreeSet <Short> (new ComparatorComparable <Short> ());
     if (aValues != null)
       for (final short aValue : aValues)
         ret.add (Short.valueOf (aValue));
@@ -3929,6 +3929,18 @@ public final class ContainerHelper
   public static final Set <String> getIDs (@Nonnull final Collection <? extends IHasID <String>> aElements)
   {
     return LockedContainerHelper.getIDs (aElements, null);
+  }
+
+  @Nonnull
+  public static final Collection <String> getOrderedIDs (@Nonnull final Collection <? extends IHasID <String>> aSourceCollection)
+  {
+    return LockedContainerHelper.getOrderedIDs (aSourceCollection, null);
+  }
+
+  @Nonnull
+  public static final Collection <String> getOrderedIDs (@Nonnull final Map <?, ? extends IHasID <String>> aSourceMap)
+  {
+    return LockedContainerHelper.getOrderedIDs (aSourceMap, null);
   }
 
   /**

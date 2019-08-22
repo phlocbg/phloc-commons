@@ -18,6 +18,7 @@
 package com.phloc.commons.math;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Locale;
@@ -41,11 +42,11 @@ public final class RoundHelper
 {
   public static enum EDecimalType
   {
-    /** Fixed number representation */
-    FIX,
+   /** Fixed number representation */
+   FIX,
 
-    /** Exponential number representation */
-    EXP;
+   /** Exponential number representation */
+   EXP;
 
     public boolean isFixed ()
     {
@@ -230,5 +231,55 @@ public final class RoundHelper
   public static String getFormattedExp2 (final double dValue, final Locale aLocale)
   {
     return getFormattedExp (dValue, 2, aLocale);
+  }
+
+  /**
+   * Rounds the passed base by dropping the fraction and rounding by
+   * {@link RoundingMode#HALF_UP}
+   * 
+   * @param aBase
+   *        The base to round, may not be <code>null</code>
+   * @return The resulting rounded value as BigInteger, never <code>null</code>
+   */
+  @Nonnull
+  public static BigInteger getRounded (@Nonnull final BigDecimal aBase)
+  {
+    return getRounded (aBase, RoundingMode.HALF_UP);
+  }
+
+  /**
+   * Rounds the passed base by dropping the fraction and rounding by
+   * {@link RoundingMode#HALF_UP}
+   * 
+   * @param aBase
+   *        The base to round, may not be <code>null</code>
+   * @param aRoundingMode
+   *        The rounding mode to use, may not be <code>null</code>
+   * @return The resulting rounded value as BigInteger, never <code>null</code>
+   */
+  @Nonnull
+  public static BigInteger getRounded (@Nonnull final BigDecimal aBase, @Nonnull final RoundingMode aRoundingMode)
+  {
+    return getRounded (aBase, 0, aRoundingMode);
+  }
+
+  /**
+   * Rounds the passed base by dropping the fraction and rounding by
+   * {@link RoundingMode#HALF_UP}
+   * 
+   * @param aBase
+   *        The base to round, may not be <code>null</code>
+   * @param nScale
+   *        The scale (number of fraction digits remaining)
+   * @param aRoundingMode
+   *        The rounding mode to use, may not be <code>null</code>
+   * @return The resulting rounded value as BigInteger, never <code>null</code>
+   */
+  @Nonnull
+  public static BigInteger getRounded (@Nonnull final BigDecimal aBase,
+                                       final int nScale,
+                                       @Nonnull final RoundingMode aRoundingMode)
+  {
+    return aBase.setScale (nScale, aRoundingMode).toBigInteger ();
   }
 }
