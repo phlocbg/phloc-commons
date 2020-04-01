@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -32,7 +33,7 @@ import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for class {@link EqualsUtils}.
- * 
+ *
  * @author Philip Helger
  */
 public final class EqualsUtilsTest extends AbstractPhlocTestCase
@@ -255,12 +256,55 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals (ContainerHelper.newList ("a", "b", "c"), ContainerHelper.newList ("a", "b", "c")));
     assertTrue (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
                                     ContainerHelper.newUnmodifiableList ("a", "b", "c")));
-    assertTrue (EqualsUtils.equals (ContainerHelper.newStack ("a", "b", "c"), ContainerHelper.newStack ("a", "b", "c")));
+    assertTrue (EqualsUtils.equals (ContainerHelper.newStack ("a", "b", "c"),
+                                    ContainerHelper.newStack ("a", "b", "c")));
     assertTrue (EqualsUtils.equals (ContainerHelper.newList ("a", "b", "c").iterator (),
                                     ContainerHelper.newList ("a", "b", "c").iterator ()));
     assertTrue (EqualsUtils.equals (ContainerHelper.getEnumeration ("a", "b", "c"),
                                     ContainerHelper.getEnumeration ("a", "b", "c")));
     assertTrue (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
                                     ContainerHelper.newList ("a", "b", "c")));
+  }
+
+  @Test
+  public void testMaps ()
+  {
+    // equals implementation, equal content
+    {
+      final Map <String, String> aMap1 = ContainerHelper.newMap ();
+      aMap1.put ("a", "A");
+      aMap1.put ("b", "B");
+      aMap1.put ("c", "C");
+      final Map <String, String> aMap2 = ContainerHelper.newMap ();
+      aMap2.put ("a", "A");
+      aMap2.put ("b", "B");
+      aMap2.put ("c", "C");
+      assertTrue (EqualsUtils.equals (aMap1, aMap2));
+    }
+    // equal implementation, changed order
+    {
+      final Map <String, String> aMap1 = ContainerHelper.newMap ();
+      aMap1.put ("a", "A");
+      aMap1.put ("b", "B");
+      aMap1.put ("c", "C");
+      final Map <String, String> aMap2 = ContainerHelper.newMap ();
+      aMap2.put ("a", "A");
+      aMap2.put ("c", "C");
+      aMap2.put ("b", "B");
+      assertTrue (EqualsUtils.equals (aMap1, aMap2));
+    }
+    // changed implementation, changed order
+    {
+      final Map <String, String> aMap1 = ContainerHelper.newMap ();
+      aMap1.put ("a", "A");
+      aMap1.put ("b", "B");
+      aMap1.put ("c", "C");
+      final Map <String, String> aMap2 = ContainerHelper.newOrderedMap ();
+      aMap2.put ("a", "A");
+      aMap2.put ("c", "C");
+      aMap2.put ("b", "B");
+      assertTrue (EqualsUtils.equals (aMap1, aMap2));
+    }
+
   }
 }
