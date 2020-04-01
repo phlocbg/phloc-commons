@@ -72,6 +72,7 @@ import com.phloc.commons.stats.StatisticsManager;
  * never be null.
  * 
  * @author Philip Helger
+ * @author Boris Gregorcic
  */
 @Immutable
 public final class StreamUtils
@@ -83,9 +84,9 @@ public final class StreamUtils
   private static final Logger s_aLogger = LoggerFactory.getLogger (StreamUtils.class);
 
   private static final IStatisticsHandlerSize s_aByteSizeHdl = StatisticsManager.getSizeHandler (StreamUtils.class.getName () +
-                                                                                                 "$COPY");
+                                                                                                 "$COPY"); //$NON-NLS-1$
   private static final IStatisticsHandlerSize s_aCharSizeHdl = StatisticsManager.getSizeHandler (StreamUtils.class.getName () +
-                                                                                                 "$COPYCHARS");
+                                                                                                 "$COPYCHARS"); //$NON-NLS-1$
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -119,10 +120,10 @@ public final class StreamUtils
       return false;
 
     final String sClass = aClass.getName ();
-    return sClass.equals ("java.io.EOFException") ||
-           sClass.equals ("org.mortbay.jetty.EofException") ||
-           sClass.equals ("org.eclipse.jetty.io.EofException") ||
-           sClass.equals ("org.apache.catalina.connector.ClientAbortException");
+    return sClass.equals ("java.io.EOFException") || //$NON-NLS-1$
+           sClass.equals ("org.mortbay.jetty.EofException") || //$NON-NLS-1$
+           sClass.equals ("org.eclipse.jetty.io.EofException") || //$NON-NLS-1$
+           sClass.equals ("org.apache.catalina.connector.ClientAbortException"); //$NON-NLS-1$
   }
 
   /**
@@ -146,7 +147,7 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close stream " + aCloseable.getClass ().getName (),
+          s_aLogger.error ("Failed to close stream " + aCloseable.getClass ().getName (), //$NON-NLS-1$
                            ex instanceof IMockException ? null : ex);
       }
     }
@@ -185,7 +186,7 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close object " + aCloseable.getClass ().getName (),
+          s_aLogger.error ("Failed to close object " + aCloseable.getClass ().getName (), //$NON-NLS-1$
                            ex instanceof IMockException ? null : ex);
       }
     }
@@ -215,7 +216,7 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close socket " + aSocket.getClass ().getName (),
+          s_aLogger.error ("Failed to close socket " + aSocket.getClass ().getName (), //$NON-NLS-1$
                            ex instanceof IMockException ? null : ex);
       }
     }
@@ -244,7 +245,7 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close server socket " + aSocket.getClass ().getName (),
+          s_aLogger.error ("Failed to close server socket " + aSocket.getClass ().getName (), //$NON-NLS-1$
                            ex instanceof IMockException ? null : ex);
       }
     }
@@ -274,7 +275,7 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (),
+          s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (), //$NON-NLS-1$
                            ex instanceof IMockException ? null : ex);
       }
     return ESuccess.FAILURE;
@@ -540,9 +541,9 @@ public final class StreamUtils
                                                         @Nullable final MutableLong aCopyByteCount,
                                                         @Nullable final Long aLimit)
   {
-    ValueEnforcer.notEmpty (aBuffer, "Buffer");
+    ValueEnforcer.notEmpty (aBuffer, "Buffer"); //$NON-NLS-1$
     if (aLimit != null && aLimit.longValue () < 0)
-      throw new IllegalArgumentException ("Limit may not be negative!");
+      throw new IllegalArgumentException ("Limit may not be negative!"); //$NON-NLS-1$
 
     try
     {
@@ -567,7 +568,7 @@ public final class StreamUtils
     catch (final IOException ex)
     {
       if (!isKnownEOFException (ex))
-        s_aLogger.error ("Failed to copy from stream to stream", ex instanceof IMockException ? null : ex);
+        s_aLogger.error ("Failed to copy from stream to stream", ex instanceof IMockException ? null : ex); //$NON-NLS-1$
     }
     finally
     {
@@ -728,7 +729,7 @@ public final class StreamUtils
   public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
                                             @Nonnull @Nonempty final String sCharset)
   {
-    ValueEnforcer.notEmpty (sCharset, "Charset");
+    ValueEnforcer.notEmpty (sCharset, "Charset"); //$NON-NLS-1$
 
     if (aIS == null)
       return null;
@@ -750,7 +751,7 @@ public final class StreamUtils
   public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
                                             @Nonnull @Nonempty final Charset aCharset)
   {
-    ValueEnforcer.notNull (aCharset, "Charset");
+    ValueEnforcer.notNull (aCharset, "Charset"); //$NON-NLS-1$
 
     if (aIS == null)
       return null;
@@ -1014,9 +1015,9 @@ public final class StreamUtils
                                              @Nullable final MutableLong aCopyCharCount,
                                              @Nullable final Long aLimit)
   {
-    ValueEnforcer.notEmpty (aBuffer, "Buffer");
+    ValueEnforcer.notEmpty (aBuffer, "Buffer"); //$NON-NLS-1$
     if (aLimit != null && aLimit.longValue () < 0)
-      throw new IllegalArgumentException ("Limit may not be negative!");
+      throw new IllegalArgumentException ("Limit may not be negative!"); //$NON-NLS-1$
 
     try
     {
@@ -1024,10 +1025,10 @@ public final class StreamUtils
       {
         // both streams are not null
         final long nTotalCharsCopied = aLimit == null ? _copyReaderToWriter (aReader, aWriter, aBuffer)
-                                                     : _copyReaderToWriterWithLimit (aReader,
-                                                                                     aWriter,
-                                                                                     aBuffer,
-                                                                                     aLimit.longValue ());
+                                                      : _copyReaderToWriterWithLimit (aReader,
+                                                                                      aWriter,
+                                                                                      aBuffer,
+                                                                                      aLimit.longValue ());
 
         // Add to statistics
         s_aCharSizeHdl.addSize (nTotalCharsCopied);
@@ -1041,7 +1042,7 @@ public final class StreamUtils
     catch (final IOException ex)
     {
       if (!isKnownEOFException (ex))
-        s_aLogger.error ("Failed to copy from reader to writer", ex instanceof IMockException ? null : ex);
+        s_aLogger.error ("Failed to copy from reader to writer", ex instanceof IMockException ? null : ex); //$NON-NLS-1$
     }
     finally
     {
@@ -1262,6 +1263,7 @@ public final class StreamUtils
     if (aIS != null)
       readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
       {
+        @Override
         public void run (final String sLine)
         {
           aTargetList.add (sLine);
@@ -1287,6 +1289,7 @@ public final class StreamUtils
     if (aIS != null)
       readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
       {
+        @Override
         public void run (final String sLine)
         {
           aTargetList.add (sLine);
@@ -1327,6 +1330,7 @@ public final class StreamUtils
     final List <String> ret = new ArrayList <String> ();
     readStreamLines (aIS, sCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
     {
+      @Override
       public void run (final String sLine)
       {
         ret.add (sLine);
@@ -1367,6 +1371,7 @@ public final class StreamUtils
     final List <String> ret = new ArrayList <String> ();
     readStreamLines (aIS, aCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
     {
+      @Override
       public void run (final String sLine)
       {
         ret.add (sLine);
@@ -1483,12 +1488,12 @@ public final class StreamUtils
                                       final int nLinesToRead,
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
-    ValueEnforcer.notNull (aCharset, "Charset");
-    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip");
+    ValueEnforcer.notNull (aCharset, "Charset"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip"); //$NON-NLS-1$
     final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
     if (nLinesToRead < 0 && !bReadAllLines)
-      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
-    ValueEnforcer.notNull (aLineCallback, "LineCallback");
+      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead); //$NON-NLS-1$
+    ValueEnforcer.notNull (aLineCallback, "LineCallback"); //$NON-NLS-1$
 
     if (aIS != null)
       try
@@ -1505,7 +1510,8 @@ public final class StreamUtils
           }
           catch (final IOException ex)
           {
-            s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex);
+            if (!isKnownEOFException (ex))
+              s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex); //$NON-NLS-1$
           }
           finally
           {
@@ -1549,12 +1555,12 @@ public final class StreamUtils
                                       final int nLinesToRead,
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
-    ValueEnforcer.notNull (sCharset, "Charset");
-    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip");
+    ValueEnforcer.notNull (sCharset, "Charset"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nLinesToSkip, "LinesToSkip"); //$NON-NLS-1$
     final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
     if (nLinesToRead < 0 && !bReadAllLines)
-      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
-    ValueEnforcer.notNull (aLineCallback, "LineCallback");
+      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead); //$NON-NLS-1$
+    ValueEnforcer.notNull (aLineCallback, "LineCallback"); //$NON-NLS-1$
 
     if (aIS != null)
       try
@@ -1571,7 +1577,8 @@ public final class StreamUtils
           }
           catch (final IOException ex)
           {
-            s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex);
+            if (!isKnownEOFException (ex))
+              s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex); //$NON-NLS-1$
           }
           finally
           {
@@ -1610,7 +1617,7 @@ public final class StreamUtils
                                       @Nonnegative final int nOfs,
                                       @Nonnegative final int nLen)
   {
-    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream"); //$NON-NLS-1$
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     try
@@ -1621,7 +1628,10 @@ public final class StreamUtils
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Failed to write to output stream", ex instanceof IMockException ? null : ex);
+      if (!isKnownEOFException (ex))
+      {
+        s_aLogger.error ("Failed to write to output stream", ex instanceof IMockException ? null : ex); //$NON-NLS-1$
+      }
       return ESuccess.FAILURE;
     }
     finally
@@ -1664,8 +1674,8 @@ public final class StreamUtils
                                       @Nonnull final String sContent,
                                       @Nonnull @Nonempty final String sCharset)
   {
-    ValueEnforcer.notNull (sContent, "Content");
-    ValueEnforcer.notEmpty (sCharset, "Charset");
+    ValueEnforcer.notNull (sContent, "Content"); //$NON-NLS-1$
+    ValueEnforcer.notEmpty (sCharset, "Charset"); //$NON-NLS-1$
 
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, sCharset));
   }
@@ -1687,8 +1697,8 @@ public final class StreamUtils
                                       @Nonnull final String sContent,
                                       @Nonnull final Charset aCharset)
   {
-    ValueEnforcer.notNull (sContent, "Content");
-    ValueEnforcer.notNull (aCharset, "Charset");
+    ValueEnforcer.notNull (sContent, "Content"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aCharset, "Charset"); //$NON-NLS-1$
 
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, aCharset));
   }
@@ -1715,7 +1725,7 @@ public final class StreamUtils
     }
     catch (final UnsupportedEncodingException ex)
     {
-      throw new IllegalArgumentException ("Failed to create Reader for charset '" + sCharset + "'", ex);
+      throw new IllegalArgumentException ("Failed to create Reader for charset '" + sCharset + "'", ex); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -1735,7 +1745,7 @@ public final class StreamUtils
     }
     catch (final UnsupportedEncodingException ex)
     {
-      throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex);
+      throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 
@@ -1758,8 +1768,8 @@ public final class StreamUtils
    */
   public static void skipFully (@Nonnull final InputStream aIS, @Nonnegative final long nBytesToSkip) throws IOException
   {
-    ValueEnforcer.notNull (aIS, "InputStream");
-    ValueEnforcer.isGE0 (nBytesToSkip, "BytesToSkip");
+    ValueEnforcer.notNull (aIS, "InputStream"); //$NON-NLS-1$
+    ValueEnforcer.isGE0 (nBytesToSkip, "BytesToSkip"); //$NON-NLS-1$
 
     long nRemaining = nBytesToSkip;
     while (nRemaining > 0)
@@ -1772,11 +1782,11 @@ public final class StreamUtils
         // -> blocking read!
         if (aIS.read () == -1)
         {
-          throw new EOFException ("Failed to skip a total of " +
+          throw new EOFException ("Failed to skip a total of " + //$NON-NLS-1$
                                   nBytesToSkip +
-                                  " bytes on input stream. Only skipped " +
+                                  " bytes on input stream. Only skipped " + //$NON-NLS-1$
                                   (nBytesToSkip - nRemaining) +
-                                  " bytes so far!");
+                                  " bytes so far!"); //$NON-NLS-1$
         }
         nRemaining--;
       }
@@ -1825,7 +1835,7 @@ public final class StreamUtils
                                @Nonnegative final int nOfs,
                                @Nonnegative final int nLen) throws IOException
   {
-    ValueEnforcer.notNull (aIS, "InputStream");
+    ValueEnforcer.notNull (aIS, "InputStream"); //$NON-NLS-1$
     ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLen);
 
     int nTotalBytesRead = 0;
@@ -1833,11 +1843,11 @@ public final class StreamUtils
     {
       final int nBytesRead = aIS.read (aBuffer, nOfs + nTotalBytesRead, nLen - nTotalBytesRead);
       if (nBytesRead < 0)
-        throw new EOFException ("Failed to read a total of " +
+        throw new EOFException ("Failed to read a total of " + //$NON-NLS-1$
                                 nLen +
-                                " bytes from input stream. Only read " +
+                                " bytes from input stream. Only read " + //$NON-NLS-1$
                                 nTotalBytesRead +
-                                " bytes so far.");
+                                " bytes so far."); //$NON-NLS-1$
       nTotalBytesRead += nBytesRead;
     }
     return nTotalBytesRead;
@@ -1850,7 +1860,7 @@ public final class StreamUtils
            aIS instanceof ByteArrayInputStream ||
            aIS instanceof NonBlockingByteArrayInputStream ||
            aIS instanceof ByteBufferInputStream ||
-           (aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ()));
+           aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ());
   }
 
   @Nullable
@@ -1866,7 +1876,7 @@ public final class StreamUtils
            aOS instanceof ByteArrayOutputStream ||
            aOS instanceof NonBlockingByteArrayOutputStream ||
            aOS instanceof ByteBufferOutputStream ||
-           (aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ()));
+           aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ());
   }
 
   @Nullable
@@ -1881,7 +1891,7 @@ public final class StreamUtils
            aReader instanceof NonBlockingBufferedReader ||
            aReader instanceof StringReader ||
            aReader instanceof NonBlockingStringReader ||
-           (aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ()));
+           aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ());
   }
 
   @Nullable
@@ -1896,7 +1906,7 @@ public final class StreamUtils
            aWriter instanceof NonBlockingBufferedWriter ||
            aWriter instanceof StringWriter ||
            aWriter instanceof NonBlockingStringWriter ||
-           (aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ()));
+           aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ());
   }
 
   @Nullable
