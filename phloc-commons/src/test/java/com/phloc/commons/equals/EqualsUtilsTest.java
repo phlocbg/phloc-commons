@@ -293,7 +293,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
       aMap2.put ("b", "B");
       assertTrue (EqualsUtils.equals (aMap1, aMap2));
     }
-    // changed implementation, changed order
+    // changed implementation is different!
     {
       final Map <String, String> aMap1 = ContainerHelper.newMap ();
       aMap1.put ("a", "A");
@@ -301,9 +301,9 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
       aMap1.put ("c", "C");
       final Map <String, String> aMap2 = ContainerHelper.newOrderedMap ();
       aMap2.put ("a", "A");
-      aMap2.put ("c", "C");
       aMap2.put ("b", "B");
-      assertTrue (EqualsUtils.equals (aMap1, aMap2));
+      aMap2.put ("c", "C");
+      assertFalse (EqualsUtils.equals (aMap1, aMap2));
     }
 
   }
