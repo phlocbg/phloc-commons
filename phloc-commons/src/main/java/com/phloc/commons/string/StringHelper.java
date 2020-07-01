@@ -18,7 +18,9 @@
 package com.phloc.commons.string;//NOPMD
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -3816,4 +3818,12 @@ public final class StringHelper
     return aPortions;
   }
 
+  @Nonnull
+  public static String getStringFromBuffer (@Nonnull final ByteBuffer aByteBuffer,
+                                            @Nonnull final Charset aCharset) throws UnsupportedEncodingException
+  {
+    ValueEnforcer.notNull (aByteBuffer, "aByteBuffer");
+    ValueEnforcer.notNull (aCharset, "aCharset");
+    return new String (aByteBuffer.array (), aByteBuffer.position (), aByteBuffer.remaining (), aCharset);
+  }
 }
