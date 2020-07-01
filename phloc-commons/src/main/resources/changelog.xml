@@ -23,6 +23,11 @@
 
   <entry date="2020-07-01" category="api" action="add">
     <change>
+      <text locale="en">Added GZIPUtils for simple GZIP compress and decompress</text>
+    </change>
+  </entry>
+  <entry date="2020-07-01" category="api" action="add">
+    <change>
       <text locale="en">StringHelper.getStringFromBuffer (CMN-2)</text>
     </change>
   </entry>
