@@ -23,11 +23,14 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.collections.pair.Pair;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.string.StringParser;
 
@@ -264,6 +267,18 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
                                     ContainerHelper.getEnumeration ("a", "b", "c")));
     assertTrue (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
                                     ContainerHelper.newList ("a", "b", "c")));
+  }
+
+  @Test
+  public void testComplexLists ()
+  {
+    final List <Pair <LocalDate, LocalDate>> aListA = ContainerHelper.newList ();
+    aListA.add (new Pair <> (LocalDate.of (2020, 1, 22), LocalDate.of (2020, 5, 18)));
+    aListA.add (new Pair <> (LocalDate.of (2020, 3, 28), LocalDate.of (2020, 8, 21)));
+    final List <Pair <LocalDate, LocalDate>> aListB = ContainerHelper.newList ();
+    aListB.add (new Pair <> (LocalDate.of (2020, 1, 22), LocalDate.of (2020, 5, 18)));
+    aListB.add (new Pair <> (LocalDate.of (2020, 3, 28), LocalDate.of (2020, 8, 21)));
+    assertTrue (EqualsUtils.equals (aListA, aListB));
   }
 
   @Test
