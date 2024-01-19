@@ -52,7 +52,8 @@ public final class LocaleCache
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   /** maps a string to a locale. */
-  private static final Map <String, Locale> s_aLocales = new HashMap <String, Locale> ();
+  private static final Map <String, Locale> s_aLocalesByString = new HashMap <String, Locale> ();
+  private static final Map <String, Locale> s_aLocalesByLanguageTag = new HashMap <String, Locale> ();
 
   static
   {
@@ -61,7 +62,8 @@ public final class LocaleCache
 
   private static void _initialAdd (@Nonnull final Locale aLocale)
   {
-    s_aLocales.put (aLocale.toString (), aLocale);
+    s_aLocalesByString.put (aLocale.toString (), aLocale);
+    s_aLocalesByLanguageTag.put (_buildLanguageTagString (aLocale.toLanguageTag ()), aLocale);
   }
 
   private static void _initialFillCache ()
@@ -76,9 +78,9 @@ public final class LocaleCache
 
     // http://forums.sun.com/thread.jspa?threadID=525482&tstart=1411
     for (final String sCountry : Locale.getISOCountries ())
-      _initialAdd (new Locale ("", sCountry));
+      _initialAdd (new Locale ("", sCountry)); //$NON-NLS-1$
     for (final String sLanguage : Locale.getISOLanguages ())
-      _initialAdd (new Locale (sLanguage, ""));
+      _initialAdd (new Locale (sLanguage, "")); //$NON-NLS-1$
   }
 
   @PresentForCodeCoverage
@@ -92,7 +94,9 @@ public final class LocaleCache
    * Get the {@link Locale} object matching the given language.
    * 
    * @param sLanguage
-   *        The language to use. May be <code>null</code> or empty.
+   *        The language to use. Either using the String representation of the
+   *        Locale object or the language tag syntax. May be <code>null</code>
+   *        or empty.
    * @return <code>null</code> if the passed language string is
    *         <code>null</code> or empty
    */
@@ -101,15 +105,63 @@ public final class LocaleCache
   {
     if (sLanguage != null && sLanguage.length () > 2)
     {
+      if (sLanguage.contains (CGlobal.LANGUAGE_TAG_SEPARATOR_STR) && !sLanguage.contains (CGlobal.LOCALE_SEPARATOR_STR))
+      {
+        return getLocaleByLanguageTag (sLanguage);
+      }
       // parse
       final String [] aParts = StringHelper.getExplodedArray (CGlobal.LOCALE_SEPARATOR, sLanguage, 3);
       if (aParts.length == 3)
         return getLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
-        return getLocale (aParts[0], aParts[1], "");
+        return getLocale (aParts[0], aParts[1], ""); //$NON-NLS-1$
       // else fall through
     }
-    return getLocale (sLanguage, "", "");
+    return getLocale (sLanguage, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
+  }
+
+  public static Locale getLocaleByLanguageTag (@Nullable final String sLanguage)
+  {
+    if (StringHelper.hasNoText (sLanguage))
+      return null;
+
+    final String sLanguageTag = _buildLanguageTagString (sLanguage);
+
+    // try to resolve locale
+    Locale aLocale;
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      aLocale = s_aLocalesByLanguageTag.get (sLanguageTag);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+
+    if (aLocale == null)
+    {
+      s_aRWLock.writeLock ().lock ();
+      try
+      {
+        // Try fetching again in writeLock
+        aLocale = s_aLocalesByLanguageTag.get (sLanguageTag);
+        if (aLocale == null)
+        {
+          // not yet in cache, create a new one
+          // -> may lead to illegal locales, but simpler than the error handling
+          // for all the possible illegal values
+          aLocale = Locale.forLanguageTag (sLanguageTag);
+          s_aLocalesByString.put (aLocale.toString (), aLocale);
+          s_aLocalesByLanguageTag.put (sLanguageTag, aLocale);
+        }
+      }
+      finally
+      {
+        s_aRWLock.writeLock ().unlock ();
+      }
+    }
+    return aLocale;
   }
 
   /**
@@ -125,7 +177,7 @@ public final class LocaleCache
   @Nullable
   public static Locale getLocale (@Nullable final String sLanguage, @Nullable final String sCountry)
   {
-    return getLocale (sLanguage, sCountry, "");
+    return getLocale (sLanguage, sCountry, ""); //$NON-NLS-1$
   }
 
   /**
@@ -153,6 +205,11 @@ public final class LocaleCache
     if (sVariant.length () > 0)
       aLocaleSB.append (CGlobal.LOCALE_SEPARATOR).append (sVariant);
     return aLocaleSB.toString ();
+  }
+
+  private static String _buildLanguageTagString (@Nonnull final String sLanguageTag)
+  {
+    return sLanguageTag.toLowerCase ();
   }
 
   /**
@@ -183,7 +240,7 @@ public final class LocaleCache
     s_aRWLock.readLock ().lock ();
     try
     {
-      aLocale = s_aLocales.get (sLocaleKey);
+      aLocale = s_aLocalesByString.get (sLocaleKey);
     }
     finally
     {
@@ -196,14 +253,15 @@ public final class LocaleCache
       try
       {
         // Try fetching again in writeLock
-        aLocale = s_aLocales.get (sLocaleKey);
+        aLocale = s_aLocalesByString.get (sLocaleKey);
         if (aLocale == null)
         {
           // not yet in cache, create a new one
           // -> may lead to illegal locales, but simpler than the error handling
           // for all the possible illegal values
           aLocale = new Locale (sRealLanguage, sRealCountry, sRealVariant);
-          s_aLocales.put (sLocaleKey, aLocale);
+          s_aLocalesByString.put (sLocaleKey, aLocale);
+          s_aLocalesByLanguageTag.put (_buildLanguageTagString (aLocale.toLanguageTag ()), aLocale);
         }
       }
       finally
@@ -226,7 +284,7 @@ public final class LocaleCache
     s_aRWLock.readLock ().lock ();
     try
     {
-      final Set <Locale> ret = ContainerHelper.newSet (s_aLocales.values ());
+      final Set <Locale> ret = ContainerHelper.newSet (s_aLocalesByString.values ());
       ret.remove (CGlobal.LOCALE_ALL);
       ret.remove (CGlobal.LOCALE_INDEPENDENT);
       return ret;
@@ -273,10 +331,10 @@ public final class LocaleCache
       if (aParts.length == 3)
         return containsLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
-        return containsLocale (aParts[0], aParts[1], "");
+        return containsLocale (aParts[0], aParts[1], ""); //$NON-NLS-1$
       // else fall through
     }
-    return containsLocale (sLanguage, "", "");
+    return containsLocale (sLanguage, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -291,7 +349,7 @@ public final class LocaleCache
    */
   public static boolean containsLocale (@Nullable final String sLanguage, @Nullable final String sCountry)
   {
-    return containsLocale (sLanguage, sCountry, "");
+    return containsLocale (sLanguage, sCountry, ""); //$NON-NLS-1$
   }
 
   @Nonnull
@@ -327,7 +385,7 @@ public final class LocaleCache
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aLocales.containsKey (sLocaleKey);
+      return s_aLocalesByString.containsKey (sLocaleKey);
     }
     finally
     {
@@ -343,10 +401,10 @@ public final class LocaleCache
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aLocales.clear ();
+      s_aLocalesByString.clear ();
       _initialFillCache ();
       if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Cache was reset: " + LocaleCache.class.getName ());
+        s_aLogger.debug ("Cache was reset: " + LocaleCache.class.getName ()); //$NON-NLS-1$
     }
     finally
     {

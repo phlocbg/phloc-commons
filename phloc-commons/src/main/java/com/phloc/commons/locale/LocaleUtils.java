@@ -50,6 +50,8 @@ import com.phloc.commons.system.SystemHelper;
 @Immutable
 public final class LocaleUtils
 {
+  private static final String EMPTY = ""; //$NON-NLS-1$
+
   /**
    * Small cache for the resolved locales.
    * 
@@ -124,7 +126,7 @@ public final class LocaleUtils
   @Nonnull
   public static String getLocaleDisplayName (@Nullable final Locale aLocale, @Nonnull final Locale aContentLocale)
   {
-    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale"); //$NON-NLS-1$
 
     if (aLocale == null || aLocale.equals (CGlobal.LOCALE_INDEPENDENT))
       return ELocaleName.ID_LANGUAGE_INDEPENDENT.getDisplayText (aContentLocale);
@@ -143,7 +145,7 @@ public final class LocaleUtils
   @Nonnull
   public static String getLocaleNativeDisplayName (@Nonnull final Locale aLocale)
   {
-    ValueEnforcer.notNull (aLocale, "Locale");
+    ValueEnforcer.notNull (aLocale, "Locale"); //$NON-NLS-1$
     return getLocaleDisplayName (aLocale, aLocale);
   }
 
@@ -159,7 +161,7 @@ public final class LocaleUtils
   @ReturnsMutableCopy
   public static Map <Locale, String> getAllLocaleDisplayNames (@Nonnull final Locale aContentLocale)
   {
-    ValueEnforcer.notNull (aContentLocale, "ContentLocale");
+    ValueEnforcer.notNull (aContentLocale, "ContentLocale"); //$NON-NLS-1$
 
     final Map <Locale, String> ret = new HashMap <Locale, String> ();
     for (final Locale aCurLocale : LocaleCache.getAllLocales ())
@@ -193,7 +195,7 @@ public final class LocaleUtils
   @ReturnsImmutableObject
   public static List <Locale> getCalculatedLocaleListForResolving (@Nonnull final Locale aLocale)
   {
-    ValueEnforcer.notNull (aLocale, "Locale");
+    ValueEnforcer.notNull (aLocale, "Locale"); //$NON-NLS-1$
 
     return s_aLocaleListCache.getFromCache (aLocale);
   }
@@ -227,8 +229,8 @@ public final class LocaleUtils
     {
       // No separator present -> use as is
       sLanguage = sLocaleAsString;
-      sCountry = "";
-      sVariant = "";
+      sCountry = EMPTY;
+      sVariant = EMPTY;
     }
     else
     {
@@ -242,7 +244,7 @@ public final class LocaleUtils
       {
         // No other separator -> country is the rest
         sCountry = sLocaleAsString.substring (i1);
-        sVariant = "";
+        sVariant = EMPTY;
       }
       else
       {
@@ -256,17 +258,17 @@ public final class LocaleUtils
     if (sLanguage.length () == 2)
       sLanguage = sLanguage.toLowerCase (Locale.US);
     else
-      sLanguage = "";
+      sLanguage = EMPTY;
 
     if (sCountry.length () == 2)
       sCountry = sCountry.toUpperCase (Locale.US);
     else
-      sCountry = "";
+      sCountry = EMPTY;
 
     if (sVariant.length () > 0 && (sLanguage.length () == 2 || sCountry.length () == 2))
       sVariant = sVariant.toUpperCase (Locale.US);
     else
-      sVariant = "";
+      sVariant = EMPTY;
 
     // And now resolve using the locale cache
     return LocaleCache.getLocale (sLanguage, sCountry, sVariant);
@@ -284,8 +286,8 @@ public final class LocaleUtils
                                                  @Nonnull final Collection <Locale> aAvailableLocales,
                                                  @Nullable final Locale aFallback)
   {
-    ValueEnforcer.notNull (aRequestLocale, "RequestLocale");
-    ValueEnforcer.notNull (aAvailableLocales, "AvailableLocales");
+    ValueEnforcer.notNull (aRequestLocale, "RequestLocale"); //$NON-NLS-1$
+    ValueEnforcer.notNull (aAvailableLocales, "AvailableLocales"); //$NON-NLS-1$
 
     // first check direct match
     if (aAvailableLocales.contains (aRequestLocale))
@@ -350,7 +352,7 @@ public final class LocaleUtils
   public static String getValidLanguageCode (@Nullable final String sCode)
   {
     if (StringHelper.hasText (sCode) &&
-        (RegExHelper.stringMatchesPattern ("[a-zA-Z]{2,8}", sCode) || isSpecialLocaleCode (sCode)))
+        (RegExHelper.stringMatchesPattern ("[a-zA-Z]{2,8}", sCode) || isSpecialLocaleCode (sCode))) //$NON-NLS-1$
     {
       return sCode.toLowerCase (Locale.US);
     }
@@ -360,7 +362,7 @@ public final class LocaleUtils
   @Nullable
   public static String getValidCountryCode (@Nullable final String sCode)
   {
-    if (StringHelper.hasText (sCode) && RegExHelper.stringMatchesPattern ("[a-zA-Z]{2}|[0-9]{3}", sCode))
+    if (StringHelper.hasText (sCode) && RegExHelper.stringMatchesPattern ("[a-zA-Z]{2}|[0-9]{3}", sCode)) //$NON-NLS-1$
     {
       return sCode.toUpperCase (CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
     }

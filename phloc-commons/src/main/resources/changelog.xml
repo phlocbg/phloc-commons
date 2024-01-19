@@ -21,6 +21,13 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
 
+<release date="2024-01-19" version="4.6.8" />
+  <entry date="2024-01-19" category="api" action="add">
+    <change>
+      <text locale="en">Support for getting Locales by language tag from LocaleCache</text>
+    </change>
+  </entry>
+
 <release date="2020-07-01" version="4.6.7" />
   <entry date="2020-07-01" category="api" action="add">
     <change>

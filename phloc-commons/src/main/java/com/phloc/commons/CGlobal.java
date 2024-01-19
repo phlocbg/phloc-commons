@@ -273,10 +273,10 @@ public final class CGlobal
   public static final BigDecimal BIGDEC_10 = BigDecimal.TEN;
 
   /** The BigDecimal representation of 100 */
-  public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");
+  public static final BigDecimal BIGDEC_100 = new BigDecimal ("100"); //$NON-NLS-1$
 
   /** The BigDecimal representation of 1000 */
-  public static final BigDecimal BIGDEC_1000 = new BigDecimal ("1000");
+  public static final BigDecimal BIGDEC_1000 = new BigDecimal ("1000"); //$NON-NLS-1$
 
   /** The system line separator */
   public static final String LINE_SEPARATOR = SystemProperties.getLineSeparator ();
@@ -292,6 +292,16 @@ public final class CGlobal
   public static final String LOCALE_SEPARATOR_STR = Character.toString (LOCALE_SEPARATOR);
 
   /**
+   * Separates language tags in locales.
+   */
+  public static final char LANGUAGE_TAG_SEPARATOR = '-';
+
+  /**
+   * Separates language tags in locales.
+   */
+  public static final String LANGUAGE_TAG_SEPARATOR_STR = Character.toString (LANGUAGE_TAG_SEPARATOR);
+
+  /**
    * The very hardcoded default locale that cannot be changed. Equals
    * {@link Locale#US}.
    */
@@ -305,23 +315,23 @@ public final class CGlobal
   /**
    * The language string representing the "all" locale. See {@link #LOCALE_ALL}.
    */
-  public static final String STR_ALL = "all";
+  public static final String STR_ALL = "all"; //$NON-NLS-1$
 
   /**
    * the default locale which means "all locales".
    */
-  public static final Locale LOCALE_ALL = new Locale (STR_ALL, "", "");
+  public static final Locale LOCALE_ALL = new Locale (STR_ALL, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
    * The language string representing the "independent" locale. See
    * {@link #LOCALE_INDEPENDENT}.
    */
-  public static final String STR_INDEPENDENT = "independent";
+  public static final String STR_INDEPENDENT = "independent"; //$NON-NLS-1$
 
   /**
    * the default locale which means "locale independent".
    */
-  public static final Locale LOCALE_INDEPENDENT = new Locale (STR_INDEPENDENT, "", "");
+  public static final Locale LOCALE_INDEPENDENT = new Locale (STR_INDEPENDENT, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**
    * The number for formatting numbers in a machine readable way. This is

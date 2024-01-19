@@ -42,30 +42,50 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   @Test
   public void testGet ()
   {
-    assertNotNull (LocaleCache.getLocale ("de"));
-    assertNotNull (LocaleCache.getLocale ("de_at"));
-    assertNotNull (LocaleCache.getLocale ("de_surely_not_known"));
+    assertNotNull (LocaleCache.getLocale ("de")); //$NON-NLS-1$
+    assertNotNull (LocaleCache.getLocale ("de_at")); //$NON-NLS-1$
+    assertNotNull (LocaleCache.getLocale ("de_surely_not_known")); //$NON-NLS-1$
     assertNull (LocaleCache.getLocale (null));
-    assertNull (LocaleCache.getLocale (""));
+    assertNull (LocaleCache.getLocale ("")); //$NON-NLS-1$
 
-    assertNotNull (LocaleCache.getLocale ("de", "AT"));
-    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT").toString ());
-    assertEquals ("de_AT", LocaleCache.getLocale ("de", "at").toString ());
-    assertEquals ("de", LocaleCache.getLocale ("de", null).toString ());
-    assertEquals ("_AT", LocaleCache.getLocale (null, "AT").toString ());
+    assertNotNull (LocaleCache.getLocale ("de", "AT")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT").toString ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "at").toString ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    assertEquals ("de", LocaleCache.getLocale ("de", null).toString ()); //$NON-NLS-1$ //$NON-NLS-2$
+    assertEquals ("_AT", LocaleCache.getLocale (null, "AT").toString ()); //$NON-NLS-1$ //$NON-NLS-2$
     assertNull (LocaleCache.getLocale (null, null));
 
-    assertNotNull (LocaleCache.getLocale ("de", "AT", "Vienna"));
-    assertEquals ("de__Vienna", new Locale ("de", "", "Vienna").toString ());
-    assertEquals ("de__Vienna", LocaleCache.getLocale ("de", null, "Vienna").toString ());
-    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT", null).toString ());
+    assertNotNull (LocaleCache.getLocale ("de", "AT", "Vienna")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    assertEquals ("de__Vienna", new Locale ("de", "", "Vienna").toString ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    assertEquals ("de__Vienna", LocaleCache.getLocale ("de", null, "Vienna").toString ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT", null).toString ()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+    // test via language tag
+    assertNotNull (LocaleCache.getLocale ("en-GB")); //$NON-NLS-1$
+    assertTrue (LocaleCache.getLocale ("en-GB") == LocaleCache.getLocale ("en_GB")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (LocaleCache.getLocale ("de-AT-Vienna")); //$NON-NLS-1$
+
+    final Locale aVienna1 = LocaleCache.getLocale ("de-AT-Vienna");
+    System.out.println (aVienna1.toLanguageTag () + ":::" + aVienna1.toString ());
+    final Locale aVienna2 = LocaleCache.getLocale ("de_AT_Vienna");
+    System.out.println (aVienna2.toLanguageTag () + ":::" + aVienna2.toString ());
+
+    assertTrue (LocaleCache.getLocale ("de-AT-Vienna") == LocaleCache.getLocale ("de_AT_Vienna")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (LocaleCache.getLocale ("gsw-u-sd-chzh")); //$NON-NLS-1$
+    assertEquals (LocaleCache.getLocale ("gsw-u-sd-chzh").toLanguageTag (), "gsw-u-sd-chzh"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (LocaleCache.getLocale ("ar-u-nu-latn")); //$NON-NLS-1$
+    assertEquals (LocaleCache.getLocale ("ar-u-nu-latn").toLanguageTag (), "ar-u-nu-latn"); //$NON-NLS-1$ //$NON-NLS-2$
+    assertNotNull (LocaleCache.getLocale ("he-IL-u-ca-hebrew-tz-jeruslm")); //$NON-NLS-1$
+    assertEquals (LocaleCache.getLocale ("he-IL-u-ca-hebrew-tz-jeruslm").toLanguageTag (), //$NON-NLS-1$
+                  "he-IL-u-ca-hebrew-tz-jeruslm"); //$NON-NLS-1$
+
   }
 
   @Test
   public void testGetInvalid ()
   {
-    assertNull (LocaleCache.getLocale ("gb result: chosen nickname \"stevenwhitecotton063\"; success;"));
-    assertNull (LocaleCache.getLocale ("aa bb"));
+    assertNull (LocaleCache.getLocale ("gb result: chosen nickname \"stevenwhitecotton063\"; success;")); //$NON-NLS-1$
+    assertNull (LocaleCache.getLocale ("aa bb")); //$NON-NLS-1$
   }
 
   @Test
@@ -93,10 +113,10 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   {
     final Set <Locale> aLocales = LocaleCache.getAllLocales ();
     assertEquals (aLocales.size (), ContainerHelper.getSorted (aLocales, new ComparatorLocale ()).size ());
-    assertEquals (aLocales.size (), ContainerHelper.getSorted (aLocales, new ComparatorLocaleDisplayName (L_DE))
-                                                   .size ());
-    assertEquals (aLocales.size (), ContainerHelper.getSorted (aLocales, new ComparatorLocaleDisplayNameNative (L_DE))
-                                                   .size ());
+    assertEquals (aLocales.size (),
+                  ContainerHelper.getSorted (aLocales, new ComparatorLocaleDisplayName (L_DE)).size ());
+    assertEquals (aLocales.size (),
+                  ContainerHelper.getSorted (aLocales, new ComparatorLocaleDisplayNameNative (L_DE)).size ());
     assertEquals (aLocales.size (),
                   ContainerHelper.getSorted (aLocales, new ComparatorLocaleDisplayNameInLocale (L_DE, L_EN)).size ());
   }
@@ -106,20 +126,20 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   {
     assertFalse (LocaleCache.containsLocale (null));
     assertFalse (LocaleCache.containsLocale (null));
-    assertTrue (LocaleCache.containsLocale ("de"));
-    assertTrue (LocaleCache.containsLocale ("de_at"));
-    assertFalse (LocaleCache.containsLocale ("de_at_var"));
-    assertFalse (LocaleCache.containsLocale ("de_xx"));
-    assertFalse (LocaleCache.containsLocale ("deh"));
+    assertTrue (LocaleCache.containsLocale ("de")); //$NON-NLS-1$
+    assertTrue (LocaleCache.containsLocale ("de_at")); //$NON-NLS-1$
+    assertFalse (LocaleCache.containsLocale ("de_at_var")); //$NON-NLS-1$
+    assertFalse (LocaleCache.containsLocale ("de_xx")); //$NON-NLS-1$
+    assertFalse (LocaleCache.containsLocale ("deh")); //$NON-NLS-1$
 
-    assertTrue (LocaleCache.containsLocale ("de", "at"));
-    assertFalse (LocaleCache.containsLocale ("de", "xx"));
+    assertTrue (LocaleCache.containsLocale ("de", "at")); //$NON-NLS-1$ //$NON-NLS-2$
+    assertFalse (LocaleCache.containsLocale ("de", "xx")); //$NON-NLS-1$ //$NON-NLS-2$
 
     assertFalse (LocaleCache.containsLocale (null, null, null));
-    assertTrue (LocaleCache.containsLocale ("de", null, null));
-    assertTrue (LocaleCache.containsLocale ("de", "at", null));
-    assertFalse (LocaleCache.containsLocale ("de", "xx", null));
-    assertFalse (LocaleCache.containsLocale ("de", "at", "var"));
+    assertTrue (LocaleCache.containsLocale ("de", null, null)); //$NON-NLS-1$
+    assertTrue (LocaleCache.containsLocale ("de", "at", null)); //$NON-NLS-1$ //$NON-NLS-2$
+    assertFalse (LocaleCache.containsLocale ("de", "xx", null)); //$NON-NLS-1$ //$NON-NLS-2$
+    assertFalse (LocaleCache.containsLocale ("de", "at", "var")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   @Test
@@ -127,7 +147,7 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   {
     LocaleCache.resetCache ();
     final int nCount = LocaleCache.getAllLanguages ().size ();
-    LocaleCache.getLocale ("xy");
+    LocaleCache.getLocale ("xy"); //$NON-NLS-1$
     assertEquals (nCount + 1, LocaleCache.getAllLanguages ().size ());
     LocaleCache.resetCache ();
     assertEquals (nCount, LocaleCache.getAllLanguages ().size ());
