@@ -132,7 +132,7 @@ public final class ResourceBundleUtils
                                       @Nonnull final Locale aContentLocale,
                                       @Nonnull @PropertyKey final String sKey)
   {
-    return getString (getUtf8ResourceBundle (sBundleName, aContentLocale), sKey);
+    return getString (getResourceBundle (sBundleName, aContentLocale), sKey);
   }
 
   @Nullable
