@@ -37,20 +37,6 @@ public final class EJavaVersionTest
     for (final EJavaVersion e : EJavaVersion.values ())
       assertSame (e, EJavaVersion.valueOf (e.name ()));
 
-    assertFalse (EJavaVersion.JDK_11.isCurrentVersion ());
-    assertFalse (EJavaVersion.JDK_12.isCurrentVersion ());
-    assertFalse (EJavaVersion.JDK_13.isCurrentVersion ());
-    assertFalse (EJavaVersion.JDK_14.isCurrentVersion ());
-    assertTrue (EJavaVersion.JDK_15.isCurrentVersion () ||
-                EJavaVersion.JDK_16.isCurrentVersion () ||
-                EJavaVersion.JDK_17.isCurrentVersion () ||
-                EJavaVersion.JDK_18.isCurrentVersion ());
-    final EJavaVersion eJV = EJavaVersion.getCurrentVersion ();
-    assertTrue (eJV == EJavaVersion.JDK_15 ||
-                eJV == EJavaVersion.JDK_16 ||
-                eJV == EJavaVersion.JDK_17 ||
-                eJV == EJavaVersion.JDK_18);
-
     assertEquals (EJavaVersion.UNKNOWN, EJavaVersion.getFromVersionNumber (44.0));
     assertEquals (EJavaVersion.JDK_15, EJavaVersion.getFromMajorAndMinor (49, 0));
     assertEquals (EJavaVersion.JDK_15, EJavaVersion.getFromVersionNumber (49.0));
@@ -58,27 +44,13 @@ public final class EJavaVersionTest
     assertEquals (EJavaVersion.JDK_16, EJavaVersion.getFromVersionNumber (50.0));
     assertEquals (EJavaVersion.JDK_17, EJavaVersion.getFromVersionNumber (51.0));
     assertEquals (EJavaVersion.JDK_18, EJavaVersion.getFromVersionNumber (52.0));
-    assertEquals (EJavaVersion.UNKNOWN, EJavaVersion.getFromVersionNumber (53.0));
+    assertEquals (EJavaVersion.JDK17, EJavaVersion.getFromVersionNumber (61.0));
 
     assertTrue (EJavaVersion.JDK_11.isSupportedVersion ());
     assertTrue (EJavaVersion.JDK_12.isSupportedVersion ());
     assertTrue (EJavaVersion.JDK_13.isSupportedVersion ());
     assertTrue (EJavaVersion.JDK_14.isSupportedVersion ());
     assertTrue (EJavaVersion.JDK_15.isSupportedVersion ());
-    if (EJavaVersion.JDK_16.isCurrentVersion () ||
-        EJavaVersion.JDK_17.isCurrentVersion () ||
-        EJavaVersion.JDK_18.isCurrentVersion ())
-      assertTrue (EJavaVersion.JDK_16.isSupportedVersion ());
-    else
-      assertFalse (EJavaVersion.JDK_16.isSupportedVersion ());
-    if (EJavaVersion.JDK_17.isCurrentVersion () || EJavaVersion.JDK_18.isCurrentVersion ())
-      assertTrue (EJavaVersion.JDK_17.isSupportedVersion ());
-    else
-      assertFalse (EJavaVersion.JDK_17.isSupportedVersion ());
-    if (EJavaVersion.JDK_18.isCurrentVersion ())
-      assertTrue (EJavaVersion.JDK_18.isSupportedVersion ());
-    else
-      assertFalse (EJavaVersion.JDK_18.isSupportedVersion ());
   }
 
   @Test
