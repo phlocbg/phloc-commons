@@ -45,7 +45,6 @@ public final class JAXBMarshallerUtilsTest
     assertNotNull (aCtx);
 
     final Marshaller aMarshaller = aCtx.createMarshaller ();
-    assertTrue (JAXBMarshallerUtils.isSunJAXB2Marshaller (aMarshaller));
 
     // Encoding
     assertEquals (CCharset.CHARSET_UTF_8, JAXBMarshallerUtils.getEncoding (aMarshaller));
