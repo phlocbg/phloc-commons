@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>24.4-SNAPSHOT</version>
+    <version>24.3</version>
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -86,12 +86,12 @@
       <version>2.11.0</version>
       <optional>true</optional>
     </dependency>
-    <!-- <dependency>
+    <dependency>
       <groupId>xml-apis</groupId>
       <artifactId>xml-apis</artifactId>
       <version>1.4.01</version>
       <optional>true</optional>
-    </dependency> -->
+    </dependency>
         
     <dependency>
       <groupId>junit</groupId>
