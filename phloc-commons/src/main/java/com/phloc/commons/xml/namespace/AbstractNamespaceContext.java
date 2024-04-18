@@ -42,7 +42,7 @@ public abstract class AbstractNamespaceContext implements IIterableNamespaceCont
   protected abstract Iterator <String> getCustomPrefixes (@Nonnull String sNamespaceURI);
 
   @Nonnull
-  public final Iterator <?> getPrefixes (@Nonnull final String sNamespaceURI)
+  public final Iterator <String> getPrefixes (@Nonnull final String sNamespaceURI)
   {
     // According to JavaDoc
     if (sNamespaceURI == null)
@@ -52,7 +52,7 @@ public abstract class AbstractNamespaceContext implements IIterableNamespaceCont
     if (sNamespaceURI.equals (XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
       return SingleElementIterator.create (XMLConstants.XMLNS_ATTRIBUTE);
 
-    final Iterator <?> ret = getCustomPrefixes (sNamespaceURI);
+    Iterator <String> ret = getCustomPrefixes (sNamespaceURI);
     return ret != null ? ret : ContainerHelper.<String> getEmptyIterator ();
   }
 

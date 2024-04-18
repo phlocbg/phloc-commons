@@ -22,7 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEventHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
 
 /**
- * An implementation of the JAXB {@link javax.xml.bind.ValidationEventHandler}
+ * An implementation of the JAXB {@link jakarta.xml.bind.ValidationEventHandler}
  * interface. It simply prints the messages to a logger before the original
  * handler handles them.
  * 

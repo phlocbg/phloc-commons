@@ -19,7 +19,7 @@ package com.phloc.commons.jaxb.validation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEventHandler;
 
 /**
  * Implementation of {@link IValidationEventHandlerFactory} creating

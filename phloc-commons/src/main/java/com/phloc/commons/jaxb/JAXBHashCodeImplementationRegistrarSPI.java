@@ -18,7 +18,7 @@
 package com.phloc.commons.jaxb;
 
 import javax.annotation.Nonnull;
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.hash.HashCodeGenerator;

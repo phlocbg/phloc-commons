@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEventHandler;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.error.IHasResourceErrorGroup;
@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An implementation of the JAXB {@link javax.xml.bind.ValidationEventHandler}
+ * An implementation of the JAXB {@link jakarta.xml.bind.ValidationEventHandler}
  * interface. It collects all events that occurred!
  * 
  * @author Philip Helger

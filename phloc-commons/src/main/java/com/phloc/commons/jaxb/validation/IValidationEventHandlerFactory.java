@@ -18,7 +18,7 @@
 package com.phloc.commons.jaxb.validation;
 
 import javax.annotation.Nullable;
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEventHandler;
 
 import com.phloc.commons.factory.IFactoryWithParameter;
 
