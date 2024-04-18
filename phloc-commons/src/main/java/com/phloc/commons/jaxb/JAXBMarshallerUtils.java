@@ -315,16 +315,12 @@ public final class JAXBMarshallerUtils
    *        The marshaller to be checked. May be <code>null</code>.
    * @return <code>true</code> if the passed marshaller is not <code>null</code>
    *         and is of the Sun class.
+   * @deprecated since jakarta is in use sun marshaller is not in use anymore
    */
+  @Deprecated
   public static boolean isSunJAXB2Marshaller (@Nullable final Marshaller aMarshaller)
   {
-    if (aMarshaller == null)
-      return false;
-    final String sClassName = aMarshaller.getClass ().getName ();
-    // When using jaxb-impl explicitly
-    return sClassName.equals (JAXB_EXTERNAL_CLASS_NAME) ||
-    // When using the JAXB version integrated in the runtime
-           sClassName.equals (JAXB_INTERNAL_CLASS_NAME);
+    return true;
   }
 
   /**
