@@ -77,21 +77,21 @@ public final class LocaleFormatterTest extends AbstractPhlocTestCase
   @Test
   public void testGetFormattedPercent ()
   {
-    assertEquals ("12%", LocaleFormatter.getFormattedPercent (0.123, L_DE));
-    assertEquals ("12%", LocaleFormatter.getFormattedPercent (0.123, L_DE_AT));
+    assertEquals ("12 %", LocaleFormatter.getFormattedPercent (0.123, L_DE));
+    assertEquals ("12 %", LocaleFormatter.getFormattedPercent (0.123, L_DE_AT));
     assertEquals ("12%", LocaleFormatter.getFormattedPercent (0.123, L_EN));
     assertEquals ("12%", LocaleFormatter.getFormattedPercent (0.123, L_EN_US));
-    assertEquals ("12 %", LocaleFormatter.getFormattedPercent (0.123, L_FR_FR));
+    assertEquals ("12 %", LocaleFormatter.getFormattedPercent (0.123, L_FR_FR));
   }
 
   @Test
   public void testGetFormattedPercent_Scale ()
   {
-    assertEquals ("12,3%", LocaleFormatter.getFormattedPercent (0.123, 1, L_DE));
-    assertEquals ("12,3%", LocaleFormatter.getFormattedPercent (0.123, 1, L_DE_AT));
+    assertEquals ("12,3 %", LocaleFormatter.getFormattedPercent (0.123, 1, L_DE));
+    assertEquals ("12,3 %", LocaleFormatter.getFormattedPercent (0.123, 1, L_DE_AT));
     assertEquals ("12.3%", LocaleFormatter.getFormattedPercent (0.123, 1, L_EN));
     assertEquals ("12.3%", LocaleFormatter.getFormattedPercent (0.123, 1, L_EN_US));
-    assertEquals ("12,3 %", LocaleFormatter.getFormattedPercent (0.123, 1, L_FR_FR));
+    assertEquals ("12,3 %", LocaleFormatter.getFormattedPercent (0.123, 1, L_FR_FR));
   }
 
   @Test
