@@ -61,38 +61,58 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
 
+  /**
+   * lock
+   */
   protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final String m_sCacheName;
+  /**
+   * access statistics
+   */
   protected final IStatisticsHandlerCache m_aCacheAccessStats;
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
   private volatile Map <KEYTYPE, VALUETYPE> m_aCache;
 
+  /**
+   * Ctor
+   * 
+   * @param sCacheName
+   *        Name of the cache
+   */
   public AbstractCache (@Nonnull @Nonempty final String sCacheName)
   {
-    m_sCacheName = ValueEnforcer.notEmpty (sCacheName, "cacheName");
-    m_aCacheAccessStats = StatisticsManager.getCacheHandler (STATISTICS_PREFIX + sCacheName + "$access");
-    m_aCacheRemoveStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$remove");
-    m_aCacheClearStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$clear");
+    this.m_sCacheName = ValueEnforcer.notEmpty (sCacheName, "cacheName");
+    this.m_aCacheAccessStats = StatisticsManager.getCacheHandler (STATISTICS_PREFIX + sCacheName + "$access");
+    this.m_aCacheRemoveStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$remove");
+    this.m_aCacheClearStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$clear");
     if (isJMXEnabled ())
       JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
   }
 
+  /**
+   * @return Whether or not JMX is enabled
+   */
   public static boolean isJMXEnabled ()
   {
     return s_aJMXEnabled.get ();
   }
 
+  /**
+   * @param bEnabled
+   *        Whether or not JMX should be enabled
+   */
   public static void setJMXEnabled (final boolean bEnabled)
   {
     s_aJMXEnabled.set (bEnabled);
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public final String getName ()
   {
-    return m_sCacheName;
+    return this.m_sCacheName;
   }
 
   /**
@@ -122,14 +142,14 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     ValueEnforcer.notNull (aValue, "cacheValue");
 
     // try again in write lock
-    if (m_aCache == null)
+    if (this.m_aCache == null)
     {
       // Create a new map to cache the objects
-      m_aCache = createCache ();
-      if (m_aCache == null)
+      this.m_aCache = createCache ();
+      if (this.m_aCache == null)
         throw new IllegalStateException ("No cache created!");
     }
-    m_aCache.put (aKey, aValue);
+    this.m_aCache.put (aKey, aValue);
   }
 
   /**
@@ -145,48 +165,63 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     ValueEnforcer.notNull (aKey, "cacheKey");
     ValueEnforcer.notNull (aValue, "cacheValue");
 
-    m_aRWLock.writeLock ().lock ();
+    this.m_aRWLock.writeLock ().lock ();
     try
     {
       putInCacheNotLocked (aKey, aValue);
     }
     finally
     {
-      m_aRWLock.writeLock ().unlock ();
+      this.m_aRWLock.writeLock ().unlock ();
     }
   }
 
+  /**
+   * @param aKey
+   *        The cache key
+   * @return The corresponding value from the cache, or <code>null</code>
+   */
   @MustBeLocked (ELockType.READ)
   protected final VALUETYPE getFromCacheNoStatsNotLocked (@Nullable final KEYTYPE aKey)
   {
     // Since null is not allowed as value, we don't need to check with
     // containsKey before get!
-    return m_aCache == null ? null : m_aCache.get (aKey);
+    return this.m_aCache == null ? null : this.m_aCache.get (aKey);
   }
 
+  /**
+   * @param aKey
+   *        The cache key
+   * @return The corresponding value from the cache, or <code>null</code>
+   */
   @Nullable
   @OverridingMethodsMustInvokeSuper
   protected final VALUETYPE getFromCacheNoStats (@Nullable final KEYTYPE aKey)
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
       return getFromCacheNoStatsNotLocked (aKey);
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 
   private void _updateStats (final boolean bMiss)
   {
     if (bMiss)
-      m_aCacheAccessStats.cacheMiss ();
+      this.m_aCacheAccessStats.cacheMiss ();
     else
-      m_aCacheAccessStats.cacheHit ();
+      this.m_aCacheAccessStats.cacheHit ();
   }
 
+  /**
+   * @param aKey
+   *        The cache key
+   * @return The corresponding value from the cache, or <code>null</code>
+   */
   @Nullable
   protected final VALUETYPE getFromCacheNotLocked (@Nullable final KEYTYPE aKey)
   {
@@ -195,6 +230,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return aValue;
   }
 
+  @Override
   @Nullable
   @OverridingMethodsMustInvokeSuper
   public VALUETYPE getFromCache (final KEYTYPE aKey)
@@ -204,87 +240,96 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return aValue;
   }
 
+  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange removeFromCache (final KEYTYPE aKey)
   {
-    m_aRWLock.writeLock ().lock ();
+    this.m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aCache == null || m_aCache.remove (aKey) == null)
+      if (this.m_aCache == null || this.m_aCache.remove (aKey) == null)
         return EChange.UNCHANGED;
     }
     finally
     {
-      m_aRWLock.writeLock ().unlock ();
+      this.m_aRWLock.writeLock ().unlock ();
     }
-    m_aCacheRemoveStats.increment ();
+    this.m_aCacheRemoveStats.increment ();
     return EChange.CHANGED;
   }
 
+  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange clearCache ()
   {
-    m_aRWLock.writeLock ().lock ();
+    this.m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aCache == null || m_aCache.isEmpty ())
+      if (this.m_aCache == null || this.m_aCache.isEmpty ())
         return EChange.UNCHANGED;
 
-      m_aCache.clear ();
-      m_aCacheClearStats.increment ();
+      this.m_aCache.clear ();
+      this.m_aCacheClearStats.increment ();
       return EChange.CHANGED;
     }
     finally
     {
-      m_aRWLock.writeLock ().unlock ();
+      this.m_aRWLock.writeLock ().unlock ();
     }
   }
 
+  @Override
   @Nonnegative
   public int size ()
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.getSize (m_aCache);
+      return ContainerHelper.getSize (this.m_aCache);
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 
+  @Override
   public boolean isEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.isEmpty (m_aCache);
+      return ContainerHelper.isEmpty (this.m_aCache);
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 
+  /**
+   * @return Whether or not the cache has any content
+   */
   public boolean isNotEmpty ()
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.isNotEmpty (m_aCache);
+      return ContainerHelper.isNotEmpty (this.m_aCache);
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("cacheName", m_sCacheName).append ("content", m_aCache).toString ();
+    return new ToStringGenerator (this).append ("cacheName", this.m_sCacheName)
+                                       .append ("content", this.m_aCache)
+                                       .toString ();
   }
 }

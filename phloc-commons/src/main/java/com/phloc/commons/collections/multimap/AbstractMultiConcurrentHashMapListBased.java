@@ -41,25 +41,51 @@ import com.phloc.commons.state.EChange;
 @ThreadSafe
 public abstract class AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE> extends AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements IMultiMapListBased <KEYTYPE, VALUETYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiConcurrentHashMapListBased ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aValue
+   *        Value
+   */
   public AbstractMultiConcurrentHashMapListBased (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     super (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Value
+   */
   public AbstractMultiConcurrentHashMapListBased (@Nonnull final KEYTYPE aKey,
                                                   @Nonnull final List <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Map
+   */
   public AbstractMultiConcurrentHashMapListBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
   {
     super (aCont);
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nonnull final KEYTYPE aKey,
                                   @Nullable final VALUETYPE aValue,

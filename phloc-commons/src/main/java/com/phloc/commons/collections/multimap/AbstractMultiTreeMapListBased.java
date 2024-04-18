@@ -41,29 +41,61 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiTreeMapListBased <KEYTYPE, VALUETYPE> extends AbstractMultiTreeMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements IMultiMapListBased <KEYTYPE, VALUETYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiTreeMapListBased ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aComparator
+   *        Comparator to use
+   */
   public AbstractMultiTreeMapListBased (@Nullable final Comparator <? super KEYTYPE> aComparator)
   {
     super (aComparator);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key to put
+   * @param aValue
+   *        Value to put
+   */
   public AbstractMultiTreeMapListBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     super (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key to put
+   * @param aCollection
+   *        Collection to put
+   */
   public AbstractMultiTreeMapListBased (@Nullable final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Map to put all entries from
+   */
   public AbstractMultiTreeMapListBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
   {
     super (aCont);
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nullable final KEYTYPE aKey,
                                   @Nullable final VALUETYPE aValue,

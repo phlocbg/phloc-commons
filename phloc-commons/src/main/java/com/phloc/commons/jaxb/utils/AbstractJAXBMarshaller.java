@@ -25,14 +25,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBElement;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.MarshalException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.UnmarshalException;
-import jakarta.xml.bind.Unmarshaller;
-import jakarta.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
@@ -72,6 +64,15 @@ import com.phloc.commons.xml.serialize.SAXReaderSettings;
 import com.phloc.commons.xml.transform.TransformResultFactory;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.MarshalException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.UnmarshalException;
+import jakarta.xml.bind.Unmarshaller;
+import jakarta.xml.bind.ValidationEventHandler;
+
 /**
  * This is the abstract reader and writer base class for JAXB enabled document
  * types.
@@ -81,8 +82,17 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 @NotThreadSafe
 public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 {
+  /**
+   * Default read secure
+   */
   public static final boolean DEFAULT_READ_SECURE = true;
+  /**
+   * Default write formatted
+   */
   public static final boolean DEFAULT_WRITE_FORMATTED = false;
+  /**
+   * Default Formatted
+   */
   @Deprecated
   public static final boolean DEFAULT_FORMATTED = DEFAULT_WRITE_FORMATTED;
 
@@ -274,6 +284,9 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     return EChange.CHANGED;
   }
 
+  /**
+   * @return Whether or not secure reading is enabled
+   */
   public final boolean isReadSecure ()
   {
     return m_bReadSecure;
@@ -295,6 +308,9 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     return EChange.CHANGED;
   }
 
+  /**
+   * @return Whether or not formatted writing is enabled
+   */
   public final boolean isWriteFormatted ()
   {
     return m_bWriteFormatted;
@@ -347,7 +363,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     final Package aPackage = m_aType.getPackage ();
     final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
-                                                           : JAXBContext.newInstance (aPackage.getName ());
+                                                            : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
     final Unmarshaller aUnmarshaller = aJAXBContext.createUnmarshaller ();
@@ -482,6 +498,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     // empty
   }
 
+  /**
+   * Handles a possible read exception
+   * 
+   * @param ex
+   *        Exception
+   */
   @OverrideOnDemand
   protected void handleReadException (@Nonnull final JAXBException ex)
   {
@@ -539,7 +561,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     final Package aPackage = m_aType.getPackage ();
     final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
-                                                           : JAXBContext.newInstance (aPackage.getName ());
+                                                            : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
     final Marshaller aMarshaller = aJAXBContext.createMarshaller ();
@@ -632,6 +654,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     // empty
   }
 
+  /**
+   * Handles a write exception
+   * 
+   * @param ex
+   *        Exception to handle
+   */
   @OverrideOnDemand
   protected void handleWriteException (@Nonnull final JAXBException ex)
   {

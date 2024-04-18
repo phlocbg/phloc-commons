@@ -29,7 +29,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link java.util.concurrent.ConcurrentHashMap}.<br>
+ * Abstract multi map based on
+ * {@link java.util.concurrent.ConcurrentHashMap}.<br>
  * Important note: <code>null</code> keys are not allowed here!
  * 
  * @author Philip Helger
@@ -43,28 +44,59 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends ConcurrentHashMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiConcurrentHashMap ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aValue
+   *        Value
+   */
   public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Value
+   */
   public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nonnull final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Map
+   */
   public AbstractMultiConcurrentHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
   {
     if (aCont != null)
       putAll (aCont);
   }
 
+  /**
+   * Creates a new collection
+   * 
+   * @return The created collection
+   */
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 
+  @Override
   @Nonnull
   public COLLTYPE getOrCreate (@Nonnull final KEYTYPE aKey)
   {
@@ -77,12 +109,14 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
     return aCont;
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
+  @Override
   @Nonnull
   public final EChange putAllIn (@Nonnull final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
@@ -92,6 +126,7 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
     return eChange;
   }
 
+  @Override
   @Nonnull
   public final EChange removeSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
@@ -99,12 +134,14 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
     return aCont == null ? EChange.UNCHANGED : EChange.valueOf (aCont.remove (aValue));
   }
 
+  @Override
   public final boolean containsSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final COLLTYPE aCont = get (aKey);
     return aCont != null && aCont.contains (aValue);
   }
 
+  @Override
   @Nonnegative
   public final long getTotalValueCount ()
   {

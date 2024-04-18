@@ -42,28 +42,59 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends HashMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiHashMap ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aValue
+   *        Value
+   */
   public AbstractMultiHashMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Collection
+   */
   public AbstractMultiHashMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Container
+   */
   public AbstractMultiHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
   {
     if (aCont != null)
       putAll (aCont);
   }
 
+  /**
+   * Creates a new collection
+   * 
+   * @return The created collection
+   */
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 
+  @Override
   @Nonnull
   public COLLTYPE getOrCreate (@Nullable final KEYTYPE aKey)
   {
@@ -76,12 +107,14 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return aCont;
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
+  @Override
   @Nonnull
   public final EChange putAllIn (@Nonnull final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
@@ -91,6 +124,7 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return eChange;
   }
 
+  @Override
   @Nonnull
   public final EChange removeSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
@@ -98,12 +132,14 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return aCont == null ? EChange.UNCHANGED : EChange.valueOf (aCont.remove (aValue));
   }
 
+  @Override
   public final boolean containsSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final Collection <VALUETYPE> aCont = get (aKey);
     return aCont != null && aCont.contains (aValue);
   }
 
+  @Override
   @Nonnegative
   public final long getTotalValueCount ()
   {

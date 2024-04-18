@@ -46,6 +46,9 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
    */
   public static final int DEFAULT_MAX_QUEUE_SIZE = 100;
 
+  /**
+   * Stop Queue
+   */
   protected static final Object STOP_QUEUE_OBJECT = new Object ();
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractConcurrentCollector.class);
 
@@ -54,6 +57,9 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
   // It's a list of Object because otherwise we could not use a static
   // STOP_OBJECT that works for every type. But it is ensured that the queue
   // contains only objects of type T
+  /**
+   * Queue
+   */
   protected final BlockingQueue <Object> m_aQueue;
 
   // Is the queue stopped?
@@ -69,9 +75,10 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
   public AbstractConcurrentCollector (@Nonnegative final int nMaxQueueSize)
   {
     ValueEnforcer.isGT0 (nMaxQueueSize, "MaxQueueSize");
-    m_aQueue = new ArrayBlockingQueue <Object> (nMaxQueueSize);
+    this.m_aQueue = new ArrayBlockingQueue <Object> (nMaxQueueSize);
   }
 
+  @Override
   @Nonnull
   public final ESuccess queueObject (@Nonnull final DATATYPE aObject)
   {
@@ -80,10 +87,10 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
     if (isStopped ())
       throw new IllegalStateException ("The queue is already stopped and does not take any more elements");
 
-    m_aRWLock.writeLock ().lock ();
+    this.m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aQueue.put (aObject);
+      this.m_aQueue.put (aObject);
       return ESuccess.SUCCESS;
     }
     catch (final InterruptedException ex)
@@ -93,33 +100,35 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
     }
     finally
     {
-      m_aRWLock.writeLock ().unlock ();
+      this.m_aRWLock.writeLock ().unlock ();
     }
   }
 
+  @Override
   @Nonnegative
   public final int getQueueLength ()
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aQueue.size ();
+      return this.m_aQueue.size ();
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 
+  @Override
   @Nonnull
   public final ESuccess stopQueuingNewObjects ()
   {
-    m_aRWLock.writeLock ().lock ();
+    this.m_aRWLock.writeLock ().lock ();
     try
     {
       // put specific stop queue
-      m_aQueue.put (STOP_QUEUE_OBJECT);
-      m_bStopTakingNewObjects = true;
+      this.m_aQueue.put (STOP_QUEUE_OBJECT);
+      this.m_bStopTakingNewObjects = true;
       return ESuccess.SUCCESS;
     }
     catch (final InterruptedException ex)
@@ -129,20 +138,21 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThro
     }
     finally
     {
-      m_aRWLock.writeLock ().unlock ();
+      this.m_aRWLock.writeLock ().unlock ();
     }
   }
 
+  @Override
   public final boolean isStopped ()
   {
-    m_aRWLock.readLock ().lock ();
+    this.m_aRWLock.readLock ().lock ();
     try
     {
-      return m_bStopTakingNewObjects;
+      return this.m_bStopTakingNewObjects;
     }
     finally
     {
-      m_aRWLock.readLock ().unlock ();
+      this.m_aRWLock.readLock ().unlock ();
     }
   }
 }

@@ -106,10 +106,10 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   public NonBlockingByteArrayInputStream (final byte [] aBuf, final int nOfs, final int nLen)
   {
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
-    m_aBuf = aBuf;
-    m_nPos = nOfs;
-    m_nCount = Math.min (nOfs + nLen, aBuf.length);
-    m_nMark = nOfs;
+    this.m_aBuf = aBuf;
+    this.m_nPos = nOfs;
+    this.m_nCount = Math.min (nOfs + nLen, aBuf.length);
+    this.m_nMark = nOfs;
   }
 
   /**
@@ -126,7 +126,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public int read ()
   {
-    return m_nPos < m_nCount ? (m_aBuf[m_nPos++] & 0xff) : -1;
+    return this.m_nPos < this.m_nCount ? (this.m_aBuf[this.m_nPos++] & 0xff) : -1;
   }
 
   /**
@@ -157,13 +157,13 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   {
     ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
-    if (m_nPos >= m_nCount)
+    if (this.m_nPos >= this.m_nCount)
       return -1;
-    final int nRealLen = m_nPos + nLen > m_nCount ? m_nCount - m_nPos : nLen;
+    final int nRealLen = this.m_nPos + nLen > this.m_nCount ? this.m_nCount - this.m_nPos : nLen;
     if (nRealLen <= 0)
       return 0;
-    System.arraycopy (m_aBuf, m_nPos, aBuf, nOfs, nRealLen);
-    m_nPos += nRealLen;
+    System.arraycopy (this.m_aBuf, this.m_nPos, aBuf, nOfs, nRealLen);
+    this.m_nPos += nRealLen;
     return nRealLen;
   }
 
@@ -181,10 +181,10 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public long skip (final long n)
   {
-    final long nSkip = m_nPos + n > m_nCount ? m_nCount - m_nPos : n;
+    final long nSkip = this.m_nPos + n > this.m_nCount ? this.m_nCount - this.m_nPos : n;
     if (nSkip <= 0)
       return 0;
-    m_nPos += nSkip;
+    this.m_nPos += nSkip;
     return nSkip;
   }
 
@@ -201,7 +201,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public int available ()
   {
-    return m_nCount - m_nPos;
+    return this.m_nCount - this.m_nPos;
   }
 
   /**
@@ -231,7 +231,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public void mark (final int readAheadLimit)
   {
-    m_nMark = m_nPos;
+    this.m_nMark = this.m_nPos;
   }
 
   /**
@@ -242,13 +242,13 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public void reset ()
   {
-    m_nPos = m_nMark;
+    this.m_nPos = this.m_nMark;
   }
 
   /**
-   * Closing a <tt>ByteArrayInputStream</tt> has no effect. The methods in this
-   * class can be called after the stream has been closed without generating an
-   * <tt>IOException</tt>.
+   * Closing a <code>ByteArrayInputStream</code> has no effect. The methods in
+   * this class can be called after the stream has been closed without
+   * generating an <code>IOException</code>.
    */
   @Override
   public void close ()
@@ -260,6 +260,6 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Nonnegative
   public int getPosition ()
   {
-    return m_nPos;
+    return this.m_nPos;
   }
 }

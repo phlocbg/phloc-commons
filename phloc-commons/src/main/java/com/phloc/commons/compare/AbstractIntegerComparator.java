@@ -36,6 +36,9 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
 {
   private static final long serialVersionUID = -2453340579608327937L;
 
+  /**
+   * Ctor
+   */
   public AbstractIntegerComparator ()
   {
     super ();
@@ -79,6 +82,13 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
     super (eSortOrder, aNestedComparator);
   }
 
+  /**
+   * Converts the passed object to long
+   * 
+   * @param aObject
+   *        Object to convert
+   * @return long value
+   */
   protected abstract long asLong (DATATYPE aObject);
 
   @Override

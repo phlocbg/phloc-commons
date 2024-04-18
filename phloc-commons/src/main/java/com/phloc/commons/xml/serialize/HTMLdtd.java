@@ -153,7 +153,7 @@ public final class HTMLdtd
   /**
    * Returns true if element's closing tag is optional and need not exist. An
    * error will not be reported for such elements if they are not closed. For
-   * example, <tt>LI</tt> is most often not closed.
+   * example, <code>LI</code> is most often not closed.
    * 
    * @param sTagName
    *        The element tag name (upper case)
@@ -166,7 +166,7 @@ public final class HTMLdtd
 
   /**
    * Returns true if element's closing tag is generally not printed. For
-   * example, <tt>LI</tt> should not print the closing tag.
+   * example, <code>LI</code> should not print the closing tag.
    * 
    * @param sTagName
    *        The element tag name (upper case)
@@ -178,10 +178,11 @@ public final class HTMLdtd
   }
 
   /**
-   * Returns true if the opening of one element (<tt>sTagName</tt>) implies the
-   * closing of another open element (<tt>openTag</tt>). For example, every
-   * opening <tt>LI</tt> will close the previously open <tt>LI</tt>, and every
-   * opening <tt>BODY</tt> will close the previously open <tt>HEAD</tt>.
+   * Returns true if the opening of one element (<code>sTagName</code>) implies
+   * the closing of another open element (<code>openTag</code>). For example,
+   * every opening <code>LI</code> will close the previously open
+   * <code>LI</code>, and every opening <code>BODY</code> will close the
+   * previously open <code>HEAD</code>.
    * 
    * @param sTagName
    *        The newly opened element

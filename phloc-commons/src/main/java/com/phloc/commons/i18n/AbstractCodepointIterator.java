@@ -32,12 +32,29 @@ import com.phloc.commons.annotations.UnsupportedOperation;
  */
 public abstract class AbstractCodepointIterator implements ICodepointIterator
 {
+  /**
+   * position
+   */
   protected int m_nPosition = -1;
+  /**
+   * limit
+   */
   protected int m_nLimit = -1;
 
+  /**
+   * Ctor
+   */
   protected AbstractCodepointIterator ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param nPosition
+   *        Position
+   * @param nLimit
+   *        Limit
+   */
   protected AbstractCodepointIterator (final int nPosition, final int nLimit)
   {
     this.m_nPosition = nPosition;

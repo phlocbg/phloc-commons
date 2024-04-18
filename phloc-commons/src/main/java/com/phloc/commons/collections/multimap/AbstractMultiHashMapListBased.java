@@ -40,25 +40,51 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiHashMapListBased <KEYTYPE, VALUETYPE> extends AbstractMultiHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements IMultiMapListBased <KEYTYPE, VALUETYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiHashMapListBased ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aValue
+   *        Key
+   */
   public AbstractMultiHashMapListBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Collection
+   */
   public AbstractMultiHashMapListBased (@Nullable final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
   {
     put (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Container
+   */
   public AbstractMultiHashMapListBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
   {
     if (aCont != null)
       putAll (aCont);
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nullable final KEYTYPE aKey,
                                   @Nullable final VALUETYPE aValue,

@@ -36,14 +36,23 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
 {
   private final IFilter <DATATYPE> m_aNestedFilter;
 
+  /**
+   * Ctor
+   */
   public AbstractFilter ()
   {
     this (null);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCustomFilter
+   *        Custom nested filter, may be <code>null</code>
+   */
   public AbstractFilter (@Nullable final IFilter <DATATYPE> aCustomFilter)
   {
-    m_aNestedFilter = aCustomFilter;
+    this.m_aNestedFilter = aCustomFilter;
   }
 
   /**
@@ -55,13 +64,14 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
    */
   protected abstract boolean matchesThisFilter (final DATATYPE aValue);
 
+  @Override
   public final boolean matchesFilter (final DATATYPE aValue)
   {
     if (matchesThisFilter (aValue))
       return true;
 
     // Check nested filter
-    return m_aNestedFilter == null || m_aNestedFilter.matchesFilter (aValue);
+    return this.m_aNestedFilter == null || this.m_aNestedFilter.matchesFilter (aValue);
   }
 
   /**
@@ -70,7 +80,7 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
   @Nullable
   public IFilter <DATATYPE> getNestedFilter ()
   {
-    return m_aNestedFilter;
+    return this.m_aNestedFilter;
   }
 
   @Override
@@ -81,18 +91,18 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AbstractFilter <?> rhs = (AbstractFilter <?>) o;
-    return m_aNestedFilter.equals (rhs.m_aNestedFilter);
+    return this.m_aNestedFilter.equals (rhs.m_aNestedFilter);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aNestedFilter).getHashCode ();
+    return new HashCodeGenerator (this).append (this.m_aNestedFilter).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("nestedFilter", m_aNestedFilter).toString ();
+    return new ToStringGenerator (this).append ("nestedFilter", this.m_aNestedFilter).toString ();
   }
 }

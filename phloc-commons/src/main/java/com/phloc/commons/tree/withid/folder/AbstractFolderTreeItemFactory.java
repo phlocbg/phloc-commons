@@ -43,15 +43,19 @@ import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
  *        the implementation item type
  */
 @NotThreadSafe
-public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                              AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                                               IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
+public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 
+  /**
+   * Ctor
+   * 
+   * @param aKeyCombinator
+   *        Key combinator
+   */
   public AbstractFolderTreeItemFactory (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    m_aKeyCombinator = aKeyCombinator;
+    this.m_aKeyCombinator = aKeyCombinator;
   }
 
   @Override
@@ -61,12 +65,18 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE
     return aItem.getGlobalUniqueDataID ();
   }
 
+  @Override
   @Nullable
   public final ICombinator <KEYTYPE> getKeyCombinator ()
   {
-    return m_aKeyCombinator;
+    return this.m_aKeyCombinator;
   }
 
+  /**
+   * Creates a root item
+   * 
+   * @return The created root item
+   */
   @Nonnull
   protected abstract ITEMTYPE internalCreateRoot ();
 
@@ -74,6 +84,7 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE
    * This implementation is different, because the root object is also put into
    * the item store.
    */
+  @Override
   @Nonnull
   public final ITEMTYPE createRoot ()
   {
@@ -89,20 +100,20 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE
     if (!super.equals (o))
       return false;
     final AbstractFolderTreeItemFactory <?, ?, ?, ?> rhs = (AbstractFolderTreeItemFactory <?, ?, ?, ?>) o;
-    return EqualsUtils.equals (m_aKeyCombinator, rhs.m_aKeyCombinator);
+    return EqualsUtils.equals (this.m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aKeyCombinator).getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (this.m_aKeyCombinator).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .appendIfNotNull ("keyCombinator", m_aKeyCombinator)
+                            .appendIfNotNull ("keyCombinator", this.m_aKeyCombinator)
                             .toString ();
   }
 }

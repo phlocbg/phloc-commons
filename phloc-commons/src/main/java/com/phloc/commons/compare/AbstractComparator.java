@@ -84,8 +84,8 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
   public AbstractComparator (@Nonnull final ESortOrder eSortOrder,
                              @Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
-    m_eSortOrder = ValueEnforcer.notNull (eSortOrder, "SortOrder");
-    m_aNestedComparator = aNestedComparator;
+    this.m_eSortOrder = ValueEnforcer.notNull (eSortOrder, "SortOrder");
+    this.m_aNestedComparator = aNestedComparator;
   }
 
   /**
@@ -98,7 +98,7 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
   @Nonnull
   public final AbstractComparator <DATATYPE> setSortOrder (@Nonnull final ESortOrder eSortOrder)
   {
-    m_eSortOrder = ValueEnforcer.notNull (eSortOrder, "SortOrder");
+    this.m_eSortOrder = ValueEnforcer.notNull (eSortOrder, "SortOrder");
     return this;
   }
 
@@ -108,7 +108,7 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
   @Nonnull
   public final ESortOrder getSortOrder ()
   {
-    return m_eSortOrder;
+    return this.m_eSortOrder;
   }
 
   /**
@@ -123,28 +123,37 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
    */
   protected abstract int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2);
 
+  /**
+   * @return Whether or not null is considered smaller compared to other values
+   */
   public final boolean isNullValuesComeFirst ()
   {
-    return m_bNullValuesComeFirst;
+    return this.m_bNullValuesComeFirst;
   }
 
+  /**
+   * @param bNullValuesComeFirst
+   *        Whether or not null is considered smaller compared to other values
+   * @return This comparator for chaining
+   */
   @Nonnull
   public final AbstractComparator <DATATYPE> setNullValuesComeFirst (final boolean bNullValuesComeFirst)
   {
-    m_bNullValuesComeFirst = bNullValuesComeFirst;
+    this.m_bNullValuesComeFirst = bNullValuesComeFirst;
     return this;
   }
 
+  @Override
   public final int compare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     int nCompare = mainCompare (aElement1, aElement2);
-    if (nCompare == 0 && m_aNestedComparator != null)
+    if (nCompare == 0 && this.m_aNestedComparator != null)
     {
       // Invoke the nested comparator for 2nd level comparison
-      nCompare = m_aNestedComparator.compare (aElement1, aElement2);
+      nCompare = this.m_aNestedComparator.compare (aElement1, aElement2);
     }
 
     // Apply sort order
-    return (m_eSortOrder.isAscending () ? 1 : -1) * nCompare;
+    return (this.m_eSortOrder.isAscending () ? 1 : -1) * nCompare;
   }
 }

@@ -42,28 +42,59 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends LinkedHashMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiLinkedHashMap ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aValue
+   *        Value
+   */
   public AbstractMultiLinkedHashMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Value
+   */
   public AbstractMultiLinkedHashMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Map
+   */
   public AbstractMultiLinkedHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
   {
     if (aCont != null)
       putAll (aCont);
   }
 
+  /**
+   * Creates a new collection
+   * 
+   * @return The created collection
+   */
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 
+  @Override
   @Nonnull
   public COLLTYPE getOrCreate (@Nullable final KEYTYPE aKey)
   {
@@ -76,12 +107,14 @@ public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE e
     return aCont;
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
+  @Override
   @Nonnull
   public final EChange putAllIn (@Nonnull final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
@@ -91,6 +124,7 @@ public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE e
     return eChange;
   }
 
+  @Override
   @Nonnull
   public final EChange removeSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
@@ -98,12 +132,14 @@ public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE e
     return aCont == null ? EChange.UNCHANGED : EChange.valueOf (aCont.remove (aValue));
   }
 
+  @Override
   public final boolean containsSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final Collection <VALUETYPE> aCont = get (aKey);
     return aCont != null && aCont.contains (aValue);
   }
 
+  @Override
   @Nonnegative
   public final long getTotalValueCount ()
   {

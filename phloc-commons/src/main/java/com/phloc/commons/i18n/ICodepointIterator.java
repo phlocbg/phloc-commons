@@ -122,12 +122,33 @@ public interface ICodepointIterator extends Iterator <Codepoint>
    */
   boolean isLow (@Nonnegative int index);
 
+  /**
+   * @param aFilter
+   *        Filter
+   * @return A restricted iterator
+   */
   @Nonnull
   CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter);
 
+  /**
+   * @param aFilter
+   *        Filter
+   * @param bScanning
+   *        Scanning
+   * @return A restricted iterator
+   */
   @Nonnull
   CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean bScanning);
 
+  /**
+   * @param aFilter
+   *        Filter
+   * @param bScanning
+   *        Scanning
+   * @param bInvert
+   *        Invert
+   * @return A restricted iterator
+   */
   @Nonnull
   CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean bScanning, boolean bInvert);
 }

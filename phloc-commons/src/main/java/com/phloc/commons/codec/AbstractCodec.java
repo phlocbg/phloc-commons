@@ -31,9 +31,13 @@ import com.phloc.commons.charset.CharsetManager;
  */
 public abstract class AbstractCodec implements ICodec
 {
+  /**
+   * Ctor
+   */
   public AbstractCodec ()
   {}
 
+  @Override
   @Nullable
   public byte [] encode (@Nullable final String sDecoded, @Nonnull final Charset aCharset)
   {
@@ -43,6 +47,7 @@ public abstract class AbstractCodec implements ICodec
     return encode (CharsetManager.getAsBytes (sDecoded, aCharset));
   }
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final String sEncoded, @Nonnull final Charset aCharset)
   {

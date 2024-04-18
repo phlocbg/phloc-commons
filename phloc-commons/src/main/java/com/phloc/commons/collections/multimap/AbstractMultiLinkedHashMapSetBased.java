@@ -36,19 +36,44 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public abstract class AbstractMultiLinkedHashMapSetBased <KEYTYPE, VALUETYPE> extends AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements IMultiMapSetBased <KEYTYPE, VALUETYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiLinkedHashMapSetBased ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        key
+   * @param aValue
+   *        Value
+   */
   public AbstractMultiLinkedHashMapSetBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     super (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key
+   * @param aCollection
+   *        Value
+   */
   public AbstractMultiLinkedHashMapSetBased (@Nullable final KEYTYPE aKey, @Nullable final Set <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Map
+   */
   public AbstractMultiLinkedHashMapSetBased (@Nullable final Map <? extends KEYTYPE, ? extends Set <VALUETYPE>> aCont)
   {
     super (aCont);

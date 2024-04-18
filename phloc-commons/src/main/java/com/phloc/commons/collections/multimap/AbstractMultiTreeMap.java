@@ -43,33 +43,70 @@ import com.phloc.commons.state.EChange;
 @NotThreadSafe
 public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends TreeMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  /**
+   * Ctor
+   */
   public AbstractMultiTreeMap ()
   {}
 
+  /**
+   * Ctor
+   * 
+   * @param aComparator
+   *        Comparator to use
+   */
   public AbstractMultiTreeMap (@Nullable final Comparator <? super KEYTYPE> aComparator)
   {
     super (aComparator);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key to put
+   * @param aValue
+   *        Value to put
+   */
   public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aKey
+   *        Key to put
+   * @param aCollection
+   *        Value to put
+   */
   public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
 
+  /**
+   * Ctor
+   * 
+   * @param aCont
+   *        Collection to put all values
+   */
   public AbstractMultiTreeMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
   {
     if (aCont != null)
       putAll (aCont);
   }
 
+  /**
+   * Creates a new collection
+   * 
+   * @return The created collection
+   */
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 
+  @Override
   @Nonnull
   public COLLTYPE getOrCreate (@Nullable final KEYTYPE aKey)
   {
@@ -82,12 +119,14 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return aCont;
   }
 
+  @Override
   @Nonnull
   public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
+  @Override
   @Nonnull
   public final EChange putAllIn (@Nonnull final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
@@ -97,6 +136,7 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return eChange;
   }
 
+  @Override
   @Nonnull
   public final EChange removeSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
@@ -104,12 +144,14 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
     return aCont == null ? EChange.UNCHANGED : EChange.valueOf (aCont.remove (aValue));
   }
 
+  @Override
   public final boolean containsSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final Collection <VALUETYPE> aCont = get (aKey);
     return aCont != null && aCont.contains (aValue);
   }
 
+  @Override
   @Nonnegative
   public final long getTotalValueCount ()
   {

@@ -132,9 +132,25 @@ public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted 
   @Nonnull
   IMicroNode detachFromParent ();
 
+  /**
+   * Get parent element by tag name
+   * 
+   * @param sTagName
+   *        Tag name
+   * @return The parent element or <code>null</code>
+   */
   @Nullable
   IMicroElement getParentElementWithName (@Nullable String sTagName);
 
+  /**
+   * Get parent element by tag name
+   * 
+   * @param sNamespaceURI
+   *        Namespace URI
+   * @param sTagName
+   *        Tag name
+   * @return The parent element or <code>null</code>
+   */
   @Nullable
   IMicroElement getParentElementWithName (@Nullable String sNamespaceURI, @Nullable String sTagName);
 

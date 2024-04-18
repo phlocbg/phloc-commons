@@ -41,8 +41,9 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
 
   /**
    * The number of valid bytes in the buffer. This value is always in the range
-   * <tt>0</tt> through <tt>buf.length</tt>; elements <tt>buf[0]</tt> through
-   * <tt>buf[count-1]</tt> contain valid byte data.
+   * <code>0</code> through <code>buf.length</code>; elements
+   * <code>buf[0]</code> through <code>buf[count-1]</code> contain valid byte
+   * data.
    */
   protected int m_nCount;
 
@@ -73,16 +74,16 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
   {
     super (aOS);
     ValueEnforcer.isGT0 (nSize, "Size");
-    m_aBuf = new byte [nSize];
+    this.m_aBuf = new byte [nSize];
   }
 
   /** Flush the internal buffer */
   private void _flushBuffer () throws IOException
   {
-    if (m_nCount > 0)
+    if (this.m_nCount > 0)
     {
-      out.write (m_aBuf, 0, m_nCount);
-      m_nCount = 0;
+      this.out.write (this.m_aBuf, 0, this.m_nCount);
+      this.m_nCount = 0;
     }
   }
 
@@ -97,9 +98,9 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
   @Override
   public void write (final int b) throws IOException
   {
-    if (m_nCount >= m_aBuf.length)
+    if (this.m_nCount >= this.m_aBuf.length)
       _flushBuffer ();
-    m_aBuf[m_nCount++] = (byte) b;
+    this.m_aBuf[this.m_nCount++] = (byte) b;
   }
 
   /**
@@ -125,7 +126,7 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
   @Override
   public void write (final byte [] aBuf, final int nOfs, final int nLen) throws IOException
   {
-    if (nLen >= m_aBuf.length)
+    if (nLen >= this.m_aBuf.length)
     {
       /*
        * If the request length exceeds the size of the output buffer, flush the
@@ -133,13 +134,13 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
        * streams will cascade harmlessly.
        */
       _flushBuffer ();
-      out.write (aBuf, nOfs, nLen);
+      this.out.write (aBuf, nOfs, nLen);
       return;
     }
-    if (nLen > m_aBuf.length - m_nCount)
+    if (nLen > this.m_aBuf.length - this.m_nCount)
       _flushBuffer ();
-    System.arraycopy (aBuf, nOfs, m_aBuf, m_nCount, nLen);
-    m_nCount += nLen;
+    System.arraycopy (aBuf, nOfs, this.m_aBuf, this.m_nCount, nLen);
+    this.m_nCount += nLen;
   }
 
   /**
@@ -153,6 +154,6 @@ public class NonBlockingBufferedOutputStream extends FilterOutputStream
   public void flush () throws IOException
   {
     _flushBuffer ();
-    out.flush ();
+    this.out.flush ();
   }
 }
